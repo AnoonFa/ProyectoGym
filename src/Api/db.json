@@ -15,7 +15,7 @@
     {
       "id": "3",
       "usuario": "Carlos",
-      "contraseña": "1234",
+      "contraseña": "1234567",
       "cargo": "admin"
     }
   ],
@@ -42,8 +42,8 @@
       "tipoCuerpo": "Endomorfo",
       "peso": "35",
       "altura": "152",
-      "usuario": "lagrasa",
-      "password": "Soyesteban1029*",
+      "usuario": "Esteban",
+      "password": "Soyesteban1234*",
       "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":\"2\",\"repeticiones\":\"1\",\"descanso\":\"3\"},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":\"30\"},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":\"10\"},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60}]"
     },
     {
@@ -93,7 +93,7 @@
       "timeSlot": "07:00 AM",
       "descripcion": "Clase de Yoga para empezar el día con energía.",
       "totalCupos": 20,
-      "cuposDisponibles": 6,
+      "cuposDisponibles": 5,
       "precio": 15000,
       "fecha": "2024-09-01",
       "inscritos": [
@@ -112,6 +112,12 @@
         {
           "id": "1",
           "nombre": "Esteban Adawda",
+          "email": "nanoespinosa13@gmail.com",
+          "fechaInscripcion": "2024-08-28"
+        },
+        {
+          "id": "4",
+          "nombre": "Andrea Paredes",
           "email": "nanoespinosa13@gmail.com",
           "fechaInscripcion": "2024-08-28"
         }

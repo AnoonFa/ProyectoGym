@@ -12,14 +12,39 @@ import planes4 from '../../assets/images/planes4.jpg';
 const Planes = () => {
   const navigate = useNavigate();
 
-  const handlePlanSelect = (plan) => {
-    navigate('/checkout', {
+  const handlePlan1Select = (plan) => {
+    navigate('/Productp1', {
       state: {
         purchaseType: 'plan',
         selectedPlan: plan
       }
     });
   };
+  const handlePlan2Select = (plan) => {
+    navigate('/Productp2', {
+      state: {
+        purchaseType: 'plan',
+        selectedPlan: plan
+      }
+    });
+  };
+  const handlePlan3Select = (plan) => {
+    navigate('/Productp3', {
+      state: {
+        purchaseType: 'plan',
+        selectedPlan: plan
+      }
+    });
+  };
+  const handlePlan4Select = (plan) => {
+    navigate('/Productp4', {
+      state: {
+        purchaseType: 'plan',
+        selectedPlan: plan
+      }
+    });
+  };
+
 
   return (
     <div>
@@ -30,11 +55,10 @@ const Planes = () => {
           <PlanCard
             image={planes1}
             title="Mensualidad"
-            description="El plan más completo para alcanzar tus objetivos con prácticas libres y clases grupales."
             price={50000}
-            onClick={() => handlePlanSelect({
+            onClick={() => handlePlan1Select({
               name: 'Mensualidad',
-              description: 'El plan más completo para alcanzar tus objetivos con prácticas libres y clases grupales.',
+              
               price: 50000,
               duration: 1 // Duración en meses
             })}
@@ -42,11 +66,10 @@ const Planes = () => {
           <PlanCard
             image={planes2}
             title="Trimestre"
-            description="11 prácticas libres en nuestros gimnasios para que puedas entrenar con la flexibilidad que necesites."
             price={130000}
-            onClick={() => handlePlanSelect({
+            onClick={() => handlePlan2Select({
               name: 'Trimestre',
-              description: '11 prácticas libres en nuestros gimnasios para que puedas entrenar con la flexibilidad que necesites.',
+              escription: '11 prácticas libres en nuestros gimnasios para que puedas entrenar con la flexibilidad que necesites.',
               price: 130000,
               duration: 3
             })}
@@ -54,9 +77,8 @@ const Planes = () => {
           <PlanCard
             image={planes3}
             title="Semestre"
-            description="Ejercítate junto a tu partner y logren juntos la meta esperada."
             price={280000}
-            onClick={() => handlePlanSelect({
+            onClick={() => handlePlan3Select({
               name: 'Semestre',
               description: 'Ejercítate junto a tu partner y logren juntos la meta esperada.',
               price: 280000,
@@ -66,9 +88,8 @@ const Planes = () => {
           <PlanCard
             image={planes4}
             title="Año"
-            description="El plan más completo para alcanzar tus objetivos con prácticas libres y clases grupales."
             price={550000}
-            onClick={() => handlePlanSelect({
+            onClick={() => handlePlan4Select({
               name: 'Año',
               description: 'El plan más completo para alcanzar tus objetivos con prácticas libres y clases grupales.',
               price: 550000,

@@ -12,8 +12,8 @@ import planes4 from '../../../assets/images/planes4.jpg';
 const Ticketera = () => {
   const navigate = useNavigate();
 
-  const handleTicketeraSelect = (ticketera) => {
-    navigate('/checkout', {
+  const handleTicketera1Select = (ticketera) => {
+    navigate('/ProductT1', {
       state: {
         purchaseType: 'ticketera',
         selectedPlan: ticketera,  // Usamos selectedPlan para reutilizar lógica
@@ -21,6 +21,38 @@ const Ticketera = () => {
       }
     });
   };
+
+  const handleTicketera2Select = (ticketera) => {
+    navigate('/ProductT2', {
+      state: {
+        purchaseType: 'ticketera',
+        selectedPlan: ticketera,  // Usamos selectedPlan para reutilizar lógica
+        ticketCount: 1,  // Si tienes un conteo específico, pásalo aquí
+      }
+    });
+  };
+
+  const handleTicketera3Select = (ticketera) => {
+    navigate('/ProductT3', {
+      state: {
+        purchaseType: 'ticketera',
+        selectedPlan: ticketera,  // Usamos selectedPlan para reutilizar lógica
+        ticketCount: 1,  // Si tienes un conteo específico, pásalo aquí
+      }
+    });
+  };
+
+  const handleTicketera4Select = (ticketera) => {
+    navigate('/ProductT4', {
+      state: {
+        purchaseType: 'ticketera',
+        selectedPlan: ticketera,  // Usamos selectedPlan para reutilizar lógica
+        ticketCount: 1,  // Si tienes un conteo específico, pásalo aquí
+      }
+    });
+  };
+
+  
 
   return (
     <div>
@@ -31,9 +63,8 @@ const Ticketera = () => {
           <PlanCard
             image={planes1}
             title="Ticketera 1"
-            description="El plan más completo para alcanzar tus objetivos con prácticas libres y clases grupales."
             price={50000}
-            onClick={() => handleTicketeraSelect({
+            onClick={() => handleTicketera1Select({
               name: 'Ticketera 1',
               description: 'El plan más completo para alcanzar tus objetivos con prácticas libres y clases grupales.',
               price: 50000
@@ -42,9 +73,8 @@ const Ticketera = () => {
           <PlanCard
             image={planes2}
             title="Ticketera 2"
-            description="11 prácticas libres en nuestros gimnasios para que puedas entrenar con la flexibilidad que necesites."
             price={130000}
-            onClick={() => handleTicketeraSelect({
+            onClick={() => handleTicketera2Select({
               name: 'Ticketera 2',
               description: '11 prácticas libres en nuestros gimnasios para que puedas entrenar con la flexibilidad que necesites.',
               price: 130000
@@ -53,9 +83,8 @@ const Ticketera = () => {
           <PlanCard
             image={planes3}
             title="Ticketera 3"
-            description="Ejercítate junto a tu partner y logren juntos la meta esperada."
             price={280000}
-            onClick={() => handleTicketeraSelect({
+            onClick={() => handleTicketera3Select({
               name: 'Ticketera 3',
               description: 'Ejercítate junto a tu partner y logren juntos la meta esperada.',
               price: 280000
@@ -64,9 +93,8 @@ const Ticketera = () => {
           <PlanCard
             image={planes4}
             title="Ticketera 4"
-            description="El plan más completo para alcanzar tus objetivos con prácticas libres y clases grupales."
             price={550000}
-            onClick={() => handleTicketeraSelect({
+            onClick={() => handleTicketera4Select({
               name: 'Ticketera 4',
               description: 'El plan más completo para alcanzar tus objetivos con prácticas libres y clases grupales.',
               price: 550000

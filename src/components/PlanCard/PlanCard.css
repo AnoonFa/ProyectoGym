@@ -6,7 +6,8 @@
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega sombra para destacar las tarjetas */
   transition: transform 0.2s; /* Efecto de transición para hover */
-}
+  margin-top: 10px;
+  }
 
 .plan-card:hover {
   transform: scale(1.05); /* Agranda la tarjeta ligeramente al pasar el mouse */

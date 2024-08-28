@@ -31,7 +31,6 @@ import './App.css';
 import Modal from './components/Modal/Modal';
 import Ticketera from './pages/Management/Ticketera/Ticketera';
 import Planes from './pages/Planes/Planes';
-import Product from './components/Product/Product';
 import Comprobant from './pages/Client/PaymentsPage/Comprobant';
 import Payments from './pages/Client/PaymentsPage/PaymentsPage';
 import RutinasCliente from './components/Rutina/RutinasCliente';
@@ -41,7 +40,14 @@ import Productos from './components/ProductCard/Productos';
 import Checkout from './components/checkout/Checkout';
 import MisClases from './pages/Client/ClassesPage/MisClases';
 import PlanesPage from './pages/Planes/planesPage';
-
+import Productp1 from './components/Product/Productp1';
+import Productp2 from './components/Product/Productp2';
+import Productp3 from './components/Product/Productp3';
+import Productp4 from './components/Product/Productp4';
+import ProductT1 from './components/Product/ProductT1';
+import ProductT2 from './components/Product/ProductT2';
+import ProductT3 from './components/Product/ProductT3';
+import ProductT4 from './components/Product/ProductT4';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -100,7 +106,14 @@ function App() {
                   <Route path="/Comprobant/*" element={<Comprobant />} />
                   <Route path="/Ticketera/*" element={<Ticketera />} />
                   <Route path="/PlanesPage/*" element={<PlanesPage/>} />
-                  <Route path="/Product/*" element={<Product />} />
+                  <Route path="/Productp1/*" element={<Productp1 />} />                  
+                  <Route path="/Productp2/*" element={<Productp2 />} />
+                  <Route path="/Productp3/*" element={<Productp3 />} />
+                  <Route path="/Productp4/*" element={<Productp4 />} />
+                  <Route path="/ProductT1/*" element={<ProductT1 />} />
+                  <Route path="/ProductT2/*" element={<ProductT2 />} />
+                  <Route path="/ProductT3/*" element={<ProductT3 />} />
+                  <Route path="/ProductT4/*" element={<ProductT4 />} />
                   <Route path="/RutinaAdminIndex/*" element={<RutinaAdminIndex />} />
                   <Route path="/Payments/*" element={<Payments />} />
                   <Route path="/RutinasCliente/*" element={<RutinasCliente />} />

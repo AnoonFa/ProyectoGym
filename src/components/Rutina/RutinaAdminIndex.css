@@ -161,7 +161,7 @@ span {
 
 .ejercicio-card .televisor-screen {
   display: block;
-  width: 320px;
+  width: 220px;
   height: 160px;
   background-color: #ccc;
   border-radius: 5px;
@@ -267,7 +267,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .ejercicio-card-cliente .televisor-screen-cliente {
   display: block;
-  width: 320px;
+  width: 220px;
   height: 160px;
   background-color: #ccc;
   border-radius: 5px;

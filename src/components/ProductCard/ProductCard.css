@@ -26,9 +26,11 @@
   border-bottom: 2px solid #eaeaea;
 }
 
-.product-info {
-  flex-grow: 1; /* Permitir que la información crezca para llenar el espacio */
- /* Distribuir el contenido de manera uniforme */
+.product-infos {
+  flex-grow: 0;
+  padding: 20px 10px 50px 27px;
+  
+  display: block;
 }
 
 .product-name {
@@ -59,7 +61,7 @@
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 10px 15px; 
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
