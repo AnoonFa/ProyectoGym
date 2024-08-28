@@ -1,0 +1,129 @@
+.Rectangle100 {
+  width: 100%;
+  background: #FFC120;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  z-index: 1000; /* Asegurarse de que esté sobre otros elementos */
+}
+
+/* Contenedor del logo */
+/* Estilos generales para el header */
+.header {
+  width: 100%;
+  background: #FFC120;
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed; /* Fija el header en la parte superior de la página */
+  top: 0;
+  z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
+}
+
+/* Contenedor del logo */
+.DavidGoliat {
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+}
+
+/* Estilo del logo */
+.LogoImage {
+  width: 150px; /* Ajusta el tamaño del logo */
+  height: auto;
+  margin-left: 30px;
+  margin-bottom: 2PX;
+  
+}
+
+/* Contenedor de los enlaces de navegación */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Espacio entre los enlaces */
+  flex-grow: 1;
+  justify-content: flex-start;
+  margin-left: 2%;
+}
+
+/* Contenedor del botón de login/logout */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Estilos para los botones de navegación */
+.nav-links button.Profile {
+  background-color: transparent;
+  border: none;
+  color: #1D1B20;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Estilos para el hover de los botones */
+.nav-links button.Profile:hover {
+  background-color: #F7F2FA;
+  color: #FFC120;
+}
+
+/* Estilos específicos para los botones de login/logout */
+.LoginButtonLink, .LogoutButtonLink {
+  background-color: #FFC120;
+  border: none;
+  color: #1D1B20;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-right: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.LoginButtonLink:hover, .LogoutButtonLink:hover {
+  background-color: #F7F2FA;
+  color: #FFC120;
+}
+
+/* Estilos específicos para el icono de logout */
+.LogoutIcon {
+  width: 24px;
+  height: auto;
+}
+
+
+/* Media Queries para responsividad */
+@media (max-width: 1200px) {
+  .nav-links button.Profile {
+      font-size: 14px;
+      padding: 8px;
+  }
+  .LogoImage {
+      width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  .nav-links {
+      flex-direction: column;
+      gap: 10px;
+  }
+  .LogoImage {
+      width: 100px;
+  }
+  .nav-links button.Profile {
+      font-size: 12px;
+  }
+}

@@ -1,0 +1,25 @@
+.album-page {
+    text-align: center;
+    padding: 30px 0;
+  }
+  
+  .products-container {
+    text-align: center;
+    padding: 30px 0;
+  }
+  
+  .products-container h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #333;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .products-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  

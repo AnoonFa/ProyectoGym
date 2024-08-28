@@ -1,0 +1,195 @@
+/* Estilo general de la sección */
+.calendar-container {
+
+  background-color: #ffffff;
+}
+
+/* Encabezado principal "Clases" */
+.header-container h2 {
+  font-size: 48px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.empty-slot {
+  height: 100%; /* Se adapta al tamaño de la celda */
+  padding: 20px;
+}
+
+/* Descripción debajo del encabezado */
+.header-description {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+  max-width: 70%;
+  margin-left: 10%;
+}
+
+/* Estilo del contenedor de encabezado */
+.header-container {
+  display: flex;
+  position: relative;
+  top: 10%;
+  left: 9%;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 100px;
+  width: 85%;
+}
+
+/* Filtro de clases */
+.Filter { 
+  display: flex; 
+  position: absolute; 
+  right: 8%; 
+  height: 54px; 
+  gap: 20px; 
+}
+
+
+/* Botón de añadir clase */
+.AddButtonLink {
+  padding: 12px 24px;
+  background-color: #2679f7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.AddButtonLink:hover {
+  background-color: #2679f7;
+}
+
+/* Formulario de añadir clase */
+.add-class-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-class-form input,
+.add-class-form select,
+.add-class-form button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100% !important; 
+}
+
+.add-class-form button {
+  background-color: #2679f7;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.add-class-form button:hover {
+  background-color: #2679f7;
+}
+
+/* Estilos del calendario */
+.calendar-table {
+  margin-top: 5%;
+  width: 78%;
+  position: relative;
+  left: 10%;
+  background-color: #fff;
+}
+
+.day-th {
+  background: #cee2f75d;
+  border-bottom: 1px solid #44709c5e;
+  padding: 12px;
+  text-transform: uppercase;
+}
+
+.calendar-body td {
+  border-bottom: 1px solid #44709c5e;
+  padding: 14px;
+  text-align: center;
+  width: 13%;
+}
+
+.time-th{
+  position: relative;
+  bottom: 2.5px;
+  border-top: 1px solid #44709c5e;
+  padding: 1px 10px 10;
+  text-transform: uppercase;
+}
+.containerDayCalendar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.colorPrimCalendar {
+  color: white;
+}
+
+.colorSecuCalendar {
+  color: black;
+}
+
+
+.itemCalendarLesson {
+  background-color: #ffc10775;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  border: 1px solid #832929;
+}
+
+.itemCalendarLesson h5 {
+  margin: 0;
+}
+
+.itemCalendarLesson p {
+  margin: 0;
+}
+
+
+.eliminar {
+  margin-top: 5px;
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.eliminar :hover {
+  background-color: #c82333;
+
+}
+.ver {
+  background-color: #2679f7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+  padding: 5px 10px;
+
+}
+.ver:hover{
+  background-color: #1065e6;
+}

@@ -1,0 +1,34 @@
+.product-form-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-form input, .product-form select {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.product-form button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #1887fd;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.product-form button:hover {
+  background-color: #0056b3;
+}

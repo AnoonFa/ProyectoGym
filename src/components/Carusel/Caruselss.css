@@ -1,0 +1,50 @@
+.carousel {
+  position: relative;
+  width: 80%; /* Ajusta el ancho del carrusel */
+  max-width: 800px; /* Máximo ancho para el carrusel */
+  height: 400px; /* Ajusta la altura según tus necesidades */
+  margin: 30px auto; /* Centra el carrusel horizontalmente y añade margen superior */
+  overflow: hidden; /* Oculta el desbordamiento de las imágenes */
+  border-radius: 10px; /* Bordes redondeados para un estilo más moderno */
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+
+.carousel-images-wrapper {
+  display: flex;
+  width: 100%; /* Asegura que el contenedor cubra todo el ancho del carrusel */
+  height: 100%; /* Asegura que el contenedor cubra toda la altura del carrusel */
+  transition: transform 0.5s ease-in-out; /* Transición suave para el cambio de imagen */
+}
+
+.carousel-image {
+  flex-shrink: 0; /* Asegura que las imágenes no se encojan */
+  width: 100%; /* Cada imagen ocupa el 100% del ancho del contenedor */
+  height: 100%; /* Cada imagen ocupa el 100% de la altura del contenedor */
+  object-fit: cover; /* Ajusta la imagen para cubrir el área del carrusel sin distorsión */
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0); /* Fondo semitransparente para los botones */
+  border: none;
+  color: #fff; /* Color blanco para el texto */
+  font-size: 2rem; /* Tamaño de fuente adecuado */
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%; /* Botones redondeados */
+  padding: 10px; /* Espaciado interno para hacer los botones más grandes y clicables */
+  transition: background 0.3s; /* Transición para el fondo del botón */
+}
+
+
+
+.carousel-button.prev {
+  left: 20px; /* Ajuste de posición para mayor accesibilidad */
+}
+
+.carousel-button.next {
+  right: 20px; /* Ajuste de posición para mayor accesibilidad */
+}

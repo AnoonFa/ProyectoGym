@@ -1,0 +1,21 @@
+.plans-container {
+  position: relative;
+  height: auto; /* Cambia a auto si la altura no es fija */
+  padding: 50px;
+  max-width: 1200px; /* Limita el ancho máximo para una mejor apariencia en pantallas grandes */
+  margin-left: auto;
+  margin-right: auto; /* Centro el contenedor en la página */
+}
+
+.plans-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center; /* Centra las tarjetas horizontalmente */
+}
+
+.plan-card {
+  flex: 1;
+  min-width: 250px; /* Ajusta el ancho mínimo de las tarjetas */
+  max-width: 300px; /* Ajusta el ancho máximo de las tarjetas */
+}

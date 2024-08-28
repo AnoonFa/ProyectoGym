@@ -1,0 +1,143 @@
+.mis-clases {
+  padding: 27px;
+  margin-top: 92px;
+  background-color: #f9f9f9;
+  min-height: 30vh;
+  position: relative;
+  width: 80%;
+  left: 10%;
+  margin-bottom: 8%;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mis-clases h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+
+.mis-clases h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.class-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.class-item:hover {
+  transform: translateY(-5px);
+}
+
+.class-item h2 {
+  color: #007bff;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+.class-item p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.class-item button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.class-item button:hover {
+  background-color: #0056b3;
+}
+
+/* Clases actuales */
+.current-class {
+  border-left: 4px solid #128cfffa;  /* Verde para clases actuales */
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+
+/* Clases pasadas */
+.past-class {
+  border-left: 4px solid #ccc;  /* Gris para clases pasadas */
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f4f4f4;
+}
+
+.no-clases, .no {
+  text-align: center;
+  color: #777;
+  font-size: 1.2rem;
+}
+
+/* Estilo para el mensaje cuando no hay clases actuales */
+.no-current-classes {
+  color: #d9534f;  /* Rojo claro */
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Estilo para el mensaje cuando no hay clases en el historial */
+.no-past-classes {
+  color: #777;  /* Gris */
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.class-filter {
+  margin-bottom: 20px;
+}
+
+.class-filter input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.class-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.class-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  width: calc(33.333% - 20px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.class-item h2 {
+  color: #007bff;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+.class-item p {
+  margin: 5px 0;
+  color: #555;
+}

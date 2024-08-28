@@ -1,0 +1,81 @@
+.VerProducto{
+    background-image: linear-gradient(to top, #f82424, #ff2323, #ed5d56, #ea8556);
+    padding: 15px;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    margin-top: 5%;
+    width: 92%; /* Mantén el ancho al 60% */
+    height: 70%;
+    position: relative;
+    left: 4%; /* Ajustado para dejar espacio suficiente */
+    box-sizing: border-box; /* Asegúrate de incluir el relleno y borde en el tamaño total */
+}
+
+.VerProducto h2 {
+    text-align: center;
+    font-size: 35px;
+    margin: 20px;
+}
+
+.VerProducto h3 {
+    margin-top: 40px;
+    margin-left: 10px;
+    font-size: 30px;
+}
+
+.VerProducto .ClienteForm input{
+    height: 28px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.VerProducto .ClienteForm {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.VerProducto .ClienteForm button {
+    height: 40px;
+    margin-top: 17px;
+}
+
+.VerProducto .ClienteForm div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.VerProducto .ClienteForm label {
+    margin-bottom: 5px;
+}
+
+.VerProducto .ClienteDatabase {
+    margin-top: 20px;
+}
+
+.VerProducto .ClienteLista {
+    margin-top: 20px;
+}
+
+.VerProducto .ClienteItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #000000;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.VerProducto .ClienteItem input {
+    width: 95%;
+    height: 35px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.VerProducto .ClienteItem button {
+    height: 38px;
+    margin-right: 10px;
+}

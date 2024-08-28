@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5dc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .container {
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .data-sections {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  
+  .data-card {
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 20px;
+    width: 280px; /* Increased the width */
+    background-color: #fff;
+    margin: 10px;
+  }
+  
+  .data-card h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .data-card ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+  }
+  
+  .data-card ul ul {
+    margin-top: 10px;
+    margin-left: 20px;
+  }
+  
+  .data-card li {
+    margin-bottom: 10px;
+  }
+  
+  .focus-types {
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 20px;
+    width: 180px;
+    background-color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 10px;
+  }
+  
+  .focus-types h2 {
+    width: 100%;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .focus-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 10px;
+  }
+  
+  .focus-circle.red { background-color: red; }
+  .focus-circle.blue { background-color: blue; }
+  .focus-circle.purple { background-color: purple; }
+  .focus-circle.green { background-color: green; }
+  .focus-circle.yellow { background-color: yellow; }
+  .focus-circle.brown { background-color: brown; }
+  

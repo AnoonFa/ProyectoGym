@@ -1,0 +1,46 @@
+.map-container {
+  margin-top: 65px;
+  margin-left: 195px;
+  display: flex;  
+  grid-template-columns: 2fr 1fr; /* No se aplica a Flexbox, se aplicaría en un contenedor de tipo grid */
+  height: auto;
+  align-items: center;
+  padding: 20px;
+  width: 80vw; /* Cambia el ancho del contenedor al 70% del ancho de la ventana del navegador */
+  max-width: 100%; /* Asegura que el contenedor no exceda el 70% del ancho de la ventana */
+  box-sizing: border-box; /* Asegura que el padding y border se incluyan en el cálculo del ancho */
+}
+
+.iframe-map {
+  height: 60%; /* Asegura que el iframe ocupa el 60% del alto del contenedor asignado */
+  width: 100%; /* Asegura que el iframe ocupa todo el ancho del contenedor asignado */
+}
+
+.text-container {
+  display: flex; /* Usa Flexbox para disposición vertical */
+  flex-direction: column;
+  justify-content: center; /* Alinea el contenido verticalmente al centro */
+  align-items: flex-start; /* Alinea el contenido al inicio (lado izquierdo) */
+  margin-left: 5%;
+  height: 100%; /* Asegura que el contenedor de texto ocupa todo el alto de su contenedor */
+}
+
+.icon-text {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px; /* Espacio entre cada línea de texto */
+}
+
+.icon {
+  margin-right: 12px; /* Espacio entre el icono y el texto */
+  margin-top: -13px;
+}
+
+.text-container p {
+  margin-bottom: 12px; /* Añade margen inferior a los párrafos */
+}
+
+.main-text {
+  margin-bottom: 10px; /* Añade margen inferior al título */
+  font-size: 3em;
+}

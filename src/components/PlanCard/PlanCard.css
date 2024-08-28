@@ -1,0 +1,38 @@
+.plan-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega sombra para destacar las tarjetas */
+  transition: transform 0.2s; /* Efecto de transición para hover */
+}
+
+.plan-card:hover {
+  transform: scale(1.05); /* Agranda la tarjeta ligeramente al pasar el mouse */
+}
+
+.plan-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.plan-card h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+.plan-card p {
+  color: #666;
+}
+
+.buy-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: blue;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}

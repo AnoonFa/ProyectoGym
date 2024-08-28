@@ -1,0 +1,16 @@
+.plans-container {
+    padding: 50px;
+  }
+  
+  .plans-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .plan-card {
+    flex: 1;
+    min-width: 250px;
+  }
+  

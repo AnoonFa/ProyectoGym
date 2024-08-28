@@ -1,0 +1,230 @@
+{
+  "admin": [
+    {
+      "id": "1",
+      "usuario": "Juan",
+      "contraseña": "123456",
+      "cargo": "admin"
+    },
+    {
+      "id": "2",
+      "usuario": "admin1234",
+      "contraseña": "123456",
+      "cargo": "admin"
+    },
+    {
+      "id": "3",
+      "usuario": "Carlos",
+      "contraseña": "1234",
+      "cargo": "admin"
+    }
+  ],
+  "employee": [
+    {
+      "id": "1",
+      "usuario": "lagrasa",
+      "contraseña": "123456",
+      "cargo": "employee"
+    },
+    {
+      "id": "2",
+      "usuario": "supapa",
+      "contraseña": "123456",
+      "cargo": "employee"
+    }
+  ],
+  "client": [
+    {
+      "id": "1",
+      "nombre": "Esteban",
+      "apellido": "Adawda",
+      "sexo": "hombre",
+      "tipoCuerpo": "Endomorfo",
+      "peso": "35",
+      "altura": "152",
+      "usuario": "lagrasa",
+      "password": "Soyesteban1029*",
+      "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":\"2\",\"repeticiones\":\"1\",\"descanso\":\"3\"},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":\"30\"},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":\"10\"},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60}]"
+    },
+    {
+      "id": "2",
+      "nombre": "Alejandro",
+      "apellido": "Espinosa",
+      "sexo": "hombre",
+      "tipoCuerpo": "Mesomorfo",
+      "peso": "74",
+      "altura": "123",
+      "usuario": "ozuna",
+      "password": "Soyesteban2111*",
+      "rutinas": "[{\"nombre\":\"Peso muerto\",\"series\":\"1\",\"repeticiones\":\"2\",\"descanso\":\"3\"},{\"nombre\":\"Press de banca inclinado\",\"series\":\"4\",\"repeticiones\":\"5\",\"descanso\":\"6\"},{\"nombre\":\"Dominadas\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto rumano\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Press de banca declinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con agarre ancho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra T\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto sumo\",\"series\":3,\"repeticiones\":6,\"descanso\":90},{\"nombre\":\"Press de banca cerrado\",\"series\":3,\"repeticiones\":12,\"descanso\":90},{\"nombre\":\"Dominadas con agarre estrecho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra con agarre invertido\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto convencional\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con peso añadido\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra con agarre ancho\",\"series\":3,\"repeticiones\":10,\"descanso\":60}]"
+    },
+    {
+      "id": "3",
+      "nombre": "Aida",
+      "apellido": "Piñeros",
+      "sexo": "mujer",
+      "tipoCuerpo": "Ectomorfo",
+      "peso": "48",
+      "altura": "194",
+      "usuario": "papeleria",
+      "password": "Soyaida2111*",
+      "rutinas": ""
+    },
+    {
+      "id": "4",
+      "nombre": "Andrea",
+      "apellido": "Paredes",
+      "sexo": "mujer",
+      "tipoCuerpo": "Endomorfo",
+      "peso": "98",
+      "altura": "200",
+      "usuario": "Andrea",
+      "password": "Papeleria12*",
+      "rutinas": ""
+    }
+  ],
+  "clases": [
+    {
+      "id": "1",
+      "nombre": "Yoga Matutino",
+      "entrenador": "Laura García",
+      "hora": "07:00 AM",
+      "day": 1,
+      "timeSlot": "07:00 AM",
+      "descripcion": "Clase de Yoga para empezar el día con energía.",
+      "totalCupos": 20,
+      "cuposDisponibles": 6,
+      "precio": 15000,
+      "fecha": "2024-09-01",
+      "inscritos": [
+        {
+          "id": "2",
+          "nombre": "Alejandro Espinosa",
+          "email": "alejandro@example.com",
+          "fechaInscripcion": "2023-08-02"
+        },
+        {
+          "id": "1",
+          "nombre": "Esteban Adawda",
+          "email": "nanoespinosa13@gmail.com",
+          "fechaInscripcion": "2024-08-28"
+        },
+        {
+          "id": "1",
+          "nombre": "Esteban Adawda",
+          "email": "nanoespinosa13@gmail.com",
+          "fechaInscripcion": "2024-08-28"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "nombre": "CrossFit Intermedio",
+      "entrenador": "Carlos Méndez",
+      "hora": "06:00 PM",
+      "day": 3,
+      "timeSlot": "06:00 PM",
+      "descripcion": "Clase de CrossFit para nivel intermedio.",
+      "totalCupos": 15,
+      "cuposDisponibles": 12,
+      "precio": 20000,
+      "fecha": "2024-09-02",
+      "inscritos": [
+        {
+          "id": "5",
+          "nombre": "Aida Piñeros",
+          "email": "aida@example.com",
+          "fechaInscripcion": "2023-08-03"
+        },
+        {
+          "id": "2",
+          "nombre": "Alejandro Espinosa",
+          "email": "gaby@gmail.com",
+          "fechaInscripcion": "2024-08-28"
+        }
+      ]
+    }
+  ],
+  "productos": [
+    {
+      "name": "Top Deportivo Mujer",
+      "description": "Top de alta compresión para mayor soporte durante el ejercicio.",
+      "price": 20000,
+      "image": "https://acdn.mitiendanube.com/stores/144/702/products/top-fit-frente1-30a52a9052d60237cc16335596123822-1024-1024.jpg",
+      "category": "ropa deportiva mujer",
+      "id": "03d7"
+    },
+    {
+      "name": "Leggings Mujer",
+      "description": "Leggings elásticos y transpirables para entrenamiento.",
+      "price": 35000,
+      "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTWTu5XYiDaqzQBtqPm8bSFcypFjaLtQy3t7k-QlHLHele9KmDkqWgRyaHkyaJMcfQkvj77b1yoGWEGs9YHrZRZbC0l-amPYbM3yCXSG8eKbu61_1YAzYCq&usqp=CAE",
+      "category": "ropa deportiva mujer",
+      "id": "bc08"
+    },
+    {
+      "name": "Camiseta Deportiva Hombre",
+      "description": "Camiseta ligera y transpirable para entrenamiento.",
+      "price": 25000,
+      "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTqJ70pFb9srp6FqPva8RHu8FEXGEUvmu5EcLjAgMjFLlSuxYGTrdrisC6UxdfdrWV9fxzQexB16l319eu0nrOKFjZ393VwGDenZKPzrQwqWxlBwEpQwT8L5Q&usqp=CAE",
+      "category": "ropa deportiva hombre",
+      "id": "5088"
+    },
+    {
+      "name": "Shorts Deportivos Hombre",
+      "description": "Shorts de secado rápido y ligeros para entrenamientos intensos.",
+      "price": 30000,
+      "image": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRGeoRxWx6FyZnv-22QPrZV55hZO3guBj9wcmJ2zjdbopr-bd8tmdXE0r2A1z3D1BIQpYjiGVmrHvN_HzNDh8uEElKarJQVnU9IeTboWBzQC3ypelYdsK1C&usqp=CAE",
+      "category": "ropa deportiva hombre",
+      "id": "50c8"
+    },
+    {
+      "name": "Powerade",
+      "description": "Bebida isotónica que repone tus electrolitos y te mantiene energizado durante el ejercicio.",
+      "price": 4500,
+      "image": "https://copservir.vtexassets.com/arquivos/ids/1168119/POWERADE-ION-4-MOUNTAIN-BLAST_F.png?v=638417016264030000",
+      "category": "bebidas",
+      "id": "3519"
+    },
+    {
+      "name": "Agua Cristal",
+      "description": "Agua pura y refrescante, ideal para mantenerte hidratado durante el día.",
+      "price": 2000,
+      "image": "https://coopasan.com.co/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTUxMzY4NCwicHVyIjoiYmxvYl9pZCJ9fQ==--ee6f0a9e4ce292b68c8dc4b9e2812d3dbd547be6/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJwbmciLCJyZXNpemVfdG9fZml0IjpbODAwLDgwMF19LCJwdXIiOiJ2YXJpYXRpb24ifX0=--cef66509c9cdc75663c0eefd9421db1d2ea4fead/ME00047.png?locale=es",
+      "category": "bebidas",
+      "id": "6582"
+    },
+    {
+      "name": "Cinturón de Levantamiento",
+      "description": "Cinturón de cuero para soporte lumbar durante levantamientos pesados.",
+      "price": 45000,
+      "image": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCO/124892034_01/w=800,h=800,fit=pad",
+      "category": "accesorios",
+      "id": "0afc"
+    },
+    {
+      "name": "Guantes de Entrenamiento",
+      "description": "Guantes Barbel, diseñados para ofrecer comodidad y protección en entrenamientos de fuerza.",
+      "price": 35000,
+      "image": "https://fitnessproject.com.co/wp-content/uploads/2023/08/guantes-barbel_815754.jpg.webp",
+      "category": "accesorios",
+      "id": "c8f5"
+    },
+    {
+      "name": "Proteína Whey",
+      "description": "Suplemento de proteína whey para ganar masa muscular.",
+      "price": 60000,
+      "image": "https://puntfitnessbcn.com/wp-content/uploads/2021/05/Optimum-Nutrition-Proteina-Whey-%E2%80%93-Proteina-de-suero-de-leche-Gold-Standard-todos-los-tamanos-doble-reich-chocolate.png",
+      "category": "suplementos",
+      "id": "18b3"
+    },
+    {
+      "name": "Creatina Monohidratada",
+      "description": "Suplemento de creatina para mejorar el rendimiento deportivo.",
+      "price": 35000,
+      "image": "https://cdnx.jumpseller.com/alimentos-naturales-vida-sana-sas/image/47187559/CREATINA-MONOHYDRATE-3000-150g-HEALTHY-SPORTS.png?1724256525",
+      "category": "suplementos",
+      "id": "ad82"
+    }
+  ]
+}
