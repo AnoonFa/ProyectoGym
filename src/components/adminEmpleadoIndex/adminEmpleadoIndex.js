@@ -21,7 +21,7 @@ function AdminPage() {
         <Route
           path="/"
           element={
-            <div style={{marginTop: "100px", marginBottom: "185px", display: "flex",flexDirection: "column", alignItems: "center", width: "100%"}}>
+            <div style={{marginTop: "100px", marginBottom: "372px", display: "flex",flexDirection: "column", alignItems: "center", width: "100%"}}>
               <h2>Bienvenido</h2>
             </div>
           }

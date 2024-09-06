@@ -5,6 +5,7 @@ import { FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import eyeIcon from '../../../assets/icons/OjoAbierto.png';
 import eyeOffIcon from '../../../assets/icons/OjoBloqueado.png';
+import Alert from '@mui/material/Alert';  // Importar Alert de Material-UI
 
 const Login = () => {
   const { setUser } = useAuth();
@@ -23,31 +24,43 @@ const Login = () => {
       try {
         const roles = ['admin', 'employee', 'client'];
         let userFound = null;
-  
+        let userExists = false;
+
         for (const role of roles) {
-          const response = await fetch(`http://localhost:3001/${role}?usuario=${username}&contraseña=${password}`);
+          const response = await fetch(`http://localhost:3001/${role}?usuario=${username}`);
           const data = await response.json();
-  
+
           if (data.length > 0) {
-            userFound = { role, username: data[0].usuario, tipoCuerpo: data[0].tipoCuerpo, id: data[0].id }; // Incluye el ID aquí
-            break;
+            userExists = true;
+            // Check if the provided password matches
+            if (data.some(user => user.contraseña === password)) {
+              userFound = {
+                role,
+                username: data[0].usuario,
+                tipoCuerpo: data[0].tipoCuerpo,
+                id: data[0].id
+              };
+              break;
+            }
           }
         }
-  
+
         if (userFound) {
-          setUser({ 
-            role: userFound.role, 
-            username: userFound.username, 
+          setUser({
+            role: userFound.role,
+            username: userFound.username,
             tipoCuerpo: userFound.tipoCuerpo,
-            id: userFound.id // Asegúrate de incluir el ID aquí
+            id: userFound.id
           });
           if (userFound.role === 'client') {
             navigate('/ClienteIndex');
           } else if (userFound.role === 'admin' || userFound.role === 'employee') {
             navigate('/adminEmpleadoIndex');
           }
+        } else if (userExists) {
+          setLoginError('Contraseña incorrecta.');
         } else {
-          setLoginError('Usuario y/o contraseña incorrectos.');
+          setLoginError('Usuario incorrecto.');
         }
       } catch (error) {
         console.error('Error:', error);
@@ -57,7 +70,6 @@ const Login = () => {
       setLoginError('Por favor, completa todos los campos correctamente.');
     }
   };
-  
 
   return (
     <div className="fondo-wrapper">
@@ -68,7 +80,7 @@ const Login = () => {
             <div className="contenedor-input">
               <input
                 type="text"
-                placeholder='Nombre de Usuario'
+                placeholder='Usuario'
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -95,7 +107,7 @@ const Login = () => {
               <a href='#'>¿Olvido su contraseña?</a>
             </div>
             <button type="submit" className="btn">Iniciar sesión</button>
-            {loginError && <p className="error-message">{loginError}</p>}
+            {loginError && <Alert className='error-message' severity="error">{loginError}</Alert>} 
           </form>
         </div>
       </div>
