@@ -1,0 +1,55 @@
+.exercise-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .exercise-modal-content {
+    position: relative; /* Permite que los elementos dentro, como el botón de cierre, se posicionen relativos a este contenedor */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .exercise-modal-close {
+    position: absolute;
+    top: 16px;  /* Alineado al borde superior */
+    right: 20px; /* Alineado al borde derecho */
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .exercise-modal-title {
+    text-align: center;
+    margin-bottom: 1rem;
+    max-width: 96%;
+  }
+  
+  .exercise-modal-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
+  
+  .exercise-modal-details h3 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .exercise-modal-details p {
+    margin-bottom: 0.5rem;
+  }
+  

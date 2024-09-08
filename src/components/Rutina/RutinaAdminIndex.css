@@ -243,7 +243,7 @@ input[type="number"] {
 
 
 
-/* RutinaCliente */
+/* Rutina Cliente */
 
 .container {
   max-width: 1200px;
@@ -252,63 +252,77 @@ input[type="number"] {
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 3.2rem;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin: 4rem auto 1.5rem;
 }
 
-.grid {
+.exercise-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
-.card {
+.exercise-card {
   background: #fff;
   border-radius: 0.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  text-align: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.card-image {
+.exercise-card:hover {
+  transform: translateY(-5px);
+}
+
+.exercise-image {
   width: 100%;
-  height: 8rem;
+  height: 200px;
   object-fit: cover;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
 }
 
-.card-title {
+.exercise-title {
   font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.card-detail {
-  font-size: 1rem;
-  color: #555;
+  margin: 1rem;
+  text-align: center;
 }
 
 .no-exercises {
   text-align: center;
   font-size: 1rem;
   color: #777;
+  grid-column: 1 / -1;
 }
 
-.return-btn{
-  margin-top: 20px;
-  margin-bottom: 70px;
-  padding: 8px;
+.retuarn-btn-cliente {
+  display: block;
+  margin: 2.5rem auto 1.5rem;
+  padding: 8px 16px;
   background-color: #2679f7;
   color: white;
-  width: 80px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 20px;
-  align-self: center;
+  font-size: 1.3rem;
+}
+
+.retuarn-btn-cliente:hover {
+  background-color: #1c5fd9;
+}
+
+@media (max-width: 768px) {
+  .exercise-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .exercise-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 
