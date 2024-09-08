@@ -5,7 +5,7 @@ import { FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import eyeIcon from '../../../assets/icons/OjoAbierto.png';
 import eyeOffIcon from '../../../assets/icons/OjoBloqueado.png';
-import Alert from '@mui/material/Alert';  // Importar Alert de Material-UI
+import Alert from '@mui/material/Alert'; // Importar Alert de Material-UI
 
 const Login = () => {
   const { setUser } = useAuth();
@@ -24,16 +24,14 @@ const Login = () => {
       try {
         const roles = ['admin', 'employee', 'client'];
         let userFound = null;
-        let userExists = false;
 
         for (const role of roles) {
           const response = await fetch(`http://localhost:3001/${role}?usuario=${username}`);
           const data = await response.json();
 
-          if (data.length > 0) {
-            userExists = true;
-            // Check if the provided password matches
-            if (data.some(user => user.contraseña === password)) {
+          if (Array.isArray(data) && data.length > 0) {
+            // Verificar si la contraseña coincide
+            if (data.some(user => user.password === password)) {
               userFound = {
                 role,
                 username: data[0].usuario,
@@ -57,10 +55,8 @@ const Login = () => {
           } else if (userFound.role === 'admin' || userFound.role === 'employee') {
             navigate('/adminEmpleadoIndex');
           }
-        } else if (userExists) {
-          setLoginError('Contraseña incorrecta.');
         } else {
-          setLoginError('Usuario incorrecto.');
+          setLoginError('Usuario o contraseña incorrectos.');
         }
       } catch (error) {
         console.error('Error:', error);
@@ -107,7 +103,7 @@ const Login = () => {
               <a href='#'>¿Olvido su contraseña?</a>
             </div>
             <button type="submit" className="btn">Iniciar sesión</button>
-            {loginError && <Alert className='error-message' severity="error">{loginError}</Alert>} 
+            {loginError && <Alert className='error-message' severity="error">{loginError}</Alert>}
           </form>
         </div>
       </div>

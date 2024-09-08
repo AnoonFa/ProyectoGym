@@ -5,15 +5,15 @@ const FormularioCliente = ({ onClienteSeleccionado }) => {
   const [cliente, setCliente] = useState(''); 
   const [searchTerm, setSearchTerm] = useState('');
   const [clientes, setClientes] = useState([]);
+  const [clienteSeleccionado, setClienteSeleccionado] = useState(false); // Nuevo estado para controlar si se selecciona un cliente
 
   useEffect(() => {
     // Obtener la lista de clientes desde el servidor
     fetch('http://localhost:3001/client')
       .then(response => response.json())
       .then(data => {
-        // Mapear datos para adecuarlos al formato requerido
         const clientesList = data.map(c => ({
-          id: c.id,  // Asegúrate de incluir el ID
+          id: c.id,
           nombre: `${c.nombre} ${c.apellido}`,
           tipo: c.tipoCuerpo || 'Desconocido'
         }));
@@ -32,15 +32,15 @@ const FormularioCliente = ({ onClienteSeleccionado }) => {
     setCliente(id);
     setSearchTerm(''); // Limpiar el término de búsqueda al seleccionar un cliente
     onClienteSeleccionado(clientes.find(c => c.id === id));
+    setClienteSeleccionado(true); // Cliente seleccionado, cambiar el estado
   };
 
-  // Filtrar clientes según el término de búsqueda
   const filteredClientes = clientes.filter(cliente =>
     cliente.nombre.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="formularioXD">
+    <div className={`formularioXD ${clienteSeleccionado ? 'no-margin' : ''}`}>
       <label>Seleccione Cliente:</label>
       <div className="input-container">
         <input

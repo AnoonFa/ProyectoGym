@@ -40,11 +40,9 @@ function Footer() {
           sus propios límites y alcanzar sus metas. Contamos con instalaciones modernas, 
           un equipo de entrenadores altamente capacitados y una amplia gama de programas y clases diseñadas.</p>
         <div className="footer-links">
-          <a href="#" className="footer-link">Términos de Servicio</a>
-          <span className="footer-separator">|</span>
-          <a href="#" className="footer-link">Términos y Condiciones</a>
-          <span className="footer-separator">|</span>
-          <a href="#" className="footer-link">Políticas de Privacidad</a>
+        <a href="/Terminos y Condiciones.pdf" className="footer-link" target="_blank" rel="noopener noreferrer">Términos y Condiciones</a>
+        <span className="footer-separator">|</span>
+        <a href="/Politica_de_Privacidad.pdf" className="footer-link" target="_blank" rel="noopener noreferrer">Políticas de Privacidad</a>
         </div>
       </div>
     </footer>

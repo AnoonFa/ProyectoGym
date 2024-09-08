@@ -11,6 +11,16 @@
     height: 100%;
 }
 
+.password-toggle-icon{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
 .fondo {
     position: relative;
     width: 400px;

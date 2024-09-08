@@ -44,76 +44,32 @@ const RutinasCliente = () => {
   return (
     <>
       <Header />
-      <div className="ejercicios-cliente-cliente">
-        <h2>Mi rutina</h2>
-        <div className="ejercicios-list-cliente">
-          {rutina.length > 0 ? (
-            rutina.map((ejercicio, index) => (
-              <div key={index} className="ejercicio-card-cliente">
-                <div className="televisor-screen-cliente"></div>
-                <div className="ejercicio-info-cliente">
-                  <h3>{ejercicio.nombre}</h3>
-                  <div className="input-container-cliente">
-                    <label>Series:</label>
-                    {ejercicio.series === 'Máximo de repeticiones' ? (
-                      <span>{ejercicio.series}</span>
-                    ) : (
-                      <input
-                        type="number"
-                        id={`series-${index}`}
-                        name={`series-${index}`}
-                        value={ejercicio.series}
-                        readOnly
-                        style={{
-                          border: 'none',
-                          outline: 'none',
-                          backgroundColor: 'transparent',
-                          marginLeft: '50px'
-                        }}
-                      />
-                    )}
-                  </div>
-                  {ejercicio.series !== 'Máximo de repeticiones' && (
-                    <div className="input-container-cliente">
-                      <label>Repeticiones:</label>
-                      <input
-                        type="number"
-                        id={`repeticiones-${index}`}
-                        name={`repeticiones-${index}`}
-                        value={ejercicio.repeticiones || ''}
-                        readOnly
-                        style={{
-                          border: 'none',
-                          outline: 'none',
-                          backgroundColor: 'transparent'
-                        }}
-                      />
-                    </div>
-                  )}
-                  <div className="input-container-cliente">
-                    <label>Descanso (s):</label>
-                    <input
-                      type="number"
-                      id={`descanso-${index}`}
-                      name={`descanso-${index}`}
-                      value={ejercicio.descanso}
-                      readOnly
-                      style={{
-                        border: 'none',
-                        outline: 'none',
-                        backgroundColor: 'transparent'
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className='nose'>No se encontraron ejercicios en tu rutina.</p>
-          )}
-        </div>
-        <button className="return-btn-cliente" onClick={handleVolver}>Volver</button>
+      <div className="container">
+      <h1 className="title">Mi rutina</h1>
+      <div className="grid">
+        {rutina.length > 0 ? (
+          rutina.map((ejercicio, index) => (
+            <div key={index} className="card">
+              <img
+                aria-hidden="true"
+                alt={ejercicio.nombre}
+                src={`https://openui.fly.dev/openui/150x150.svg?text=${encodeURIComponent(ejercicio.nombre)}`}
+                className="card-image"
+              />
+              <h2 className="card-title">{ejercicio.nombre}</h2>
+              <p className="card-detail">Series: {ejercicio.series}</p>
+              {ejercicio.series !== 'Máximo de repeticiones' && (
+                <p className="card-detail">Repeticiones: {ejercicio.repeticiones || '-'}</p>
+              )}
+              <p className="card-detail">Descanso (s): {ejercicio.descanso}</p>
+            </div>
+          ))
+        ) : (
+          <p className='no-exercises'>No se encontraron ejercicios en tu rutina.</p>
+        )}
       </div>
+      <button className="return-btn" onClick={handleVolver}>Volver</button>
+    </div>
       <Footer />
     </>
   );
