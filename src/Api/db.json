@@ -3,19 +3,19 @@
     {
       "id": "1",
       "usuario": "Juan",
-      "contraseña": "123456",
+      "password": "123456",
       "cargo": "admin"
     },
     {
       "id": "2",
       "usuario": "admin1234",
-      "contraseña": "123456",
+      "password": "123456",
       "cargo": "admin"
     },
     {
       "id": "3",
       "usuario": "Carlos",
-      "contraseña": "1234567",
+      "password": "1234567",
       "cargo": "admin"
     }
   ],
@@ -23,13 +23,13 @@
     {
       "id": "1",
       "usuario": "lagrasa",
-      "contraseña": "123456",
+      "password": "123456",
       "cargo": "employee"
     },
     {
       "id": "2",
       "usuario": "supapa",
-      "contraseña": "123456",
+      "password": "123456",
       "cargo": "employee"
     }
   ],
@@ -37,14 +37,14 @@
     {
       "id": "1",
       "nombre": "Esteban",
-      "apellido": "Adawda",
+      "apellido": "Piñeros",
       "sexo": "hombre",
       "tipoCuerpo": "Endomorfo",
-      "peso": "35",
-      "altura": "152",
-      "usuario": "Esteban",
+      "peso": "20",
+      "altura": "211",
+      "usuario": "InsanoXD",
       "password": "Soyesteban1234*",
-      "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":\"2\",\"repeticiones\":\"1\",\"descanso\":\"3\"},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":\"30\"},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":\"10\"},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60}]"
+      "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Remo con barra T\",\"series\":3,\"repeticiones\":10,\"descanso\":60}]"
     },
     {
       "id": "2",
@@ -56,16 +56,16 @@
       "altura": "123",
       "usuario": "ozuna",
       "password": "Soyesteban2111*",
-      "rutinas": "[{\"nombre\":\"Peso muerto\",\"series\":\"1\",\"repeticiones\":\"2\",\"descanso\":\"3\"},{\"nombre\":\"Press de banca inclinado\",\"series\":\"4\",\"repeticiones\":\"5\",\"descanso\":\"6\"},{\"nombre\":\"Dominadas\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto rumano\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Press de banca declinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con agarre ancho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra T\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto sumo\",\"series\":3,\"repeticiones\":6,\"descanso\":90},{\"nombre\":\"Press de banca cerrado\",\"series\":3,\"repeticiones\":12,\"descanso\":90},{\"nombre\":\"Dominadas con agarre estrecho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra con agarre invertido\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto convencional\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con peso añadido\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra con agarre ancho\",\"series\":3,\"repeticiones\":10,\"descanso\":60}]"
+      "rutinas": "[{\"nombre\":\"Peso muerto\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto rumano\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Press de banca declinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con agarre ancho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Peso muerto sumo\",\"series\":3,\"repeticiones\":6,\"descanso\":90},{\"nombre\":\"Press de banca cerrado\",\"series\":3,\"repeticiones\":12,\"descanso\":90},{\"nombre\":\"Dominadas con agarre estrecho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra con agarre invertido\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto convencional\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con peso añadido\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120}]"
     },
     {
       "id": "3",
       "nombre": "Aida",
-      "apellido": "Piñeros",
+      "apellido": "Muñoz",
       "sexo": "mujer",
       "tipoCuerpo": "Ectomorfo",
-      "peso": "48",
-      "altura": "194",
+      "peso": "50",
+      "altura": "180",
       "usuario": "papeleria",
       "password": "Soyaida2111*",
       "rutinas": ""
@@ -81,6 +81,34 @@
       "usuario": "Andrea",
       "password": "Papeleria12*",
       "rutinas": ""
+    },
+    {
+      "id": "5",
+      "nombre": "David",
+      "apellido": "Becerra",
+      "sexo": "hombre",
+      "tipoCuerpo": "",
+      "peso": "20",
+      "altura": "123",
+      "usuario": "casaabuela",
+      "password": "Soyesteban2111*",
+      "rutinas": "",
+      "correo": "estebanpineros42@gmail.com",
+      "telefono": "3196699831"
+    },
+    {
+      "id": "6",
+      "nombre": "Sofia",
+      "apellido": "Nazaret",
+      "sexo": "mujer",
+      "tipoCuerpo": "Ectomorfo",
+      "peso": "65",
+      "altura": "168",
+      "usuario": "lanoviadenegro",
+      "password": "Ojoconladenazaret2111*",
+      "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
+      "correo": "ojoconladenazaret@gmail.com",
+      "telefono": "3146874784"
     }
   ],
   "clases": [
@@ -109,6 +137,31 @@
       "id": "47ce",
       "cuposDisponibles": "20",
       "inscritos": []
+    },
+    {
+      "id": "10aa",
+      "clienteId": "7",
+      "cuerpoSeleccionado": "Ectomorfo"
+    },
+    {
+      "id": "cd7d",
+      "clienteId": "7",
+      "cuerpoSeleccionado": "Endomorfo"
+    },
+    {
+      "id": "8305",
+      "clienteId": "6",
+      "cuerpoSeleccionado": "Mesomorfo"
+    },
+    {
+      "id": "536a",
+      "clienteId": "6",
+      "cuerpoSeleccionado": "Mesomorfo"
+    },
+    {
+      "id": "bfea",
+      "clienteId": "6",
+      "cuerpoSeleccionado": "Ectomorfo"
     }
   ],
   "productos": [

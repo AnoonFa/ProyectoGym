@@ -1,62 +1,56 @@
-.cliente-form {
-  background-image: linear-gradient(to left, #43a1ee, #489fe6, #57a2df, #60aff0);
+.unique-cliente-form {
+  background-color: rgb(243, 188, 69);
   border-radius: 10px;
-  border: 0.5px solid black;
   padding: 20px;
-  width: 90%;
-  max-width: 800px;
+  width: 100%; /* Cambiado para ser más amplio */
+  max-width: 22rem;
   margin: 20px auto;
   color: #0A0909;
   text-align: center;
+  box-shadow: 10px 20px 10px rgba(0, 0, 0, 0.1);
 }
 
-.cliente-form h2{
+.unique-cliente-form h2{
   font-size: 1.875rem;
   margin-bottom: 22px;
 }
 
-.form-content {
+.unique-form-content {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.form-fields {
+.unique-form-fields {
   display: flex;
   flex-direction: column;
   gap: 15px;
   width: 100%;
 }
 
-.input-row {
-  display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se ajusten en varias líneas */
-  gap: 10px;
-}
-
-.input-row > * {
-  flex: 1 1 calc(33.333% - 10px); /* Tres elementos por fila, menos el espacio entre ellos */
-}
-
-.form-fields input,
-.form-fields select {
+.unique-form-fields input, .unique-form-fields select {
+  width: 100%;
   padding: 10px;
   border: none;
   border-radius: 5px;
   box-sizing: border-box;
 }
 
-.password-container {
+.unique-form-fields input[type="number"] {
+  width: 100%; /* Asegura que los campos de tipo número también ocupen el 100% del ancho */
+}
+
+.unique-password-container {
   position: relative;
   width: 100%;
 }
 
-.password-container input {
+.unique-password-container input {
   width: 100%;
   padding-right: 40px;
 }
 
-.password-toggle-icon {
+.unique-password-toggle-icon {
   position: absolute;
   right: 10px;
   top: 50%;
@@ -66,63 +60,24 @@
   height: 20px;
 }
 
-.error-message {
-  color: #0A0909;
-  font-size: 0.9em;
-  margin-top: 5px;
-}
 
-.form-icons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
-}
 
-.user-icon,
-.fingerprint-icon {
-  width: 115px;
-  height: auto;
+.unique-form-buttons {
   margin-top: 20px;
 }
 
-.form-buttons {
-  margin-top: 20px;
-}
-
-.add-button {
-  padding: 16px 20px;
-  font-size: 20px;
-  background-color: #007bff;
-  border: none;
+.unique-add-button {
+  border: 0.5px solid black;
+  font-size: 16px;
+  padding: 10px 20px;
   border-radius: 5px;
-  color: #fff;
   cursor: pointer;
+  background-color: white;
 }
 
 /* Media Queries */
-
-/* Para pantallas medianas: dos inputs por fila */
-@media (max-width: 1200px) {
-  .input-row > * {
-    flex: 1 1 calc(50% - 10px); /* Dos elementos por fila */
-  }
-}
-
-/* Para pantallas pequeñas: un input por fila */
 @media (max-width: 768px) {
-  .input-row > * {
-    flex: 1 1 100%; /* Un solo input por fila */
-    margin-right: 0; /* Elimina el margen derecho en pantallas pequeñas */
-  }
-
-  .form-icons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .user-icon,
-  .fingerprint-icon {
-    width: 80px; /* Ajusta el tamaño de los iconos en pantallas pequeñas */
+  .unique-cliente-form {
+    width: 90%;
   }
 }

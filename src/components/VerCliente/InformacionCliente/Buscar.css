@@ -1,0 +1,142 @@
+/* Overlay para la ventana modal */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Contenido de la ventana modal */
+.content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 600px;
+  width: 100%;
+  text-align: left;
+  line-height: 1.7;
+}
+
+/* Título del contenido de la ventana modal */
+.content h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 2rem;
+}
+
+/* Contenedor de la información del cliente */
+.client-info-container {
+  display: flex;
+  gap: 50px; /* Espacio entre la imagen y el texto */
+}
+
+/* Contenedor de la imagen del cliente */
+.image-container-client {
+  width: 40%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  text-align: center;
+  margin-left: 30px;
+}
+
+/* Imagen del cliente */
+.Imagen-Logo {
+  width: 130px;
+  height: auto;
+  margin-top: 40%;
+}
+
+/* Contenedor del texto del cliente */
+.text-container {
+  flex: 1;
+}
+
+/* Estilo de cada par de etiqueta y campo */
+.text-pair {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Espacio entre cada par */
+}
+
+/* Estilo de las etiquetas */
+.text-pair strong {
+  flex-shrink: 0;
+  width: 150px; /* Ajusta el ancho según sea necesario */
+}
+
+/* Estilo de los campos de entrada */
+.text-container input {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Contenedor de los botones de la ventana modal */
+.modal-button-container {
+  display: flex;
+  justify-content: center; /* Centra los botones */
+  gap: 30px; /* Espacio entre los botones */
+  margin-top: 20px; /* Espacio superior para separar los botones del contenido anterior */
+}
+
+/* Botón de cerrar la ventana modal */
+.modal-close-button {
+  background-color: transparent;
+  border: 0.5px solid black;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-close-button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Efecto hover sutil */
+}
+
+/* Botón de editar la ventana modal */
+.modal-edit-button {
+  background-color: rgb(243, 188, 69);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 2px 7px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.modal-edit-button:hover {
+  background-color: rgb(246, 181, 40);
+}
+
+/* Botón de guardar la ventana modal */
+.modal-save-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-save-button:hover {
+  background-color: #4abf4e;
+}
+
+.alert-container {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2000;  /* Asegura que el alert esté encima de otros elementos */
+    width: 80%;
+    max-width: 600px;
+  }

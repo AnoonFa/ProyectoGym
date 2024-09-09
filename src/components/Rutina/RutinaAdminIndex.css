@@ -1,7 +1,11 @@
 .rutina-admin-container {
   text-align: center;
-  margin-top: 132px;
-  margin-bottom: 17.2%;
+  margin-top: 8%;
+  margin-bottom: 17.25%;
+}
+
+.rutina-admin-container.no-margin-bottom {
+  margin-bottom: 0; /* Elimina el margin-bottom al hacer clic en un botón */
 }
 
 .rutina-admin-container h1 {
@@ -54,12 +58,20 @@
   align-items: center;
   justify-content: center;
   width: 300px;
-  padding: 20px;
-  margin: 0 auto;
+  padding: 10px;
+  margin: 30px auto 24.2%;
   border: 1px solid #ddd;
   border-radius: 5px;
   background-color: #f9f9f9;
-  margin-top: 20px;
+}
+
+.formularioXD.no-margin {
+  margin-bottom: 0; /* Eliminar margin-bottom cuando se selecciona un cliente */
+}
+
+.formularioXD label {
+  font-size: 1.5rem;
+  margin: 10px;
 }
 
 .formularioXD .input-container {
@@ -68,7 +80,7 @@
 }
 
 .formularioXD .search-input {
-  width: calc(100% - 40px); /* Ajustar el ancho para hacer espacio para el botón de búsqueda */
+  width: calc(100% - 40px);
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -77,8 +89,8 @@
 
 .formularioXD .dropdown-list {
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: 79%;
+  left: 7%;
   right: 0;
   background-color: white;
   border: 1px solid #ccc;
@@ -89,6 +101,7 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+  width: 86%;
 }
 
 .formularioXD .dropdown-list-item {
@@ -111,6 +124,7 @@
 
 
 
+/* Ejercicios cliente*/
 
 
 span {
@@ -119,187 +133,203 @@ span {
 
 .ejercicios-cliente {
   margin-top: 20px;
-  /* Espacio general en la parte superior */
-}
-
-.return-btn{
-  margin-top: 20px;
-  margin-bottom: 70px;
-  padding: 8px;
-  background-color: #2679f7;
-  color: white;
-  width: 80px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 20px;
-  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ejercicios-cliente h2 {
-  margin-bottom: 10px;
+  margin: 20px auto;
   font-size: 2em;
 }
 
-.ejercicios-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.ejercicio-card {
-  margin-top: 20px;
-  position: relative;
-  border: 1px solid #ddd;
-  padding: 20px;
-  width: 23%;
-  /* Ajusta el ancho según la cantidad de ejercicios */
-  text-align: center;
-  margin-bottom: 40px;
-  /* Espacio entre tarjetas */
-}
-
-.ejercicio-card .televisor-screen {
-  display: block;
-  width: 220px;
-  height: 160px;
-  background-color: #ccc;
-  border-radius: 5px;
-  margin: 0 auto 20px;
-  /* Espacio entre el televisor y el título del ejercicio */
-}
-
-.ejercicio-info h3 {
-  margin-top: 20px;
-  /* Espacio superior para el título del ejercicio dentro de la tarjeta */
+.ejercicios-table {
+  width: 90%;
+  border-collapse: collapse;
   margin-bottom: 20px;
-  /* Espacio inferior para separar del primer input */
-  font-size: 1.5em;
 }
 
-.input-container {
-  margin-bottom: 15px;
-  /* Espacio entre los inputs */
+.ejercicios-table th,
+.ejercicios-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
 }
 
-.input-container label {
-  margin-right: 10px;
-  /* Espacio entre la etiqueta y el input */
+.ejercicios-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.ejercicios-table input[type="text"],
+.ejercicios-table input[type="number"] {
+  width: 80px;
+  padding: 5px;
+  border: 1px solid #757575;
+  border-radius: 3px;
+}
+
+.ejercicios-table input[type="text"] {
+  width: 150px;
+  margin-top: 5px;
+}
+
+.ejercicios-table button {
+  margin: 5px 10px;
+  padding: 5px 10px;
+  background-color: #2679f7;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.ejercicios-table button:hover {
+  background-color: #336dc2;
+}
+
+.ejercicios-table button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.video-thumbnail {
+  max-width: 120px;
+  max-height: 90px;
+  margin-bottom: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .actualizar-btn {
-  display: inline-flex;
-  /* Cambiado de flex a inline-flex para centrar el botón como un elemento en línea */
-  align-items: center;
-  justify-content: center;
-  /* Asegura que el contenido del botón esté centrado */
-  gap: 10px;
+  display: inline-block;
   padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
   font-size: 1.3em;
-  cursor: pointer;
   background-color: #2679f7;
   color: white;
-  margin: 20px;
-
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 40px;
 }
 
-input[type="number"] {
-  width: 100px;
-  /* Ajusta el ancho del input según tu preferencia */
+.actualizar-btn:hover {
+  background-color: #1c5fc9;
 }
 
-/* Ocultar flechas en Chrome, Safari y Edge */
+.actualizar-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+
+.error-alert {
+  margin-bottom: 20px;
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield; /* Propiedad estándar */
+}
 
-/*RutinaCliente*/
 
-.ejercicios-cliente-cliente{
-  margin-top: 120px;
+
+/* Rutina Cliente */
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1.5rem;
+}
+
+.title {
+  font-size: 3.2rem;
+  font-weight: bold;
   text-align: center;
-  margin-bottom: 9%;
-}
-  
-
-
-.ejercicios-cliente-cliente h2{
-  font-size: 3em;
+  margin: 4rem auto 1.5rem;
 }
 
+.exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
 
-.return-btn-cliente{
-  margin-top: 20px;
-  margin-bottom: 70px;
-  padding: 8px;
+.exercise-card {
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.exercise-card:hover {
+  transform: translateY(-5px);
+}
+
+.exercise-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.exercise-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1rem;
+  text-align: center;
+}
+
+.no-exercises {
+  text-align: center;
+  font-size: 1rem;
+  color: #777;
+  grid-column: 1 / -1;
+}
+
+.retuarn-btn-cliente {
+  display: block;
+  margin: 2.5rem auto 1.5rem;
+  padding: 8px 16px;
   background-color: #2679f7;
   color: white;
-  width: 80px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 20px;
-  align-self: center;
+  font-size: 1.3rem;
 }
 
-.ejercicios-list-cliente {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.retuarn-btn-cliente:hover {
+  background-color: #1c5fd9;
 }
 
-.ejercicio-card-cliente {
-  margin-top: 20px;
-  position: relative;
-  border: 1px solid #ddd;
-  padding: 20px;
-  width: 23%;
-  /* Ajusta el ancho según la cantidad de ejercicios */
-  text-align: center;
-  margin-bottom: 40px;
-  /* Espacio entre tarjetas */
+@media (max-width: 768px) {
+  .exercise-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.ejercicio-card-cliente .televisor-screen-cliente {
-  display: block;
-  width: 220px;
-  height: 160px;
-  background-color: #ccc;
-  border-radius: 5px;
-  margin: 0 auto 20px;
-  /* Espacio entre el televisor y el título del ejercicio */
+@media (max-width: 480px) {
+  .exercise-grid {
+    grid-template-columns: 1fr;
+  }
 }
-
-.ejercicio-info-cliente h3 {
-  margin-top: 20px;
-  /* Espacio superior para el título del ejercicio dentro de la tarjeta */
-  margin-bottom: 20px;
-  /* Espacio inferior para separar del primer input */
-  font-size: 1.5em;
-}
-
-.input-container-cliente {
-  margin-bottom: 15px;
-  /* Espacio entre los inputs */
-}
-
-.input-container-cliente label {
-  margin-right: 10px;
-  /* Espacio entre la etiqueta y el input */
-}
-
-
 
 
 
 /*Añadir Rutina*/
 
-.form-container {
+.form-container-Rutina {
   margin-top: 20px;
   display: flex;
   justify-content: center;
@@ -307,30 +337,23 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* Estilo del formulario */
-.form-container form {
-  background-color: #ffffff;
-  /* Color de fondo del formulario */
-  width: 400px;
-  /* Ancho del formulario ajustado */
+.form-container-Rutina form {
+  background-color: #ffffff;  /* Color de fondo del formulario */
+  width: 400px; /* Ancho del formulario ajustado */
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  /* Estira los inputs para que ocupen todo el ancho */
+  align-items: stretch; /* Estira los inputs para que ocupen todo el ancho */
   gap: 10px;
   padding: 20px;
-  border-radius: 8px;
-  /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* Sombra sutil */
-  transition: max-height 0.3s ease-out;
-  /* Transición suave para el despliegue */
-  margin: 0;
-  /* Elimina márgenes adicionales que puedan afectar el centrado */
-  margin-bottom: 19.5%;
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+  transition: max-height 0.3s ease-out;/* Transición suave para el despliegue */
+  margin: 0; /* Elimina márgenes adicionales que puedan afectar el centrado */
+  margin-bottom: 10%;
 }
 
 /* Estilo de las etiquetas */
-.form-container label {
+.form-container-Rutina label {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -341,7 +364,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* Estilo de los selectores */
-.form-container select {
+.form-container-Rutina select {
   padding: 10px;
   /* Mayor padding para los selectores */
   border: 1px solid #ccc;
@@ -352,10 +375,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* Estilo del botón dentro del formulario */
-.form-container form button {
+.form-container-Rutina form button {
   padding: 10px;
   background-color: #2679f7;
-  /* Verde */
   color: white;
   width: 120px;
   /* Ancho del botón */
@@ -367,37 +389,13 @@ input[type="number"]::-webkit-outer-spin-button {
   /* Centra el botón horizontalmente dentro del formulario */
 }
 
-/* Mensaje */
-
-.confirmacion-container {
-  text-align: center;
-  background-color: #e8f5e9;
-  /* Verde claro */
-  border: 1px solid #c3e6cb;
-  border-radius: 5px;
-  padding: 20px;
-}
-
-.checkmark {
-  font-size: 48px;
-  color: #1b5e20;
-  /* Verde oscuro */
-  margin-bottom: 10px;
-}
-
-.botonVolver {
-  margin-top: 20px;
-  padding: 8px;
-  background-color: #2679f7;
-  /* Verde */
-  color: white;
-  width: 120px;
-  /* Ancho del botón */
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+.confirmation-alert {
+  width: 100%;
+  /* Para que coincida con el ancho del botón */
   align-self: center;
+  /* Centra el alerta igual que el botón */
+  text-align: center;
+  margin-top: 10px;
 }
 
 
@@ -445,7 +443,7 @@ select {
 
 .submit-button {
   padding: 10px;
-  background-color: #2679f7;
+  background-color: #32ba32;
   color: white;
   border: none;
   border-radius: 4px;
@@ -474,7 +472,7 @@ select {
 
 .return-button {
   padding: 10px 20px;
-  background-color: #2679f7;
+  background-color: #2679f7; 
   color: white;
   border: none;
   border-radius: 4px;

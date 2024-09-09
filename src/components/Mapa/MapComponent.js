@@ -16,28 +16,6 @@ const MapComponent = () => {
           referrerPolicy="no-referrer-when-downgrade"
         />
       </div>
-
-      {/* Sección de texto adicional */}
-      <div className="text-container">
-        <h2 className="main-text">Gimnasio David & Goliat</h2>
-        <p>Equipado con lo último en maquinaria para lograr tu objetivo y entrenadores de calidad</p>
-        <div className="icon-text">
-          <i className="fas fa-map-marker-alt icon"></i>
-          <p className="text">Tv. 14c Este #5489, Bogota</p>
-        </div>
-        <div className="icon-text">
-          <i className="far fa-clock icon"></i>
-          <div className="text">
-            <p>Lunes a Viernes: 06:00 AM - 04:00 PM</p>
-            <p>Sábados: 08:00 AM - 04:00 PM</p>
-            <p>Domingos: 06:00 AM - 12:00 PM</p>
-          </div>
-        </div>
-        <div className="icon-text">
-          <i className="fas fa-phone icon"></i>
-          <p className="text">+57 (601) 456-7890</p>
-        </div>
-      </div>
     </div>
   );
 };

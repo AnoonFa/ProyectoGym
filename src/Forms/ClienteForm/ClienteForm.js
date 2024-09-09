@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ClienteForm.css';
 import { useNavigate } from 'react-router-dom';
-import userIcon from '../../assets/icons/userIcon.png';
-import fingerprintIcon from '../../assets/icons/fingerprintIcon.png';
-import Button from '../../components/Button/Button';
+import Alert from '@mui/material/Alert';
 import eyeIcon from '../../assets/icons/OjoAbierto.png';
 import eyeOffIcon from '../../assets/icons/OjoBloqueado.png';
 
@@ -13,15 +11,19 @@ const ClienteForm = () => {
     nombre: '',
     apellido: '',
     sexo: '',
-    tipoCuerpo: '', // Rutina del cliente
+    tipoCuerpo: '', // Este campo permanece en el estado
     peso: '',
     altura: '',
     usuario: '',
     password: '',
-    rutinas: '' // Nuevo campo agregado para rutinas
+    rutinas: '',
+    correo: '',
+    telefono: ''
   });
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
+  const [formSuccess, setFormSuccess] = useState('');
+  const [userWarning, setUserWarning] = useState('');
   const [currentId, setCurrentId] = useState(0);
   const navigate = useNavigate();
 
@@ -34,6 +36,7 @@ const ClienteForm = () => {
         setCurrentId(maxId + 1);
       } catch (error) {
         console.error('Error fetching clients:', error);
+        setFormError('Error al cargar los datos de los clientes.');
       }
     };
 
@@ -42,16 +45,53 @@ const ClienteForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+  
+    if (name === 'peso' || name === 'altura') {
+      let numericValue = value.replace(/[^0-9.]/g, '');
+      numericValue = numericValue.replace(/(\..*?)\..*/g, '$1');
+      numericValue = numericValue.slice(0, 3);
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: numericValue
+      }));
+    } else if (name === 'telefono') {
+      const numericValue = value.replace(/\D/g, '').slice(0, 10);
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: numericValue
+      }));
+    } else if (name === 'usuario') {
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+      checkUserExists(value);
+    } else {
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
+  };
+  
+  const checkUserExists = async (username) => {
+    try {
+      const response = await fetch(`http://localhost:3001/client?usuario=${username}`);
+      const data = await response.json();
+      if (data.length > 0) {
+        setUserWarning('El usuario que se va a ingresar ya está en la base de datos, por favor modifíquelo');
+      } else {
+        setUserWarning('');
+      }
+    } catch (error) {
+      console.error('Error checking user:', error);
+    }
   };
 
   const validatePassword = (value) => {
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d.*\d)[^\s]{10,}$/;
     if (!passwordRegex.test(value)) {
-      setPasswordError('La contraseña del usuario debe tener al menos 10 caracteres, 1 mayúscula, 1 caracter especial, 2 números y no debe contener espacios.');
+      setPasswordError('La contraseña debe tener al menos 10 caracteres, 1 mayúscula, 1 caracter especial, 2 números y sin espacios.');
     } else {
       setPasswordError('');
     }
@@ -67,21 +107,34 @@ const ClienteForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormError('');
+    setFormSuccess('');
 
-    const requiredFields = ['nombre', 'apellido', 'sexo', 'peso', 'altura', 'usuario', 'password'];
+    const requiredFields = ['nombre', 'apellido', 'sexo', 'peso', 'altura', 'usuario', 'password', 'correo', 'telefono'];
     const isFormValid = requiredFields.every(field => formData[field].trim() !== '');
 
-    if (isFormValid && !passwordError) {
+    if (isFormValid && !passwordError && !userWarning) {
+      if (formData.telefono.length !== 10) {
+        setFormError('El número de teléfono debe tener exactamente 10 dígitos.');
+        return;
+      }
+      if (formData.peso.length < 2 || formData.altura.length < 2) {
+        setFormError('El peso y la altura deben tener al menos 2 dígitos.');
+        return;
+      }
+
       const newClient = { 
         nombre: formData.nombre,
         apellido: formData.apellido,
         sexo: formData.sexo,
-        tipoCuerpo: formData.tipoCuerpo, // Rutina del cliente
+        tipoCuerpo: formData.tipoCuerpo, // Campo mantenido en el objeto enviado
         peso: formData.peso,
         altura: formData.altura,
         usuario: formData.usuario,
         password: formData.password,
-        rutinas: formData.rutinas, // Nuevo campo para rutinas
+        rutinas: formData.rutinas,
+        correo: formData.correo,
+        telefono: formData.telefono,
         id: currentId.toString() 
       };
 
@@ -95,70 +148,86 @@ const ClienteForm = () => {
         });
 
         if (response.ok) {
-          alert('Cliente agregado exitosamente');
-          navigate('/adminEmpleadoIndex');
+          setFormSuccess('Cliente agregado exitosamente');
+          setTimeout(() => {
+            navigate('/adminEmpleadoIndex');
+          }, 2000);
         } else {
-          alert('Error al agregar el cliente');
+          setFormError('Error al agregar el cliente');
         }
       } catch (error) {
         console.error('Error:', error);
-        alert('Hubo un problema al agregar el cliente.');
+        setFormError('Hubo un problema al agregar el cliente.');
       }
+    } else if (userWarning) {
+      setFormError('Por favor, elige un nombre de usuario diferente.');
     } else {
       setFormError('Por favor, completa todos los campos requeridos y asegúrate de que la contraseña cumpla con los requisitos.');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="cliente-form">
+    <form onSubmit={handleSubmit} className="unique-cliente-form">
       <h2>Formulario</h2>
-      <div className="form-content">
-        <div className="form-fields">
-          <div className="input-row">
-            <input type="text" name="nombre" placeholder="Nombre" required value={formData.nombre} onChange={handleInputChange} />
-            <input type="text" name="apellido" placeholder="Apellido" required value={formData.apellido} onChange={handleInputChange} />
-            <select name="sexo" required value={formData.sexo} onChange={handleInputChange}>
-              <option value="" disabled>Sexo</option>
-              <option value="hombre">Hombre</option>
-              <option value="mujer">Mujer</option>
-            </select>
+      <div className="unique-form-content">
+        <div className="unique-form-fields">
+          <input type="text" name="nombre" placeholder="Nombre" required value={formData.nombre} onChange={handleInputChange} />
+          <input type="text" name="apellido" placeholder="Apellido" required value={formData.apellido} onChange={handleInputChange} />
+          <select name="sexo" required value={formData.sexo} onChange={handleInputChange}>
+            <option value="" disabled>Género</option>
+            <option value="Hombre">Masculino</option>
+            <option value="Mujer">Femenino</option>
+          </select>
+          <input type="email" name="correo" placeholder="Correo electrónico" required value={formData.correo} onChange={handleInputChange} />
+          <input type="tel" name="telefono" placeholder="Número telefónico" required value={formData.telefono} onChange={handleInputChange} minLength="10" maxLength="10" />
+          <input type="text" name="peso" placeholder="Peso (2-3 dígitos)" required value={formData.peso} onChange={handleInputChange} minLength="2" maxLength="3" />
+          <input type="text" name="altura" placeholder="Altura (3 dígitos)" required value={formData.altura} onChange={handleInputChange} minLength="3" maxLength="3" />
+          {/* <input type="text" name="tipoCuerpo" placeholder="Rutina" readOnly value={formData.tipoCuerpo} onChange={handleInputChange} /> */}
+          <input type="text" name="usuario" placeholder='Usuario' required value={formData.usuario} onChange={handleInputChange} />
+          <div className="unique-password-container">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              placeholder='Contraseña'
+              required
+              value={formData.password}
+              onChange={(e) => validatePassword(e.target.value)}
+            />
+            <img
+              src={showPassword ? eyeIcon : eyeOffIcon}
+              alt="Toggle Password Visibility"
+              className="unique-password-toggle-icon"
+              onClick={togglePasswordVisibility}
+            />
           </div>
-          <div className="input-row">
-            <input type="number" name="peso" placeholder="Peso" required value={formData.peso} onChange={handleInputChange} />
-            <input type="number" name="altura" placeholder="Altura" required value={formData.altura} onChange={handleInputChange} />
-            <input type="text" name="tipoCuerpo" placeholder="Rutina del cliente" readOnly value={formData.tipoCuerpo} onChange={handleInputChange} />
-          </div>
-          <div className="input-row">
-            <input type="text" readOnly placeholder='Membresía actual' className="full-width" />
-            <input type="text" readOnly placeholder='Plan actual' className="full-width" />
-            <input type="text" readOnly placeholder='Ticketera' className="full-width" />
-          </div>
-          <div className="input-row">
-            <input type="text" name="usuario" placeholder='Usuario' className="full-width" required value={formData.usuario} onChange={handleInputChange} />
-            <div className="password-container">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                name="password"
-                placeholder='Contraseña'
-                className="full-width"
-                required
-                value={formData.password}
-                onChange={(e) => validatePassword(e.target.value)}
-              />
-              <img
-                src={showPassword ? eyeIcon : eyeOffIcon}
-                alt="Toggle Password Visibility"
-                className="password-toggle-icon"
-                onClick={togglePasswordVisibility}
-              />
-            </div>
-          </div>
-          {passwordError && <p className="error-message">{passwordError}</p>}
-          {formError && <p className="error-message">{formError}</p>}
         </div>
+
+        {passwordError && (
+          <Alert severity="warning" style={{ marginTop: '10px' }}>
+            {passwordError}
+          </Alert>
+        )}
+
+        {userWarning && (
+          <Alert severity="warning" style={{ marginTop: '10px' }}>
+            {userWarning}
+          </Alert>
+        )}
+
+        {formError && (
+          <Alert severity="error" style={{ marginTop: '10px' }}>
+            {formError}
+          </Alert>
+        )}
+
+        {formSuccess && (
+          <Alert severity="success" style={{ marginTop: '10px' }}>
+            {formSuccess}
+          </Alert>
+        )}
       </div>
-      <div className="form-buttons">
-        <Button type="submit" className="add-button">Agregar</Button>
+      <div className="unique-form-buttons">
+        <button type="submit" className="unique-add-button">Agregar</button>
       </div>
     </form>
   );
