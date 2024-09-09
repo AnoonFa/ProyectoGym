@@ -85,70 +85,30 @@
   ],
   "clases": [
     {
-      "id": "1",
-      "nombre": "Yoga Matutino",
-      "entrenador": "Laura García",
-      "hora": "07:00 AM",
-      "day": 1,
-      "timeSlot": "07:00 AM",
-      "descripcion": "Clase de Yoga para empezar el día con energía.",
-      "totalCupos": 20,
-      "cuposDisponibles": 5,
-      "precio": 15000,
-      "fecha": "2024-09-01",
-      "inscritos": [
-        {
-          "id": "2",
-          "nombre": "Alejandro Espinosa",
-          "email": "alejandro@example.com",
-          "fechaInscripcion": "2023-08-02"
-        },
-        {
-          "id": "1",
-          "nombre": "Esteban Adawda",
-          "email": "nanoespinosa13@gmail.com",
-          "fechaInscripcion": "2024-08-28"
-        },
-        {
-          "id": "1",
-          "nombre": "Esteban Adawda",
-          "email": "nanoespinosa13@gmail.com",
-          "fechaInscripcion": "2024-08-28"
-        },
-        {
-          "id": "4",
-          "nombre": "Andrea Paredes",
-          "email": "nanoespinosa13@gmail.com",
-          "fechaInscripcion": "2024-08-28"
-        }
-      ]
+      "nombre": "Alejao",
+      "entrenador": "supapa",
+      "startTime": "20:27",
+      "endTime": "21:27",
+      "day": "2024-09-11",
+      "descripcion": "111111111111111111111111111111111111111111111111111111111",
+      "totalCupos": "2",
+      "precio": "25000",
+      "id": "036b",
+      "cuposDisponibles": "1",
+      "inscritos": []
     },
     {
-      "id": "2",
-      "nombre": "CrossFit Intermedio",
-      "entrenador": "Carlos Méndez",
-      "hora": "06:00 PM",
-      "day": 3,
-      "timeSlot": "06:00 PM",
-      "descripcion": "Clase de CrossFit para nivel intermedio.",
-      "totalCupos": 15,
-      "cuposDisponibles": 12,
-      "precio": 20000,
-      "fecha": "2024-09-02",
-      "inscritos": [
-        {
-          "id": "5",
-          "nombre": "Aida Piñeros",
-          "email": "aida@example.com",
-          "fechaInscripcion": "2023-08-03"
-        },
-        {
-          "id": "2",
-          "nombre": "Alejandro Espinosa",
-          "email": "gaby@gmail.com",
-          "fechaInscripcion": "2024-08-28"
-        }
-      ]
+      "nombre": "Yoga Matutino",
+      "entrenador": "supapa",
+      "startTime": "12:00",
+      "endTime": "13:00",
+      "day": "2024-09-09",
+      "descripcion": "Clase de Yoga para empezar el día con energías",
+      "totalCupos": "23",
+      "precio": "2800",
+      "id": "47ce",
+      "cuposDisponibles": "20",
+      "inscritos": []
     }
   ],
   "productos": [

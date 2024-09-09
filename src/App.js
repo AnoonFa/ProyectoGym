@@ -4,11 +4,9 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Plans from "./components/Plans/Plans";
 import RegisterForm from "./pages/Auth/RegisterPage/Register";
-import ClasesForm from "./Forms/ClasesForm/ClasesForm";
 import ClientPage from "./components/IndexCliente/IndexCliente";
 import AdminPage from "./components/adminEmpleadoIndex/adminEmpleadoIndex";
 import VerProducto from "./components/VerProductos/VerProductos";
-import ProductForm from "./Forms/ProductForm/ProductForm";
 import Carousel from "./components/Carousel/Carousel";
 import VerClases from "./components/VerClases/VerClases";
 import PlanDetails from "./pages/Planes/VerPlan";
@@ -93,9 +91,7 @@ function App() {
                   <Route path="/LoginP/*" element={<LoginP />} />
                   <Route path="/Register/*" element={<RegisterForm />} />
                   <Route path="/VerProducto/*" element={<VerProducto />} />
-                  <Route path="/ProductForm/*" element={<ProductForm />} />
                   <Route path="/VerClases/*" element={<VerClases />} />
-                  <Route path="/ClasesForm/*" element={<ClasesForm />} />
                   <Route path="PlanDetails/:planId" element={<PlanDetails />} />
                   <Route path="/ClasesPage/*" element={<ClasesPage />} />
                   <Route path="/ProductsPage/*" element={<ProductsPage />} />

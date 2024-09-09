@@ -15,7 +15,12 @@ export const ClassesProvider = ({ children }) => {
         return response.json();
       })
       .then(data => {
-        setClasses(data);
+        // Verifica que los datos están en el formato correcto
+        if (Array.isArray(data)) {
+          setClasses(data);
+        } else {
+          console.error('Los datos recibidos no son un array:', data);
+        }
       })
       .catch(error => {
         console.error('Error cargando las clases:', error);

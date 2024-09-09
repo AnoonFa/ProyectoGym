@@ -72,7 +72,7 @@
 /* Estilos para el hover de los botones */
 .nav-links button.Profile:hover {
   background-color: #F7F2FA;
-  color: #FFC120;
+  color: #000000;
 }
 
 /* Estilos específicos para los botones de login/logout */
@@ -90,7 +90,7 @@
 
 .LoginButtonLink:hover, .LogoutButtonLink:hover {
   background-color: #F7F2FA;
-  color: #FFC120;
+  color: #000000;
 }
 
 /* Estilos específicos para el icono de logout */

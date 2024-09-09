@@ -22,8 +22,12 @@
   font-size: 18px;
   color: #666;
   margin-bottom: 20px;
-  max-width: 70%;
-  margin-left: 10%;
+  max-width: 100%;
+  width: 94%;
+  display: flex;
+  left: 3.1%;
+  position: relative;
+
 }
 
 /* Estilo del contenedor de encabezado */
@@ -31,18 +35,18 @@
   display: flex;
   position: relative;
   top: 10%;
-  left: 9%;
+  left: 6%;
   align-items: center;
   margin-bottom: 20px;
   margin-top: 100px;
-  width: 85%;
+  width: 88%;
 }
 
 /* Filtro de clases */
 .Filter { 
   display: flex; 
   position: absolute; 
-  right: 8%; 
+  right: 0%; 
   height: 54px; 
   gap: 20px; 
 }
@@ -66,40 +70,107 @@
 
 /* Formulario de añadir clase */
 .add-class-form {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  top: 16px;
+  display: grid;
+  right: 64px;
+  width: 24%;
   gap: 12px;
-  margin-top: 20px;
-  position: fixed;
-  top: 100px;
-  right: 20px;
-  z-index: 9999;
   background-color: rgba(255, 255, 255, 0.95);
-  padding: 20px;
+  padding: 20px 20px 12px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e4e4e4;
 }
 
-.add-class-form input,
-.add-class-form select,
-.add-class-form button {
+/* Button styles */
+.vkz-button {
+  padding: 10px 37px;
+  background-color: #2679f7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: medium;
+}
+.vkz-button-l {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px 37px; 
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: medium;
+  border: 1px solid #bababa;
+}
+
+.vkz-button:hover {
+  background-color: #1a5cc3;
+}
+
+.vkz-button-l:hover {
+  background-color: #b1b1b1;
+
+}
+
+
+.vkz-input-field {
+  margin-top: 3px;
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #ddd;
-  width: 100% !important; 
+  width: 100%; 
 }
 
-.add-class-form button {
-  background-color: #2679f7;
+.descripcion-field {
+  height: 100px;
+  resize: vertical;
+  max-height: 200px; /* Máxima altura para evitar que se expanda demasiado */
+}
+
+/* Estilos para agrupar campos en una fila */
+.field-row {
+  display: flex;
+  gap: 10px;
+}
+
+.field-half {
+  flex: 1;
+}
+
+.form-field {
+  /* Espacio personalizado para cada div que contiene una opción */
+}
+
+.form-clases {
+  font-weight: 600;
+}
+
+.form-button {
+  display: flex;
+  position: relative;
+  left: 1%;
+  width: 99%;
+  top: -12%;
+  justify-content: space-between;
+}
+
+/* Contador de caracteres en el campo de descripción */
+.char-counter {
+  text-align: right;
+  font-size: 12px;
+  color: #888;
+}
+.form-title {
+  background-color: #0081ff;
   color: white;
-  border: none;
-  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+  border-radius:5px ; 
 }
 
-.add-class-form button:hover {
-  background-color: #2679f7;
-}
+
+
 
 /* Estilos del calendario */
 .calendar-table {
@@ -192,4 +263,42 @@
 }
 .ver:hover{
   background-color: #1065e6;
+}
+
+.rbc-calendar {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-right: 6%;
+  margin-left: 6%;
+  margin-top: 44px;
+}
+
+
+.calendar-form-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/*Calendario se mueve cuando el form es visible*/
+.calendar-container.form-visible .calendar-wrapper {
+  width: 73%;
+  transition: width 0.3s ease;
+}
+
+.calendar-wrapper {
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Estilos del calendario y contenedores */
+.mis-clases-container {
+  margin-bottom: 20px; /* Agrega espacio debajo de "Mis Clases" */
+}
+
+.calendar-form-wrapper.mis-clases-visible .calendar-wrapper {
+  margin-top: 20px; /* Añadir espacio cuando "Mis Clases" está visible */
 }

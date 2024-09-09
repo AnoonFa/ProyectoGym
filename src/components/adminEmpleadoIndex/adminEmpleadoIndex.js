@@ -4,8 +4,6 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import VerProducto from "../VerProductos/VerProductos";
 import VerCliente from "../VerCliente/VerCliente";
-import ClasesForm from "../../Forms/ClasesForm/ClasesForm";
-import ProductForm from "../../Forms/ProductForm/ProductForm";
 import VerClases from "../VerClases/VerClases";
 import PlanDetails from "../../pages/Planes/VerPlan";
 import RutinaAdminIndex from "../Rutina/RutinaAdminIndex";
@@ -35,9 +33,7 @@ function AdminPage() {
           }
         />
         <Route path="VerProducto" element={<VerProducto />} />
-        <Route path="resultados" element={<ProductForm />} />
         <Route path="VerClases" element={<VerClases />} />
-        <Route path="ClasesForm" element={<ClasesForm />} />
         <Route path="/Planes/*" element={<Planes />} />
         <Route path="PlanDetails/:planId" element={<PlanDetails />} />
         <Route path="RutinaAdminIndex" element={<RutinaAdminIndex />} />

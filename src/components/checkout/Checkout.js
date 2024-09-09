@@ -97,7 +97,7 @@ export default function Checkout() {
         inscritos: [...selectedClass.inscritos, {
           id: cliente.id,
           nombre: `${cliente.nombre} ${cliente.apellido}`,
-          email: formData.email,
+          correo: formData.email,
           fechaInscripcion: new Date().toISOString().split('T')[0]
         }]
       };

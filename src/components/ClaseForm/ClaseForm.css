@@ -1,0 +1,89 @@
+/* Formulario de añadir clase */
+.modify-class-form {
+    position: relative;
+    display: grid;
+    right: 7%;
+    width: 128%;
+    gap: 12px;
+    background-color: rgba(255, 255, 255, 0.95);
+    margin-top: 30px;
+    padding: 20px 20px 12px;
+    border-radius: 10px;
+    border: 1px solid #e4e4e4;
+}
+  
+  /* Button styles */
+  .vkz-button {
+    padding: 8px 15px;
+    background-color: #2679f7;
+    color: white;
+    border: none;
+    position: relative;
+    left: 1%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+    
+  }
+  .vkz-button-l {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px 29px; 
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vkz-button:hover {
+    background-color: #1a5cc3;
+  }
+  
+  .vkz-button-l:hover {
+    background-color: #b1b1b1;
+  
+  }
+  
+  
+  .vkz-input-field {
+    margin-top: 3px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
+  }
+  
+  .descripcion-field {
+    height: 100px;
+    resize: vertical;
+    max-height: 200px; /* Máxima altura para evitar que se expanda demasiado */
+  }
+  
+  /* Estilos para agrupar campos en una fila */
+  .field-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .field-half {
+    flex: 1;
+  }
+  
+  .form-field {
+    /* Espacio personalizado para cada div que contiene una opción */
+  }
+  
+  .form-clases {
+    font-weight: 600;
+  }
+  
+  .form-button {
+    display: flex;
+    position: relative;
+    left: 1%;
+    width: 99%;
+    top: -12%;
+    justify-content: space-between;
+  }

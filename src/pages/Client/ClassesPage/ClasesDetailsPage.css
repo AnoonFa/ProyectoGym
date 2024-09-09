@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
   background-color: #f4f4f4;
   width: 100%;
 }
@@ -12,35 +11,59 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 100%;
-  margin-top: 76px;
-  margin-bottom: 30px;
+  background-color: #ffffff00;
+  position: relative;
+  padding: 20px 25px;
+  width: 89%;
+  margin-top: 72px;
   align-items: flex-start;
+  margin-left: 65px;
 }
 
 .class-image {
-  width: 50%;
+  width: 36%;
   height: auto;
-  border-radius: 8px;
+
+}
+.class-title {
+  position: absolute;
+  top: 11%;
+  font-size: 2.5rem;
+
+
+}
+.tittlel {
+  width: 40%;
+  display: flex;
+  top: 10%;
+  left: 41%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  height: 5%;
 }
 
 .class-info {
-  width: 45%;
+  width: 31%;
+  margin-right: 22px;
   margin-left: 20px;
-  margin-top: 4%;
+  margin-top: 84px;
   text-align: left;
+
 }
 
 .class-info h1 {
   font-size: 2.5rem;
   color: #333;
   margin-bottom: 15px;
+  text-align: center;
 }
 
+.reserva{
+  margin-bottom: 10px;
+
+}
 .class-info p {
   font-size: 1.1rem;
   color: #555;
@@ -53,13 +76,12 @@
 }
 
 .class-reservations {
-  background-color: #f9f9f9;
-  padding: 15px;
+  background-color: #f9f9f900;
+  align-items: center;
+  padding: 15px 15px 0px 0px;
   border-radius: 8px;
-  margin-top: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: 34%;
-  margin-top: 4%;
+  margin-top: 5.3%;
 }
 
 .class-reservations h1 {
@@ -70,15 +92,12 @@
 
 .class-reservations p {
   font-size: 1.1rem;
+  margin-top: 10px;
   color: #555;
   margin-bottom: 10px;
 }
 
-.reservation-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
+
 
 .buy-button, .cancelar-button {
   background-color: #2679f7;
@@ -111,15 +130,92 @@
   background-color: #c9302c;
 }
 
-.inscritos-list {
-  background-color: #f4f4f4;
+
+.class-description {
+  word-wrap: break-word; /* Para manejo de salto de línea */
+}
+
+
+.reservation-buttons {
+  display: flex;
+  gap: 20px;
+  margin-top: -42px;
+  position: relative;
+  margin-bottom: 20px;
+  left: 25%;
+
+}
+.reservation-button {
+  display: flex;
+  gap: 20px;
+  margin-top: -6px;
+  position: relative;
+  margin-bottom: 20px;
+  left: 3%;
+
+}
+
+.modify-button, .toggle-inscritos-button {
+  background-color: #2679f7;
+  color: white;
+  text-align: center;
+  border: none;
+  padding: 10px ;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modify-button {
+  background-color: #ffffff;
+  color: #333;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modify-button:hover {
+  background-color: #bbbbbb;
+
+}
+
+.toggle-inscritos-button:hover{
+  background-color: #0f5ed3;
+  padding: 10px ;
+
+}
+
+
+
+/* Modal estilos */
+.modal-content {
+  background-color: #ffffff00;
   padding: 20px;
-  border-radius: 8px;
-  max-width: 1200px;
-  width: 100%;
+  border-radius: 10px;
+  width: 20%;
+  margin: 10% auto; /* Centramos el modal */
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #e4c9c700;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* Estilo para la lista de inscritos */
+.inscritos-list {
+  background-color: #ffffff;
+  padding: 20px;
+  width: 91%;
+  left: 5%;
+  position: relative;
   text-align: left;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+
 }
 
 .inscritos-list h2 {
@@ -129,42 +225,131 @@
   text-align: center;
 }
 
-.inscritos-list ul {
-  list-style-type: none;
-  padding: 0;
+/* Estilo de la tabla de inscritos */
+.inscritos-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-.inscritos-list li {
-  background-color: #ffffff;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.inscritos-list li p {
-  margin: 5px 0;
+.inscritos-table th, .inscritos-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
   font-size: 1.1rem;
-  color: #555;
 }
 
-.inscritos-list li strong {
-  color: #333;
-}
-
-/* Botón para mostrar/ocultar inscritos */
-.show-inscritos-button {
-  background-color: #0275d8;
+/* Estilo de los encabezados de la tabla */
+.inscritos-table th {
+  background-color: #2679f7;
   color: white;
-  border: none;
+  font-weight: bold;
+}
+
+/* Estilo para las filas de la tabla */
+.inscritos-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Estilo para las filas de la tabla cuando se pasa el mouse */
+.inscritos-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Botón de cerrar para inscritos */
+.close-inscritos-button {
+  margin-top: 20px;
+  background-color: hsl(0, 0%, 100%);
+  color: rgb(0, 0, 0);
+  position: relative;
+  left: 93%;
   padding: 10px 20px;
-  font-size: 1.1rem;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 10px;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+
 }
 
-.show-inscritos-button:hover {
-  background-color: #025aa5;
+.close-inscritos-button:hover {
+  background-color: #aaaaaa;
+}
+
+.close-button {
+  margin-top: -10px;
+  background-color: hsla(0, 0%, 100%, 0);
+  color: rgb(0 75 172);
+  position: relative;
+  left: 90%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0);
+
+}
+
+.inscritos-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+  width: 91%;
+}
+
+.filter-sidebar {
+  width: 30%;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 33px;
+}
+
+.inscritos-table-container {
+  width: 70%;
+}
+
+.inscritos-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inscritos-table th, .inscritos-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.inscritos-table th {
+  background-color: #2679f7;
+  color: white;
+}
+
+.clear-filters-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.clear-filters-button:hover {
+  background-color: #0056b3;
+}
+
+.close-inscritos-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-inscritos-button:hover {
+  background-color: #d9534f;
 }
