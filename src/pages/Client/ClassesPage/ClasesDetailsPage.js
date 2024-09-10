@@ -264,8 +264,14 @@ const ClassDetail = () => {
         )}
 
         {showInscritos && (
+          <div className="inscritos-contenedor">
           <div className="inscritos-container">
-            <div className="filter-sidebar">
+            
+
+            <div className="inscritos-table-container">
+              {filteredInscritos && filteredInscritos.length > 0 ? (
+                <>
+                <div className="filter-sidebars">
               <h3>Filtros</h3>
               <div className="filter-group">
                 <label>Nombre:</label>
@@ -279,9 +285,6 @@ const ClassDetail = () => {
               </div>
               <button onClick={clearFilters} className="clear-filters-button">Limpiar Filtros</button>
             </div>
-
-            <div className="inscritos-table-container">
-              {filteredInscritos && filteredInscritos.length > 0 ? (
                 <table className="inscritos-table">
                   <thead>
                     <tr>
@@ -300,12 +303,18 @@ const ClassDetail = () => {
                     ))}
                   </tbody>
                 </table>
+                <button className="close-inscritos-button" onClick={() => setShowInscritos(false)}>Cerrar</button>
+              </>
+
               ) : (
-                <p>No hay inscritos para esta clase.</p>
+                <div className='no-hay'>
+                <h2 className='inscritos'>No hay inscritos para  la clase {classDetail.nombre}</h2>
+                <button className="close-inscritos-buttons" onClick={() => setShowInscritos(null)}>Cerrar</button>
+                </div>
               )}
-              <button className="close-inscritos-button" onClick={() => setShowInscritos(false)}>Cerrar</button>
             </div>
           </div>
+        </div>
         )}
       </div>
 

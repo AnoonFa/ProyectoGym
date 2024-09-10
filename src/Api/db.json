@@ -137,31 +137,6 @@
       "id": "47ce",
       "cuposDisponibles": "20",
       "inscritos": []
-    },
-    {
-      "id": "10aa",
-      "clienteId": "7",
-      "cuerpoSeleccionado": "Ectomorfo"
-    },
-    {
-      "id": "cd7d",
-      "clienteId": "7",
-      "cuerpoSeleccionado": "Endomorfo"
-    },
-    {
-      "id": "8305",
-      "clienteId": "6",
-      "cuerpoSeleccionado": "Mesomorfo"
-    },
-    {
-      "id": "536a",
-      "clienteId": "6",
-      "cuerpoSeleccionado": "Mesomorfo"
-    },
-    {
-      "id": "bfea",
-      "clienteId": "6",
-      "cuerpoSeleccionado": "Ectomorfo"
     }
   ],
   "productos": [

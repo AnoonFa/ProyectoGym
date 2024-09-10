@@ -1,6 +1,6 @@
 .mis-clases-container {
   display: flex;
-  padding: 20px;
+  padding: 20px 45px;
   background-color: #fff;
   width: 100%;
   border-radius: 10px;
@@ -9,11 +9,11 @@
 /* Estilos para la barra lateral */
 .filter-sidebar {
   width: 25%;
-  height: 101%;
+  height: 100%;
   padding: 20px;
   background-color: #f8f8f8;
   margin-right: 20px;
-  border-radius: 21px 0px 0px 21px;;
+  border-radius: 21px 0px 0px 21px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

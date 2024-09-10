@@ -255,6 +255,7 @@ const MisClases = () => {
           )}
                   </td>
                 </tr>
+
               ))
             ) : (
               <tr>
@@ -266,8 +267,10 @@ const MisClases = () => {
 
         {showInscritos && (
         <div className="inscritos-list">
-          <h2 className='inscritos'>Inscritos para {showInscritos.nombre}</h2>
+          
           {showInscritos.inscritos && showInscritos.inscritos.length > 0 ? (
+            <>
+            <h2 className='inscritos'>Inscritos para {showInscritos.nombre}</h2>
             <table className="inscritos-table">
               <thead>
                 <tr>
@@ -286,10 +289,15 @@ const MisClases = () => {
                 ))}
               </tbody>
             </table>
+            <button className="close-inscritos-button" onClick={() => setShowInscritos(null)}>Cerrar</button>
+
+            </>
           ) : (
-            <p className='pp'>No hay inscritos para esta clase.</p>
+            <div>
+            <h2 className='inscritos'>No hay inscritos para  la clase {showInscritos.nombre}</h2>
+            <button className="close-inscritos-buttons" onClick={() => setShowInscritos(null)}>Cerrar</button>
+            </div>
           )}
-          <button className="close-inscritos-button" onClick={() => setShowInscritos(null)}>Cerrar</button>
         </div>
       )}
 
