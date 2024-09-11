@@ -1,7 +1,107 @@
-import React from 'react';
+import React, { useEffect , useState } from 'react';
 import './EjercicioModal.css';
 
+// Importa todas las imágenes que necesites
+
+/* Ectomorfo */
+import curlBicepsBarraZImg from '../../../assets/images/Ejercicios/Ectomorfo/curl-de-biceps-con-barra-en-z-y-w.png';
+import curlBicepsMartilloImg from '../../../assets/images/Ejercicios/Ectomorfo/curl-de-biceps-martillo.png';
+import elevacionesLateralesImg from '../../../assets/images/Ejercicios/Ectomorfo/elevacion-lateral.png';
+import elevacionesLateralesconBandaElástica from '../../../assets/images/Ejercicios/Ectomorfo/Elevaciones-Laterales-con-Banda-Elástica.png';
+import extensióndetrícepsporencimadelacabeza from '../../../assets/images/Ejercicios/Ectomorfo/Extensión-de-tríceps-por-encima-de-la-cabeza.jpg'; 
+import pressfrances from '../../../assets/images/Ejercicios/Ectomorfo/press-frances-mancuernas.jpg';
+import pressFrancésconBarra from '../../../assets/images/Ejercicios/Ectomorfo/Press-Francés-con-Barra.png';
+import remoalmentón from '../../../assets/images/Ejercicios/Ectomorfo/Remo-al-mentón-con-barra.png';
+import zancadasconmancuernas from '../../../assets/images/Ejercicios/Ectomorfo/zancadas-con-mancuernas.png';
+import zancadasconSalto from '../../../assets/images/Ejercicios/Ectomorfo/Zancadas-con-Salto.png';
+import zancadas from '../../../assets/images/Ejercicios/Ectomorfo/Zancadas.png';
+import curldebícepsconbarraW from '../../../assets/images/Ejercicios/Ectomorfo/Curl-de-bíceps-con-barra-W.png';
+
+/* Mesomorfo */
+import dominadasconAgarreAnchoyEstrecho from '../../../assets/images/Ejercicios/Mesomorfo/dominadas-con-Agarre-Ancho-y-Estrecho.png';
+import dominadasconPesoAñadido from '../../../assets/images/Ejercicios/Mesomorfo/Dominadas-con-Peso-Añadido.png';
+import dominadas from '../../../assets/images/Ejercicios/Mesomorfo/dominadas.jpg';
+import pesomuertoconbarraconvencional from '../../../assets/images/Ejercicios/Mesomorfo/peso-muerto-con-barra-convencional.png';
+import pesomuertosumo from '../../../assets/images/Ejercicios/Mesomorfo/peso-muerto-sumo.png';
+import pesomuerto from '../../../assets/images/Ejercicios/Mesomorfo/peso-muerto.png';
+import pressdebancainclinado from '../../../assets/images/Ejercicios/Mesomorfo/press-de-banca-inclinado.png';
+import presspectoraldeclinado from '../../../assets/images/Ejercicios/Mesomorfo/press-pectoral-declinado.png';
+import pressbancaagarrecerrado from '../../../assets/images/Ejercicios/Mesomorfo/pressbanca-agarre-cerrado.png';
+import RemoconBarraconAgarreInvertido from '../../../assets/images/Ejercicios/Mesomorfo/Remo-con-Barra-con-Agarre-Invertido.jpg';
+import remoconbarradepie from '../../../assets/images/Ejercicios/Mesomorfo/remo-con-barra-de-pie.png';
+
+/* Endomorfo */
+import flexionesConPiesElevados from '../../../assets/images/Ejercicios/Endomorfo/flexiones-con-pies-elevados.png';
+import flexiones from '../../../assets/images/Ejercicios/Endomorfo/flexiones.png';
+import fondosEnParalelas from '../../../assets/images/Ejercicios/Endomorfo/fondos-en-paralelas.png';
+import remoConMacuerna from '../../../assets/images/Ejercicios/Endomorfo/Remo con mancuerna.png';
+import remoConBarraT from '../../../assets/images/Ejercicios/Endomorfo/remo-con-barra-t.png';
+import remoConMancuernaUnaMano from '../../../assets/images/Ejercicios/Endomorfo/remo-con-mancuerna-una-mano.png';
+import sentadilla from '../../../assets/images/Ejercicios/Endomorfo/Sentadilla.png';
+import sentadillaFrontales from '../../../assets/images/Ejercicios/Endomorfo/Sentadillas-frontales.jpg';
+import fondosenparalelasconpeso from '../../../assets/images/Ejercicios/Endomorfo/Fondos-en-paralelas-con-peso.png';
+
+
+// Mapeo de ejercicios a imágenes
+const ejerciciosImagenes = {
+
+  /* Ectomorfo */
+  'Elevaciones laterales': elevacionesLateralesImg,
+  'Curl de bíceps con barra Z': curlBicepsBarraZImg,
+  'Curl de bíceps con martillo': curlBicepsMartilloImg,
+  'Elevaciones laterales con banda elástica': elevacionesLateralesconBandaElástica,
+  'Extensión de tríceps por encima de la cabeza': extensióndetrícepsporencimadelacabeza,
+  'Press francés con mancuerna': pressfrances,
+  'Press francés con barra': pressFrancésconBarra ,
+  'Remo al mentón con barra': remoalmentón,
+  'Zancadas bulgaras': zancadas,
+  'Zancadas con salto': zancadasconSalto,
+  'Zancadas con peso': zancadasconmancuernas,
+  'Curl de bíceps con barra W' : curldebícepsconbarraW,
+
+  /* Mesomorfo */
+
+  'Peso muerto' : pesomuerto,
+  'Press de banca inclinado' : pressdebancainclinado,
+  'Dominadas' : dominadas,
+  'Remo con barra' : remoconbarradepie,
+  'Peso muerto rumano' : pesomuerto,
+  'Press de banca declinado' : presspectoraldeclinado,
+  'Dominadas con agarre ancho' : dominadasconAgarreAnchoyEstrecho,
+  'Peso muerto sumo' : pesomuertosumo,
+  'Press de banca cerrado' : pressbancaagarrecerrado,
+  'Dominadas con agarre estrecho' : dominadasconAgarreAnchoyEstrecho,
+  'Remo con barra con agarre invertido' : RemoconBarraconAgarreInvertido,
+  'Peso muerto convencional' : pesomuertoconbarraconvencional,
+  'Dominadas con peso añadido' : dominadasconPesoAñadido,
+
+  /* Endomorfo */
+
+  'Sentadillas' : sentadilla,
+  'Flexiones' : flexiones,
+  'Fondos en paralelas' : fondosEnParalelas,
+  'Remo con mancuerna' : remoConMacuerna,
+  'Fondos en paralelas con peso' : fondosenparalelasconpeso,
+  'Remo con mancuerna a una mano' : remoConMancuernaUnaMano,
+  'Elevaciones laterales con mancuerna' : elevacionesLateralesImg,
+  'Sentadillas frontales' : sentadillaFrontales,
+  'Flexiones con pies elevados' : flexionesConPiesElevados,
+  'Remo con barra T' : remoConBarraT
+
+};
+
 const EjercicioModal = ({ ejercicio, tipoCuerpo, onClose }) => {
+    const [isClosing, setIsClosing] = useState(false);
+
+        // Función para cerrar con animación
+        const handleClose = () => {
+            setIsClosing(true); // Activar la animación de cierre
+            setTimeout(() => {
+            onClose(); // Llamar a onClose después de la animación
+            }, 300); // 300ms para que coincida con la duración de la animación
+        };
+
+
   // Función para normalizar los nombres de los ejercicios (eliminar acentos, reemplazar espacios y pasar a minúsculas)
   const normalizeString = (str) => {
     return str
@@ -10,6 +110,16 @@ const EjercicioModal = ({ ejercicio, tipoCuerpo, onClose }) => {
       .replace(/\s+/g, '_') // Reemplaza espacios por guiones bajos
       .toLowerCase(); // Convierte a minúsculas
   };
+
+  useEffect(() => {
+    // Evitar que el fondo se desplace al abrir el modal
+    document.body.style.overflow = 'hidden';
+
+    // Restaurar el desplazamiento del fondo cuando se cierre el modal
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
 
   const getEjercicioInfo = (tipoCuerpo, nombre) => {
     console.log('Tipo de cuerpo:', tipoCuerpo);
@@ -209,13 +319,23 @@ const EjercicioModal = ({ ejercicio, tipoCuerpo, onClose }) => {
   // Obtener la información adicional del ejercicio seleccionado
   const infoAdicional = getEjercicioInfo(tipoCuerpo, ejercicio.nombre);
 
+  // Función para extraer el ID del video de YouTube
+  const getYouTubeId = (url) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
+  // Obtener el ID del video de YouTube
+  const videoId = ejercicio.videoUrl ? getYouTubeId(ejercicio.videoUrl) : null;
+
   return (
-    <div className="exercise-modal-overlay">
+    <div className={`exercise-modal-overlay ${isClosing ? 'closing' : ''}`}>
       <div className="exercise-modal-content">
-        <button className="exercise-modal-close" onClick={onClose}>X</button>
+      <button className="exercise-modal-close" onClick={handleClose}>X</button>
         <h2 className="exercise-modal-title">{ejercicio.nombre}</h2>
         <img
-          src={`ProyectoGym/src/assets/images/Ejercicios/${normalizeString(ejercicio.nombre)}.jpg`}
+          src={ejerciciosImagenes[ejercicio.nombre] || '/src/assets/images/placeholder.png'}
           alt={ejercicio.nombre}
           className="exercise-modal-image"
         />
@@ -230,12 +350,20 @@ const EjercicioModal = ({ ejercicio, tipoCuerpo, onClose }) => {
           <p>Series: {ejercicio.series}</p>
           <p>Repeticiones: {ejercicio.repeticiones || '-'}</p>
           <p>Descanso: {ejercicio.descanso} s</p>
-          {ejercicio.video && (
+          {videoId && (
             <div>
               <h3>Video</h3>
-              <a href={ejercicio.video} target="_blank" rel="noopener noreferrer">
-                Ver video del ejercicio
-              </a>
+              <div className="video-container">
+                <iframe
+                  width="570"
+                  height="315"
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
             </div>
           )}
         </div>

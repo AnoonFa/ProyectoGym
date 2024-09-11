@@ -9,9 +9,11 @@ import PlanDetails from "../../pages/Planes/VerPlan";
 import RutinaAdminIndex from "../Rutina/RutinaAdminIndex";
 import Payments from "../Payments/Payments";
 import Planes from "../../pages/Planes/Planes";
-
+import { useAuth } from "../../context/RoleContext.js";
 
 function AdminPage() {
+  const { user } = useAuth(); // Obtén el usuario del contexto
+
   return (
     <>
       <Header />
@@ -19,8 +21,8 @@ function AdminPage() {
         <Route
           path="/"
           element={
-            <div style={{marginTop: "100px", marginBottom: "24.4%", display: "flex",flexDirection: "column", alignItems: "center", width: "100%"}}>
-              <h2>Bienvenido</h2>
+            <div style={{marginTop: "100px", marginBottom: "23%", display: "flex",flexDirection: "column", alignItems: "center", width: "100%", fontSize: "1.8rem"}}>
+              <h2>Bienvenido, {user ? user.username : "Usuario"}</h2>
             </div>
           }
         />

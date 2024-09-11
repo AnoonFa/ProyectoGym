@@ -71,7 +71,6 @@ function App() {
                     <>
                       <Header />
                       <Carousel />
-                      <MapComponent />
                       <Planes openModal={handleOpenModal} />
                       <SearchBar />
 

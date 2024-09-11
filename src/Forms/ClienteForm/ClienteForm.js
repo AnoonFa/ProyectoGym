@@ -168,7 +168,7 @@ const ClienteForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="unique-cliente-form">
-      <h2>Formulario</h2>
+      <h2>Agregar Cliente</h2>
       <div className="unique-form-content">
         <div className="unique-form-fields">
           <input type="text" name="nombre" placeholder="Nombre" required value={formData.nombre} onChange={handleInputChange} />

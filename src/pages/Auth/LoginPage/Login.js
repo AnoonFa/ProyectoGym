@@ -5,6 +5,7 @@ import { FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import eyeIcon from '../../../assets/icons/OjoAbierto.png';
 import eyeOffIcon from '../../../assets/icons/OjoBloqueado.png';
+import logo from '../../../assets/images/David&GoliatLogo.png';
 import Alert from '@mui/material/Alert'; // Importar Alert de Material-UI
 
 const Login = () => {
@@ -67,44 +68,51 @@ const Login = () => {
     }
   };
 
+  const handleVolverIndex = () => {
+    navigate("/"); // Limpiar el mensaje del alert al cerrarlo
+  };
+
   return (
-    <div className="fondo-wrapper">
-      <div className="fondo">
-        <div className='contenedor-form login'>
-          <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
-            <h2>Iniciar sesión</h2>
-            <div className="contenedor-input">
-              <input
-                type="text"
-                placeholder='Usuario'
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-              <FaUser className='icono' />
-            </div>
-            <div className="contenedor-input">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                placeholder='Contraseña'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <img
-                src={showPassword ? eyeIcon : eyeOffIcon}
-                alt="Toggle Password Visibility"
-                className="password-toggle-icon"
-                onClick={togglePasswordVisibility}
-              />
-            </div>
-            <div className="recordar">
-              <label><input type="checkbox" /> Recordar sesión</label>
-              <a href='#'>¿Olvido su contraseña?</a>
-            </div>
-            <button type="submit" className="btn">Iniciar sesión</button>
-            {loginError && <Alert className='error-message' severity="error">{loginError}</Alert>}
-          </form>
+    <div className="app-container-login">
+      <div className="fondo-wrapper">
+        <div className="fondo">
+        <img onClick={handleVolverIndex} className='ImagenLogo-login' src={logo} alt="Logo" />
+          <div className='contenedor-form-login'> 
+            <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+              <h2>Iniciar sesión</h2>
+              <div className="contenedor-input">
+                <input
+                  type="text"
+                  placeholder='Usuario'
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+                <FaUser className='icono' />
+              </div>
+              <div className="contenedor-input">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder='Contraseña'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <img
+                  src={showPassword ? eyeIcon : eyeOffIcon}
+                  alt="Toggle Password Visibility"
+                  className="password-toggle-icon"
+                  onClick={togglePasswordVisibility}
+                />
+              </div>
+              {/*<div className="recordar">
+                <label><input type="checkbox" /> Recordar sesión</label>
+                <a href='#'>¿Olvido su contraseña?</a>
+              </div>*/}
+              <button type="submit" className="btn">Iniciar sesión</button>
+              {loginError && <Alert className='error-message' severity="error">{loginError}</Alert>}
+            </form>
+          </div>
         </div>
       </div>
     </div>

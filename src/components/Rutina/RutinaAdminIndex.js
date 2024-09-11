@@ -9,47 +9,54 @@ import './RutinaAdminIndex.css';
 const RutinaAdminIndex = () => {
   const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
   const [formularioVisible, setFormularioVisible] = useState(null); // 'modificar', 'añadir' o null
-  const [botonClickeado, setBotonClickeado] = useState(false); // Estado para controlar si se hizo clic en un botón
+  const [expansionState, setExpansionState] = useState('collapsed'); // Estado para la expansión
+  const [noMargin, setNoMargin] = useState(false); // Estado para manejar el margen
 
   const handleClienteSeleccionado = (cliente) => {
     setClienteSeleccionado(cliente);
     setFormularioVisible('modificar');
-    setBotonClickeado(true); // Cambiar estado al hacer clic
+    setExpansionState('modificar-phase');
+    setNoMargin(true); // Elimina el margen al seleccionar un cliente
   };
 
   const mostrarFormulario = (tipo) => {
     setFormularioVisible(tipo);
-    setBotonClickeado(true); // Cambiar estado al hacer clic
+    setNoMargin(true); // Elimina el margen al hacer clic en un botón
+    if (tipo === 'añadir') {
+      setExpansionState('añadir-phase');
+    } else if (tipo === 'modificar') {
+      setExpansionState('modificar-phase');
+    }
   };
 
   return (
     <>
       <Header />
-      <div className={`rutina-admin-container ${botonClickeado ? 'no-margin-bottom' : ''}`}>
+      <div className={`rutina-admin-container ${expansionState} ${noMargin ? 'no-margin-bottom' : ''}`}>
         <h1>Rutinas</h1>
         <div className="button-container">
           <button
             className="btn-añadir"
-            onClick={() => mostrarFormulario('modificar')}
-          >
-            <i className="fas fa-edit"></i> Modificar
-          </button>
-          <button
-            className="btn-modificar"
             onClick={() => mostrarFormulario('añadir')}
           >
             <i className="fas fa-plus"></i> Añadir
           </button>
+          <button
+            className="btn-modificar"
+            onClick={() => mostrarFormulario('modificar')}
+          >
+            <i className="fas fa-edit"></i> Modificar
+          </button>
         </div>
 
         {formularioVisible === 'modificar' && (
-          <div className="form-container slide-down">
+          <div className="form-container-slide-down">
             <FormularioCliente onClienteSeleccionado={handleClienteSeleccionado} />
           </div>
         )}
 
         {formularioVisible === 'añadir' && (
-          <div className="form-container slide-down">
+          <div className="form-container-slide-down">
             <AñadirRutina /> {/* Mostrar el formulario de añadir */}
           </div>
         )}
