@@ -11,25 +11,25 @@ const FilterBar = () => {
   const handleFilter = () => {
     let filtered = products;
 
-    // Filter by product name
+    // Filtrar por nombre
     if (searchTerm) {
       filtered = filtered.filter(product =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    // Filter by category
+    // Filtrar por categoría
     if (category) {
-      filtered = filtered.filter(product => product.category === category);
+      filtered = filtered.filter(product => product.categoria === category);
     }
 
-    // Filter by price range
+    // Filtrar por rango de precio
     if (priceRange) {
       const [min, max] = priceRange.split('-').map(Number);
       filtered = filtered.filter(product => product.price >= min && product.price <= max);
     }
 
-    setFilteredProducts(filtered); // Set the filtered products
+    setFilteredProducts(filtered); // Aplicar los filtros a los productos
   };
 
   return (
@@ -37,7 +37,7 @@ const FilterBar = () => {
       <h2>Filtrado por</h2>
       <hr />
 
-      {/* Search by Product Name */}
+      {/* Buscar por nombre */}
       <div className="filter-group">
         <label>Buscar</label>
         <input
@@ -48,20 +48,20 @@ const FilterBar = () => {
         />
       </div>
 
-      {/* Filter by Category */}
+      {/* Filtrar por categoría */}
       <div className="filter-group">
         <label>Categoría</label>
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
           <option value="">Todas</option>
-          <option value="ropa deportiva mujer">Ropa Deportiva Mujer</option>
-          <option value="ropa deportiva hombre">Ropa Deportiva Hombre</option>
-          <option value="bebidas">Bebidas</option>
-          <option value="suplementos">Suplementos</option>
-          <option value="accesorios">Accesorios</option>
+          <option value="Ropa Deportiva Mujer">Ropa Deportiva Mujer</option>
+          <option value="Ropa Deportiva Hombre">Ropa Deportiva Hombre</option>
+          <option value="Bebidas">Bebidas</option>
+          <option value="Suplementos">Suplementos</option>
+          <option value="Accesorios">Accesorios</option>
         </select>
       </div>
 
-      {/* Filter by Price Range */}
+      {/* Filtrar por rango de precios */}
       <div className="filter-group">
         <label>Rango de precios</label>
         <select value={priceRange} onChange={(e) => setPriceRange(e.target.value)}>

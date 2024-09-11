@@ -294,7 +294,15 @@ setOpenSnackbar(true);
             </p>
             <p className="class-day">
               <strong>Día:</strong> {classDetail.fecha 
-                ? `${new Date(classDetail.fecha).toLocaleDateString('es-ES', { weekday: 'long' })}, ${new Date(classDetail.fecha).toLocaleDateString('es-ES')}` 
+                ? `${new Date(Date.UTC(
+                    parseInt(classDetail.fecha.split('-')[0]), // Año
+                    parseInt(classDetail.fecha.split('-')[1]) - 1, // Mes (restar 1 porque los meses empiezan desde 0 en JS)
+                    parseInt(classDetail.fecha.split('-')[2])+1 // Día
+                  )).toLocaleDateString('es-ES', { weekday: 'long' })}, ${new Date(Date.UTC(
+                    parseInt(classDetail.fecha.split('-')[0]),
+                    parseInt(classDetail.fecha.split('-')[1]) - 1,
+                    parseInt(classDetail.fecha.split('-')[2])+1
+                  )).toLocaleDateString('es-ES')}` 
                 : 'Fecha no disponible'}
             </p>
           </div>

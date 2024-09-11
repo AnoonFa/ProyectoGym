@@ -90,18 +90,17 @@
     }
   ],
   "clases": [
-    
     {
-      "id": "fdff",
-      "nombre": "eses",
-      "entrenador": "lagrasa",
-      "startTime": "22:29",
-      "endTime": "22:31",
-      "descripcion": "1111111121111111111111111111122",
+      "id": "69a6",
+      "nombre": "Zumba 2",
+      "entrenador": "supapa",
+      "startTime": "01:40",
+      "endTime": "04:40",
+      "descripcion": "111111111111111111111111111111111111111111",
       "totalCupos": "12",
       "cuposDisponibles": "12",
-      "fecha": "2024-09-13 ",
-      "precio": "112220",
+      "fecha": "2024-09-11",
+      "precio": "10000",
       "inscritos": [
         {
           "idCliente": "5",
@@ -110,20 +109,29 @@
           "fechaInscripcion": "2024-09-11T05:10:14.673Z",
           "estadoPago": "pagado"
         }
-      ]
+      ],
+      "day": "2024-09-11"
     },
     {
-      "id": "69a6",
-      "nombre": "Esteban",
+      "id": "6082",
+      "nombre": "Zumba",
       "entrenador": "lagrasa",
-      "startTime": "01:38",
-      "endTime": "04:37",
-      "descripcion": "111111111111111111111111111111111111111111",
-      "totalCupos": "12",
-      "cuposDisponibles": "12",
-      "fecha": "2024-09-11",
-      "precio": "10000",
-      "inscritos": []
+      "startTime": "04:00",
+      "endTime": "05:31",
+      "descripcion": "Una buena clase de zumba para la tarde",
+      "totalCupos": "20",
+      "cuposDisponibles": 19,
+      "fecha": "2024-09-12",
+      "precio": "15000",
+      "inscritos": [
+        {
+          "idCliente": "6",
+          "nombre": "Sofia Nazaret",
+          "correo": "ojoconladenazaret@gmail.com",
+          "fechaInscripcion": "2024-09-11T08:17:56.430Z",
+          "estadoPago": "pagado"
+        }
+      ]
     }
   ],
   "productos": [

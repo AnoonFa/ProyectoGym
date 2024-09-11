@@ -7,6 +7,7 @@ import { useAuth } from '../../context/RoleContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faUserCircle, faUsers, faDumbbell, faBox, faTicketAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import FullScreenEditProfileModal from '../editProfile/PerfilEditarModal';
 
 
 const Header = () => {
@@ -15,6 +16,7 @@ const Header = () => {
   const location = useLocation(); // Obtiene la ruta actual
   const [showProfileMenu, setShowProfileMenu] = useState(false); // Estado para el menú del perfil
 
+  const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
 
 
   const handleLoginClick = () => {
@@ -54,6 +56,19 @@ const Header = () => {
       color += ('00' + value.toString(16)).slice(-2);
     }
     return color;
+  };
+
+  const handleEditProfileClick = () => {
+    setShowModal(true); // Mostrar el modal
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false); // Cerrar el modal
+  };
+
+  const handleSaveProfile = (updatedData) => {
+    // Aquí puedes hacer la lógica para actualizar los datos del usuario
+    console.log('Datos actualizados:', updatedData);
   };
 
   return (
@@ -163,14 +178,21 @@ const Header = () => {
                   <p className="welcome-message">¡Hola, {user.username}!</p>
 
                   {/* Botón de editar perfil centrado */}
-                  <button className="edit-profile-btn" onClick={() => navigate('/edit-profile')}>
+                  <button className="edit-profile-btn" onClick={handleEditProfileClick}>
                     Editar Perfil
                   </button>
+                  {showModal && (
+                    <FullScreenEditProfileModal 
+                      user={user} 
+                      onClose={handleModalClose} 
+                      onSave={handleSaveProfile} 
+                    />
+                  )}
 
                   {/* Menú de opciones con íconos */}
                   {user.role === 'admin' && (
                     <>
-                      <button onClick={() => navigate('/ver-clases')} className="menu-option">
+                      <button onClick={() => navigate('/ClasesPage')} className="menu-option">
                         <FontAwesomeIcon icon={faUsers} className="menu-icon" /> Ver Clases de Usuarios
                       </button>
                       <button onClick={() => navigate('/gestion-clientes')} className="menu-option">

@@ -12,6 +12,7 @@ export const ProductsProvider = ({ children }) => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get('http://localhost:3001/productos');
+        console.log('Productos obtenidos:', response.data); // Debug: Verifica si los datos llegan
         setProducts(response.data);
       } catch (error) {
         console.error('Error al obtener los productos:', error);

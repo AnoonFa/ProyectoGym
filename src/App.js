@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState , useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import { ProductsContext } from './context/ProductsContext';
 import Plans from "./components/Plans/Plans";
 import RegisterForm from "./pages/Auth/RegisterPage/Register";
 import ClientPage from "./components/IndexCliente/IndexCliente";
@@ -46,9 +47,25 @@ import ProductT1 from './components/Product/ProductT1';
 import ProductT2 from './components/Product/ProductT2';
 import ProductT3 from './components/Product/ProductT3';
 import ProductT4 from './components/Product/ProductT4';
+import ProductCard from './components/ProductCard/ProductCard';
+
 
 function App() {
   const [showModal, setShowModal] = useState(false);
+
+  // Llamar useContext para obtener los productos del contexto
+  const productsContext = useContext(ProductsContext);
+
+  // Desestructurar de manera segura los productos y productos filtrados
+  const { filteredProducts = [], products = [] } = productsContext || {};
+
+  // Log para depurar
+  useEffect(() => {
+    console.log("filteredProducts:", filteredProducts);
+    console.log("products:", products);
+  }, [filteredProducts, products]);
+
+  const productsToShow = filteredProducts.length > 0 ? filteredProducts : products;
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -62,7 +79,7 @@ function App() {
 
       <RoleProvider>{/* Envuelve  con el proveedor de roles */}
         <ClassesProvider>
-          <ProductsProvider>
+          
             <div className="app-container">
               <Routes>
                 <Route
@@ -73,10 +90,28 @@ function App() {
                       <Carousel />
                       <MapComponent />
                       <Planes openModal={handleOpenModal} />
-                      <SearchBar />
+                       {/* Category Circles */}
+                      <CategoryCircles />
 
-                        <CategoryCircles />
-                        <Productos/>
+                        {/* Sidebar and Product Grid */}
+                        <div className="content-container">
+                          <div className="searchbar-container">
+                            <SearchBar /> {/* Filter Sidebar */}
+                          </div>
+
+                          <div className="products-section">
+                            <h2>Productos</h2>
+                            <div className="products-grid">
+                              {productsToShow.length > 0 ? (
+                                productsToShow.map((product, index) => (
+                                  <ProductCard key={index} product={product} />
+                                ))
+                              ) : (
+                                <p>No hay productos disponibles.</p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
                         <Footer className="footer"/>
                         <Modal show={showModal} onClose={handleCloseModal}>
                           <PaymentForm onClose={handleCloseModal} />
@@ -117,7 +152,7 @@ function App() {
                   <Route path="/ClassDetail/:className" element={<ClassDetail />} />
                 </Routes>
               </div>
-            </ProductsProvider>
+            
         </ClassesProvider>
       </RoleProvider>
 

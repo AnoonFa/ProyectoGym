@@ -7,6 +7,8 @@ import Modal from '@mui/material/Modal';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import ClaseForm from '../../../components/ClaseForm/ClaseForm';
+import Header from '../../../components/Header/Header';
+import Footer from '../../../components/Footer/Footer';
 
 
 // Función para formatear la fecha y hora de inscripción
@@ -279,6 +281,8 @@ const openPaymentModal = (inscrito) => {
   
 
   return (
+    <>
+    
     <div className="mis-clases-container">
       <div className="filter-sidebar">
         <h3>Filtros</h3>
@@ -429,7 +433,7 @@ const openPaymentModal = (inscrito) => {
                   {inscrito.estadoPago === 'inscrito pero no pagado' ? (
                     <>
                       <span>Esperando pago</span>
-                      <button onClick={() => openPaymentModal(inscrito)}>Autorizar Pago</button>
+                      <button className="details-button" onClick={() => openPaymentModal(inscrito)}>Autorizar Pago</button>
                     </>
                   ) : (
                     <span>Pagado <span>&#10003;</span></span>
@@ -474,13 +478,19 @@ const openPaymentModal = (inscrito) => {
       {/* Modal para confirmar el pago */}
           {/* Modal para confirmar el pago */}
           <Modal open={isPaymentModalOpen} onClose={() => setIsPaymentModalOpen(false)}>
-            <div className="modal-content">
-              <h3>Autorizar pago</h3>
-              <p>¿Estás seguro de que deseas marcar este pago como completado para {selectedInscrito?.nombre || 'Nombre no disponible'}?</p>
-              <button onClick={authorizePayment}>Confirmar</button>
-              <button onClick={() => setIsPaymentModalOpen(false)}>Cancelar</button>
+            <div className="custom-modal-overlay">
+              <div className="custom-modal-content">
+                <h3>Autorizar pago</h3>
+                <p>¿Estás seguro de que deseas marcar este pago como completado para {selectedInscrito?.nombre || 'Nombre no disponible'}?</p>
+                <div className="custom-modal-buttons">
+                  <button className="custom-modal-confirm-button" onClick={authorizePayment}>Confirmar</button>
+                  <button className="custom-modal-cancel-button" onClick={() => setIsPaymentModalOpen(false)}>Cancelar</button>
+                </div>
+              </div>
             </div>
           </Modal>
+
+
 
     
       {/* Snackbar para mostrar las alertas */}
@@ -495,6 +505,8 @@ const openPaymentModal = (inscrito) => {
         </Alert>
       </Snackbar>
     </div>
+
+    </>
   );
 };
 

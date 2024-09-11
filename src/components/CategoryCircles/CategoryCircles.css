@@ -1,17 +1,19 @@
 .category-circles {
     display: flex;
     justify-content: center;
-    gap: 5%;
+   
     margin-bottom: 40px;
   }
   
   .category-circle {
     display: flex;
     flex-direction: column;
-    align-items: center;
     cursor: pointer;
+    justify-content: end;
+    align-items: center;
+    width: 16%;
     transition: transform 0.3s;
-  }
+}
   
   .category-circle:hover {
     transform: translateY(-10px);
@@ -26,4 +28,6 @@
     font-size: 16px;
     text-align: center;
   }
-  
+  img{
+    width: 50%;
+  }
