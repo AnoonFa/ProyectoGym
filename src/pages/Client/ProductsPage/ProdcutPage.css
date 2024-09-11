@@ -23,9 +23,10 @@
   width: 20%;
   position: sticky;
   top: 71px;
-  height: 36vh;
+  height: 25vh;
   /* padding: 20px; */
   margin-left: 20px;
+  margin-top: 36px;
   background-color: #f5f5f5;
   border-right: 1px solid #ddd;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
@@ -73,3 +74,4 @@
   height: 20vh; /* 20% of viewport height */
   object-fit: cover; /* Maintain aspect ratio, covering the element */
 }
+

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import SearchBar from '../../../components/SearchBar/SearchBar';
 import CategoryCircles from '../../../components/CategoryCircles/CategoryCircles';
 import ProductCard from '../../../components/ProductCard/ProductCard';
@@ -6,51 +6,65 @@ import { ProductsContext } from '../../../context/ProductsContext';
 import './ProdcutPage.css';
 import Header from '../../../components/Header/Header';
 import Footer from '../../../components/Footer/Footer';
-import ProductForm from '../../../components/ProductForm/ProductForm'
 import BattleRopeImage from '../../../assets/images/1366_2000.jpeg'; // Asegúrate de que la ruta de la imagen sea correcta.
 
 const ProductPage = () => {
-  const { filteredProducts, products, setFilteredProducts } = useContext(ProductsContext); // Añadimos setFilteredProducts aquí
-  const [categoryFilter, setCategoryFilter] = useState(null); // Estado para manejar la categoría seleccionada
+  const { products, filteredProducts, setFilteredProducts } = useContext(ProductsContext);
+  const [searchTerm, setSearchTerm] = useState(''); // Estado para la barra de búsqueda
+  const [categoryFilter, setCategoryFilter] = useState(null); // Estado para la categoría seleccionada
+  const [priceRange, setPriceRange] = useState(''); // Estado para el rango de precios
 
-  // Filtrar productos según la categoría seleccionada
-  const handleCategorySelect = (selectedCategory) => {
-    setCategoryFilter(selectedCategory);
-    if (selectedCategory) {
-      const filtered = products.filter(product => product.categoria === selectedCategory);
-      setFilteredProducts(filtered);
-    } else {
-      setFilteredProducts(products); // Si no hay categoría seleccionada, mostrar todos los productos
+  // Lógica para aplicar los filtros de nombre, categoría y precio
+  useEffect(() => {
+    let filtered = products;
+
+    // Filtrar por categoría si hay una seleccionada
+    if (categoryFilter) {
+      filtered = filtered.filter(product => product.category === categoryFilter);
     }
-  };
 
-  const productsToShow = filteredProducts.length > 0 ? filteredProducts : products;
+    // Filtrar por nombre si se ingresa un término de búsqueda
+    if (searchTerm) {
+      filtered = filtered.filter(product => 
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Filtrar por rango de precio si se selecciona uno
+    if (priceRange) {
+      const [min, max] = priceRange.split('-').map(Number);
+      filtered = filtered.filter(product => product.price >= min && product.price <= max);
+    }
+
+    setFilteredProducts(filtered); // Actualizar productos filtrados
+  }, [categoryFilter, searchTerm, priceRange, products, setFilteredProducts]);
+
+  
 
   return (
     <>
       <Header />
       <div className="album-page">
-        {/* Imagen banner */}
         <div className="banner-image">
           <img src={BattleRopeImage} alt="Fitness Image" className="full-width-image" />
         </div>
 
-        {/* Círculos de Categorías */}
-        <br/>
-        <h2><center>Nuestras Categorias</center></h2>
-        <CategoryCircles onCategorySelect={handleCategorySelect} /> {/* Pasar el callback */}
+        <br />
+        <h2><center>Nuestras Categorías</center></h2>
+        <CategoryCircles onCategorySelect={setCategoryFilter} />
 
-        {/* Barra lateral y productos */}
         <div className="content-container">
           <div className="searchbar-container">
-            <SearchBar /> {/* Filtro de búsqueda */}
+            <SearchBar 
+              onSearch={setSearchTerm} 
+              onPriceRangeSelect={setPriceRange} 
+            />
           </div>
 
           <div className="products-section">
-            <h2>Productos</h2>
             <div className="products-grid">
-              {productsToShow.length > 0 ? (
-                productsToShow.map((product, index) => (
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((product, index) => (
                   <ProductCard key={index} product={product} />
                 ))
               ) : (
