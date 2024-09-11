@@ -1,12 +1,13 @@
 import React from 'react';
 import './Footer.css';
-import logo from '../../assets/images/David&GoliatLogo.png';
+import MapComponent from "../Mapa/MapComponent"
 
 function Footer() {
   return (
+    <>
     <footer className="footer-container">
       <div className="footer-column footer-logo">
-        <img src={logo} alt="David & Goliat Logo" />
+        <MapComponent />
       </div>
       <hr className="footer-divider" />
       <div className="footer-column footer-info">
@@ -46,6 +47,7 @@ function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }
 

@@ -88,7 +88,6 @@ function App() {
                     <>
                       <Header />
                       <Carousel />
-                      <MapComponent />
                       <Planes openModal={handleOpenModal} />
                        {/* Category Circles */}
                       <CategoryCircles />

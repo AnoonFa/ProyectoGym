@@ -1,27 +1,36 @@
 .vkz-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   padding: 30px;
   min-height: 80vh;
   margin-top: 70px;
-  transition: margin-left 0.3s ease; /* Transición suave */
+  transition: margin-left 0.3s ease;
 }
 
-/* Cuando el otro formulario está presente */
+.vkz-search-form-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.vkz-form-right-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .vkz-container.with-form {
-  justify-content: flex-start; /* Alinea a la izquierda */
-  margin-left: 250px; /* Desplaza el contenedor 250px hacia la derecha */
+  flex-direction: row; /* Muestra el formulario y la búsqueda en fila */
 }
 
-/* Formulario dentro del contenedor */
 .vkz-form-container {
   width: 100%;
   max-width: 22rem;
   border-radius: 0.5rem;
   border: 0.5px solid black;
   box-shadow: 10px 20px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 25px;
+  margin: auto;
 }
 
 .vkz-form-content {
@@ -42,7 +51,7 @@
   flex-direction: column;
   justify-content: center;
   margin-bottom: 24px;
-  position: relative; /* Añadido para posicionar correctamente la lista desplegable */
+  position: relative;
 }
 
 .vkz-input-label {
@@ -52,7 +61,7 @@
 
 .vkz-input-field {
   padding: 8px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #727272;
   border-radius: 0.375rem;
   width: 100%;
   z-index: 1;
@@ -72,12 +81,23 @@
   border-radius: 5px;
   cursor: pointer;
   background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.vkz-button-Buscar:hover:not(:disabled) {
+  background-color: rgb(179, 179, 179);
+}
+
+.vkz-button-Buscar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .vkz-button-Agregar {
   border-radius: 5px;
+  color: white;
   cursor: pointer;
-  background-color: rgb(243, 188, 69);
+  background-color: #2679f7;
   font-size: 16px;
   padding: 10px 20px;
   border: none;
@@ -86,22 +106,22 @@
 }
 
 .vkz-button-Agregar:hover {
-  background-color: rgb(246, 181, 40);
+  background-color: #2561bc;
 }
-
 
 .dropdown-list-Cliente {
   position: absolute;
+  top: 56%;
+  left: 0;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin-top: 170px;
   padding: 0;
   list-style-type: none;
-  width: calc(100% - 2px); /* Ajusta el ancho de la lista desplegable */
-  max-height: 150px; /* Altura máxima de la lista */
-  overflow-y: auto; /* Desplazamiento vertical si es necesario */
-  z-index: 1000; /* Asegúrate de que esté encima de otros elementos */
+  width: calc(100% - 2px);
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1000;
   text-align: center;
 }
 
@@ -121,3 +141,16 @@
   padding: 10px;
 }
 
+@media (max-width: 768px) {
+  .vkz-container,
+  .vkz-container.with-sidebar {
+    flex-direction: column;
+  }
+
+  .sidebar-form,
+  .table-container {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 20px;
+  }
+}

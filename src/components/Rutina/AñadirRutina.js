@@ -52,7 +52,7 @@ function AñadirRutina() {
     setError('');
     setMostrarConfirmacion(true);
 
-    const cliente = clientes.find(c => c.nombre === clienteSeleccionado);
+    const cliente = clientes.find(c => `${c.nombre} ${c.apellido}` === clienteSeleccionado);
     if (!cliente) {
       setError('Cliente no encontrado.');
       return;
@@ -91,7 +91,6 @@ function AñadirRutina() {
             { nombre: 'Dominadas con agarre estrecho', series: 'Máximo de repeticiones', repeticiones: null, descanso: 120 },
             { nombre: 'Remo con barra con agarre invertido', series: 3, repeticiones: 10, descanso: 60 },
             { nombre: 'Peso muerto convencional', series: 3, repeticiones: 5, descanso: 90 },
-            { nombre: 'Press de banca inclinado', series: 3, repeticiones: 8, descanso: 90 },
             { nombre: 'Dominadas con peso añadido', series: 'Máximo de repeticiones', repeticiones: null, descanso: 120 },
 
           ],
@@ -144,8 +143,8 @@ function AñadirRutina() {
             <select value={clienteSeleccionado} onChange={handleClienteChange}>
               <option value="">Cliente</option>
               {clientes.map((cliente) => (
-                <option key={cliente.id} value={cliente.nombre}>
-                  {cliente.nombre}
+                <option key={cliente.id} value={`${cliente.nombre} ${cliente.apellido}`}>
+                  {`${cliente.nombre} ${cliente.apellido}`}
                 </option>
               ))}
             </select>

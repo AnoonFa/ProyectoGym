@@ -38,7 +38,6 @@ const EjerciciosCliente = ({ cliente }) => {
       { nombre: 'Dominadas con agarre estrecho', series: 'Máximo de repeticiones', repeticiones: null, descanso: 120 },
       { nombre: 'Remo con barra con agarre invertido', series: 3, repeticiones: 10, descanso: 60 },
       { nombre: 'Peso muerto convencional', series: 3, repeticiones: 5, descanso: 90 },
-      { nombre: 'Press de banca inclinado', series: 3, repeticiones: 8, descanso: 90 },
       { nombre: 'Dominadas con peso añadido', series: 'Máximo de repeticiones', repeticiones: null, descanso: 120 },
       ],
       Ectomorfo: [

@@ -22,12 +22,14 @@
   "employee": [
     {
       "id": "1",
+      "name": "Daniel",
       "usuario": "lagrasa",
       "password": "123456",
       "cargo": "employee"
     },
     {
       "id": "2",
+      "name": "Carolina",
       "usuario": "supapa",
       "password": "123456",
       "cargo": "employee"
@@ -65,12 +67,12 @@
       "nombre": "David",
       "apellido": "Becerra",
       "sexo": "hombre",
-      "tipoCuerpo": "",
+      "tipoCuerpo": "Ectomorfo",
       "peso": "20",
       "altura": "123",
       "usuario": "casaabuela",
       "password": "Soyesteban2111*",
-      "rutinas": "",
+      "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
       "correo": "estebanpineros42@gmail.com",
       "telefono": "3196699831"
     },
@@ -87,6 +89,20 @@
       "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
       "correo": "ojoconladenazaret@gmail.com",
       "telefono": "3146874784"
+    },
+    {
+      "id": "7",
+      "nombre": "Edsson",
+      "apellido": "Doncel",
+      "sexo": "Hombre",
+      "tipoCuerpo": "Endomorfo",
+      "peso": "65",
+      "altura": "846",
+      "usuario": "lagrasa",
+      "password": "Soyesteban1029*",
+      "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":1,\"repeticiones\":2,\"descanso\":99},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60,\"videoUrl\":\"https://youtu.be/NxwNl3Z9CDM?si=puePYsSrIDh4jhPe\",\"thumbnailUrl\":\"https://img.youtube.com/vi/NxwNl3Z9CDM/0.jpg\"},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Remo con barra T\",\"series\":3,\"repeticiones\":10,\"descanso\":60}]",
+      "correo": "balalanad@gmail.com",
+      "telefono": "3315151515"
     }
   ],
   "clases": [
