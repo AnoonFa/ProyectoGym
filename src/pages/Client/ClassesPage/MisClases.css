@@ -1,6 +1,6 @@
 .mis-clases-container {
   display: flex;
-  padding: 20px;
+  padding: 20px 45px;
   background-color: #fff;
   width: 100%;
   border-radius: 10px;
@@ -9,11 +9,11 @@
 /* Estilos para la barra lateral */
 .filter-sidebar {
   width: 25%;
-  height: 101%;
+  height: 100%;
   padding: 20px;
   background-color: #f8f8f8;
   margin-right: 20px;
-  border-radius: 21px 0px 0px 21px;;
+  border-radius: 21px 0px 0px 21px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -40,6 +40,22 @@
   border: 1px solid #ddd;
   width: 100%;  
 }
+
+/* Ajustes para las filas de los filtros de hora */
+.field-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Espacio entre los dos campos */
+}
+
+.field-row .filter-group {
+  flex: 1; /* Para que ambos campos ocupen el mismo espacio */
+}
+
+.field-row .filter-group input {
+  width: 100%; /* Asegura que el input tome todo el ancho del contenedor */
+}
+
 
 .clear-filters-button {
   display: block;
@@ -106,6 +122,8 @@
   background-color: #b6b6b6;
 }
 
+
+
 .show-more-button {
   display: block;
   margin: 20px auto;
@@ -117,10 +135,7 @@
   cursor: pointer;
 }
 
-.field-row {
-  display: flex;
-  gap: 10px;
-}
+
 
 /* Estilo para la lista de inscritos */
 .inscritos-list {
@@ -173,12 +188,12 @@
 }
 
 /* Botón de cerrar para inscritos */
-.close-inscritos-button {
+.close-inscritos-buttons {
   margin-top: 20px;
-  background-color: hsl(0, 0%, 100%);
-  color: rgb(0, 0, 0);
+  background-color: hsl(0, 100%, 39%);
+  color: rgb(255, 255, 255);
   position: relative;
-  left: 93%;
+  left: 44%;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -187,6 +202,10 @@
 
 }
 
+
 .close-inscritos-button:hover {
-  background-color: #aaaaaa;
+  background-color: #d9534f;
+  color: #ffffff;
 }
+
+

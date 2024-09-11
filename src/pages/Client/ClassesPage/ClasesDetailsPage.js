@@ -23,6 +23,21 @@ const convertTo12HourFormat = (time) => {
   return date.toLocaleTimeString('es-ES', options);
 };
 
+
+// Función para formatear la fecha y hora de inscripción
+const formatDateTime = (isoDateString) => {
+  const date = new Date(isoDateString);
+  return date.toLocaleDateString('es-ES', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }) + ', ' + date.toLocaleTimeString('es-ES', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
+};
+
 const formatPrice = (price) => {
   return price < 50 ? 'Gratis' : `$${price}`;
 };
@@ -70,19 +85,75 @@ const ClassDetail = () => {
 
   const handleReservation = () => {
     if (classDetail.cuposDisponibles > 0) {
-      navigate('/Checkout', {
-        state: {
-          purchaseType: 'class',
-          selectedClass: classDetail
+      openConfirm({
+        title: 'Confirmar Reserva',
+        message: 'Debes pagar en el gimnasio dentro de un plazo de 1 día. Horarios del gimnasio:\n' +
+          'Lunes a Viernes: 06:00 AM - 04:00 PM\n' +
+          'Sábados: 08:00 AM - 04:00 PM\n' +
+          'Domingos: 06:00 AM - 12:00 PM.',
+          onConfirm: () => {
+            const fechaInscripcion = new Date().toISOString();
+    
+            // Buscar el cliente en la base de datos client usando su ID o usuario
+            fetch(`http://localhost:3001/client?id=${user.id}`)
+              .then(response => response.json())
+              .then(clientData => {
+                if (clientData.length > 0) {
+                  const cliente = clientData[0]; // Obtener el cliente
+    
+                  // Guardar los datos del cliente en la clase
+                  const updatedClass = {
+                    ...classDetail,
+                    cuposDisponibles: classDetail.cuposDisponibles - 1,
+                    inscritos: [...classDetail.inscritos, {
+                      idCliente: cliente.id,
+                      nombre: `${cliente.nombre} ${cliente.apellido}`,  // Guardar nombre completo
+                      correo: cliente.correo,  // Guardar correo
+                      fechaInscripcion: fechaInscripcion,
+                      estadoPago: 'inscrito pero no pagado'
+                    }]
+                  };
+  
+          // Actualizar la clase en la base de datos
+          fetch(`http://localhost:3001/clases/${classDetail.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedClass)
+          })
+          .then(() => {
+            setClassDetail(updatedClass);
+            updateClass(updatedClass);  // Actualizar el contexto de clases
+
+            setAlertMessage('Te has inscrito con éxito. Recuerda pagar en el gimnasio.');
+            setOpenSnackbar(true);
+          })
+          .catch(error => {
+            console.error('Error al reservar la clase:', error);
+            setAlertMessage('Ocurrió un error al reservar. Por favor, intenta nuevamente.');
+            setOpenSnackbar(true);
+          });
+        } else {
+          setAlertMessage('No se encontró el cliente.');
+          setOpenSnackbar(true);
         }
+      })
+      .catch(error => {
+        console.error('Error al buscar el cliente:', error);
+        setAlertMessage('Ocurrió un error al buscar el cliente. Intenta nuevamente.');
+        setOpenSnackbar(true);
       });
-    } else {
-      setAlertMessage('No hay cupos disponibles.');
-      setOpenSnackbar(true);
-    }
-  };
 
-
+    closeConfirm();  // Cerrar el modal de confirmación
+  },
+  onCancel: () => {
+    closeConfirm();
+  }
+});
+} else {
+setAlertMessage('No hay cupos disponibles.');
+setOpenSnackbar(true);
+}
+};
   const handleCancelarInscripcion = () => {
     openConfirm({
       title: 'Confirmar Cancelación',
@@ -146,6 +217,7 @@ const ClassDetail = () => {
       (filters.nombre === '' || inscrito.nombre.toLowerCase().includes(filters.nombre.toLowerCase()))
     );
   });
+  
 
   const handleModificarClase = () => {
     setSelectedClass(classDetail); // Pass the full classDetail
@@ -224,7 +296,7 @@ const ClassDetail = () => {
               <strong>Día:</strong> {classDetail.fecha 
                 ? `${new Date(classDetail.fecha).toLocaleDateString('es-ES', { weekday: 'long' })}, ${new Date(classDetail.fecha).toLocaleDateString('es-ES')}` 
                 : 'Fecha no disponible'}
-            </p>       
+            </p>
           </div>
 
           <div className="class-reservations">
@@ -244,16 +316,7 @@ const ClassDetail = () => {
           </div>
         </div>
 
-        <div className="reservation-buttons">
-          {user.role === 'admin' && (
-            <>
-              <button className="modify-button" onClick={handleModificarClase}>Modificar Clase</button>
-              <button className="toggle-inscritos-button" onClick={handleToggleInscritos}>
-                {showInscritos ? 'Ocultar Inscritos' : 'Inscritos'}
-              </button>
-            </>
-          )}
-        </div>
+        
 
         {isModalOpen && (
           <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -261,51 +324,6 @@ const ClassDetail = () => {
               <ClaseForm initialClass={classDetail} onSubmit={handleSubmitClass}  onCancel={handleCancel}  employees={[]} />
             </div>
           </Modal>
-        )}
-
-        {showInscritos && (
-          <div className="inscritos-container">
-            <div className="filter-sidebar">
-              <h3>Filtros</h3>
-              <div className="filter-group">
-                <label>Nombre:</label>
-                <input
-                  type="text"
-                  name="nombre"
-                  placeholder="Buscar por nombre"
-                  value={filters.nombre}
-                  onChange={handleFilterChange}
-                />
-              </div>
-              <button onClick={clearFilters} className="clear-filters-button">Limpiar Filtros</button>
-            </div>
-
-            <div className="inscritos-table-container">
-              {filteredInscritos && filteredInscritos.length > 0 ? (
-                <table className="inscritos-table">
-                  <thead>
-                    <tr>
-                      <th>Nombre</th>
-                      <th>Correo</th>
-                      <th>Fecha de inscripción</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredInscritos.map((inscrito, index) => (
-                      <tr key={index}>
-                        <td>{inscrito.nombre}</td>
-                        <td>{inscrito.correo}</td>
-                        <td>{inscrito.fechaInscripcion}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <p>No hay inscritos para esta clase.</p>
-              )}
-              <button className="close-inscritos-button" onClick={() => setShowInscritos(false)}>Cerrar</button>
-            </div>
-          </div>
         )}
       </div>
 

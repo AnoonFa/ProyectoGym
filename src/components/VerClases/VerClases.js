@@ -80,9 +80,8 @@ const CalendarClases = () => {
   useEffect(() => {
     if (classes.length > 0) {
       const mappedClasses = classes.map((clase) => {
-        const convertedTime = clase.startTime ? convertTo24Hour(clase.startTime) : '';
-        const startDate = new Date(`${clase.fecha}T${convertedTime}`);
-        const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 hora de duración por defecto
+        const startDate = new Date(`${clase.fecha}T${clase.startTime}:00`);
+        const endDate = new Date(`${clase.fecha}T${clase.endTime}:00`);
   
         return {
           title: clase.nombre,
@@ -93,9 +92,9 @@ const CalendarClases = () => {
           id: clase.id,
         };
       });
-      setEvents(mappedClasses);  // Actualiza los eventos del calendario
+      setEvents(mappedClasses);
     }
-  }, [classes]);  // Monitorea cambios en 'classes'
+  }, [classes]);  // Monitorea cambios en 'classes'  // Monitorea cambios en 'classes'
 
   const handleEventClick = (event) => {
     navigate(`/ClassDetail/${event.title}`);
@@ -175,7 +174,7 @@ const CalendarClases = () => {
 
       case 'descripcion':
         if (!value || value.length < 30 || value.length > 200) {
-          newErrors.descripcion = 'La descripción debe tener entre 50 y 200 caracteres.';
+          newErrors.descripcion = 'La descripción debe tener entre 30 y 200 caracteres.';
         } else {
           delete newErrors.descripcion;
         }
@@ -268,11 +267,11 @@ const CalendarClases = () => {
         entrenador: newClass.entrenador,
         startTime: newClass.startTime,
         endTime: newClass.endTime,
-        day: new Date(newClass.day).getDay(),
+        day: newClass.day, // Use full date string
         descripcion: newClass.descripcion,
         totalCupos: newClass.totalCupos,
         cuposDisponibles: newClass.totalCupos,
-        fecha: newClass.day,
+        fecha: newClass.day, // Storing the same date as 'fecha'
         precio: newClass.precio || 0,
         inscritos: []
       };
@@ -320,6 +319,16 @@ const CalendarClases = () => {
   };
 
 
+    // Formato de 12 horas (AM/PM)
+    const formats = {
+      timeGutterFormat: (date, culture, localizer) => localizer.format(date, 'h:mm A', culture),
+      eventTimeRangeFormat: ({ start, end }, culture, localizer) =>
+        `${localizer.format(start, 'h:mm A', culture)} - ${localizer.format(end, 'h:mm A', culture)}`,
+      agendaTimeRangeFormat: ({ start, end }, culture, localizer) =>
+        `${localizer.format(start, 'h:mm A', culture)} - ${localizer.format(end, 'h:mm A', culture)}`,
+    };
+
+
   const resetForm = () => {
     setNewClass({
       nombre: '',
@@ -354,9 +363,7 @@ const CalendarClases = () => {
           <button onClick={() => setShowForm(!showForm)} className="AddButtonLink">
             {showForm ? 'Cancelar' : 'Añadir Clase'}
           </button>
-          <button onClick={handleMisClasesClick} className="AddButtonLink">
-            {showMisClases ? 'Cerrar' : 'Ver Clases'}
-          </button>
+          
         </>
       )}
       {user.role === 'client' && (
@@ -392,29 +399,38 @@ const CalendarClases = () => {
           <MisClases />
         </div>
     )}
+    {(user.role === 'admin' || user.role === 'employee') && (
+        <>
+          <div className="mis-clases-container">
+          <MisClases />
+        </div>
+        </>
+      )}
+
     <div className={`calendar-form-wrapper ${showMisClases ? 'mis-clases-visible' : ''}`}>
       {/* Calendar Section */}
       <div className="calendar-wrapper">
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 600 }}
-          onSelectEvent={handleEventClick}
-          messages={{
-            next: 'Siguiente',
-            previous: 'Anterior',
-            today: 'Hoy',
-            month: 'Mes',
-            week: 'Semana',
-            day: 'Día',
-            agenda: 'Agenda',
-            date: 'Fecha',
-            time: 'Hora',
-            event: 'Evento',
-            noEventsInRange: 'No hay eventos en este rango',
-            showMore: (total) => `+ Ver más (${total})`,
+      <Calendar
+        localizer={localizer}
+        events={events}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 600 }}
+        onSelectEvent={handleEventClick}
+        formats={formats}  // Formatos personalizados para 12 horas
+        messages={{
+          next: 'Siguiente',
+          previous: 'Anterior',
+          today: 'Hoy',
+          month: 'Mes',
+          week: 'Semana',
+          day: 'Día',
+          agenda: 'Agenda',
+          date: 'Fecha',
+          time: 'Hora',
+          event: 'Evento',
+          noEventsInRange: 'No hay eventos en este rango',
+          showMore: (total) => `+ Ver más (${total})`,
           }}
         />
       </div>
