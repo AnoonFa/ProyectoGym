@@ -349,8 +349,8 @@
 
 .close-inscritos-button {
   margin-top: 20px;
-  background-color: hsl(0, 0%, 100%);
-  color: rgb(0, 0, 0);
+  background-color: hsl(0, 82%, 62%);
+  color: rgb(255, 255, 255);
   position: relative;
   left: 93%;
   padding: 10px 20px;
@@ -362,8 +362,8 @@
 }
 .close-inscritos-buttons {
   margin-top: 20px;
-  background-color: hsl(0, 0%, 100%);
-  color: rgb(0, 0, 0);
+  background-color: hsl(0, 82%, 62%);
+  color: rgb(255, 255, 255);
   position: relative;
   left: 44%;
   padding: 10px 20px;
@@ -373,8 +373,12 @@
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
 
 }
-
+.close-inscritos-buttons:hover {
+  background-color: #f0312b;
+  color: #ffffff;
+}
 
 .close-inscritos-button:hover {
-  background-color: #d9534f;
+  background-color: #f0312b;
+  color: #ffffff;
 }

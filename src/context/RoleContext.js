@@ -5,7 +5,7 @@ const AuthContext = createContext();
 export const RoleProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : { role: 'nolog', username: null, id: null };
+    return savedUser ? JSON.parse(savedUser) : { role: 'nolog', username: null,id: null, nombre: null, apellido: null, correo: null };
   });
 
   useEffect(() => {

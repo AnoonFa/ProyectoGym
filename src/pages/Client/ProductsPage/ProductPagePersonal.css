@@ -12,28 +12,26 @@
 }
 
 .products-grid {
-  width: 80%;
+  width: 104%;
   display: flex;
-  left: 10%;
+  left: -4%;
   position: relative;
-  gap: 0px;
+  gap: 1px;
   flex-wrap: wrap;
 }
 
 /* Ajustes para mantener un tamaño consistente en las tarjetas */
 .product-card {
-  width: 300px; /* Establecer un tamaño fijo para las tarjetas */
+  width: 249px;
   max-width: 100%;
   background-color: #fff;
   border-radius: 10px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
 }
 
-.product-card:hover {
-  transform: scale(1.05); /* Efecto de hover */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
+
+
 
 .product-card img {
   width: 100%;

@@ -144,7 +144,10 @@ const Header = () => {
               {showProfileMenu && (
                 <div className="profile-menu">
                   {/* Botón de cerrar (X) en la esquina superior derecha */}
-                  <button className="close-menu-btn" onClick={handleProfileClick}>
+                  <button className="close-menu-btn" 
+                  onClick={handleProfileClick}
+                  title='boton para cerrar perfil'
+                  >
                     <FontAwesomeIcon icon={faTimes} />
                   </button>
 

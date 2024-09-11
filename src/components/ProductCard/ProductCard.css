@@ -1,23 +1,20 @@
 .product-card {
   background-color: #f9f9f9;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 5px rgb(157 157 157 / 10%);
   overflow: hidden;
   width: 300px;
-  height: 400px; /* Altura fija para que todas las tarjetas sean consistentes */
+  height: 400px;
   position: relative;
   margin: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
+  /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+  /* cursor: pointer; */
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Distribuir el contenido de manera uniforme */
+  /* justify-content: space-between; */
 }
 
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
+
 
 .product-image {
   width: 100%;
@@ -28,8 +25,7 @@
 
 .product-infos {
   flex-grow: 0;
-  padding: 20px 10px 50px 27px;
-  
+  padding: 8px 9px 21px 10px;
   display: block;
 }
 
