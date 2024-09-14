@@ -204,7 +204,7 @@ const Buscar = ({ clientInfo, onClose }) => {
               <td>{client.password}</td>
               <td>{client.clase || 'N/A'}</td>
               <td>{client.planes || 'N/A'}</td>
-              <td>{client.ticketera || 'N/A'}</td>
+              <td>{client.tickets || 0}</td>
               <td>
                 {editingId === client.id ? (
                   <button onClick={() => handleSave(client.id)} className="save-button">Guardar</button>

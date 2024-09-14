@@ -28,7 +28,7 @@ import ProductPagePersonal from "./pages/Client/ProductsPage/ProductPagePersonal
 import './Modal.css';
 import './App.css';
 import Modal from './components/Modal/Modal';
-import Ticketera from './pages/Management/Ticketera/Ticketera';
+import VerTicketera from './components/Ticketera/VerTicketera';
 import Planes from './pages/Planes/Planes';
 import Comprobant from './pages/Client/PaymentsPage/Comprobant';
 import Payments from './pages/Client/PaymentsPage/PaymentsPage';
@@ -48,6 +48,7 @@ import ProductT2 from './components/Product/ProductT2';
 import ProductT3 from './components/Product/ProductT3';
 import ProductT4 from './components/Product/ProductT4';
 import ProductCard from './components/ProductCard/ProductCard';
+import AdminConfirmacion from './components/Ticketera/Admin/Confirmacion';
 
 
 function App() {
@@ -134,7 +135,7 @@ function App() {
                   <Route path="/VerCliente/*" element={<VerCliente />} />
                   <Route path="/ClienteForm/*" element={<ClienteForm />} />
                   <Route path="/Comprobant/*" element={<Comprobant />} />
-                  <Route path="/Ticketera/*" element={<Ticketera />} />
+                  <Route path="/VerTicketera/*" element={<VerTicketera />} />
                   <Route path="/PlanesPage/*" element={<PlanesPage/>} />
                   <Route path="/Productp1/*" element={<Productp1 />} />                  
                   <Route path="/Productp2/*" element={<Productp2 />} />
@@ -149,6 +150,7 @@ function App() {
                   <Route path="/RutinasCliente/*" element={<RutinasCliente />} />
                   <Route path="/" element={<CalendarClases />} />
                   <Route path="/ClassDetail/:className" element={<ClassDetail />} />
+                  <Route path="/AdminConfirmacion" element={<AdminConfirmacion />} />
                 </Routes>
               </div>
             

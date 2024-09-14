@@ -18,7 +18,8 @@ const ClienteForm = () => {
     password: '',
     rutinas: '',
     correo: '',
-    telefono: ''
+    telefono: '',
+    tickets: 0 // Asegúrate de que el campo 'tickets' esté aquí
   });
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
@@ -45,7 +46,7 @@ const ClienteForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-  
+
     if (name === 'peso' || name === 'altura') {
       let numericValue = value.replace(/[^0-9.]/g, '');
       numericValue = numericValue.replace(/(\..*?)\..*/g, '$1');
@@ -73,7 +74,7 @@ const ClienteForm = () => {
       }));
     }
   };
-  
+
   const checkUserExists = async (username) => {
     try {
       const response = await fetch(`http://localhost:3001/client?usuario=${username}`);
@@ -135,6 +136,7 @@ const ClienteForm = () => {
         rutinas: formData.rutinas,
         correo: formData.correo,
         telefono: formData.telefono,
+        tickets: formData.tickets, // Incluye el campo 'tickets' con el valor inicial
         id: currentId.toString() 
       };
 
@@ -182,7 +184,6 @@ const ClienteForm = () => {
           <input type="tel" name="telefono" placeholder="Número telefónico" required value={formData.telefono} onChange={handleInputChange} minLength="10" maxLength="10" />
           <input type="text" name="peso" placeholder="Peso (2-3 dígitos)" required value={formData.peso} onChange={handleInputChange} minLength="2" maxLength="3" />
           <input type="text" name="altura" placeholder="Altura (3 dígitos)" required value={formData.altura} onChange={handleInputChange} minLength="3" maxLength="3" />
-          {/* <input type="text" name="tipoCuerpo" placeholder="Rutina" readOnly value={formData.tipoCuerpo} onChange={handleInputChange} /> */}
           <input type="text" name="usuario" placeholder='Usuario' required value={formData.usuario} onChange={handleInputChange} />
           <div className="unique-password-container">
             <input

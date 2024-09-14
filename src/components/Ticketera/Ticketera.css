@@ -1,0 +1,461 @@
+/* General Styles */
+.ver-ticketera-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+  padding: 1rem; /* Agrega un poco de espacio en los bordes */
+}
+
+.ver-ticketera-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.ver-ticketera-tickets,
+.ver-ticketera-compra {
+  padding: 2rem;
+  border: 1px solid black;
+  box-shadow: 10px 20px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ver-ticketera-tickets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 300px;
+  margin: 0 auto;
+  background-color: #f5f5f5;
+}
+
+.ver-ticketera-compra {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.ver-ticketera-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.ver-ticketera-text {
+  font-size: 1.125rem;
+}
+
+.ver-ticketera-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ver-ticketera-label {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.ver-ticketera-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+.ver-ticketera-input-number {
+  text-align: center;
+  margin: 0 0.5rem;
+  width: 3rem;
+}
+
+.ver-ticketera-quantity {
+  display: flex;
+  align-items: center;
+  margin-left: 24%;
+}
+
+.ver-ticketera-button {
+  padding: 0.5rem 1rem;
+  background-color: #2679f7;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.ver-ticketera-button:hover {
+  background-color: #1b61c4;
+}
+
+.ver-ticketera-submit {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #2679f7;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.ver-ticketera-submit:hover {
+  background-color: #1b61c4;
+}
+
+.ver-ticketera-center {
+  text-align: center;
+}
+
+/* Modal overlay */
+.modal-Ticket {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que el modal esté encima de otros elementos */
+  animation: fadeInScale 0.3s ease-out; /* Aplicar la animación de aparición */
+}
+
+/* Modal content */
+.modal-content-Ticket {
+  background: white;
+  padding: 35px;
+  border-radius: 8px;
+  width: 90%; /* Ajusta según necesites */
+  max-width: 500px; /* Ajusta el tamaño máximo según necesites */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: left; /* Alinea el texto a la izquierda */
+  animation: fadeInScale 0.3s ease-out; /* Animación al aparecer */
+}
+
+/* Estilo para el contenido comprimido */
+.modal-content-Ticket p {
+  margin: 15px 0 20px; /* Ajusta el margen inferior para que el párrafo esté más comprimido */
+}
+
+/* Botones dentro del modal */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end; /* Ubicar los botones a la derecha */
+  gap: 10px; /* Espacio entre los botones */
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.modal-buttons .confirm-button {
+  background-color: #2679f7; /* Color azul para el botón de comprar */
+  transition: background-color 0.3s;
+}
+
+.confirm-button:hover{
+  background-color: #1b61c4;
+}
+
+.modal-buttons .cancel-button {
+  background-color: #e53935; /* Color rojo para el botón de cancelar */
+}
+
+/* Animación de desaparición */
+.modal-Ticket.exiting {
+  animation: fadeOutScale 0.3s ease-out; /* Aplicar la animación de desaparición */
+}
+
+/* Estilo para asegurar que el alert esté en la parte superior */
+.alert-Ticket {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100; /* Asegura que esté encima de otros elementos */
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+}
+
+/* Estilos para el botón de cierre (la "X") */
+.alert-Ticket .alert-close-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  margin-left: 10px;
+  padding: 0;
+  line-height: 1;
+  font-weight: bold;
+}
+
+.alert-Ticket .alert-message {
+  flex: 1;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .ver-ticketera-grid {
+    grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+  }
+
+  .ver-ticketera-quantity {
+    margin-left: 0; /* Elimina el margen izquierdo en pantallas pequeñas */
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ver-ticketera-input-number {
+    width: auto; /* Ajusta el ancho en pantallas pequeñas */
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-content-Ticket {
+    width: 95%; /* Ajusta el ancho en pantallas pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .ver-ticketera-title {
+    font-size: 1.5rem; /* Reduce el tamaño del título en pantallas muy pequeñas */
+  }
+
+  .ver-ticketera-text {
+    font-size: 1rem; /* Reduce el tamaño del texto en pantallas muy pequeñas */
+  }
+
+  .ver-ticketera-input {
+    padding: 0.5rem; /* Reduce el padding en pantallas muy pequeñas */
+  }
+
+  .ver-ticketera-button, .ver-ticketera-submit {
+    padding: 0.5rem; /* Ajusta el padding de los botones en pantallas pequeñas */
+    font-size: 0.875rem; /* Reduce el tamaño de la fuente en pantallas pequeñas */
+  }
+}
+
+
+
+/* Ticketera */
+
+
+.confirmacion-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 16px;
+}
+
+.confirmacion-content {
+  width: 100%;
+  max-width: 1200px;
+  background-color: white;
+  padding: 32px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.confirmacion-form-section {
+  margin-bottom: 32px;
+}
+
+.confirmacion-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.confirmacion-label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.confirmacion-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.confirmacion-input-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.confirmacion-input {
+  flex-grow: 1;
+  padding: 12px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.confirmacion-button {
+  width: 100px;
+  padding: 12px;
+  background-color: #2679f7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.confirmacion-button:hover {
+  background-color: #1b61c4;
+}
+
+.confirmacion-table-container {
+  overflow-x: auto;
+  margin-top: 24px;
+}
+
+.confirmacion-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.confirmacion-table-header {
+  text-align: left;
+  background-color: #f0f0f0;
+  padding: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.confirmacion-table-cell {
+  text-align: left;
+  padding: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.confirmacion-select {
+  width: 150px;
+  padding: 8px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: white;
+}
+
+.client-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 8px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.client-list li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.client-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.no-tickets-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin-top: 24px;
+}
+
+.modal-Ticket {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content-Ticket {
+  background-color: white;
+  padding: 24px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.cancel-button, .confirm-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.cancel-button {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.confirm-button {
+  background-color: #2679f7;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .confirmacion-content {
+    padding: 16px;
+  }
+
+  .confirmacion-form-section {
+    margin-bottom: 16px;
+  }
+
+  .confirmacion-input-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .confirmacion-button {
+    width: 100%;
+  }
+}

@@ -4,7 +4,6 @@ import './header.css';
 import logo from '../../assets/images/David&GoliatLogo.png';
 import logoutIcon from '../../assets/icons/LogOut.png';
 import { useAuth } from '../../context/RoleContext';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faUserCircle, faUsers, faDumbbell, faBox, faTicketAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import FullScreenEditProfileModal from '../editProfile/PerfilEditarModal';
@@ -112,7 +111,7 @@ const Header = () => {
               <button onClick={() => handleNavigation('/RutinaAdminIndex')} className={`Profile ${isActive('/RutinaAdminIndex')}`}>Rutinas</button>
               <button onClick={() => handleNavigation('/VerCliente')} className={`Profile ${isActive('/VerCliente')}`}>Cliente</button>
               <button onClick={() => handleNavigation('/ProductsPage')} className={`Profile ${isActive('/ProductsPage')}`}>Productos</button>
-              <button onClick={() => handleNavigation('/Ticketera')} className={`Profile ${isActive('/Ticketera')}`}>Ticketera</button>
+              <button onClick={() => handleNavigation('/AdminConfirmacion')} className={`Profile ${isActive('/Ticketera')}`}>Ticketera</button>
             </>
           )}
           {/* Enlaces para Empleado si esta autenticado */}
@@ -122,7 +121,7 @@ const Header = () => {
               <button onClick={() => handleNavigation('/planesPage')} className={`Profile ${isActive('/planesPage')}`}>Planes</button>
               <button onClick={() => handleNavigation('/RutinaAdminIndex')} className={`Profile ${isActive('/RutinaAdminIndex')}`}>Rutinas</button>
               <button onClick={() => handleNavigation('/ProductsPage')} className={`Profile ${isActive('/ProductsPage')}`}>Productos</button>
-              <button onClick={() => handleNavigation('/Ticketera')} className={`Profile ${isActive('/Ticketera')}`}>Ticketera</button>
+              <button onClick={() => handleNavigation('/AdminConfirmacion')} className={`Profile ${isActive('/Ticketera')}`}>Ticketera</button>
             </>
           )}
           {/* Enlaces para Cliente si esta autenticado */}
@@ -132,7 +131,7 @@ const Header = () => {
               <button onClick={() => handleNavigation('/planesPage/')} className={`Profile ${isActive('/planesPage/')}`}>Planes</button>
               <button onClick={() => handleNavigation('/ProductsPage/')} className={`Profile ${isActive('/ProductsPage/')}`}>Productos</button>
               <button onClick={() => handleNavigation('/RutinasCliente/')} className={`Profile ${isActive('/RutinasCliente/')}`}>Rutinas</button>
-              <button onClick={() => handleNavigation('/Ticketera')} className={`Profile ${isActive('/Ticketera')}`}>Ticketera</button>
+              <button onClick={() => handleNavigation('/VerTicketera')} className={`Profile ${isActive('/VerTicketera')}`}>Ticketera</button>
             </>
           )}
           {user.role === 'nolog' && (
@@ -140,7 +139,7 @@ const Header = () => {
               <button onClick={() => handleNavigation('/ClasesPage/')} className={`Profile ${isActive('/ClasesPage/')}`}>Clases</button>
               <button onClick={() => handleNavigation('/planesPage/')} className={`Profile ${isActive('/planesPage/')}`}>Planes</button>
               <button onClick={() => handleNavigation('/ProductsPage/')} className={`Profile ${isActive('/ProductsPage/')}`}>Productos</button>
-              <button onClick={() => handleNavigation('/Ticketera')} className={`Profile ${isActive('/Ticketera')}`}>Ticketera</button>
+              {/* <button onClick={() => handleNavigation('/Ticketera')} className={`Profile ${isActive('/Ticketera')}`}>Ticketera</button> */}
             </>
           )}
         </div>
@@ -195,22 +194,22 @@ const Header = () => {
                       <button onClick={() => navigate('/ClasesPage')} className="menu-option">
                         <FontAwesomeIcon icon={faUsers} className="menu-icon" /> Ver Clases de Usuarios
                       </button>
-                      <button onClick={() => navigate('/gestion-clientes')} className="menu-option">
+                      <button onClick={() => navigate('/VerCliente')} className="menu-option">
                         <FontAwesomeIcon icon={faUserCircle} className="menu-icon" /> Gestión de Clientes
                       </button>
-                      <button onClick={() => navigate('/gestion-rutinas')} className="menu-option">
+                      <button onClick={() => navigate('/RutinaAdminIndex')} className="menu-option">
                         <FontAwesomeIcon icon={faDumbbell} className="menu-icon" /> Gestión de Rutinas
                       </button>
-                      <button onClick={() => navigate('/gestion-productos')} className="menu-option">
+                      <button onClick={() => navigate('/ProductsPage')} className="menu-option">
                         <FontAwesomeIcon icon={faBox} className="menu-icon" /> Gestión de Productos
                       </button>
-                      <button onClick={() => navigate('/Ticketera')} className="menu-option">
+                      <button onClick={() => navigate('/AdminConfirmacion')} className="menu-option">
                         <FontAwesomeIcon icon={faTicketAlt} className="menu-icon" /> Ticketera
                       </button>
                     </>
                   )}
 
-                  {user.role !== 'admin' && (
+                  {user.role === 'client' && (
                     <>
                       <button onClick={() => navigate('/ClasesPage/')} className="menu-option">
                         <FontAwesomeIcon icon={faDumbbell} className="menu-icon" /> Mis Clases
@@ -218,7 +217,7 @@ const Header = () => {
                       <button onClick={() => navigate('/RutinasCliente/')} className="menu-option">
                         <FontAwesomeIcon icon={faDumbbell} className="menu-icon" /> Mis Rutinas
                       </button>
-                      <button onClick={() => navigate('/Ticketera')} className="menu-option">
+                      <button onClick={() => navigate('/VerTicketera')} className="menu-option">
                         <FontAwesomeIcon icon={faTicketAlt} className="menu-icon" /> Mi Ticketera
                       </button>
                       <button onClick={() => navigate('/Plan')} className="menu-option">

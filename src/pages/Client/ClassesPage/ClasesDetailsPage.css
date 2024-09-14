@@ -191,7 +191,7 @@
   padding: 20px;
   border-radius: 10px;
   width: 20%;
-  margin: 8% auto; /* Centramos el modal */
+  margin: 2px auto; /* Centramos el modal */
 }
 
 .modal-close {

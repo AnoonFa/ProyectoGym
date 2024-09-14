@@ -47,7 +47,8 @@
       "usuario": "InsanoXD",
       "password": "Soyesteban1234*",
       "correo": "estebanpineros43@gmail.com",
-      "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Remo con barra T\",\"series\":3,\"repeticiones\":10,\"descanso\":60}]"
+      "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Remo con barra T\",\"series\":3,\"repeticiones\":10,\"descanso\":60}]",
+      "tickets": 16
     },
     {
       "id": "2",
@@ -60,7 +61,8 @@
       "usuario": "ozuna",
       "password": "Soyesteban2111*",
       "correo": "estebanpineros41@gmail.com",
-      "rutinas": "[{\"nombre\":\"Peso muerto\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto rumano\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Press de banca declinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con agarre ancho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Peso muerto sumo\",\"series\":3,\"repeticiones\":6,\"descanso\":90},{\"nombre\":\"Press de banca cerrado\",\"series\":3,\"repeticiones\":12,\"descanso\":90},{\"nombre\":\"Dominadas con agarre estrecho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra con agarre invertido\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto convencional\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con peso añadido\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120}]"
+      "rutinas": "[{\"nombre\":\"Peso muerto\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto rumano\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Press de banca declinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con agarre ancho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Peso muerto sumo\",\"series\":3,\"repeticiones\":6,\"descanso\":90},{\"nombre\":\"Press de banca cerrado\",\"series\":3,\"repeticiones\":12,\"descanso\":90},{\"nombre\":\"Dominadas con agarre estrecho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra con agarre invertido\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto convencional\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con peso añadido\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120}]",
+      "tickets": 0
     },
     {
       "id": "5",
@@ -74,7 +76,8 @@
       "password": "Soyesteban2111*",
       "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
       "correo": "estebanpineros42@gmail.com",
-      "telefono": "3196699831"
+      "telefono": "3196699831",
+      "tickets": 0
     },
     {
       "id": "6",
@@ -84,25 +87,27 @@
       "tipoCuerpo": "Ectomorfo",
       "peso": "65",
       "altura": "168",
-      "usuario": "Esteban",
+      "usuario": "ojonazaret",
       "password": "Soyesteban1234*",
       "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
       "correo": "ojoconladenazaret@gmail.com",
-      "telefono": "3146874784"
+      "telefono": "3146874784",
+      "tickets": 3
     },
     {
       "id": "7",
       "nombre": "Edsson",
       "apellido": "Doncel",
       "sexo": "Hombre",
-      "tipoCuerpo": "Endomorfo",
+      "tipoCuerpo": "",
       "peso": "65",
-      "altura": "846",
-      "usuario": "lagrasa",
-      "password": "Soyesteban1029*",
-      "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":1,\"repeticiones\":2,\"descanso\":99},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60,\"videoUrl\":\"https://youtu.be/NxwNl3Z9CDM?si=puePYsSrIDh4jhPe\",\"thumbnailUrl\":\"https://img.youtube.com/vi/NxwNl3Z9CDM/0.jpg\"},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Remo con barra T\",\"series\":3,\"repeticiones\":10,\"descanso\":60}]",
-      "correo": "balalanad@gmail.com",
-      "telefono": "3315151515"
+      "altura": "235",
+      "usuario": "elmarika",
+      "password": "Soyesteban2111*",
+      "rutinas": "",
+      "correo": "estebanpineros42@gmail.com",
+      "telefono": "3196699831",
+      "tickets": 1
     }
   ],
   "clases": [
@@ -136,18 +141,104 @@
       "endTime": "05:31",
       "descripcion": "Una buena clase de zumba para la tarde",
       "totalCupos": "20",
-      "cuposDisponibles": 19,
+      "cuposDisponibles": 20,
       "fecha": "2024-09-12",
       "precio": "15000",
-      "inscritos": [
-        {
-          "idCliente": "6",
-          "nombre": "Sofia Nazaret",
-          "correo": "ojoconladenazaret@gmail.com",
-          "fechaInscripcion": "2024-09-12T01:05:22.033Z",
-          "estadoPago": "inscrito pero no pagado"
-        }
-      ]
+      "inscritos": []
+    },
+    {
+      "id": "14f8",
+      "nombre": "Prueba 2",
+      "entrenador": "lagrasa",
+      "startTime": "11:35",
+      "endTime": "02:15",
+      "day": "2024-09-15",
+      "descripcion": "Esta clase se esta creando para realizar pruebas con la relacion de ticketeras\n\nLa grasa va primero y el XD sera eterno",
+      "totalCupos": "20",
+      "cuposDisponibles": 20,
+      "fecha": "2024-09-15",
+      "precio": "6500",
+      "inscritos": []
+    },
+    {
+      "id": "cd1d",
+      "nombre": "Prueba 3",
+      "entrenador": "lagrasa",
+      "startTime": "13:38",
+      "endTime": "16:40",
+      "day": "2024-10-08",
+      "descripcion": "Esta clase se esta creando para realizar pruebas con la relacion de ticketeras\n\nLa grasa va primero y el XD sera eterno",
+      "totalCupos": "30",
+      "cuposDisponibles": "30",
+      "fecha": "2024-10-08",
+      "precio": "9800",
+      "inscritos": []
+    },
+    {
+      "id": "0700",
+      "nombre": "Prueba 4",
+      "entrenador": "lagrasa",
+      "startTime": "05:36",
+      "endTime": "08:31",
+      "day": "2024-11-08",
+      "descripcion": "Esta clase se esta creando para realizar pruebas con la relacion de ticketeras\n\nLa grasa va primero y el XD sera eterno",
+      "totalCupos": "50",
+      "cuposDisponibles": "50",
+      "fecha": "2024-11-08",
+      "precio": "12500",
+      "inscritos": []
+    }
+  ],
+  "ticketera": [
+    {
+      "id": "94b7",
+      "clientId": "1",
+      "nombre": "Esteban Piñeros",
+      "quantity": 1,
+      "totalPrice": 12000,
+      "date": "2024-09-13",
+      "time": "18:41:03",
+      "status": "No Pagado"
+    },
+    {
+      "id": "2b64",
+      "clientId": "1",
+      "nombre": "Esteban Piñeros",
+      "quantity": 5,
+      "totalPrice": 60000,
+      "date": "2024-09-13",
+      "time": "18:41:07",
+      "status": "No Pagado"
+    },
+    {
+      "id": "133d",
+      "clientId": "2",
+      "nombre": "Alejandro Espinosa",
+      "quantity": 9,
+      "totalPrice": 108000,
+      "date": "2024-09-13",
+      "time": "18:46:02",
+      "status": "No Pagado"
+    },
+    {
+      "id": "c830",
+      "clientId": "2",
+      "nombre": "Alejandro Espinosa",
+      "quantity": 5,
+      "totalPrice": 60000,
+      "date": "2024-09-13",
+      "time": "18:46:07",
+      "status": "No Pagado"
+    },
+    {
+      "id": "4499",
+      "clientId": "7",
+      "nombre": "Edsson Doncel",
+      "quantity": 3,
+      "totalPrice": 36000,
+      "date": "2024-09-14",
+      "time": "19:01:16",
+      "status": "No Pagado"
     }
   ],
   "productos": [
