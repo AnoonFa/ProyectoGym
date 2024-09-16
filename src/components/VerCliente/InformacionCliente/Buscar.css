@@ -1,7 +1,6 @@
 .buscar-container {
   padding: 20px;
   max-width: 100%;
-  overflow-x: auto;
   text-align: center;
 }
 
@@ -17,21 +16,31 @@
   border-radius: 4px;
 }
 
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .client-table {
   width: 100%;
   border-collapse: collapse;
+  white-space: nowrap;
+  text-align: center; /* Centra el contenido de la tabla */
 }
 
 .client-table th,
 .client-table td {
   border: 1px solid #ddd;
   padding: 12px;
-  text-align: left;
+  text-align: center; /* Centra el contenido en las celdas */
 }
 
 .client-table th {
   background-color: #f2f2f2;
   font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .client-photo {
@@ -46,6 +55,7 @@
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
+  box-sizing: border-box; /* Asegura que el padding no expanda el ancho del input */
 }
 
 .edit-button,
@@ -80,7 +90,7 @@
   z-index: 1000;
 }
 
-.volver-button-Buscar{
+.volver-button-Buscar {
   background-color: #2679f7;
   color: #fff;
   border: none;
@@ -92,7 +102,7 @@
   transition: background-color 0.3s ease;
 }
 
-.volver-button-Buscar:hover{
+.volver-button-Buscar:hover {
   background-color: #2561bc;
 }
 

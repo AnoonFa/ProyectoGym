@@ -10,8 +10,10 @@ const ClienteForm = () => {
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
+    tipoDocumento: '',
+    numeroDocumento: '',
     sexo: '',
-    tipoCuerpo: '', // Este campo permanece en el estado
+    tipoCuerpo: '',
     peso: '',
     altura: '',
     usuario: '',
@@ -19,12 +21,13 @@ const ClienteForm = () => {
     rutinas: '',
     correo: '',
     telefono: '',
-    tickets: 0 // Asegúrate de que el campo 'tickets' esté aquí
+    tickets: 0
   });
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState('');
   const [userWarning, setUserWarning] = useState('');
+  const [documentError, setDocumentError] = useState('');
   const [currentId, setCurrentId] = useState(0);
   const navigate = useNavigate();
 
@@ -55,12 +58,15 @@ const ClienteForm = () => {
         ...prevState,
         [name]: numericValue
       }));
-    } else if (name === 'telefono') {
-      const numericValue = value.replace(/\D/g, '').slice(0, 10);
+    } else if (name === 'telefono' || name === 'numeroDocumento') {
+      const numericValue = value.replace(/\D/g, '').slice(0, name === 'numeroDocumento' ? 20 : 10);
       setFormData(prevState => ({
         ...prevState,
         [name]: numericValue
       }));
+      if (name === 'numeroDocumento') {
+        setDocumentError(numericValue.length < 8 ? 'Número de documento inválido, por favor escribir nuevamente' : '');
+      }
     } else if (name === 'usuario') {
       setFormData(prevState => ({
         ...prevState,
@@ -111,10 +117,10 @@ const ClienteForm = () => {
     setFormError('');
     setFormSuccess('');
 
-    const requiredFields = ['nombre', 'apellido', 'sexo', 'peso', 'altura', 'usuario', 'password', 'correo', 'telefono'];
+    const requiredFields = ['nombre', 'apellido', 'tipoDocumento', 'numeroDocumento', 'sexo', 'peso', 'altura', 'usuario', 'password', 'correo', 'telefono'];
     const isFormValid = requiredFields.every(field => formData[field].trim() !== '');
 
-    if (isFormValid && !passwordError && !userWarning) {
+    if (isFormValid && !passwordError && !userWarning && !documentError) {
       if (formData.telefono.length !== 10) {
         setFormError('El número de teléfono debe tener exactamente 10 dígitos.');
         return;
@@ -123,20 +129,13 @@ const ClienteForm = () => {
         setFormError('El peso y la altura deben tener al menos 2 dígitos.');
         return;
       }
+      if (formData.numeroDocumento.length < 8) {
+        setDocumentError('Número de documento inválido, por favor escribir nuevamente');
+        return;
+      }
 
       const newClient = { 
-        nombre: formData.nombre,
-        apellido: formData.apellido,
-        sexo: formData.sexo,
-        tipoCuerpo: formData.tipoCuerpo, // Campo mantenido en el objeto enviado
-        peso: formData.peso,
-        altura: formData.altura,
-        usuario: formData.usuario,
-        password: formData.password,
-        rutinas: formData.rutinas,
-        correo: formData.correo,
-        telefono: formData.telefono,
-        tickets: formData.tickets, // Incluye el campo 'tickets' con el valor inicial
+        ...formData,
         id: currentId.toString() 
       };
 
@@ -163,6 +162,8 @@ const ClienteForm = () => {
       }
     } else if (userWarning) {
       setFormError('Por favor, elige un nombre de usuario diferente.');
+    } else if (documentError) {
+      setFormError('Por favor, corrige el número de documento.');
     } else {
       setFormError('Por favor, completa todos los campos requeridos y asegúrate de que la contraseña cumpla con los requisitos.');
     }
@@ -175,6 +176,13 @@ const ClienteForm = () => {
         <div className="unique-form-fields">
           <input type="text" name="nombre" placeholder="Nombre" required value={formData.nombre} onChange={handleInputChange} />
           <input type="text" name="apellido" placeholder="Apellido" required value={formData.apellido} onChange={handleInputChange} />
+          <select name="tipoDocumento" required value={formData.tipoDocumento} onChange={handleInputChange}>
+            <option value="" disabled>Tipo de documento</option>
+            <option value="CC">CC</option>
+            <option value="TI">TI</option>
+            <option value="CE">CE</option>
+          </select>
+          <input type="number" name="numeroDocumento" placeholder="Número de documento" required value={formData.numeroDocumento} onChange={handleInputChange} />
           <select name="sexo" required value={formData.sexo} onChange={handleInputChange}>
             <option value="" disabled>Género</option>
             <option value="Hombre">Masculino</option>
@@ -212,6 +220,12 @@ const ClienteForm = () => {
         {userWarning && (
           <Alert severity="warning" style={{ marginTop: '10px' }}>
             {userWarning}
+          </Alert>
+        )}
+
+        {documentError && (
+          <Alert severity="error" style={{ marginTop: '10px' }}>
+            {documentError}
           </Alert>
         )}
 

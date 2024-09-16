@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import './RutinaAdminIndex.css';
@@ -10,6 +10,9 @@ function AñadirRutina() {
   const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
   const [error, setError] = useState('');
   const [postResponse, setPostResponse] = useState('');
+  const [numeroDocumento, setNumeroDocumento] = useState('');
+  const [coincidencias, setCoincidencias] = useState([]);
+  const [showList, setShowList] = useState(false);
 
   const cuerpos = ['Endomorfo', 'Mesomorfo', 'Ectomorfo'];
   const navigate = useNavigate();
@@ -34,12 +37,30 @@ function AñadirRutina() {
     }
   }, [mostrarConfirmacion, navigate]);
 
+  useEffect(() => {
+    if (numeroDocumento) {
+      const matches = clientes.filter(cliente => cliente.numeroDocumento.includes(numeroDocumento));
+      setCoincidencias(matches);
+      setShowList(true);
+    } else {
+      setCoincidencias([]);
+      setShowList(false);
+    }
+  }, [numeroDocumento, clientes]);
+
   const handleClienteChange = (event) => {
-    setClienteSeleccionado(event.target.value);
+    setNumeroDocumento(event.target.value);
   };
 
   const handleCuerpoChange = (event) => {
     setCuerpoSeleccionado(event.target.value);
+  };
+
+  const handleSelectCliente = (cliente) => {
+    console.log('Cliente seleccionado:', `${cliente.nombre} ${cliente.apellido}`);
+    setClienteSeleccionado(`${cliente.nombre} ${cliente.apellido}`);
+    setNumeroDocumento(cliente.numeroDocumento);
+    setShowList(false);
   };
 
   const handleSubmit = (event) => {
@@ -57,7 +78,6 @@ function AñadirRutina() {
       setError('Cliente no encontrado.');
       return;
     }
-
     const clienteId = cliente.id;
 
     // Obtener datos actuales del cliente
@@ -118,9 +138,7 @@ function AñadirRutina() {
 
         return fetch(`http://localhost:3001/client/${clienteId}`, {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(updatedData)
         });
       })
@@ -139,15 +157,24 @@ function AñadirRutina() {
       <div className="form-wrapper">
         <form className="form-content-Rutina" onSubmit={handleSubmit}>
           <label className="form-label">
-            Seleccione cliente:
-            <select value={clienteSeleccionado} onChange={handleClienteChange}>
-              <option value="">Cliente</option>
-              {clientes.map((cliente) => (
-                <option key={cliente.id} value={`${cliente.nombre} ${cliente.apellido}`}>
-                  {`${cliente.nombre} ${cliente.apellido}`}
-                </option>
-              ))}
-            </select>
+            Ingrese número de documento del cliente:
+            <input
+              type="number"
+              value={numeroDocumento}
+              className="InputNumber"
+              onChange={handleClienteChange}
+              placeholder="Número de documento"
+              pattern="[0-9]*"
+            />
+            {showList && (
+              <ul className="client-list-Rutina">
+                {coincidencias.map(cliente => (
+                  <li key={cliente.id} onClick={() => handleSelectCliente(cliente)}>
+                    {`${cliente.nombre} ${cliente.apellido}`}
+                  </li>
+                ))}
+              </ul>
+            )}
           </label>
           <label className="form-label">
             Tipo de cuerpo:

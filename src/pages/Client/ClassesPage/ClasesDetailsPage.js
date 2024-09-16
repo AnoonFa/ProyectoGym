@@ -44,25 +44,23 @@ const formatPrice = (price) => {
 
 const ClassDetail = () => {
   const { className } = useParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { classes } = useContext(ClassesContext);
   const [classDetail, setClassDetail] = useState(null);
-  const [showInscritos, setShowInscritos] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user, setUser, updateUserTickets } = useAuth();
+  const { updateClass } = useContext(ClassesContext);
+  const { isOpen, confirmationOptions, openConfirm, closeConfirm } = useConfirm();
   const [alertMessage, setAlertMessage] = useState(null);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [localUser, setLocalUser] = useState(JSON.parse(localStorage.getItem('user')) || user);
+  const [isUserEnrolled, setIsUserEnrolled] = useState(false);
   const [filters, setFilters] = useState({
     nombre: '',
     entrenador: '',
     startTime: '',
     endTime: '',
   });
-  const { user } = useAuth();
-  const { updateClass } = useContext(ClassesContext);
   const navigate = useNavigate();
-
- 
-   // Uso del hook useConfirm
-  const { isOpen, confirmationOptions, openConfirm, closeConfirm } = useConfirm();
 
   useEffect(() => {
     fetch(`http://localhost:3001/clases?nombre=${className}`)
@@ -70,18 +68,23 @@ const ClassDetail = () => {
       .then(data => {
         if (data.length > 0) {
           setClassDetail(data[0]);
+          setIsUserEnrolled(data[0].inscritos.some(inscrito => 
+            inscrito?.correo?.trim().toLowerCase() === user?.correo?.trim().toLowerCase()
+          ));
         }
       })
       .catch(error => console.error('Error cargando los detalles de la clase:', error));
-  }, [className]);
+  }, [className, user?.correo]);
+
+  useEffect(() => {
+    if (user) {
+      setLocalUser(user);
+    }
+  }, [user]);
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   };
-
-  const isUserEnrolled = classDetail?.inscritos?.some(inscrito => 
-    inscrito?.email?.trim().toLowerCase() === user?.correo?.trim().toLowerCase()
-  );
 
   const handleReservation = () => {
     if (classDetail.cuposDisponibles > 0) {
@@ -91,160 +94,156 @@ const ClassDetail = () => {
           'Lunes a Viernes: 06:00 AM - 04:00 PM\n' +
           'Sábados: 08:00 AM - 04:00 PM\n' +
           'Domingos: 06:00 AM - 12:00 PM.',
-          onConfirm: () => {
-            const fechaInscripcion = new Date().toISOString();
-    
-            // Buscar el cliente en la base de datos client usando su ID o usuario
-            fetch(`http://localhost:3001/client?id=${user.id}`)
-              .then(response => response.json())
-              .then(clientData => {
-                if (clientData.length > 0) {
-                  const cliente = clientData[0]; // Obtener el cliente
-    
-                  // Guardar los datos del cliente en la clase
-                  const updatedClass = {
-                    ...classDetail,
-                    cuposDisponibles: classDetail.cuposDisponibles - 1,
-                    inscritos: [...classDetail.inscritos, {
-                      idCliente: cliente.id,
-                      nombre: `${cliente.nombre} ${cliente.apellido}`,  // Guardar nombre completo
-                      correo: cliente.correo,  // Guardar correo
-                      fechaInscripcion: fechaInscripcion,
-                      estadoPago: 'inscrito pero no pagado'
-                    }]
-                  };
+        onConfirm: () => {
+          const fechaInscripcion = new Date().toISOString();
+      
+          fetch(`http://localhost:3001/client?id=${user.id}`)
+            .then(response => response.json())
+            .then(clientData => {
+              if (clientData.length > 0) {
+                const cliente = clientData[0];
+      
+                const updatedClass = {
+                  ...classDetail,
+                  cuposDisponibles: classDetail.cuposDisponibles - 1,
+                  inscritos: [...classDetail.inscritos, {
+                    idCliente: cliente.id,
+                    nombre: `${cliente.nombre} ${cliente.apellido}`,
+                    correo: cliente.correo,
+                    fechaInscripcion: fechaInscripcion,
+                    estadoPago: 'inscrito pero no pagado'
+                  }]
+                };
+      
+                fetch(`http://localhost:3001/clases/${classDetail.id}`, {
+                  method: 'PUT',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(updatedClass)
+                })
+                .then(() => {
+                  setClassDetail(updatedClass);
+                  updateClass(updatedClass);
+                  setAlertMessage('Te has inscrito con éxito. Recuerda pagar en el gimnasio.');
+                  setOpenSnackbar(true);
+                })
+                .catch(error => {
+                  console.error('Error al reservar la clase:', error);
+                  setAlertMessage('Ocurrió un error al reservar. Por favor, intenta nuevamente.');
+                  setOpenSnackbar(true);
+                });
+              } else {
+                setAlertMessage('No se encontró el cliente.');
+                setOpenSnackbar(true);
+              }
+            })
+            .catch(error => {
+              console.error('Error al buscar el cliente:', error);
+              setAlertMessage('Ocurrió un error al buscar el cliente. Intenta nuevamente.');
+              setOpenSnackbar(true);
+            });
   
-          // Actualizar la clase en la base de datos
-          fetch(`http://localhost:3001/clases/${classDetail.id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedClass)
-          })
-          .then(() => {
-            setClassDetail(updatedClass);
-            updateClass(updatedClass);  // Actualizar el contexto de clases
-
-            setAlertMessage('Te has inscrito con éxito. Recuerda pagar en el gimnasio.');
-            setOpenSnackbar(true);
-          })
-          .catch(error => {
-            console.error('Error al reservar la clase:', error);
-            setAlertMessage('Ocurrió un error al reservar. Por favor, intenta nuevamente.');
-            setOpenSnackbar(true);
-          });
-        } else {
-          setAlertMessage('No se encontró el cliente.');
-          setOpenSnackbar(true);
+          closeConfirm(); 
+        },
+        onCancel: () => {
+          closeConfirm();
         }
-      })
-      .catch(error => {
-        console.error('Error al buscar el cliente:', error);
-        setAlertMessage('Ocurrió un error al buscar el cliente. Intenta nuevamente.');
-        setOpenSnackbar(true);
       });
+    } else {
+      setAlertMessage('No hay cupos disponibles.');
+      setOpenSnackbar(true);
+    }
+  };
 
-    closeConfirm();  // Cerrar el modal de confirmación
-  },
-  onCancel: () => {
-    closeConfirm();
-  }
-});
-} else {
-setAlertMessage('No hay cupos disponibles.');
-setOpenSnackbar(true);
-}
-};
-  const handleCancelarInscripcion = () => {
-    openConfirm({
-      title: 'Confirmar Cancelación',
-      message: '¿Estás seguro de que deseas cancelar tu inscripción? No hay reembolzos ',
-      onConfirm: () => {
-        const updatedClass = {
-          ...classDetail,
-          cuposDisponibles: classDetail.cuposDisponibles + 1,
-          inscritos: classDetail.inscritos.filter(inscrito => 
-            inscrito?.email?.trim().toLowerCase() !== user?.correo?.trim().toLowerCase()
-          )
-        };
+   const handleCancelarInscripcion = () => {
+  openConfirm({
+    title: 'Confirmar Cancelación',
+    message: '¿Estás seguro de que deseas cancelar tu inscripción? No hay reembolzos ',
+    onConfirm: () => {
+      const updatedClass = {
+        ...classDetail,
+        cuposDisponibles: classDetail.cuposDisponibles + 1,
+        inscritos: classDetail.inscritos.filter(inscrito => 
+          inscrito?.correo?.trim().toLowerCase() !== user?.correo?.trim().toLowerCase()
+        )
+      };
 
-        fetch(`http://localhost:3001/clases/${classDetail.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updatedClass)
+      fetch(`http://localhost:3001/clases/${classDetail.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedClass)
+      })
+        .then(() => {
+          setClassDetail(updatedClass);
+          updateClass(updatedClass);  // Actualizar el contexto
+
+          // Actualizar el mensaje de alerta
+          setAlertMessage('Tu inscripción ha sido cancelada con éxito.');
+          setOpenSnackbar(true);
         })
-          .then(() => {
-            setClassDetail(updatedClass);
-            updateClass(updatedClass);  // Actualizar el contexto
+        .catch(error => {
+          console.error('Error cancelando la inscripción:', error);
+          setAlertMessage('Hubo un error al cancelar tu inscripción. Inténtalo de nuevo.');
+          setOpenSnackbar(true);
+        });
 
-            // Actualizar el mensaje de alerta
-            setAlertMessage('Tu inscripción ha sido cancelada con éxito.');
-            setOpenSnackbar(true);
-          })
-          .catch(error => {
-            console.error('Error cancelando la inscripción:', error);
-            setAlertMessage('Hubo un error al cancelar tu inscripción. Inténtalo de nuevo.');
-            setOpenSnackbar(true);
-          });
-
-        closeConfirm();
-      },
-      onCancel: () => {
-        closeConfirm();
-      },
-    });
-  };
-
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters(prevFilters => ({
-      ...prevFilters,
-      [name]: value
-    }));
-  };
-
-  const clearFilters = () => {
-    setFilters({
-      nombre: '',
-      entrenador: '',
-      startTime: '',
-      endTime: ''
-    });
-  };
-
-  // Filtrar los inscritos
-  const filteredInscritos = classDetail?.inscritos?.filter(inscrito => {
-    return (
-      (filters.nombre === '' || inscrito.nombre.toLowerCase().includes(filters.nombre.toLowerCase()))
-    );
+      closeConfirm();
+    },
+    onCancel: () => {
+      closeConfirm();
+    },
   });
-  
+};
 
-  const handleModificarClase = () => {
-    setSelectedClass(classDetail); // Pass the full classDetail
-    setIsModalOpen(true);
-  };
+    const handleFilterChange = (e) => {
+      const { name, value } = e.target;
+      setFilters(prevFilters => ({
+        ...prevFilters,
+        [name]: value
+      }));
+    };
 
-  const handleToggleInscritos = () => {
-    setShowInscritos(!showInscritos);
-  };
-
-
-  const handleSubmitClass = (updatedClass) => {
-    // Save the updated class details
-    fetch(`http://localhost:3001/clases/${updatedClass.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedClass),
-    })
-      .then(() => {
-        setClassDetail(updatedClass);
-        updateClass(updatedClass); // Update the class in the context
-        setIsModalOpen(false); // Close the modal after success
-      })
-      .catch((error) => {
-        console.error('Error updating class:', error);
+    const clearFilters = () => {
+      setFilters({
+        nombre: '',
+        entrenador: '',
+        startTime: '',
+        endTime: ''
       });
-  };
+    };
+
+    // Filtrar los inscritos
+    const filteredInscritos = classDetail?.inscritos?.filter(inscrito => {
+      return (
+        (filters.nombre === '' || inscrito.nombre.toLowerCase().includes(filters.nombre.toLowerCase()))
+      );
+    });
+    
+    const handleModificarClase = () => {
+      setSelectedClass(classDetail);
+      setIsModalOpen(true);
+    };
+
+    const handleToggleInscritos = () => {
+      setShowInscritos(!showInscritos);
+    };
+
+
+    const handleSubmitClass = (updatedClass) => {
+      // Save the updated class details
+      fetch(`http://localhost:3001/clases/${updatedClass.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedClass),
+      })
+        .then(() => {
+          setClassDetail(updatedClass);
+          updateClass(updatedClass); // Update the class in the context
+          setIsModalOpen(false); // Close the modal after success
+        })
+        .catch((error) => {
+          console.error('Error updating class:', error);
+        });
+    };
 
 
   const [selectedClass, setSelectedClass] = useState(null);
@@ -276,6 +275,78 @@ setOpenSnackbar(true);
       </>
     );
   }
+
+  console.log('Datos de user.role', user.role);
+  console.log('Datos de user.tickets', user.tickets);
+  console.log('Datos de isUserEnrolled', isUserEnrolled);
+
+  const handleGastarTicket = () => {
+    openConfirm({
+      title: 'Confirmar Gasto de Ticket',
+      message: '¿Estás seguro de que deseas gastar 1 ticket para esta clase?',
+      onConfirm: () => {
+        if (user.tickets > 0) {
+          // Resta un ticket del usuario
+          const newTicketCount = user.tickets - 1;
+          const updatedUser = { ...user, tickets: newTicketCount };
+  
+          // Actualiza el estado del usuario en el contexto
+          setUser(updatedUser);
+  
+          // Guarda en localStorage
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+  
+          // Actualiza la clase con el nuevo inscrito
+          const updatedClass = {
+            ...classDetail,
+            cuposDisponibles: classDetail.cuposDisponibles - 1,
+            inscritos: [
+              ...classDetail.inscritos,
+              {
+                idCliente: user.id,
+                nombre: `${user.nombre || 'Nombre'} ${user.apellido || 'Apellido'}`, // Manejar valores undefined
+                correo: user.correo,
+                fechaInscripcion: new Date().toISOString(),
+                estadoPago: 'pagado con ticket'
+              }
+            ]
+          };
+  
+          // Enviar la actualización al servidor
+          fetch(`http://localhost:3001/clases/${classDetail.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedClass)
+          })
+          .then(() => {
+            setClassDetail(updatedClass);
+            updateClass(updatedClass);
+            setIsUserEnrolled(true);
+            setAlertMessage('Has gastado 1 ticket y te has inscrito en la clase.');
+            setOpenSnackbar(true);
+          })
+          .catch(error => {
+            console.error('Error al actualizar la clase:', error);
+            setAlertMessage('Ocurrió un error al inscribirte en la clase. Por favor, intenta nuevamente.');
+            setOpenSnackbar(true);
+          });
+        } else {
+          setAlertMessage('No tienes tickets disponibles.');
+          setOpenSnackbar(true);
+        }
+  
+        closeConfirm();
+      },
+      onCancel: () => {
+        closeConfirm();
+      }
+    });
+  };
+  
+  
+
+    console.log('Nombre:', user.nombre);
+    console.log('Apellido:', user.apellido);
 
   return (
     <>
@@ -313,12 +384,17 @@ setOpenSnackbar(true);
             <p className="class-total-slots"><strong>Cupos Totales:</strong> {classDetail.totalCupos}</p>
             <p className="class-available-slots"><strong>Cupos Disponibles:</strong> {classDetail.cuposDisponibles}</p>
             {user.role === 'client' && (
-              <div className="reservation-button">
-                {!isUserEnrolled ? (
+            <div className="reservation-button">
+              {!isUserEnrolled ? (
+                <>
                   <button className="buy-button" onClick={handleReservation}>Reservar</button>
-                ) : (
-                  <button className="cancelar-button" onClick={handleCancelarInscripcion}>Cancelar Clase</button>
-                )}
+                  {user.tickets > 0 && (
+                    <button className="buy-button" onClick={handleGastarTicket}>Gastar Ticket</button>
+                  )}
+                </>
+              ) : (
+                <button className="cancelar-button" onClick={handleCancelarInscripcion}>Cancelar Clase</button>
+              )}
               </div>
             )}
           </div>
@@ -335,8 +411,8 @@ setOpenSnackbar(true);
         )}
       </div>
 
-       {/* Modal de Confirmación */}
-       <ConfirmationModal
+      {/* Modal de Confirmación */}
+      <ConfirmationModal
         isOpen={isOpen}
         title={confirmationOptions.title}
         message={confirmationOptions.message}

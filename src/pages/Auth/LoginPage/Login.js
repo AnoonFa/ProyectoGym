@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import eyeIcon from '../../../assets/icons/OjoAbierto.png';
 import eyeOffIcon from '../../../assets/icons/OjoBloqueado.png';
 import logo from '../../../assets/images/David&GoliatLogo.png';
-import Alert from '@mui/material/Alert'; // Importar Alert de Material-UI
+import Alert from '@mui/material/Alert';
 
 const Login = () => {
   const { setUser } = useAuth();
@@ -15,10 +15,6 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(prevState => !prevState);
-  };
 
   const handleLogin = async () => {
     if (username && password) {
@@ -31,13 +27,16 @@ const Login = () => {
           const data = await response.json();
 
           if (Array.isArray(data) && data.length > 0) {
-            // Verificar si la contraseña coincide
             if (data.some(user => user.password === password)) {
               userFound = {
                 role,
                 username: data[0].usuario,
                 tipoCuerpo: data[0].tipoCuerpo,
-                id: data[0].id
+                id: data[0].id,
+                nombre: data[0].nombre,
+                apellido: data[0].apellido,
+                correo: data[0].correo,
+                tickets: data[0].tickets || 0 // Asumiendo que los tickets se guardan en la base de datos
               };
               break;
             }
@@ -45,12 +44,8 @@ const Login = () => {
         }
 
         if (userFound) {
-          setUser({
-            role: userFound.role,
-            username: userFound.username,
-            tipoCuerpo: userFound.tipoCuerpo,
-            id: userFound.id
-          });
+          setUser(userFound);
+          localStorage.setItem('user', JSON.stringify(userFound)); // Guardar en localStorage
           if (userFound.role === 'client') {
             navigate('/ClienteIndex');
           } else if (userFound.role === 'admin' || userFound.role === 'employee') {
@@ -72,11 +67,16 @@ const Login = () => {
     navigate("/"); // Limpiar el mensaje del alert al cerrarlo
   };
 
+  // Define la función togglePasswordVisibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(prevState => !prevState);
+  };
+
   return (
     <div className="app-container-login">
       <div className="fondo-wrapper">
         <div className="fondo">
-        <img onClick={handleVolverIndex} className='ImagenLogo-login' src={logo} alt="Logo" />
+          <img onClick={handleVolverIndex} className='ImagenLogo-login' src={logo} alt="Logo" />
           <div className='contenedor-form-login'> 
             <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
               <h2>Iniciar sesión</h2>
@@ -102,7 +102,7 @@ const Login = () => {
                   src={showPassword ? eyeIcon : eyeOffIcon}
                   alt="Toggle Password Visibility"
                   className="password-toggle-icon"
-                  onClick={togglePasswordVisibility}
+                  onClick={togglePasswordVisibility} // Usa la función definida
                 />
               </div>
               {/*<div className="recordar">

@@ -65,7 +65,7 @@ const Buscar = ({ clientInfo, onClose }) => {
 
   const handleBackClick = () => {
     if (typeof onClose === 'function') {
-      onClose(); // Cierra la tabla y vuelve a la página de búsqueda
+      onClose();
     }
   };
 
@@ -87,7 +87,6 @@ const Buscar = ({ clientInfo, onClose }) => {
       if (response.ok) {
         setEditingId(null);
         showAlert('Cliente actualizado correctamente', 'success');
-        // Fetch clients again to update the client list
         const updatedResponse = await fetch('http://localhost:3001/client');
         const updatedData = await updatedResponse.json();
         setClients(updatedData);
@@ -137,89 +136,65 @@ const Buscar = ({ clientInfo, onClose }) => {
           className="search-input"
         />
       </div>
-      <table className="client-table">
-        <thead>
-          <tr>
-            <th>Foto</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Género</th>
-            <th>Tipo de cuerpo</th>
-            <th>Peso</th>
-            <th>Altura</th>
-            <th>Usuario</th>
-            <th>Contraseña</th>
-            <th>Clase</th>
-            <th>Plan</th>
-            <th>Ticketera</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredClients.map(client => (
-            <tr key={client.id}>
-              <td><img src={Foto} alt="User" className="client-photo" /></td>
-              <td>
-                {editingId === client.id ? 
-                  <input 
-                    value={client.nombre} 
-                    onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, nombre: e.target.value } : c))} 
-                  /> : 
-                  client.nombre}
-              </td>
-              <td>
-                {editingId === client.id ? 
-                  <input 
-                    value={client.apellido} 
-                    onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, apellido: e.target.value } : c))} 
-                  /> : 
-                  client.apellido}
-              </td>
-              <td>{client.sexo}</td>
-              <td>{client.tipoCuerpo}</td>
-              <td>
-                {editingId === client.id ? 
-                  <input 
-                    value={client.peso} 
-                    onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, peso: e.target.value } : c))} 
-                  /> : 
-                  client.peso}
-              </td>
-              <td>
-                {editingId === client.id ? 
-                  <input 
-                    value={client.altura} 
-                    onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, altura: e.target.value } : c))} 
-                  /> : 
-                  client.altura}
-              </td>
-              <td>
-                {editingId === client.id ? 
-                  <input 
-                    value={client.usuario} 
-                    onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, usuario: e.target.value } : c))} 
-                  /> : 
-                  client.usuario}
-              </td>
-              <td>{client.password}</td>
-              <td>{client.clase || 'N/A'}</td>
-              <td>{client.planes || 'N/A'}</td>
-              <td>{client.tickets || 0}</td>
-              <td>
-                {editingId === client.id ? (
-                  <button onClick={() => handleSave(client.id)} className="save-button">Guardar</button>
-                ) : (
-                  <button onClick={() => handleEdit(client.id)} className="edit-button">Editar</button>
-                )}
-                <button onClick={() => handleDisable(client.id)} className="disable-button">Inhabilitar</button>
-              </td>
+      <div className="table-container">
+        <table className="client-table">
+          <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Tipo de Documento</th>
+              <th>Número de Documento</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+              <th>Género</th>
+              <th>Tipo de cuerpo</th>
+              <th>Peso</th>
+              <th>Altura</th>
+              <th>Usuario</th>
+              <th>Contraseña</th>
+              <th>Clase</th>
+              <th>Plan</th>
+              <th>Tickets</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredClients.map(client => (
+              <tr key={client.id}>
+                <td><img src={Foto} alt="User" className="client-photo" /></td>
+                <td>{editingId === client.id ? <input value={client.nombre} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, nombre: e.target.value } : c))} /> : client.nombre}</td>
+                <td>{editingId === client.id ? <input value={client.apellido} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, apellido: e.target.value } : c))} /> : client.apellido}</td>
+                <td>{client.tipoDocumento}</td>
+                <td>{client.numeroDocumento}</td>
+                <td>{client.correo}</td>
+                <td>{client.telefono}</td>
+                <td>{client.sexo}</td>
+                <td>{client.tipoCuerpo}</td>
+                <td>{editingId === client.id ? <input value={client.peso} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, peso: e.target.value } : c))} /> : client.peso}</td>
+                <td>{editingId === client.id ? <input value={client.altura} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, altura: e.target.value } : c))} /> : client.altura}</td>
+                <td>{editingId === client.id ? <input value={client.usuario} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, usuario: e.target.value } : c))} /> : client.usuario}</td>
+                <td>{client.password}</td>
+                <td>{client.clase || 'N/A'}</td>
+                <td>{client.planes || 'N/A'}</td>
+                <td>{client.tickets || 0}</td>
+                <td>
+                  {editingId === client.id ? (
+                    <button onClick={() => handleSave(client.id)} className="save-button">Guardar</button>
+                  ) : (
+                    <button onClick={() => handleEdit(client.id)} className="edit-button">Editar</button>
+                  )}
+                  <button onClick={() => handleDisable(client.id)} className="disable-button">Inhabilitar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <button onClick={handleBackClick} className="volver-button-Buscar">Volver</button>
     </div>
   );
 };
+
 
 export default Buscar;

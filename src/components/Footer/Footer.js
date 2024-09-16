@@ -16,8 +16,8 @@ function Footer() {
           <p>Tv. 14c Este #5489, Bogota</p>
         </div>
         <div className="footer-section">
-          <h3 className="footer-heading">Teléfono Fijo</h3>
-          <p>+57 (601) 456-7890</p>
+          <h3 className="footer-heading">Teléfono </h3>
+          <p>3115927446</p>
         </div>
       </div>
       <hr className="footer-divider" />

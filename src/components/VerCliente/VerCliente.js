@@ -7,18 +7,18 @@ import Mostrar from './InformacionCliente/Buscar';
 import Alert from '@mui/material/Alert'; 
 
 function VerCliente() {
-  const [showForm, setShowForm] = useState(false); 
-  const [showSearch, setShowSearch] = useState(true); 
-  const [showModal, setShowModal] = useState(false); 
+  const [showForm, setShowForm] = useState(false);
+  const [showSearch, setShowSearch] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [clientInfo, setClientInfo] = useState(null);
   const [userInput, setUserInput] = useState('');
   const [clientes, setClientes] = useState([]);
   const [filteredClientes, setFilteredClientes] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedClient, setSelectedClient] = useState(null); // Nuevo estado para el cliente seleccionado
-  const [alertMessage, setAlertMessage] = useState(null); 
+  const [selectedClient, setSelectedClient] = useState(null);
+  const [alertMessage, setAlertMessage] = useState(null);
   const [alertType, setAlertType] = useState('');
-  const [showAlert, setShowAlert] = useState(false); // Nuevo estado para controlar la visibilidad del Alert
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:3001/client')
@@ -26,8 +26,8 @@ function VerCliente() {
       .then(data => {
         const clientesList = data.map(c => ({
           id: c.id,
-          nombreCompleto: `${c.nombre} ${c.apellido}`,
-          usuario: c.usuario
+          numeroDocumento: c.numeroDocumento,
+          nombreCompleto: `${c.nombre} ${c.apellido}`
         }));
         setClientes(clientesList);
       })
@@ -39,34 +39,32 @@ function VerCliente() {
   useEffect(() => {
     setFilteredClientes(
       clientes.filter(cliente =>
-        cliente.nombreCompleto.toLowerCase().includes(userInput.toLowerCase()) ||
-        cliente.usuario.toLowerCase().includes(userInput.toLowerCase())
+        cliente.numeroDocumento.includes(userInput)
       )
     );
     setShowDropdown(userInput.length > 0);
   }, [userInput, clientes]);
 
   useEffect(() => {
-    // Habilitar/Deshabilitar el botón Buscar en función del estado de entrada y cliente seleccionado
-    setSelectedClient(filteredClientes.find(cliente => cliente.nombreCompleto === userInput) || null);
+    setSelectedClient(filteredClientes.find(cliente => cliente.numeroDocumento === userInput) || null);
   }, [userInput, filteredClientes]);
 
   const handleAddClientClick = (event) => {
     event.preventDefault();
-    setShowForm(true); 
-    setShowSearch(true); // Muestra la búsqueda si el formulario está visible
-    setShowModal(false); 
+    setShowForm(true);
+    setShowSearch(true);
+    setShowModal(false);
   };
 
   const handleSelectCliente = async (cliente) => {
-    setUserInput(cliente.nombreCompleto);
-    setSelectedClient(cliente); // Actualiza el cliente seleccionado
+    setUserInput(cliente.numeroDocumento);
+    setSelectedClient(cliente);
     try {
       const response = await fetch(`http://localhost:3001/client/${cliente.id}`);
       const data = await response.json();
       setClientInfo(data);
       setShowModal(true);
-      setShowForm(false); 
+      setShowForm(false);
     } catch (error) {
       console.error('Error fetching client data:', error);
       setAlertMessage('Error al obtener la información del cliente');
@@ -78,24 +76,23 @@ function VerCliente() {
   const handleSearchClick = async (event) => {
     event.preventDefault();
 
-    // Mostrar el alert si no hay entrada de usuario y no se ha seleccionado un cliente
-    if (!userInput.trim() && !selectedClient) {
-      setAlertMessage('Por favor, ingrese un nombre o seleccione un cliente.');
+    if (!userInput.trim()) {
+      setAlertMessage('Por favor, ingrese un número de documento.');
       setAlertType('warning');
       setShowAlert(true);
       return;
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/client?usuario=${userInput}`);
+      const response = await fetch(`http://localhost:3001/client?numeroDocumento=${userInput}`);
       const data = await response.json();
       if (data.length) {
         setClientInfo(data[0]);
         setShowModal(true);
         setShowForm(false);
       } else {
-        setAlertMessage('Cliente no encontrado'); 
-        setAlertType('error'); 
+        setAlertMessage('Cliente no encontrado');
+        setAlertType('error');
         setShowAlert(true);
       }
     } catch (error) {
@@ -112,7 +109,12 @@ function VerCliente() {
   };
 
   const handleCloseAlert = () => {
-    setShowAlert(false); 
+    setShowAlert(false);
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value.replace(/\D/g, ''); // Solo permite dígitos
+    setUserInput(value);
   };
 
   return (
@@ -134,15 +136,16 @@ function VerCliente() {
                   <h1 className="vkz-form-title">Buscar cliente</h1>
                   <div className="vkz-input-group">
                     <label htmlFor="Usuario" className="vkz-input-label">
-                      Nombre y Apellido
+                      Número de Documento
                     </label>
                     <input
                       id="Usuario"
-                      placeholder="Ingrese el nombre y apellido"
+                      placeholder="Ingrese el Número de Documento"
                       className="vkz-input-field"
                       value={userInput}
-                      onChange={(e) => setUserInput(e.target.value)}
+                      onChange={handleInputChange}
                       onFocus={() => setShowDropdown(true)}
+                      type="text"
                     />
                     {showDropdown && userInput && (
                       <ul className="dropdown-list-Cliente">
@@ -153,7 +156,7 @@ function VerCliente() {
                               onClick={() => handleSelectCliente(cliente)}
                               className="dropdown-list-item-Cliente"
                             >
-                              {cliente.nombreCompleto} ({cliente.usuario})
+                              {cliente.nombreCompleto}
                             </li>
                           ))
                         ) : (

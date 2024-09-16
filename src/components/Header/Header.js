@@ -45,6 +45,10 @@ const Header = () => {
   };
 
   const stringToColor = (str) => {
+    if (!str) {  // Si la cadena es undefined, null, o vacía
+      return '#000000'; // Devuelve un color por defecto
+    }
+  
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
@@ -55,7 +59,7 @@ const Header = () => {
       color += ('00' + value.toString(16)).slice(-2);
     }
     return color;
-  };
+  };  
 
   const handleEditProfileClick = () => {
     setShowModal(true); // Mostrar el modal
@@ -149,10 +153,10 @@ const Header = () => {
             <div className="profile-section">
               <div
                 className="profile-avatar"
-                style={{ backgroundColor: stringToColor(user.username) }}
+                style={{ backgroundColor: stringToColor(user?.username || 'default') }} // Usamos 'default' si user.username es undefined
                 onClick={handleProfileClick}
               >
-                {getInitials(user.username)} {/* Muestra la inicial */}
+                {getInitials(user?.username || 'Usuario')} {/* Muestra la inicial o 'Usuario' si username no existe */}
               </div>
 
               {showProfileMenu && (

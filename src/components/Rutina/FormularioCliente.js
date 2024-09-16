@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './RutinaAdminIndex.css';
 
 const FormularioCliente = ({ onClienteSeleccionado }) => {
-  const [cliente, setCliente] = useState(''); 
+  const [cliente, setCliente] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [clientes, setClientes] = useState([]);
-  const [clienteSeleccionado, setClienteSeleccionado] = useState(false); // Nuevo estado para controlar si se selecciona un cliente
+  const [clienteSeleccionado, setClienteSeleccionado] = useState(false);
 
   useEffect(() => {
     // Obtener la lista de clientes desde el servidor
@@ -15,7 +15,7 @@ const FormularioCliente = ({ onClienteSeleccionado }) => {
         const clientesList = data.map(c => ({
           id: c.id,
           nombre: `${c.nombre} ${c.apellido}`,
-          tipo: c.tipoCuerpo || 'Desconocido'
+          numeroDocumento: c.numeroDocumento // Agregar numeroDocumento
         }));
         setClientes(clientesList);
       })
@@ -25,7 +25,11 @@ const FormularioCliente = ({ onClienteSeleccionado }) => {
   }, []);
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
+    // Aceptar solo números
+    const input = e.target.value;
+    if (!isNaN(input)) {
+      setSearchTerm(input);
+    }
   };
 
   const handleSelectCliente = (id) => {
@@ -35,17 +39,18 @@ const FormularioCliente = ({ onClienteSeleccionado }) => {
     setClienteSeleccionado(true); // Cliente seleccionado, cambiar el estado
   };
 
+  // Filtrar clientes por numeroDocumento
   const filteredClientes = clientes.filter(cliente =>
-    cliente.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    cliente.numeroDocumento.includes(searchTerm)
   );
 
   return (
     <div className={`formularioXD ${clienteSeleccionado ? 'no-margin' : ''}`}>
-      <label>Seleccione Cliente:</label>
+      <label>Buscar Cliente:</label>
       <div className="input-container">
         <input
           type="text"
-          placeholder="Buscar cliente..."
+          placeholder="Ingrese número de documento"
           value={searchTerm}
           onChange={handleSearchChange}
           className="search-input"
@@ -59,7 +64,7 @@ const FormularioCliente = ({ onClienteSeleccionado }) => {
                   onClick={() => handleSelectCliente(cliente.id)}
                   className="dropdown-list-item"
                 >
-                  {cliente.nombre}
+                  {cliente.nombre} {/* Mostrar nombre y apellido */}
                 </li>
               ))
             ) : (
