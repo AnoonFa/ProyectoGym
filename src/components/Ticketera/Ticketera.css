@@ -1,9 +1,8 @@
-/* General Styles */
 .ver-ticketera-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  margin: 9% auto 5%;
   position: relative;
   padding: 1rem; /* Agrega un poco de espacio en los bordes */
 }
@@ -13,6 +12,7 @@
   grid-template-columns: 1fr 1fr;
   max-width: 1200px;
   width: 100%;
+  gap: 250px;
 }
 
 .ver-ticketera-tickets,
@@ -28,8 +28,18 @@
   align-items: center;
   justify-content: center;
   max-width: 300px;
-  margin: 0 auto;
   background-color: #f5f5f5;
+  text-align: center; /* Asegura que el número esté centrado debajo de las imágenes */
+}
+
+.ver-ticketera-tickets img {
+  width: 100px; /* Ajusta el tamaño de las imágenes según lo necesites */
+  height: auto; /* Mantiene la proporción de las imágenes */
+  margin: 0 10px; /* Espacio horizontal entre las imágenes */
+}
+
+.ver-ticketera-tickets p {
+  margin-top: 10px; /* Espacio entre las imágenes y el número */
 }
 
 .ver-ticketera-compra {
@@ -253,7 +263,7 @@
 
 
 
-/* Ticketera */
+/* Confirmacion */
 
 
 .confirmacion-container {

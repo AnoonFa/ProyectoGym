@@ -5,23 +5,27 @@ import AñadirRutina from './AñadirRutina';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './RutinaAdminIndex.css';
+import imageReferencia from '../../assets/images/Ejercicios/icono-del-calendario-y-reloj-104702326.jpg';
 
 const RutinaAdminIndex = () => {
   const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
   const [formularioVisible, setFormularioVisible] = useState(null); // 'modificar', 'añadir' o null
   const [expansionState, setExpansionState] = useState('collapsed'); // Estado para la expansión
   const [noMargin, setNoMargin] = useState(false); // Estado para manejar el margen
+  const [imagenVisible, setImagenVisible] = useState(true); // Nuevo estado para la visibilidad de la imagen
 
   const handleClienteSeleccionado = (cliente) => {
     setClienteSeleccionado(cliente);
     setFormularioVisible('modificar');
     setExpansionState('modificar-phase');
     setNoMargin(true); // Elimina el margen al seleccionar un cliente
+    setImagenVisible(false); // Oculta la imagen al seleccionar un cliente
   };
 
   const mostrarFormulario = (tipo) => {
     setFormularioVisible(tipo);
     setNoMargin(true); // Elimina el margen al hacer clic en un botón
+    setImagenVisible(false); // Oculta la imagen al hacer clic en un botón
     if (tipo === 'añadir') {
       setExpansionState('añadir-phase');
     } else if (tipo === 'modificar') {
@@ -48,6 +52,12 @@ const RutinaAdminIndex = () => {
             <i className="fas fa-edit"></i> Modificar
           </button>
         </div>
+
+        {imagenVisible && (
+          <div className="Cotenedor-image">
+            <img src={imageReferencia} alt="Icono de calendario y reloj" className="imagen-referencia" />
+          </div>
+        )}
 
         {formularioVisible === 'modificar' && (
           <div className="form-container-slide-down">

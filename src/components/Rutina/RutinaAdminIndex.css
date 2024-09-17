@@ -1,7 +1,7 @@
 .rutina-admin-container {
   text-align: center;
   margin-top: 8%;
-  margin-bottom: 17.25%;
+  margin-bottom: 5%;
   transition: margin-bottom 0.5s ease-in-out, width 1s ease-in-out, max-height 1s ease-in-out;
 }
 
@@ -55,6 +55,23 @@
 
 .fas {
   font-size: 1.2em;
+}
+
+.Cotenedor-image{
+  width: 300px; /* Ancho del área visible */
+  height: 200px; /* Alto del área visible */
+  overflow: hidden; /* Oculta la parte de la imagen que queda fuera del contenedor */
+  position: relative;
+  margin: auto;
+}
+
+.imagen-referencia{
+  position: absolute;
+  top: 50%; /* Centra la imagen verticalmente */
+  left: 50%; /* Centra la imagen horizontalmente */
+  transform: translate(-50%, -50%); /* Ajusta el centrado */
+  width: 100%; /* Ajusta el ancho de la imagen al contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
 }
 
 

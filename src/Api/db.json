@@ -51,7 +51,7 @@
       "correo": "estebanpineros43@gmail.com",
       "telefono": "3196699831",
       "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Remo con barra T\",\"series\":3,\"repeticiones\":10,\"descanso\":60}]",
-      "tickets": 12
+      "tickets": 9
     },
     {
       "id": "2",
@@ -167,20 +167,6 @@
       "cuposDisponibles": 30,
       "fecha": "2024-10-08",
       "precio": "9800",
-      "inscritos": []
-    },
-    {
-      "id": "0700",
-      "nombre": "Prueba 4",
-      "entrenador": "lagrasa",
-      "startTime": "05:36",
-      "endTime": "08:31",
-      "day": "2024-11-08",
-      "descripcion": "Esta clase se esta creando para realizar pruebas con la relacion de ticketeras\n\nLa grasa va primero y el XD sera eterno",
-      "totalCupos": "50",
-      "cuposDisponibles": "50",
-      "fecha": "2024-11-08",
-      "precio": "12500",
       "inscritos": []
     }
   ],

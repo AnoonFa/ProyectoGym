@@ -123,6 +123,7 @@ const ClassDetail = () => {
                 .then(() => {
                   setClassDetail(updatedClass);
                   updateClass(updatedClass);
+                  setIsUserEnrolled(true); // Actualizar el estado de inscripción
                   setAlertMessage('Te has inscrito con éxito. Recuerda pagar en el gimnasio.');
                   setOpenSnackbar(true);
                 })
@@ -154,45 +155,65 @@ const ClassDetail = () => {
     }
   };
 
-   const handleCancelarInscripcion = () => {
-  openConfirm({
-    title: 'Confirmar Cancelación',
-    message: '¿Estás seguro de que deseas cancelar tu inscripción? No hay reembolzos ',
-    onConfirm: () => {
-      const updatedClass = {
-        ...classDetail,
-        cuposDisponibles: classDetail.cuposDisponibles + 1,
-        inscritos: classDetail.inscritos.filter(inscrito => 
-          inscrito?.correo?.trim().toLowerCase() !== user?.correo?.trim().toLowerCase()
-        )
-      };
-
-      fetch(`http://localhost:3001/clases/${classDetail.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedClass)
-      })
-        .then(() => {
+  const handleCancelarInscripcion = () => {
+    openConfirm({
+      title: 'Confirmar Cancelación',
+      message: '¿Estás seguro de que deseas cancelar tu inscripción? Se te devolverá el ticket.',
+      onConfirm: async () => {
+        try {
+          // Actualizar la clase
+          const updatedClass = {
+            ...classDetail,
+            cuposDisponibles: classDetail.cuposDisponibles + 1,
+            inscritos: classDetail.inscritos.filter(inscrito => 
+              inscrito?.correo?.trim().toLowerCase() !== user?.correo?.trim().toLowerCase()
+            )
+          };
+  
+          const classResponse = await fetch(`http://localhost:3001/clases/${classDetail.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedClass)
+          });
+  
+          if (!classResponse.ok) throw new Error('Error al actualizar la clase');
+  
+          // Actualizar los tickets del usuario
+          const newTicketCount = user.tickets + 1;
+          const userResponse = await fetch(`http://localhost:3001/client/${user.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ tickets: newTicketCount })
+          });
+  
+          if (!userResponse.ok) throw new Error('Error al actualizar los tickets del usuario');
+  
+          const updatedUser = await userResponse.json();
+  
+          // Actualizar estados locales
           setClassDetail(updatedClass);
-          updateClass(updatedClass);  // Actualizar el contexto
-
-          // Actualizar el mensaje de alerta
-          setAlertMessage('Tu inscripción ha sido cancelada con éxito.');
+          updateClass(updatedClass);
+          setUser(prevUser => ({
+            ...prevUser,
+            tickets: updatedUser.tickets
+          }));
+          setIsUserEnrolled(false);  // Cambiar el estado de inscripción
+  
+          setAlertMessage('Tu inscripción ha sido cancelada y se te ha devuelto el ticket.');
           setOpenSnackbar(true);
-        })
-        .catch(error => {
+        } catch (error) {
           console.error('Error cancelando la inscripción:', error);
           setAlertMessage('Hubo un error al cancelar tu inscripción. Inténtalo de nuevo.');
           setOpenSnackbar(true);
-        });
-
-      closeConfirm();
-    },
-    onCancel: () => {
-      closeConfirm();
-    },
-  });
-};
+        }
+  
+        closeConfirm();
+      },
+      onCancel: () => {
+        closeConfirm();
+      }
+    });
+  };
 
     const handleFilterChange = (e) => {
       const { name, value } = e.target;
@@ -284,52 +305,61 @@ const ClassDetail = () => {
     openConfirm({
       title: 'Confirmar Gasto de Ticket',
       message: '¿Estás seguro de que deseas gastar 1 ticket para esta clase?',
-      onConfirm: () => {
+      onConfirm: async () => {
         if (user.tickets > 0) {
-          // Resta un ticket del usuario
-          const newTicketCount = user.tickets - 1;
-          const updatedUser = { ...user, tickets: newTicketCount };
+          try {
+            // Primero, actualizamos la clase
+            const updatedClass = {
+              ...classDetail,
+              cuposDisponibles: classDetail.cuposDisponibles - 1,
+              inscritos: [
+                ...classDetail.inscritos,
+                {
+                  idCliente: user.id,
+                  nombre: `${user.nombre || 'Nombre'} ${user.apellido || 'Apellido'}`,
+                  correo: user.correo,
+                  fechaInscripcion: new Date().toISOString(),
+                  estadoPago: 'pagado con ticket'
+                }
+              ]
+            };
   
-          // Actualiza el estado del usuario en el contexto
-          setUser(updatedUser);
+            const classResponse = await fetch(`http://localhost:3001/clases/${classDetail.id}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(updatedClass)
+            });
   
-          // Guarda en localStorage
-          localStorage.setItem('user', JSON.stringify(updatedUser));
+            if (!classResponse.ok) throw new Error('Error al actualizar la clase');
   
-          // Actualiza la clase con el nuevo inscrito
-          const updatedClass = {
-            ...classDetail,
-            cuposDisponibles: classDetail.cuposDisponibles - 1,
-            inscritos: [
-              ...classDetail.inscritos,
-              {
-                idCliente: user.id,
-                nombre: `${user.nombre || 'Nombre'} ${user.apellido || 'Apellido'}`, // Manejar valores undefined
-                correo: user.correo,
-                fechaInscripcion: new Date().toISOString(),
-                estadoPago: 'pagado con ticket'
-              }
-            ]
-          };
+            // Luego, actualizamos los tickets del usuario
+            const newTicketCount = user.tickets - 1;
+            const userResponse = await fetch(`http://localhost:3001/client/${user.id}`, {
+              method: 'PATCH',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ tickets: newTicketCount })
+            });
   
-          // Enviar la actualización al servidor
-          fetch(`http://localhost:3001/clases/${classDetail.id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedClass)
-          })
-          .then(() => {
+            if (!userResponse.ok) throw new Error('Error al actualizar los tickets del usuario');
+  
+            const updatedUser = await userResponse.json();
+  
+            // Actualizamos el estado local y el contexto de una sola vez
             setClassDetail(updatedClass);
             updateClass(updatedClass);
+            setUser(prevUser => ({
+              ...prevUser,
+              tickets: updatedUser.tickets
+            }));
             setIsUserEnrolled(true);
+  
             setAlertMessage('Has gastado 1 ticket y te has inscrito en la clase.');
             setOpenSnackbar(true);
-          })
-          .catch(error => {
-            console.error('Error al actualizar la clase:', error);
-            setAlertMessage('Ocurrió un error al inscribirte en la clase. Por favor, intenta nuevamente.');
+          } catch (error) {
+            console.error('Error:', error);
+            setAlertMessage('Ocurrió un error. Por favor, intenta nuevamente.');
             setOpenSnackbar(true);
-          });
+          }
         } else {
           setAlertMessage('No tienes tickets disponibles.');
           setOpenSnackbar(true);
@@ -384,17 +414,17 @@ const ClassDetail = () => {
             <p className="class-total-slots"><strong>Cupos Totales:</strong> {classDetail.totalCupos}</p>
             <p className="class-available-slots"><strong>Cupos Disponibles:</strong> {classDetail.cuposDisponibles}</p>
             {user.role === 'client' && (
-            <div className="reservation-button">
-              {!isUserEnrolled ? (
-                <>
-                  <button className="buy-button" onClick={handleReservation}>Reservar</button>
-                  {user.tickets > 0 && (
-                    <button className="buy-button" onClick={handleGastarTicket}>Gastar Ticket</button>
-                  )}
-                </>
-              ) : (
-                <button className="cancelar-button" onClick={handleCancelarInscripcion}>Cancelar Clase</button>
-              )}
+              <div className="reservation-button">
+                {isUserEnrolled ? (
+                  <button className="cancelar-button" onClick={handleCancelarInscripcion}>Cancelar Clase</button>
+                ) : (
+                  <>
+                    <button className="buy-button" onClick={handleReservation}>Reservar</button>
+                    {user.tickets > 0 && (
+                      <button className="buy-button" onClick={handleGastarTicket}>Gastar Ticket</button>
+                    )}
+                  </>
+                )}
               </div>
             )}
           </div>

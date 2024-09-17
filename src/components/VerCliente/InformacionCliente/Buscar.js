@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Buscar.css';
-import Foto from '../../../assets/icons/userIcon.png';
+// import Foto from '../../../assets/icons/userIcon.png';
 import Alert from '@mui/material/Alert';
 
 const Buscar = ({ clientInfo, onClose }) => {
@@ -140,7 +140,7 @@ const Buscar = ({ clientInfo, onClose }) => {
         <table className="client-table">
           <thead>
             <tr>
-              <th>Foto</th>
+              {/* <th>Foto</th> }*/}
               <th>Nombre</th>
               <th>Apellido</th>
               <th>Tipo de Documento</th>
@@ -156,13 +156,13 @@ const Buscar = ({ clientInfo, onClose }) => {
               <th>Clase</th>
               <th>Plan</th>
               <th>Tickets</th>
-              <th>Acciones</th>
+              <th>Accion</th>
             </tr>
           </thead>
           <tbody>
             {filteredClients.map(client => (
               <tr key={client.id}>
-                <td><img src={Foto} alt="User" className="client-photo" /></td>
+                {/* <td><img src={Foto} alt="User" className="client-photo" /></td>*/}
                 <td>{editingId === client.id ? <input value={client.nombre} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, nombre: e.target.value } : c))} /> : client.nombre}</td>
                 <td>{editingId === client.id ? <input value={client.apellido} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, apellido: e.target.value } : c))} /> : client.apellido}</td>
                 <td>{client.tipoDocumento}</td>
@@ -184,7 +184,7 @@ const Buscar = ({ clientInfo, onClose }) => {
                   ) : (
                     <button onClick={() => handleEdit(client.id)} className="edit-button">Editar</button>
                   )}
-                  <button onClick={() => handleDisable(client.id)} className="disable-button">Inhabilitar</button>
+                  {/* <button onClick={() => handleDisable(client.id)} className="disable-button">Inhabilitar</button>*/}
                 </td>
               </tr>
             ))}
