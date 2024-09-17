@@ -120,9 +120,9 @@ function VerTicketera() {
           <div className="ver-ticketera-tickets">
             <h2 className="ver-ticketera-title">Mis Tickets</h2>
             <p className="ver-ticketera-text">Tienes {availableTickets} tickets disponibles</p>
-            <img src={nequi} alt="logo nequi" />
+           {/*  <img src={nequi} alt="logo nequi" />
             <img src={daviplata} alt="logo daviplata" />
-            <p> 3115927446 </p>
+            <p> 3115927446 </p>*/}
           </div>
 
           <div className="ver-ticketera-compra">
