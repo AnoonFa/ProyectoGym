@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import { useAuth } from '../../context/RoleContext'; // Import the useAuth hook
+import { useAuth } from '../../context/RoleContext'; // Importamos el hook de autenticación
 import './PerfilEditarModal.css';
 
 const PerfilEditarModal = ({ onClose }) => {
-  const { user, setUser } = useAuth(); // Access user from context
+  const { user, setUser } = useAuth(); // Obtenemos el usuario y la función para actualizarlo
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -23,23 +23,62 @@ const PerfilEditarModal = ({ onClose }) => {
   const [alertMessage, setAlertMessage] = useState('');
   const [alertType, setAlertType] = useState(null);
 
+  // Función para mostrar alertas
+  const showAlertWithTimeout = (type, message, timeout = 5000) => {
+    setShowAlert(true);
+    setAlertMessage(message);
+    setAlertType(type);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, timeout);
+  };
+
+  // Cargar los datos del usuario
   useEffect(() => {
-    if (user) {
-      console.log(user); // Debug: Check if user data is loaded correctly
-      setFormData({
-        nombre: user.nombre || '',
-        apellido: user.apellido || '',
-        genero: user.sexo || '',
-        tipoCuerpo: user.tipoCuerpo || '',
-        peso: user.peso || '',
-        altura: user.altura || '',
-        password: user.password || '',
-        correo: user.correo || '',
-        telefono: user.telefono || ''
-      });
+    if (user && user.id) {
+      let apiUrl = '';
+      switch (user.role) {
+        case 'admin':
+          apiUrl = `http://localhost:3001/admin/${user.id}`;
+          break;
+        case 'employee':
+          apiUrl = `http://localhost:3001/employee/${user.id}`;
+          break;
+        case 'client':
+          apiUrl = `http://localhost:3001/client/${user.id}`;
+          break;
+        default:
+          console.error('Rol de usuario no reconocido');
+          return;
+      }
+
+      fetch(apiUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setFormData({
+            nombre: data.nombre || '',
+            apellido: data.apellido || '',
+            genero: data.sexo || data.genero || '',
+            tipoCuerpo: data.tipoCuerpo || '',
+            peso: data.peso || '',
+            altura: data.altura || '',
+            password: '', // Contraseña en blanco por seguridad
+            correo: data.correo || '',
+            telefono: data.telefono || ''
+          });
+        })
+        .catch((error) => {
+          showAlertWithTimeout('error', `Error al cargar los datos del usuario: ${error.message}`);
+        });
     }
   }, [user]);
 
+  // Validar campos
   const validateField = (field, value) => {
     const newErrors = { ...errors };
     switch (field) {
@@ -48,7 +87,7 @@ const PerfilEditarModal = ({ onClose }) => {
         else delete newErrors.genero;
         break;
       case 'password':
-        if (!value || value.length < 8) newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
+        if (value && value.length < 8) newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
         else delete newErrors.password;
         break;
       case 'correo':
@@ -65,6 +104,7 @@ const PerfilEditarModal = ({ onClose }) => {
     setErrors(newErrors);
   };
 
+  // Manejar cambios en los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -74,18 +114,50 @@ const PerfilEditarModal = ({ onClose }) => {
     validateField(name, value);
   };
 
+  // Enviar los datos del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (Object.keys(errors).length === 0) {
-      const updatedUser = { ...user, ...formData };
-      setUser(updatedUser); // Update the user in context
-      setShowAlert(true);
-      setAlertType('success');
-      setAlertMessage('Perfil actualizado correctamente.');
+      let apiUrl = '';
+      switch (user.role) {
+        case 'admin':
+          apiUrl = `http://localhost:3001/admin/${user.id}`;
+          break;
+        case 'employee':
+          apiUrl = `http://localhost:3001/employee/${user.id}`;
+          break;
+        case 'client':
+          apiUrl = `http://localhost:3001/client/${user.id}`;
+          break;
+        default:
+          console.error('Rol de usuario no reconocido');
+          return;
+      }
+
+      fetch(apiUrl, {
+        method: 'PATCH', // PATCH para actualizar parcialmente
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Error al actualizar el perfil');
+          }
+          return response.json();
+        })
+        .then((updatedUser) => {
+          setUser(updatedUser); // Actualizamos el usuario en el contexto
+          showAlertWithTimeout('success', 'Perfil actualizado correctamente');
+          onClose(); // Cerrar el modal
+        })
+        .catch((error) => {
+          showAlertWithTimeout('error', `Error al actualizar el perfil: ${error.message}`);
+        });
     } else {
-      setShowAlert(true);
-      setAlertType('error');
-      setAlertMessage('Error en el formulario, revisa los campos.');
+      showAlertWithTimeout('error', 'Error en el formulario, revisa los campos.');
     }
   };
 
@@ -108,7 +180,7 @@ const PerfilEditarModal = ({ onClose }) => {
                 type="text"
                 name="nombre"
                 value={formData.nombre}
-                disabled
+                disabled // Campo no editable
                 required
                 className="vkz-input-field"
               />
@@ -119,7 +191,7 @@ const PerfilEditarModal = ({ onClose }) => {
                 type="text"
                 name="apellido"
                 value={formData.apellido}
-                disabled
+                disabled // Campo no editable
                 required
                 className="vkz-input-field"
               />
@@ -149,7 +221,7 @@ const PerfilEditarModal = ({ onClose }) => {
                 type="text"
                 name="tipoCuerpo"
                 value={formData.tipoCuerpo}
-                disabled
+                disabled // Campo no editable
                 required
                 className="vkz-input-field"
               />
@@ -163,7 +235,7 @@ const PerfilEditarModal = ({ onClose }) => {
                 type="number"
                 name="peso"
                 value={formData.peso}
-                disabled
+                disabled // Campo no editable
                 required
                 className="vkz-input-field"
               />
@@ -174,7 +246,7 @@ const PerfilEditarModal = ({ onClose }) => {
                 type="number"
                 name="altura"
                 value={formData.altura}
-                disabled
+                disabled // Campo no editable
                 required
                 className="vkz-input-field"
               />

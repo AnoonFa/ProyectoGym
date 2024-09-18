@@ -19,10 +19,33 @@ export const RoleProvider = ({ children }) => {
   useEffect(() => {
     if (user && user.username) {
       localStorage.setItem('user', JSON.stringify(user));
-      // Fetch tickets from the server when user logs in
+
+      // Aquí construimos la URL de la API según el rol del usuario
+      let apiUrl = '';
+      switch (user.role) {
+        case 'admin':
+          apiUrl = `http://localhost:3001/admin/${user.id}`;
+          break;
+        case 'employee':
+          apiUrl = `http://localhost:3001/employee/${user.id}`;
+          break;
+        case 'client':
+          apiUrl = `http://localhost:3001/client/${user.id}`;
+          break;
+        default:
+          console.error('Rol de usuario no reconocido');
+          return;
+      }
+
+      // Fetch para obtener los datos del usuario, según el rol
       if (user.id) {
-        fetch(`http://localhost:3001/client/${user.id}`)
-          .then(response => response.json())
+        fetch(apiUrl)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`Error ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+          })
           .then(data => {
             setUser(prevUser => ({
               ...prevUser,
@@ -32,8 +55,8 @@ export const RoleProvider = ({ children }) => {
           .catch(error => console.error('Error fetching user tickets:', error));
       }
     }
-  }, [user.username, user.id]);
-
+  }, [user.username, user.id, user.role]);
+  
   const updateUserTickets = (newTicketCount) => {
     setUser(prevUser => {
       const updatedUser = {

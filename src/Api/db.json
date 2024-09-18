@@ -80,7 +80,7 @@
       "tipoCuerpo": "Ectomorfo",
       "peso": "65",
       "altura": "168",
-      "usuario": "ojonazaret",
+      "usuario": "Esteban",
       "password": "Soyesteban1234*",
       "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
       "correo": "ojoconladenazaret@gmail.com",
