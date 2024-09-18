@@ -195,38 +195,13 @@ const Header = () => {
                   {/* Menú de opciones con íconos */}
                   {user.role === 'admin' && (
                     <>
-                      <button onClick={() => navigate('/ClasesPage')} className="menu-option">
-                        <FontAwesomeIcon icon={faUsers} className="menu-icon" /> Ver Clases de Usuarios
-                      </button>
-                      <button onClick={() => navigate('/VerCliente')} className="menu-option">
-                        <FontAwesomeIcon icon={faUserCircle} className="menu-icon" /> Gestión de Clientes
-                      </button>
-                      <button onClick={() => navigate('/RutinaAdminIndex')} className="menu-option">
-                        <FontAwesomeIcon icon={faDumbbell} className="menu-icon" /> Gestión de Rutinas
-                      </button>
-                      <button onClick={() => navigate('/ProductsPage')} className="menu-option">
-                        <FontAwesomeIcon icon={faBox} className="menu-icon" /> Gestión de Productos
-                      </button>
-                      <button onClick={() => navigate('/AdminConfirmacion')} className="menu-option">
-                        <FontAwesomeIcon icon={faTicketAlt} className="menu-icon" /> Ticketera
-                      </button>
+                      
                     </>
                   )}
 
                   {user.role === 'client' && (
                     <>
-                      <button onClick={() => navigate('/ClasesPage/')} className="menu-option">
-                        <FontAwesomeIcon icon={faDumbbell} className="menu-icon" /> Mis Clases
-                      </button>
-                      <button onClick={() => navigate('/RutinasCliente/')} className="menu-option">
-                        <FontAwesomeIcon icon={faDumbbell} className="menu-icon" /> Mis Rutinas
-                      </button>
-                      <button onClick={() => navigate('/VerTicketera')} className="menu-option">
-                        <FontAwesomeIcon icon={faTicketAlt} className="menu-icon" /> Mi Ticketera
-                      </button>
-                      <button onClick={() => navigate('/Plan')} className="menu-option">
-                        <FontAwesomeIcon icon={faBox} className="menu-icon" /> Mi Plan
-                      </button>
+                      
                     </>
                   )}
 
