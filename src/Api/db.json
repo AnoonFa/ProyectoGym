@@ -256,36 +256,12 @@
       "id": "50c8"
     },
     {
-      "name": "Powerade",
-      "description": "Bebida isotónica que repone tus electrolitos y te mantiene energizado durante el ejercicio.",
-      "price": 4500,
-      "image": "https://copservir.vtexassets.com/arquivos/ids/1168119/POWERADE-ION-4-MOUNTAIN-BLAST_F.png?v=638417016264030000",
-      "category": "bebidas",
-      "id": "3519"
-    },
-    {
       "name": "Agua Cristal",
       "description": "Agua pura y refrescante, ideal para mantenerte hidratado durante el día.",
       "price": 2000,
       "image": "https://coopasan.com.co/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTUxMzY4NCwicHVyIjoiYmxvYl9pZCJ9fQ==--ee6f0a9e4ce292b68c8dc4b9e2812d3dbd547be6/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJwbmciLCJyZXNpemVfdG9fZml0IjpbODAwLDgwMF19LCJwdXIiOiJ2YXJpYXRpb24ifX0=--cef66509c9cdc75663c0eefd9421db1d2ea4fead/ME00047.png?locale=es",
       "category": "bebidas",
       "id": "6582"
-    },
-    {
-      "name": "Cinturón de Levantamiento",
-      "description": "Cinturón de cuero para soporte lumbar durante levantamientos pesados.",
-      "price": 45000,
-      "image": "https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/falabellaCO/124892034_01/w=800,h=800,fit=pad",
-      "category": "accesorios",
-      "id": "0afc"
-    },
-    {
-      "name": "Guantes de Entrenamiento",
-      "description": "Guantes Barbel, diseñados para ofrecer comodidad y protección en entrenamientos de fuerza.",
-      "price": 35000,
-      "image": "https://fitnessproject.com.co/wp-content/uploads/2023/08/guantes-barbel_815754.jpg.webp",
-      "category": "accesorios",
-      "id": "c8f5"
     },
     {
       "name": "Proteína Whey",

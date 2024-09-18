@@ -3,7 +3,7 @@ import './CategoryCircles.css';
 import RopaDeportivaMujerImg from '../../assets/images/mujerdeportiva_-removebg-preview.png';
 import RopaDeportivaHombreImg from '../../assets/images/hombredeportiva-removebg-preview.png';
 import SuplementosImg from '../../assets/images/suplementos.png';
-import BebidasImg from '../../assets/images/bebidas-energeticas-removebg-preview.png';
+import BebidasImg from '../../assets/images/aguas.png';
 import AccesoriosImg from '../../assets/images/accesorios-removebg-preview.png';
 
 const categories = [
@@ -11,7 +11,7 @@ const categories = [
   { name: 'Ropa Deportiva Hombre', img: RopaDeportivaHombreImg, category: 'ropa deportiva hombre' },
   { name: 'Suplementos', img: SuplementosImg, category: 'suplementos' },
   { name: 'Bebidas', img: BebidasImg, category: 'bebidas' },
-  { name: 'Accesorios', img: AccesoriosImg, category: 'accesorios' },
+
 ];
 
 const CategoryCircles = ({ onCategorySelect }) => {

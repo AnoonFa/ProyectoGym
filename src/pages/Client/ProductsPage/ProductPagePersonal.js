@@ -5,6 +5,7 @@ import ProductCard from '../../../components/ProductCard/ProductCard';
 import './ProductPagePersonal.css';
 import Footer from '../../../components/Footer/Footer';
 import Header from '../../../components/Header/Header';
+import ProductForm from '../../../components/ProductForm/ProductForm';
 
 const ProductPagePersonal = () => {
   const { category } = useParams();
@@ -24,6 +25,7 @@ const ProductPagePersonal = () => {
       <Header />
       <div className="product-page">
         <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
+        <ProductForm />
         <div className="products-grid">
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product, index) => (

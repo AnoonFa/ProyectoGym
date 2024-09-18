@@ -51,8 +51,8 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
                 }
                 break;
             case 'description':
-                if (!value || value.length < 20 || value.length > 200) {
-                    newErrors.description = 'La descripción debe tener entre 20 y 200 caracteres.';
+                if (!value || value.length < 10 || value.length > 120) {
+                    newErrors.description = 'La descripción debe tener entre 10 y 120 caracteres.';
                 } else {
                     delete newErrors.description;
                 }
@@ -64,13 +64,14 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
                     delete newErrors.category;
                 }
                 break;
-            case 'image':
-                if (!value || !value.startsWith('http')) {
-                    newErrors.image = 'Debes proporcionar una URL válida de la imagen.';
-                } else {
-                    delete newErrors.image;
-                }
-                break;
+                case 'image':
+                    // Verificar si la URL comienza con http, https o data
+                    if (!value || !(value.startsWith('http') || value.startsWith('https') || value.startsWith('data:'))) {
+                        newErrors.image = 'Debes proporcionar una URL válida de la imagen, que comience con https, data o http.';
+                    } else {
+                        delete newErrors.image;
+                    }
+                    break;
             default:
                 break;
         }
@@ -93,7 +94,7 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
         };
     
         // Asegúrate de que `onSubmit` esté haciendo correctamente la llamada a la API
-        fetch('http://localhost:3001/products', {
+        fetch('http://localhost:3001/productos', {
           method: initialProduct?.id ? 'PUT' : 'POST',  // Si el producto existe, usa PUT, de lo contrario POST
           headers: {
             'Content-Type': 'application/json',
@@ -135,11 +136,10 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
 
         setTimeoutId(id);
     };
-
     const handleCancel = () => {
-      setShowForm(false); // O cualquier otra lógica para cerrar el modal
-
+        onCancel();  // Usamos la función onCancel que está pasando desde ProductPage
     };
+    
 
     if (user.role !== 'admin') {
         return null;
@@ -190,6 +190,11 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
                                     <Alert severity="error">{errors.price}</Alert>
                                 </Stack>
                             )}
+                            {productData.price && productData.price < 50 && (
+                                <Stack sx={{ width: '100%' }} spacing={2} style={{ marginTop: '10px' }}>
+                                    <Alert severity="warning">El precio es menor a 50, el producto será marcado como gratis.</Alert>
+                                </Stack>
+                            )}
                         </div>
                     </div>
 
@@ -201,10 +206,10 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
                             onChange={handleChange}
                             required
                             className="product-input-field-modal descripcion-field-modal"
-                            maxLength="200"
-                            minLength="20"
+                            maxLength="120"
+                            minLength="10"
                         />
-                        <div className="char-counter-modal">{productData.description.length}/200</div>
+                        <div className="char-counter-modal">{productData.description.length}/120</div>
                         {errors.description && (
                             <Stack sx={{ width: '100%' }} spacing={2}>
                                 <Alert severity="error">{errors.description}</Alert>
@@ -245,7 +250,6 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
                             <option value="ropa deportiva hombre">Ropa Deportiva Hombre</option>
                             <option value="alimentos">Alimentos</option>
                             <option value="bebidas">Bebidas</option>
-                            <option value="accesorios">Accesorios</option>
                             <option value="suplementos">Suplementos</option>
                         </select>
                         {errors.category && (

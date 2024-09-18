@@ -3,10 +3,12 @@
   justify-content: space-around;
   /* flex-wrap: wrap; */
   position: relative;
-  width: 96%;
-  left: 2%;
+  width: 82%;
+  left: 10%;
   gap: 0px;
   margin-bottom: 40px;
+  margin-top: 8px;
+
 }
 
 .category-circle {
@@ -14,7 +16,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 18%;
+  width: 22%;
   padding: 20px;
   cursor: pointer;
   transition: transform 0.3s;

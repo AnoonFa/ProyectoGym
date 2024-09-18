@@ -20,7 +20,7 @@
 
 /* Sidebar for filters (SearchBar) */
 .searchbar-container {
-  width: 20%;
+  width: 100%;
   position: sticky;
   top: 71px;
   height: 25vh;
@@ -33,9 +33,31 @@
   overflow-y: auto;
 }
 
+.filter-butoon {
+  position: sticky;
+  height: 41vh;
+  /* align-items: inherit; */
+  display: flex;
+  /* width: 100%; */
+  padding: 15px;
+  /* background-color: #f9f9f9; */
+  /* border-right: 1px solid #e0e0e0; */
+  position: sticky;
+  top: -2px;
+  /* height: auto; */
+}
+
 .products-section {
   width: 75%; /* Take 75% of the width for the product display */
   margin-left: 20px;
+}
+
+.add-product-button-container{
+  position: absolute;
+  bottom: 5%;
+  display: flex;
+  left: 23%;
+  width: 65%;
 }
 
 .products-grid {
