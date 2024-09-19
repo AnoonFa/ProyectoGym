@@ -38,15 +38,9 @@ import CalendarClases from './components/VerClases/VerClases';
 import Productos from './components/ProductCard/Productos';
 import Checkout from './components/checkout/Checkout';
 import MisClases from './pages/Client/ClassesPage/MisClases';
+import MisPlanes from './pages/Planes/MisPlanes';
 import PlanesPage from './pages/Planes/planesPage';
 import Productp1 from './components/Product/Productp1';
-import Productp2 from './components/Product/Productp2';
-import Productp3 from './components/Product/Productp3';
-import Productp4 from './components/Product/Productp4';
-import ProductT1 from './components/Product/ProductT1';
-import ProductT2 from './components/Product/ProductT2';
-import ProductT3 from './components/Product/ProductT3';
-import ProductT4 from './components/Product/ProductT4';
 import ProductCard from './components/ProductCard/ProductCard';
 import AdminConfirmacion from './components/Ticketera/Admin/Confirmacion';
 
@@ -138,13 +132,7 @@ function App() {
                   <Route path="/VerTicketera/*" element={<VerTicketera />} />
                   <Route path="/PlanesPage/*" element={<PlanesPage/>} />
                   <Route path="/Productp1/*" element={<Productp1 />} />                  
-                  <Route path="/Productp2/*" element={<Productp2 />} />
-                  <Route path="/Productp3/*" element={<Productp3 />} />
-                  <Route path="/Productp4/*" element={<Productp4 />} />
-                  <Route path="/ProductT1/*" element={<ProductT1 />} />
-                  <Route path="/ProductT2/*" element={<ProductT2 />} />
-                  <Route path="/ProductT3/*" element={<ProductT3 />} />
-                  <Route path="/ProductT4/*" element={<ProductT4 />} />
+                  <Route path="/MisPlanes/*" element={<MisPlanes/>} />
                   <Route path="/RutinaAdminIndex/*" element={<RutinaAdminIndex />} />
                   <Route path="/Payments/*" element={<Payments />} />
                   <Route path="/RutinasCliente/*" element={<RutinasCliente />} />

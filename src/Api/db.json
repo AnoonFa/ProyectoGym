@@ -51,7 +51,8 @@
       "correo": "estebanpineros43@gmail.com",
       "telefono": "3196699831",
       "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":1,\"repeticiones\":30,\"descanso\":99,\"videoUrl\":\"https://youtu.be/wWK7j1o_Xa8?si=AJ-rYAmWKJfY9tEB\",\"thumbnailUrl\":\"https://img.youtube.com/vi/wWK7j1o_Xa8/0.jpg\"},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Remo con barra T\",\"series\":3,\"repeticiones\":10,\"descanso\":60}]",
-      "tickets": 9
+      "tickets": 9,
+      "planes": []
     },
     {
       "id": "2",
@@ -68,7 +69,8 @@
       "correo": "estebanpineros41@gmail.com",
       "telefono": "3196699831",
       "rutinas": "[{\"nombre\":\"Peso muerto\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto rumano\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Press de banca declinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con agarre ancho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Peso muerto sumo\",\"series\":3,\"repeticiones\":6,\"descanso\":90},{\"nombre\":\"Press de banca cerrado\",\"series\":3,\"repeticiones\":12,\"descanso\":90},{\"nombre\":\"Dominadas con agarre estrecho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra con agarre invertido\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto convencional\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con peso añadido\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120}]",
-      "tickets": 0
+      "tickets": 0,
+      "planes": []
     },
     {
       "id": "4",
@@ -85,7 +87,25 @@
       "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
       "correo": "ojoconladenazaret@gmail.com",
       "telefono": "3146874784",
-      "tickets": 3
+      "tickets": 3,
+      "planes": [
+        {
+          "id": "p1",
+          "name": "Mensualidad",
+          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un mes",
+          "price": 50000,
+          "duration": "1 mes",
+          "image": "/assets/images/planes1.jpg"
+        },
+        {
+          "id": "p2",
+          "name": "Trimestre",
+          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
+          "price": 130000,
+          "duration": "1 mes",
+          "image": "/assets/images/planes2.jpg"
+        }
+      ]
     },
     {
       "id": "5",
@@ -102,7 +122,8 @@
       "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
       "correo": "estebanpineros42@gmail.com",
       "telefono": "3146874784",
-      "tickets": 0
+      "tickets": 0,
+      "planes": []
     }
   ],
   "clases": [
@@ -168,6 +189,36 @@
       "fecha": "2024-10-08",
       "precio": "9800",
       "inscritos": []
+    }
+  ],
+  "planes": [
+    {
+      "id": "p1",
+      "name": "Mensualidad",
+      "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un mes",
+      "price": 50000,
+      "image": "/assets/images/planes1.jpg"
+    },
+    {
+      "id": "p2",
+      "name": "Trimestre",
+      "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
+      "price": 130000,
+      "image": "/assets/images/planes2.jpg"
+    },
+    {
+      "id": "p3",
+      "name": "Semestre",
+      "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante seis meses",
+      "price": 280000,
+      "image": "/assets/images/planes3.jpg"
+    },
+    {
+      "id": "p4",
+      "name": "Año",
+      "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un año",
+      "price": 550000,
+      "image": "/assets/images/planes4.jpg"
     }
   ],
   "ticketera": [
