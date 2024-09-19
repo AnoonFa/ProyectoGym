@@ -3,35 +3,39 @@
     {
       "id": "1",
       "usuario": "Juan",
-      "password": "123456",
-      "cargo": "admin"
+      "password": "Soyadmin1234*",
+      "cargo": "admin",
+      "correo": "admins1@gmail.com"
     },
     {
       "id": "2",
       "usuario": "admin1234",
-      "password": "123456",
-      "cargo": "admin"
+      "password": "Soyadmin1234*",
+      "cargo": "admin",
+      "correo": "admins2@gmail.com"
     },
     {
       "id": "3",
       "usuario": "Carlos",
-      "password": "1234567",
-      "cargo": "admin"
+      "password": "Soyadmin1234*",
+      "cargo": "admin",
+      "correo": "admins3@gmail.com"
     }
   ],
   "employee": [
     {
       "id": "1",
-      "name": "Daniel",
-      "usuario": "lagrasa",
-      "password": "123456",
-      "cargo": "employee"
+      "name": "Daniel Lopez",
+      "usuario": "Daniel",
+      "password": "Soyempleado1234*",
+      "cargo": "employee",
+      "correo": "admins3@gmail.com"
     },
     {
       "id": "2",
-      "name": "Carolina",
-      "usuario": "supapa",
-      "password": "123456",
+      "name": "Carolina Rodriguez",
+      "usuario": "Carolina",
+      "password": "Soyempleado1234*",
       "cargo": "employee"
     }
   ],
@@ -107,19 +111,19 @@
       "usuario": "Esteban",
       "password": "Soyesteban1234*",
       "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
-      "correo": "ojoconladenazaret@gmail.com",
+      "correo": "nanoespinosa13@gmail.com",
       "telefono": "3146874784",
       "tickets": 3,
       "fechaCreacion": "08/9/2024",
       "horaCreacion": "10:00 a.m.",
       "planes": [
         {
-          "id": "p2",
-          "name": "Trimestre",
-          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
-          "price": 130000,
+          "id": "p1",
+          "name": "Mensualidad",
+          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un mes",
+          "price": 50000,
           "duration": "1 mes",
-          "image": "/assets/images/planes2.jpg"
+          "image": "/assets/images/planes1.jpg"
         }
       ]
     },
@@ -156,11 +160,11 @@
   "clases": [
     {
       "id": "69a6",
-      "nombre": "Zumba 2",
-      "entrenador": "supapa",
-      "startTime": "01:40",
-      "endTime": "04:40",
-      "descripcion": "111111111111111111111111111111111111111111",
+      "nombre": "Zumba Mañanero",
+      "entrenador": "Carolina",
+      "startTime": "08:40",
+      "endTime": "09:40",
+      "descripcion": "Disfruta de una energía revitalizante con esta clase de Zumba, perfecta para empezar el día con buen ritmo y mucha alegría.",
       "totalCupos": "12",
       "cuposDisponibles": "121",
       "fecha": "2024-09-11",
@@ -171,24 +175,25 @@
     {
       "id": "6082",
       "nombre": "Zumba",
-      "entrenador": "lagrasa",
-      "startTime": "04:00",
-      "endTime": "05:31",
-      "descripcion": "Una buena clase de zumba para la tarde",
+      "entrenador": "Daniel",
+      "startTime": "06:00",
+      "endTime": "07:32",
+      "descripcion": "Únete a esta divertida clase de Zumba, donde podrás bailar, hacer ejercicio y liberar el estrés del día.",
       "totalCupos": "20",
       "cuposDisponibles": 20,
       "fecha": "2024-09-12",
       "precio": "15000",
-      "inscritos": []
+      "inscritos": [],
+      "day": "2024-09-12"
     },
     {
       "id": "14f8",
-      "nombre": "Prueba 2",
-      "entrenador": "lagrasa",
+      "nombre": "Yoga mensual",
+      "entrenador": "Carolina",
       "startTime": "11:35",
       "endTime": "02:15",
       "day": "2024-09-15",
-      "descripcion": "Esta clase se esta creando para realizar pruebas con la relacion de ticketeras\n\nLa grasa va primero y el XD sera eterno",
+      "descripcion": "Disfruta de una experiencia transformadora con nuestras sesiones de yoga, diseñadas para calmar la mente y fortalecer el cuerpo.",
       "totalCupos": "20",
       "cuposDisponibles": 19,
       "fecha": "2024-09-15",
@@ -206,11 +211,11 @@
     {
       "id": "cd1d",
       "nombre": "Prueba 3",
-      "entrenador": "lagrasa",
-      "startTime": "13:38",
-      "endTime": "16:40",
+      "entrenador": "Daniel",
+      "startTime": "14:00",
+      "endTime": "16:00",
       "day": "2024-10-08",
-      "descripcion": "Esta clase se esta creando para realizar pruebas con la relacion de ticketeras\n\nLa grasa va primero y el XD sera eterno",
+      "descripcion": "Participa en esta clase experimental, donde podrás contribuir a la creación de nuevas dinámicas de entrenamiento y bienestar.",
       "totalCupos": "30",
       "cuposDisponibles": 30,
       "fecha": "2024-10-08",

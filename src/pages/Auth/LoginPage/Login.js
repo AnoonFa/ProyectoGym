@@ -10,20 +10,20 @@ import Alert from '@mui/material/Alert';
 
 const Login = () => {
   const { setUser } = useAuth();
-  const [username, setUsername] = useState('');
+  const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    if (username && password) {
+    if (correo && password) {
       try {
         const roles = ['admin', 'employee', 'client'];
         let userFound = null;
 
         for (const role of roles) {
-          const response = await fetch(`http://localhost:3001/${role}?usuario=${username}`);
+          const response = await fetch(`http://localhost:3001/${role}?correo=${correo}`);
           const data = await response.json();
 
           if (Array.isArray(data) && data.length > 0) {
@@ -83,9 +83,9 @@ const Login = () => {
               <div className="contenedor-input">
                 <input
                   type="text"
-                  placeholder='Usuario'
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder='Correo'
+                  value={correo}
+                  onChange={(e) => setCorreo(e.target.value)}
                   required
                 />
                 <FaUser className='icono' />
