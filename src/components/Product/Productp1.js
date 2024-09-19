@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';  // Asegúrate de que useParams está importado aquí
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import './Product.css';
-import { useAuth } from '../../context/RoleContext'; // Asegúrate de tener este contexto implementado
+import { useAuth } from '../../context/RoleContext';
 
-const Product = () => {
-  const { planId } = useParams(); // Extrae el ID del plan de la URL
+const Productp1 = () => {
+  const { planId } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth(); // Obtiene el usuario autenticado
-  const [plan, setPlan] = useState(null); // Estado para el plan seleccionado
-  const [openModal, setOpenModal] = useState(false); // Control para el modal de confirmación
-  const [price, setPrice] = useState(0); // Precio del plan seleccionado
-  const [userName, setUserName] = useState(''); // Nombre del usuario autenticado
+  const { user } = useAuth();
+  const [plan, setPlan] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [price, setPrice] = useState(0);
+  const [userName, setUserName] = useState('');
 
-  // Obtener los detalles del plan desde la API
   useEffect(() => {
     const fetchPlan = async () => {
       try {
@@ -23,53 +22,46 @@ const Product = () => {
           throw new Error('Error al obtener los datos del plan');
         }
         const data = await response.json();
-        setPlan(data); // Establece los datos del plan
-        setPrice(data.price); // Establece el precio del plan
+        setPlan(data);
+        setPrice(data.price);
       } catch (error) {
         console.error('Error fetching plan data:', error);
       }
     };
-  
+
     fetchPlan();
   }, [planId]);
 
-  // Establecer el nombre del usuario autenticado
   useEffect(() => {
     if (user) {
       setUserName(`${user.nombre} ${user.apellido}`);
     }
   }, [user]);
 
-  // Lógica para abrir el modal de confirmación
   const handleCheckout = (e) => {
     e.preventDefault();
-    setOpenModal(true); // Abre el modal de confirmación
+    setOpenModal(true);
   };
 
-  // Confirmar la compra y registrar el plan en el cliente
   const handleConfirmPurchase = async () => {
     try {
-      // Obtener los datos del cliente
       const clientResponse = await fetch(`http://localhost:3001/client/${user.id}`);
       const clientData = await clientResponse.json();
 
-      // Crear el nuevo plan a añadir al cliente
       const newPlan = {
         id: plan.id,
         name: plan.name,
         description: plan.description,
         price: plan.price,
-        duration: plan.duration || '1 mes', // Puedes agregar la duración del plan
+        duration: plan.duration || '1 mes',
         image: plan.image,
       };
 
-      // Actualizar los planes del cliente
       const updatedClient = {
         ...clientData,
-        planes: [...clientData.planes, newPlan], // Añadir el nuevo plan
+        planes: [...clientData.planes, newPlan],
       };
 
-      // Hacer un PUT request para actualizar el cliente en el db.json
       const updateResponse = await fetch(`http://localhost:3001/client/${user.id}`, {
         method: 'PUT',
         headers: {
@@ -83,7 +75,7 @@ const Product = () => {
         console.log('Plan añadido al cliente:', data);
         setOpenModal(false);
         alert('Compra realizada con éxito. Por favor, paga en el gimnasio para confirmar.');
-        navigate('/MisPlanes'); // Redirigir a la página "Mis Planes"
+        navigate('/MisPlanes');
       } else {
         const errorData = await updateResponse.json();
         console.error('Error al actualizar el cliente:', errorData);
@@ -93,16 +85,14 @@ const Product = () => {
     }
   };
 
-  // Función para cargar la imagen usando require
   const loadImage = (imagePath) => {
     try {
       return require(`../../assets/images/${imagePath}`);
     } catch (error) {
-      return require('../../assets/images/planes5.jpg'); // Imagen predeterminada si no encuentra la imagen
+      return require('../../assets/images/planes5.jpg');
     }
   };
 
-  // Mientras se está cargando el plan, mostrar un mensaje
   if (!plan) {
     return <div>Cargando...</div>;
   }
@@ -112,7 +102,6 @@ const Product = () => {
       <Header />
       <div className="product-page">
         <div className="product-details">
-          {/* Cargar la imagen con require */}
           <img 
             src={loadImage(plan.image)} 
             alt={plan.name} 
@@ -128,7 +117,6 @@ const Product = () => {
         </div>
       </div>
 
-      {/* Modal de confirmación */}
       {openModal && (
         <div className={`modal-Ticket ${openModal ? '' : 'exiting'}`}>
           <div className="modal-content-Ticket">
@@ -150,4 +138,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Productp1;
