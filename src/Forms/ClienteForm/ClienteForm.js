@@ -134,9 +134,15 @@ const ClienteForm = () => {
         return;
       }
 
+      const now = new Date();
+      const fechaCreacion = now.toLocaleDateString('es-ES');
+      const horaCreacion = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+
       const newClient = { 
         ...formData,
-        id: currentId.toString() 
+        id: currentId.toString(),
+        fechaCreacion,  // Nuevo campo fecha de creación
+        horaCreacion    // Nuevo campo hora de creación
       };
 
       try {

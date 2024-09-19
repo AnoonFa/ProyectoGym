@@ -152,10 +152,10 @@ const Buscar = ({ clientInfo, onClose }) => {
               <th>Peso</th>
               <th>Altura</th>
               <th>Usuario</th>
-              <th>Contraseña</th>
-              <th>Clase</th>
+              {/*<th>Contraseña</th>
+               <th>Clase</th>
               <th>Plan</th>
-              <th>Tickets</th>
+              <th>Tickets</th> */}
               <th>Accion</th>
             </tr>
           </thead>
@@ -174,10 +174,10 @@ const Buscar = ({ clientInfo, onClose }) => {
                 <td>{editingId === client.id ? <input value={client.peso} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, peso: e.target.value } : c))} /> : client.peso}</td>
                 <td>{editingId === client.id ? <input value={client.altura} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, altura: e.target.value } : c))} /> : client.altura}</td>
                 <td>{editingId === client.id ? <input value={client.usuario} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, usuario: e.target.value } : c))} /> : client.usuario}</td>
-                <td>{client.password}</td>
-                <td>{client.clase || 'N/A'}</td>
+                {/*<td>{client.password}</td>
+                 <td>{client.clase || 'N/A'}</td>
                 <td>{client.planes || 'N/A'}</td>
-                <td>{client.tickets || 0}</td>
+                <td>{client.tickets || 0}</td>*/}
                 <td>
                   {editingId === client.id ? (
                     <button onClick={() => handleSave(client.id)} className="save-button">Guardar</button>

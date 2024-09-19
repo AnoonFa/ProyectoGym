@@ -10,9 +10,11 @@ import RutinaAdminIndex from "../Rutina/RutinaAdminIndex";
 import Payments from "../Payments/Payments";
 import Planes from "../../pages/Planes/Planes";
 import { useAuth } from "../../context/RoleContext.js";
+import { TicketeraChart } from "../Graficos/Ticketeras.js";
+import { ClientCreationChart } from "../Graficos/Cliente.js";
 
 function AdminPage() {
-  const { user } = useAuth(); // Obtén el usuario del contexto
+  const { user } = useAuth();
 
   return (
     <>
@@ -21,8 +23,22 @@ function AdminPage() {
         <Route
           path="/"
           element={
-            <div style={{marginTop: "100px", marginBottom: "23%", display: "flex",flexDirection: "column", alignItems: "center", width: "100%", fontSize: "1.8rem"}}>
-              <h2>Bienvenido, {user ? user.username : "Usuario"}</h2>
+            <div style={{
+              marginTop: "100px",
+              marginBottom: "3%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "100%",
+              fontSize: "1.8rem"
+            }}>
+             <h2>Bienvenido, {user ? user.username : "Usuario"}</h2>
+              <div style={{ width: "80%", maxWidth: "800px", marginTop: "20px" }}>
+                <TicketeraChart />
+              </div>
+              <div style={{ width: "80%", maxWidth: "800px", marginTop: "20px" }}>
+                <ClientCreationChart />
+              </div>
             </div>
           }
         />

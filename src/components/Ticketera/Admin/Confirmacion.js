@@ -15,25 +15,27 @@ function AdminConfirmacion() {
     }, []);
 
     useEffect(() => {
-        if (searchTerm.length > 0) {
-            const filtered = tickets.filter(ticket => 
-                ticket.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            setFilteredTickets(filtered);
-        } else {
-            setFilteredTickets(tickets.slice(0, 4));
-        }
+        filterTickets();
     }, [searchTerm, tickets]);
 
     const fetchTickets = async () => {
         try {
             const response = await fetch('http://localhost:3001/ticketera');
             const data = await response.json();
-            setTickets(data);
-            setFilteredTickets(data.slice(0, 4));
+            setTickets(data.filter(ticket => ticket.status !== 'Pagado'));
         } catch (error) {
             console.error('Error fetching tickets:', error);
         }
+    };
+
+    const filterTickets = () => {
+        let filtered = tickets;
+        if (searchTerm.length > 0) {
+            filtered = filtered.filter(ticket => 
+                ticket.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+        setFilteredTickets(filtered.slice(0, 4));
     };
 
     const handleStatusChange = async (ticketId, newStatus) => {
@@ -47,12 +49,16 @@ function AdminConfirmacion() {
 
     const updateTicketStatus = async (ticketId, newStatus) => {
         try {
+            const ticketResponse = await fetch(`http://localhost:3001/ticketera/${ticketId}`);
+            const currentTicket = await ticketResponse.json();
+            const updatedTicket = { ...currentTicket, status: newStatus };
+
             const response = await fetch(`http://localhost:3001/ticketera/${ticketId}`, {
-                method: 'PATCH',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ status: newStatus }),
+                body: JSON.stringify(updatedTicket),
             });
 
             if (response.ok) {
@@ -69,7 +75,6 @@ function AdminConfirmacion() {
         if (selectedTicket) {
             await updateTicketStatus(selectedTicket.id, 'Pagado');
             await updateClientTickets(selectedTicket);
-            await deleteTicket(selectedTicket.id);
             setOpenModal(false);
             fetchTickets();
         }
@@ -94,22 +99,6 @@ function AdminConfirmacion() {
             }
         } catch (error) {
             console.error('Error al actualizar los tickets del cliente:', error);
-        }
-    };
-
-    const deleteTicket = async (ticketId) => {
-        try {
-            const response = await fetch(`http://localhost:3001/ticketera/${ticketId}`, {
-                method: 'DELETE',
-            });
-
-            if (response.ok) {
-                console.log('Ticket eliminado correctamente');
-            } else {
-                console.error('Error al eliminar el ticket');
-            }
-        } catch (error) {
-            console.error('Error:', error);
         }
     };
 
