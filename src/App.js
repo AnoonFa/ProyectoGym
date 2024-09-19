@@ -1,4 +1,4 @@
-import React, { useState , useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -18,7 +18,7 @@ import ClasesPage from "./pages/Client/ClassesPage/ClassesPage";
 import VerCliente from "./components/VerCliente/VerCliente";
 import ClienteForm from "./Forms/ClienteForm/ClienteForm";
 import RutinaAdminIndex from "./components/Rutina/RutinaAdminIndex";
-import MapComponent from "./components/Mapa/MapComponent"
+import MapComponent from "./components/Mapa/MapComponent";
 import { ClassesProvider } from "./context/ClasesContext";
 import { ProductsProvider } from "./context/ProductsContext";
 import { RoleProvider } from "./context/RoleContext";
@@ -44,17 +44,12 @@ import Productp1 from './components/Product/Productp1';
 import ProductCard from './components/ProductCard/ProductCard';
 import AdminConfirmacion from './components/Ticketera/Admin/Confirmacion';
 
-
 function App() {
   const [showModal, setShowModal] = useState(false);
 
-  // Llamar useContext para obtener los productos del contexto
   const productsContext = useContext(ProductsContext);
-
-  // Desestructurar de manera segura los productos y productos filtrados
   const { filteredProducts = [], products = [] } = productsContext || {};
 
-  // Log para depurar
   useEffect(() => {
     console.log("filteredProducts:", filteredProducts);
     console.log("products:", products);
@@ -71,84 +66,74 @@ function App() {
   };
 
   return (
-
-      <RoleProvider>{/* Envuelve  con el proveedor de roles */}
-        <ClassesProvider>
-          
-            <div className="app-container">
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <>
-                      <Header />
-                      <Carousel />
-                      <Planes openModal={handleOpenModal} />
-                       {/* Category Circles */}
-                      <CategoryCircles />
-
-                        {/* Sidebar and Product Grid */}
-                        <div className="content-container">
-                          <div className="searchbar-container">
-                            <SearchBar /> {/* Filter Sidebar */}
-                          </div>
-
-                          <div className="products-section">
-                            <h2>Productos</h2>
-                            <div className="products-grid">
-                              {productsToShow.length > 0 ? (
-                                productsToShow.map((product, index) => (
-                                  <ProductCard key={index} product={product} />
-                                ))
-                              ) : (
-                                <p>No hay productos disponibles.</p>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        <Footer className="footer"/>
-                        <Modal show={showModal} onClose={handleCloseModal}>
-                          <PaymentForm onClose={handleCloseModal} />
-                          || </Modal>
-                      </>
-                    }
-                  />
-                  <Route path="/MisClases/*" element={<MisClases />} />
-                  <Route path="/Checkout/*" element={<Checkout />} />
-                  <Route path="/ClienteIndex/*" element={<ClientPage />} />
-                  <Route path="/adminEmpleadoIndex/*" element={<AdminPage />} />
-                  <Route path="/LoginP/*" element={<LoginP />} />
-                  <Route path="/Register/*" element={<RegisterForm />} />
-                  <Route path="/VerProducto/*" element={<VerProducto />} />
-                  <Route path="/VerClases/*" element={<VerClases />} />
-                  <Route path="PlanDetails/:planId" element={<PlanDetails />} />
-                  <Route path="/ClasesPage/*" element={<ClasesPage />} />
-                  <Route path="/ProductsPage/*" element={<ProductsPage />} />
-                  <Route path="/products/:category" element={<ProductPagePersonal />} />
-                  <Route path="/RutinesClient/*" element={<RutinesPage />} />
-                  <Route path="/VerCliente/*" element={<VerCliente />} />
-                  <Route path="/ClienteForm/*" element={<ClienteForm />} />
-                  <Route path="/Comprobant/*" element={<Comprobant />} />
-                  <Route path="/VerTicketera/*" element={<VerTicketera />} />
-                  <Route path="/PlanesPage/*" element={<PlanesPage/>} />
-                  <Route path="/Productp1/*" element={<Productp1 />} />                  
-                  <Route path="/MisPlanes/*" element={<MisPlanes/>} />
-                  <Route path="/RutinaAdminIndex/*" element={<RutinaAdminIndex />} />
-                  <Route path="/Payments/*" element={<Payments />} />
-                  <Route path="/RutinasCliente/*" element={<RutinasCliente />} />
-                  <Route path="/" element={<CalendarClases />} />
-                  <Route path="/ClassDetail/:className" element={<ClassDetail />} />
-                  <Route path="/AdminConfirmacion" element={<AdminConfirmacion />} />
-                </Routes>
-              </div>
-            
-        </ClassesProvider>
-      </RoleProvider>
-
+    <RoleProvider>
+      <ClassesProvider>
+        <div className="app-container">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Header />
+                  <Carousel />
+                  <Plans openModal={handleOpenModal} />
+                  <CategoryCircles />
+                  <div className="content-container">
+                    <div className="searchbar-container">
+                      <SearchBar />
+                    </div>
+                    <div className="products-section">
+                      <h2>Productos</h2>
+                      <div className="products-grid">
+                        {productsToShow.length > 0 ? (
+                          productsToShow.map((product, index) => (
+                            <ProductCard key={index} product={product} />
+                          ))
+                        ) : (
+                          <p>No hay productos disponibles.</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <Footer className="footer" />
+                  <Modal show={showModal} onClose={handleCloseModal}>
+                    <PaymentForm onClose={handleCloseModal} />
+                  </Modal>
+                </>
+              }
+            />
+            <Route path="/MisClases/*" element={<MisClases />} />
+            <Route path="/Checkout/*" element={<Checkout />} />
+            <Route path="/ClienteIndex/*" element={<ClientPage />} />
+            <Route path="/adminEmpleadoIndex/*" element={<AdminPage />} />
+            <Route path="/LoginP/*" element={<LoginP />} />
+            <Route path="/Register/*" element={<RegisterForm />} />
+            <Route path="/VerProducto/*" element={<VerProducto />} />
+            <Route path="/VerClases/*" element={<VerClases />} />
+            <Route path="PlanDetails/:planId" element={<PlanDetails />} />
+            <Route path="/ClasesPage/*" element={<ClasesPage />} />
+            <Route path="/ProductsPage/*" element={<ProductsPage />} />
+            <Route path="/products/:category" element={<ProductPagePersonal />} />
+            <Route path="/RutinesClient/*" element={<RutinesPage />} />
+            <Route path="/VerCliente/*" element={<VerCliente />} />
+            <Route path="/ClienteForm/*" element={<ClienteForm />} />
+            <Route path="/Comprobant/*" element={<Comprobant />} />
+            <Route path="/VerTicketera/*" element={<VerTicketera />} />
+            <Route path="/PlanesPage/*" element={<PlanesPage />} />
+            <Route path="/Productp1/:planId" element={<Productp1 />} />
+            <Route path="/MisPlanes/*" element={<MisPlanes />} />
+            <Route path="/RutinaAdminIndex/*" element={<RutinaAdminIndex />} />
+            <Route path="/Payments/*" element={<Payments />} />
+            <Route path="/RutinasCliente/*" element={<RutinasCliente />} />
+            <Route path="/" element={<CalendarClases />} />
+            <Route path="/ClassDetail/:className" element={<ClassDetail />} />
+            <Route path="/AdminConfirmacion" element={<AdminConfirmacion />} />
+          </Routes>
+        </div>
+      </ClassesProvider>
+    </RoleProvider>
   );
 }
-
-
 
 function PaymentForm({ onClose }) {
   const navigate = useNavigate();
@@ -162,7 +147,7 @@ function PaymentForm({ onClose }) {
       phone: formData.get('phone'),
       cost: formData.get('cost'),
       code: formData.get('code'),
-      paymentMethod: formData.get('payment-method')
+      paymentMethod: formData.get('payment-method'),
     };
 
     alert('Payment Submitted');
@@ -212,6 +197,5 @@ function PaymentForm({ onClose }) {
     </form>
   );
 }
-
 
 export default App;
