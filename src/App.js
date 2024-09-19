@@ -76,7 +76,7 @@ function App() {
                 <>
                   <Header />
                   <Carousel />
-                  <Plans openModal={handleOpenModal} />
+                  <Planes />
                   <CategoryCircles />
                   <div className="content-container">
                     <div className="searchbar-container">
