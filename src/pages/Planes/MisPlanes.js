@@ -65,7 +65,6 @@ const MisPlanes = () => {
                   <h2>{plan.name}</h2>
                   <p>{plan.description}</p>
                   <p className="price"><strong>Precio:</strong> ${plan.price}</p>
-                  <p className="duration"><strong>Duración:</strong> {plan.duration}</p>
                 </div>
               </div>
             ))}
