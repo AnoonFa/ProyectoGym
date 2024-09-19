@@ -3,20 +3,23 @@
     {
       "id": "1",
       "usuario": "Juan",
-      "password": "123456",
-      "cargo": "admin"
+      "password": "Soyadmin1234*",
+      "cargo": "admin",
+      "correo": "admins1@gmail.com"
     },
     {
       "id": "2",
       "usuario": "admin1234",
-      "password": "123456",
-      "cargo": "admin"
+      "password": "Soyadmin1234*",
+      "cargo": "admin",
+      "correo": "admins2@gmail.com"
     },
     {
       "id": "3",
       "usuario": "Carlos",
-      "password": "1234567",
-      "cargo": "admin"
+      "password": "Soyadmin1234*",
+      "cargo": "admin",
+      "correo": "admins3@gmail.com"
     }
   ],
   "employee": [
@@ -24,14 +27,15 @@
       "id": "1",
       "name": "Daniel Lopez",
       "usuario": "Daniel",
-      "password": "123456",
-      "cargo": "employee"
+      "password": "Soyempleado1234*",
+      "cargo": "employee",
+      "correo": "admins3@gmail.com"
     },
     {
       "id": "2",
       "name": "Carolina Rodriguez",
       "usuario": "Carolina",
-      "password": "123456",
+      "password": "Soyempleado1234*",
       "cargo": "employee"
     }
   ],
@@ -107,7 +111,7 @@
       "usuario": "Esteban",
       "password": "Soyesteban1234*",
       "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
-      "correo": "ojoconladenazaret@gmail.com",
+      "correo": "nanoespinosa13@gmail.com",
       "telefono": "3146874784",
       "tickets": 3,
       "fechaCreacion": "08/9/2024",
@@ -120,14 +124,6 @@
           "price": 50000,
           "duration": "1 mes",
           "image": "/assets/images/planes1.jpg"
-        },
-        {
-          "id": "p2",
-          "name": "Trimestre",
-          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
-          "price": 130000,
-          "duration": "1 mes",
-          "image": "/assets/images/planes2.jpg"
         }
       ]
     },
