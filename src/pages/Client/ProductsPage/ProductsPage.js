@@ -9,6 +9,7 @@ import Footer from '../../../components/Footer/Footer';
 import BattleRopeImage from '../../../assets/images/1366_2000.jpeg'; // Asegúrate de que la ruta de la imagen sea correcta.
 import ProductForm from '../../../components/ProductForm/ProductForm';
 import { Button, Modal } from '@mui/material';
+import { useAuth } from '../../../context/RoleContext';
 
 const ProductPage = () => {
   const { products, filteredProducts, setFilteredProducts } = useContext(ProductsContext);
@@ -17,6 +18,7 @@ const ProductPage = () => {
   const [priceRange, setPriceRange] = useState(''); // Estado para el rango de precios
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
 
+  const { user, setUser } = useAuth(); // Usamos el contexto de autenticación
 
 
   // Lógica para aplicar los filtros de nombre, categoría y precio
@@ -91,9 +93,11 @@ const ProductPage = () => {
             /></div>
 
           <div className="add-product-button-container">
-          {/*<Button variant="contained" color="primary" onClick={handleOpenModal}>
+          {user.role === 'admin' &&(
+          <Button variant="contained" color="primary" onClick={handleOpenModal}>
             Añadir Producto
-          </Button>*/}
+          </Button>)
+          }
         </div>
         </div>
           

@@ -97,6 +97,7 @@
 
 .details-button, .cancel-button {
   padding: 10px 15px;
+  margin-top: 10px;
   margin-right: 10px;
   background-color: #007bff;
   color: white;

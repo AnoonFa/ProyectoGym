@@ -19,6 +19,11 @@ export const RoleProvider = ({ children }) => {
   useEffect(() => {
     if (user && user.username) {
       localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user'); // Limpia localStorage si no hay un usuario establecido
+    }
+      
+      
 
       // Aquí construimos la URL de la API según el rol del usuario
       let apiUrl = '';
@@ -54,8 +59,7 @@ export const RoleProvider = ({ children }) => {
           })
           .catch(error => console.error('Error fetching user tickets:', error));
       }
-    }
-  }, [user.username, user.id, user.role]);
+    }, [user.username, user.id, user.role]);
   
   const updateUserTickets = (newTicketCount) => {
     setUser(prevUser => {

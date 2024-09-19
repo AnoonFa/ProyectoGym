@@ -22,15 +22,15 @@
   "employee": [
     {
       "id": "1",
-      "name": "Daniel",
-      "usuario": "lagrasa",
+      "name": "Daniel Lopez",
+      "usuario": "Daniel",
       "password": "123456",
       "cargo": "employee"
     },
     {
       "id": "2",
-      "name": "Carolina",
-      "usuario": "supapa",
+      "name": "Carolina Rodriguez",
+      "usuario": "Carolina",
       "password": "123456",
       "cargo": "employee"
     }
@@ -155,11 +155,11 @@
   "clases": [
     {
       "id": "69a6",
-      "nombre": "Zumba 2",
-      "entrenador": "supapa",
-      "startTime": "01:40",
-      "endTime": "04:40",
-      "descripcion": "111111111111111111111111111111111111111111",
+      "nombre": "Zumba Mañanero",
+      "entrenador": "Carolina",
+      "startTime": "08:40",
+      "endTime": "09:40",
+      "descripcion": "Disfruta de una energía revitalizante con esta clase de Zumba, perfecta para empezar el día con buen ritmo y mucha alegría.",
       "totalCupos": "12",
       "cuposDisponibles": "121",
       "fecha": "2024-09-11",
@@ -170,24 +170,25 @@
     {
       "id": "6082",
       "nombre": "Zumba",
-      "entrenador": "lagrasa",
-      "startTime": "04:00",
-      "endTime": "05:31",
-      "descripcion": "Una buena clase de zumba para la tarde",
+      "entrenador": "Daniel",
+      "startTime": "06:00",
+      "endTime": "07:32",
+      "descripcion": "Únete a esta divertida clase de Zumba, donde podrás bailar, hacer ejercicio y liberar el estrés del día.",
       "totalCupos": "20",
       "cuposDisponibles": 20,
       "fecha": "2024-09-12",
       "precio": "15000",
-      "inscritos": []
+      "inscritos": [],
+      "day": "2024-09-12"
     },
     {
       "id": "14f8",
-      "nombre": "Prueba 2",
-      "entrenador": "lagrasa",
+      "nombre": "Yoga mensual",
+      "entrenador": "Carolina",
       "startTime": "11:35",
       "endTime": "02:15",
       "day": "2024-09-15",
-      "descripcion": "Esta clase se esta creando para realizar pruebas con la relacion de ticketeras\n\nLa grasa va primero y el XD sera eterno",
+      "descripcion": "Disfruta de una experiencia transformadora con nuestras sesiones de yoga, diseñadas para calmar la mente y fortalecer el cuerpo.",
       "totalCupos": "20",
       "cuposDisponibles": 20,
       "fecha": "2024-09-15",
@@ -197,11 +198,11 @@
     {
       "id": "cd1d",
       "nombre": "Prueba 3",
-      "entrenador": "lagrasa",
-      "startTime": "13:38",
-      "endTime": "16:40",
+      "entrenador": "Daniel",
+      "startTime": "14:00",
+      "endTime": "16:00",
       "day": "2024-10-08",
-      "descripcion": "Esta clase se esta creando para realizar pruebas con la relacion de ticketeras\n\nLa grasa va primero y el XD sera eterno",
+      "descripcion": "Participa en esta clase experimental, donde podrás contribuir a la creación de nuevas dinámicas de entrenamiento y bienestar.",
       "totalCupos": "30",
       "cuposDisponibles": 30,
       "fecha": "2024-10-08",

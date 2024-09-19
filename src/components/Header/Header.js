@@ -21,11 +21,13 @@ const Header = () => {
   const handleLoginClick = () => {
     navigate('/LoginP');
   };
-
+  
   const handleLogoutClick = () => {
-    setUser({ role: 'nolog' }); // Restablecer el rol del usuario al rol por defecto
-    navigate('/'); // Redirigir al usuario a la página de inicio después de cerrar sesión
+    setUser({ role: 'nolog' }); // Restablece el rol del usuario al valor predeterminado
+    localStorage.removeItem('user'); // Borra los datos del usuario de localStorage
+    navigate('/'); // Redirige a la página de inicio después de cerrar sesión
   };
+  
 
   const handleNavigation = (path) => {
     navigate(path);

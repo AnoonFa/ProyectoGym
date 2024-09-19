@@ -19,18 +19,11 @@
 }
 
 /* Sidebar for filters (SearchBar) */
-.searchbar-container {
-  width: 100%;
-  position: sticky;
-  top: 71px;
-  height: 45vh;
-  /* padding: 20px; */
-  margin-left: 20px;
-  margin-top: 36px;
-  background-color: #f5f5f5;
-  border-right: 1px solid #ddd;
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
+.calendar-form-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 23px;
 }
 
 .filter-butoon {
@@ -43,7 +36,7 @@
   /* background-color: #f9f9f9; */
   /* border-right: 1px solid #e0e0e0; */
   position: sticky;
-  top: -2px;
+  top: 55px;
   /* height: auto; */
 }
 
@@ -54,9 +47,9 @@
 
 .add-product-button-container{
   position: absolute;
-  bottom: 5%;
+  bottom: 23%;
   display: flex;
-  left: 23%;
+  left: 18%;
   width: 65%;
 }
 
