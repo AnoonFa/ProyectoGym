@@ -1,7 +1,6 @@
 .rutina-admin-container {
   text-align: center;
   margin-top: 8%;
-  margin-bottom: 5%;
   transition: margin-bottom 0.5s ease-in-out, width 1s ease-in-out, max-height 1s ease-in-out;
 }
 
@@ -14,7 +13,7 @@
   margin-bottom: 20px;
 }
 
-.button-container {
+.button-container-rutina {
   display: flex;
   justify-content: center;
   gap: 20px;

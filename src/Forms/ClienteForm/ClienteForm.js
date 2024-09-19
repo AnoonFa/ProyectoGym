@@ -21,8 +21,10 @@ const ClienteForm = () => {
     rutinas: '',
     correo: '',
     telefono: '',
-    tickets: 0
+    tickets: 0,
+    planes: []  // Añadir el nuevo campo aquí
   });
+  
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState('');
@@ -141,8 +143,9 @@ const ClienteForm = () => {
       const newClient = { 
         ...formData,
         id: currentId.toString(),
-        fechaCreacion,  // Nuevo campo fecha de creación
-        horaCreacion    // Nuevo campo hora de creación
+        fechaCreacion,
+        horaCreacion,
+        planes: []  // Asegúrate de agregar este campo aquí
       };
 
       try {

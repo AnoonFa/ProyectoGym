@@ -91,9 +91,9 @@ const ProductPage = () => {
             /></div>
 
           <div className="add-product-button-container">
-          <Button variant="contained" color="primary" onClick={handleOpenModal}>
+          {/*<Button variant="contained" color="primary" onClick={handleOpenModal}>
             Añadir Producto
-          </Button>
+          </Button>*/}
         </div>
         </div>
           

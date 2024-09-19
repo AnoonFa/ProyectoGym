@@ -38,7 +38,7 @@ const RutinaAdminIndex = () => {
       <Header />
       <div className={`rutina-admin-container ${expansionState} ${noMargin ? 'no-margin-bottom' : ''}`}>
         <h1>Rutinas</h1>
-        <div className="button-container">
+        <div className="button-container-rutina">
           <button
             className="btn-añadir"
             onClick={() => mostrarFormulario('añadir')}
