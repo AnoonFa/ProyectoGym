@@ -1,42 +1,141 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import './Product.css';
+import { useAuth } from '../../context/RoleContext';
 
-const Product = () => {
+const Productp1 = () => {
+  const { planId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const [plan, setPlan] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [price, setPrice] = useState(0);
+  const [userName, setUserName] = useState('');
 
-  const handleCheckout = () => {
-    navigate('/Checkout', {
-      state: {
-        plan: {
-          title: 'Plan Mensual de Gimnasio',
-          description: 'En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un mes',
-          price: 50000
+  useEffect(() => {
+    const fetchPlan = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/planes/${planId}`);
+        if (!response.ok) {
+          throw new Error('Error al obtener los datos del plan');
         }
+        const data = await response.json();
+        setPlan(data);
+        setPrice(data.price);
+      } catch (error) {
+        console.error('Error fetching plan data:', error);
       }
-    });
+    };
+
+    fetchPlan();
+  }, [planId]);
+
+  useEffect(() => {
+    if (user) {
+      setUserName(`${user.nombre} ${user.apellido}`);
+    }
+  }, [user]);
+
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    setOpenModal(true);
   };
+
+  const handleConfirmPurchase = async () => {
+    try {
+      const clientResponse = await fetch(`http://localhost:3001/client/${user.id}`);
+      const clientData = await clientResponse.json();
+
+      const newPlan = {
+        id: plan.id,
+        name: plan.name,
+        description: plan.description,
+        price: plan.price,
+        duration: plan.duration || '1 mes',
+        image: plan.image,
+      };
+
+      const updatedClient = {
+        ...clientData,
+        planes: [...clientData.planes, newPlan],
+      };
+
+      const updateResponse = await fetch(`http://localhost:3001/client/${user.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedClient),
+      });
+
+      if (updateResponse.ok) {
+        const data = await updateResponse.json();
+        console.log('Plan añadido al cliente:', data);
+        setOpenModal(false);
+        alert('Compra realizada con éxito. Por favor, paga en el gimnasio para confirmar.');
+        navigate('/MisPlanes');
+      } else {
+        const errorData = await updateResponse.json();
+        console.error('Error al actualizar el cliente:', errorData);
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+  };
+
+  const loadImage = (imagePath) => {
+    try {
+      return require(`../../assets/images/${imagePath}`);
+    } catch (error) {
+      return require('../../assets/images/planes5.jpg');
+    }
+  };
+
+  if (!plan) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <div>
       <Header />
       <div className="product-page">
         <div className="product-details">
-          <img src={require('../../assets/images/planes5.jpg')} alt="Tiquetera práctica libre gimnasio" className="product-image" />
+          <img 
+            src={loadImage(plan.image)} 
+            alt={plan.name} 
+            className="product-image" 
+          />
           <div className="product-info">
-            <h1>Plan Mensual de Gimnasio</h1>
-            <p>En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un mes</p>
-            <p className="price">Desde <strong>$50.000</strong></p>
+            <h1>{plan.name}</h1>
+            <p>{plan.description}</p>
+            <p className="price">Desde <strong>${price}</strong></p>
             <p className="note"> No se realizan reembolsos.</p>
             <button className="cta-button" onClick={handleCheckout}>Comprar</button>
           </div>
         </div>
       </div>
+
+      {openModal && (
+        <div className={`modal-Ticket ${openModal ? '' : 'exiting'}`}>
+          <div className="modal-content-Ticket">
+            <h2>Confirmación de compra</h2>
+            <p>
+              ¿Estás seguro de comprar este plan por un total de ${price}?
+              Recuerda pagar en el gimnasio dentro de un plazo de 1 día.
+            </p>
+            <div className="modal-buttons">
+              <button className="cancel-button" onClick={() => setOpenModal(false)}>Cancelar</button>
+              <button className="confirm-button" onClick={handleConfirmPurchase}>Comprar</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );
-}
+};
 
-export default Product;
+export default Productp1;

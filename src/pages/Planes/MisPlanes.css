@@ -1,0 +1,88 @@
+.mis-planes-container {
+  margin-top: 40px;
+  padding: 40px;
+  background-color: #f8f9fa; /* Fondo claro para diferenciar secciones */
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.mis-planes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.plan-card {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.plan-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.plan-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.plan-info {
+  padding: 10px 0;
+}
+
+.plan-info h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.plan-info p {
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.price {
+  font-weight: bold;
+  color: #28a745; /* Verde para indicar precio */
+}
+
+.duration {
+  font-style: italic;
+  color: #007bff; /* Azul para destacar la duración */
+}
+
+.no-planes-message {
+  text-align: center;
+  color: #666;
+  font-size: 1.2rem;
+  margin-top: 50px;
+  margin-bottom: 31.6%;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .plan-card {
+    padding: 15px;
+  }
+
+  .plan-image {
+    height: 150px;
+  }
+}

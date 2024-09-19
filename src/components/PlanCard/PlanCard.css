@@ -15,10 +15,10 @@
 
 .plan-image {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 220px; /* Altura fija para todas las imágenes */
+  object-fit: cover; /* Hace que la imagen ocupe toda el área de forma proporcional */
+  border-radius: 5px;
 }
-
 .plan-card h2 {
   font-size: 1.5em;
   margin: 10px 0;
