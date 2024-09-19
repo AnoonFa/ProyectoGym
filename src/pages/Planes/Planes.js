@@ -58,7 +58,6 @@ const Planes = () => {
           />
         </div>
       </div>
-      <Footer /> 
     </div>
   );
 };
