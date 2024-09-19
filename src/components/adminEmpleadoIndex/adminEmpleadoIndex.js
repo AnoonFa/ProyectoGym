@@ -12,6 +12,7 @@ import Planes from "../../pages/Planes/Planes";
 import { useAuth } from "../../context/RoleContext.js";
 import { TicketeraChart } from "../Graficos/Ticketeras.js";
 import { ClientCreationChart } from "../Graficos/Cliente.js";
+import { PlanesChart }  from "../Graficos/Planes.js";
 
 function AdminPage() {
   const { user } = useAuth();
@@ -38,6 +39,9 @@ function AdminPage() {
               </div>
               <div style={{ width: "80%", maxWidth: "800px", marginTop: "20px" }}>
                 <ClientCreationChart />
+              </div>
+              <div style={{ width: "80%", maxWidth: "800px", marginTop: "20px" }}>
+                <PlanesChart />
               </div>
             </div>
           }

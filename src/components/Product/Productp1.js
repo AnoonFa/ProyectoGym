@@ -4,6 +4,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import './Product.css';
 import { useAuth } from '../../context/RoleContext';
+import { Alert } from '@mui/material';
 
 const Productp1 = () => {
   const { planId } = useParams();
@@ -13,6 +14,7 @@ const Productp1 = () => {
   const [openModal, setOpenModal] = useState(false);
   const [price, setPrice] = useState(0);
   const [userName, setUserName] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     const fetchPlan = async () => {
@@ -74,8 +76,11 @@ const Productp1 = () => {
         const data = await updateResponse.json();
         console.log('Plan añadido al cliente:', data);
         setOpenModal(false);
-        alert('Compra realizada con éxito. Por favor, paga en el gimnasio para confirmar.');
-        navigate('/MisPlanes');
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+          navigate('/MisPlanes');
+        }, 3000);
       } else {
         const errorData = await updateResponse.json();
         console.error('Error al actualizar el cliente:', errorData);
@@ -100,6 +105,18 @@ const Productp1 = () => {
   return (
     <div>
       <Header />
+      {showAlert && (
+        <div style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          zIndex: 1000
+        }}>
+          <Alert severity="success" onClose={() => setShowAlert(false)}>
+            Compra realizada con éxito. Por favor, paga en el gimnasio para confirmar.
+          </Alert>
+        </div>
+      )}
       <div className="product-page">
         <div className="product-details">
           <img 

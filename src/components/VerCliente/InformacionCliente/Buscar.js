@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './Buscar.css';
-// import Foto from '../../../assets/icons/userIcon.png';
 import Alert from '@mui/material/Alert';
 
 const Buscar = ({ clientInfo, onClose }) => {
   const [clients, setClients] = useState([]);
   const [filteredClients, setFilteredClients] = useState([]);
+  const [classes, setClasses] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [alertVisible, setAlertVisible] = useState(false);
@@ -13,19 +13,34 @@ const Buscar = ({ clientInfo, onClose }) => {
   const [alertType, setAlertType] = useState('success');
 
   useEffect(() => {
-    const fetchClients = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/client');
-        const data = await response.json();
-        setClients(data);
-        setFilteredClients(data);
+        const [clientsResponse, classesResponse] = await Promise.all([
+          fetch('http://localhost:3001/client'),
+          fetch('http://localhost:3001/clases')
+        ]);
+        const clientsData = await clientsResponse.json();
+        const classesData = await classesResponse.json();
+        setClients(clientsData);
+        setFilteredClients(clientsData);
+        setClasses(classesData);
       } catch (error) {
-        console.error('Error fetching clients:', error);
-        showAlert('Error al obtener los clientes', 'error');
+        console.error('Error fetching data:', error);
+        showAlert('Error al obtener los datos', 'error');
       }
     };
-    fetchClients();
+    fetchData();
   }, []);
+
+  const getClientClass = (clientId) => {
+    for (let clase of classes) {
+      const inscrito = clase.inscritos.find(i => i.idCliente === clientId);
+      if (inscrito) {
+        return clase.nombre;
+      }
+    }
+    return 'N/A';
+  };
 
   useEffect(() => {
     if (clientInfo) {
@@ -138,9 +153,8 @@ const Buscar = ({ clientInfo, onClose }) => {
       </div>
       <div className="table-container">
         <table className="client-table">
-          <thead>
+        <thead>
             <tr>
-              {/* <th>Foto</th> }*/}
               <th>Nombre</th>
               <th>Apellido</th>
               <th>Tipo de Documento</th>
@@ -152,17 +166,15 @@ const Buscar = ({ clientInfo, onClose }) => {
               <th>Peso</th>
               <th>Altura</th>
               <th>Usuario</th>
-              {/*<th>Contraseña</th>
-               <th>Clase</th>
+              <th>Clase</th>
               <th>Plan</th>
-              <th>Tickets</th> */}
-              <th>Accion</th>
+              <th>Tickets</th> 
+              {/* <th>Accion</th>*/}
             </tr>
           </thead>
           <tbody>
             {filteredClients.map(client => (
               <tr key={client.id}>
-                {/* <td><img src={Foto} alt="User" className="client-photo" /></td>*/}
                 <td>{editingId === client.id ? <input value={client.nombre} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, nombre: e.target.value } : c))} /> : client.nombre}</td>
                 <td>{editingId === client.id ? <input value={client.apellido} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, apellido: e.target.value } : c))} /> : client.apellido}</td>
                 <td>{client.tipoDocumento}</td>
@@ -174,18 +186,16 @@ const Buscar = ({ clientInfo, onClose }) => {
                 <td>{editingId === client.id ? <input value={client.peso} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, peso: e.target.value } : c))} /> : client.peso}</td>
                 <td>{editingId === client.id ? <input value={client.altura} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, altura: e.target.value } : c))} /> : client.altura}</td>
                 <td>{editingId === client.id ? <input value={client.usuario} onChange={(e) => setClients(clients.map(c => c.id === client.id ? { ...c, usuario: e.target.value } : c))} /> : client.usuario}</td>
-                {/*<td>{client.password}</td>
-                 <td>{client.clase || 'N/A'}</td>
-                <td>{client.planes || 'N/A'}</td>
-                <td>{client.tickets || 0}</td>*/}
-                <td>
+                <td>{getClientClass(client.id)}</td>
+                <td>{client.planes && client.planes.length > 0 ? client.planes[0].name : 'N/A'}</td>
+                <td>{client.tickets || 0}</td>
+                {/* <td>
                   {editingId === client.id ? (
                     <button onClick={() => handleSave(client.id)} className="save-button">Guardar</button>
                   ) : (
                     <button onClick={() => handleEdit(client.id)} className="edit-button">Editar</button>
                   )}
-                  {/* <button onClick={() => handleDisable(client.id)} className="disable-button">Inhabilitar</button>*/}
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>
@@ -195,6 +205,5 @@ const Buscar = ({ clientInfo, onClose }) => {
     </div>
   );
 };
-
 
 export default Buscar;

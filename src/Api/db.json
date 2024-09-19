@@ -114,14 +114,6 @@
       "horaCreacion": "10:00 a.m.",
       "planes": [
         {
-          "id": "p1",
-          "name": "Mensualidad",
-          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un mes",
-          "price": 50000,
-          "duration": "1 mes",
-          "image": "/assets/images/planes1.jpg"
-        },
-        {
           "id": "p2",
           "name": "Trimestre",
           "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
@@ -146,10 +138,19 @@
       "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
       "correo": "estebanpineros42@gmail.com",
       "telefono": "3146874784",
-      "tickets": 0,
+      "tickets": 5,
       "fechaCreacion": "18/9/2024",
       "horaCreacion": "05:29 p.m.",
-      "planes": []
+      "planes": [
+        {
+          "id": "p2",
+          "name": "Trimestre",
+          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
+          "price": 130000,
+          "duration": "3 meses",
+          "image": "/assets/images/planes2.jpg"
+        }
+      ]
     }
   ],
   "clases": [
@@ -189,10 +190,18 @@
       "day": "2024-09-15",
       "descripcion": "Esta clase se esta creando para realizar pruebas con la relacion de ticketeras\n\nLa grasa va primero y el XD sera eterno",
       "totalCupos": "20",
-      "cuposDisponibles": 20,
+      "cuposDisponibles": 19,
       "fecha": "2024-09-15",
       "precio": "6500",
-      "inscritos": []
+      "inscritos": [
+        {
+          "idCliente": "4",
+          "nombre": " Edsson Gabriel Garzon Doncel",
+          "correo": "estebanpineros42@gmail.com",
+          "fechaInscripcion": "2024-09-19T22:24:37.755Z",
+          "estadoPago": "inscrito pero no pagado"
+        }
+      ]
     },
     {
       "id": "cd1d",
@@ -292,7 +301,17 @@
       "totalPrice": 36000,
       "date": "2024-09-14",
       "time": "19:01:16",
-      "status": "No Pagado"
+      "status": "Pagado"
+    },
+    {
+      "id": "56ce",
+      "clientId": "4",
+      "nombre": " Edsson Gabriel Garzon Doncel",
+      "quantity": 5,
+      "totalPrice": 60000,
+      "date": "2024-09-19",
+      "time": "17:24:23",
+      "status": "Pagado"
     }
   ],
   "productos": [

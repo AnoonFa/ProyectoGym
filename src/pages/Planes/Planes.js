@@ -7,8 +7,8 @@ import planes1 from '../../assets/images/planes1.jpg';
 import planes2 from '../../assets/images/planes2.jpg';
 import planes3 from '../../assets/images/planes3.jpg';
 import planes4 from '../../assets/images/planes4.jpg';
-import { Snackbar, Alert } from '@mui/material'; // Importamos Snackbar y Alert de MUI
-import { useAuth } from '../../context/RoleContext'; // Asumimos que tienes un contexto de autenticación
+import { Snackbar, Alert } from '@mui/material';
+import { useAuth } from '../../context/RoleContext';
 
 const Planes = () => {
   const navigate = useNavigate();
@@ -52,9 +52,14 @@ const Planes = () => {
     <div>
       <Header />
       <div className="plans-container">
-        <button className="mis-planes-button" onClick={() => navigate('/MisPlanes')}>
-          Mis Planes
-        </button>
+
+        {/* Mostrar botón solo si el usuario es client */}
+        {user?.role === 'client' && (
+          <button className="mis-planes-button" onClick={() => navigate('/MisPlanes')}>
+            Mis Planes
+          </button>
+        )}
+
         <h1>Planes</h1>
         <div className="plans-grid">
           <PlanCard
@@ -83,7 +88,6 @@ const Planes = () => {
           />
         </div>
       </div>
-
 
       {/* Snackbar para mostrar la alerta cuando ya tiene un plan activo */}
       <Snackbar
