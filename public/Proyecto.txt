@@ -1,0 +1,19 @@
+Terminal de gitbash
+git clone https://github.com/AnoonFa/ProyectoGym.git
+dir
+cd ProyectoGym
+npm install --legacy-peer-deps
+
+Alert
+cd ProyectoGym
+npm install @mui/material @emotion/react @emotion/styled
+
+
+Terminal de Command prompt
+cd ProyectoGym
+npm install -g json-server
+json-server --watch src/Api/db.json --port 3001
+
+Terminar la seccion de Rutinas para el cliente como esta pagina 
+https://www.entrenamientos.com/entrenamientos/entreno-complementario-mejora-dominadas/7167
+y que en AñadirRutina el input de persona se ponga     Nombre Apellido (usuario) y siga siendo lista 
