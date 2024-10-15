@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
             {(user.role === 'admin' || user.role === 'employee') && (
                 <i 
                     className="fas fa-trash delete-icon" 
-                    title='eliminar producto'
+                    title='Eliminar producto'
                     onClick={handleDelete}
                 ></i>
             )}

@@ -168,23 +168,9 @@
       "day": "2024-09-11"
     },
     {
-      "id": "6082",
-      "nombre": "Zumba",
-      "entrenador": "Daniel",
-      "startTime": "06:00",
-      "endTime": "07:32",
-      "descripcion": "Únete a esta divertida clase de Zumba, donde podrás bailar, hacer ejercicio y liberar el estrés del día.",
-      "totalCupos": "20",
-      "cuposDisponibles": 20,
-      "fecha": "2024-09-12",
-      "precio": "15000",
-      "inscritos": [],
-      "day": "2024-09-12"
-    },
-    {
       "id": "14f8",
       "nombre": "Yoga mensual",
-      "entrenador": "Carolina",
+      "entrenador": "Arolina",
       "startTime": "11:35",
       "endTime": "02:15",
       "day": "2024-09-15",
@@ -202,43 +188,8 @@
           "estadoPago": "inscrito pero no pagado"
         }
       ]
-    },
-    {
-      "id": "cd1d",
-      "nombre": "Prueba 3",
-      "entrenador": "Daniel",
-      "startTime": "14:00",
-      "endTime": "16:00",
-      "day": "2024-10-08",
-      "descripcion": "Participa en esta clase experimental, donde podrás contribuir a la creación de nuevas dinámicas de entrenamiento y bienestar.",
-      "totalCupos": "30",
-      "cuposDisponibles": 29,
-      "fecha": "2024-10-08",
-      "precio": "9800",
-      "inscritos": [
-        {
-          "idCliente": "1",
-          "nombre": "Esteban Piñeros",
-          "correo": "estebanpineros43@gmail.com",
-          "fechaInscripcion": "2024-10-11T06:54:46.547Z",
-          "estadoPago": "inscrito pero no pagado"
-        }
-      ]
-    },
-    {
-      "id": "662e",
-      "nombre": "Bachata",
-      "entrenador": "Carolina",
-      "startTime": "15:23",
-      "endTime": "01:00",
-      "day": "2024-11-20",
-      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis placerat ornare sollicitudin. Maecenas eleifend porta nunc. Nullam nulla justo, suscipit vel interdum ut, fringilla vel mi.",
-      "totalCupos": "10",
-      "cuposDisponibles": "10",
-      "fecha": "2024-11-20",
-      "precio": "5000",
-      "inscritos": []
     }
+
   ],
   "planes": [
     {

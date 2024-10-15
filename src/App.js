@@ -35,12 +35,10 @@ import Payments from './pages/Client/PaymentsPage/PaymentsPage';
 import RutinasCliente from './components/Rutina/RutinasCliente';
 import ClassDetail from './pages/Client/ClassesPage/ClasesDetailsPage';
 import CalendarClases from './components/VerClases/VerClases';
-import Productos from './components/ProductCard/Productos';
 import Checkout from './components/checkout/Checkout';
 import MisClases from './pages/Client/ClassesPage/MisClases';
 import MisPlanes from './pages/Planes/MisPlanes';
 import PlanesPage from './pages/Planes/planesPage';
-import Productp1 from './components/Product/Productp1';
 import ProductCard from './components/ProductCard/ProductCard';
 import AdminConfirmacion from './components/Ticketera/Admin/Confirmacion';
 
@@ -66,6 +64,7 @@ function App() {
   };
 
   return (
+    
     <RoleProvider>
       <ClassesProvider>
         <div className="app-container">
@@ -74,6 +73,7 @@ function App() {
               path="/"
               element={
                 <>
+                
                   <Header />
                   <Carousel />
                   <Planes />
@@ -83,7 +83,6 @@ function App() {
                       <SearchBar />
                     </div>
                     <div className="products-section">
-                      <h2>Productos</h2>
                       <div className="products-grid">
                         {productsToShow.length > 0 ? (
                           productsToShow.map((product, index) => (
@@ -120,7 +119,6 @@ function App() {
             <Route path="/Comprobant/*" element={<Comprobant />} />
             <Route path="/VerTicketera/*" element={<VerTicketera />} />
             <Route path="/PlanesPage/*" element={<PlanesPage />} />
-            <Route path="/Productp1/:planId" element={<Productp1 />} />
             <Route path="/MisPlanes/*" element={<MisPlanes />} />
             <Route path="/RutinaAdminIndex/*" element={<RutinaAdminIndex />} />
             <Route path="/Payments/*" element={<Payments />} />

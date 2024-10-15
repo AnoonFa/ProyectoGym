@@ -10,9 +10,11 @@
 .filter-sidebar {
   width: 25%;
   height: 100%;
+  flex: 1;
+  min-width: 250px; /* Ancho mínimo para la barra de filtros */
   padding: 20px;
   background-color: #f8f8f8;
-  margin-right: 20px;
+  margin-right: 10px;
   border-radius: 21px 0px 0px 21px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -22,8 +24,11 @@
   font-size: 1.5rem;
 }
 
+
 .filter-group {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px; /* Espacio entre los filtros */
 }
 
 .filter-group label {
@@ -38,7 +43,8 @@
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #ddd;
-  width: 100%;  
+  width: 100%; /* Asegura que los inputs ocupen todo el espacio */
+  box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
 }
 
 /* Ajustes para las filas de los filtros de hora */
@@ -123,7 +129,65 @@
   background-color: #b6b6b6;
 }
 
+/* Estilos para indicar el orden de la tabla */
+.sortable-header {
+  cursor: pointer; /* Indica que se puede hacer clic */
+  position: relative; /* Para posicionar las flechas */
+}
 
+.sortable-header:after {
+  content: ''; /* Para el ícono de orden */
+  position: absolute;
+  right: 10px; /* Ajusta según tu diseño */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0; 
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
+.asc:after {
+  border-bottom: 5px solid #007bff; /* Color de la flecha hacia arriba */
+}
+
+.desc:after {
+  border-top: 5px solid #007bff; /* Color de la flecha hacia abajo */
+}
+
+
+/* Estilos para la paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.pagination button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination button:disabled {
+  background-color: #c0c0c0;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pagination span {
+  margin: 0 10px;
+  font-size: 16px;
+}
 
 .show-more-button {
   display: block;
@@ -288,4 +352,33 @@
     transform: translateY(0);
   }
 }
+@media (max-width: 1564px) {
+  .filter-sidebar {
+    order: 1; /* Mueve la barra de filtros al inicio */
+  }
+  .classes-table-container {
+    order: 2; /* Mueve la tabla a continuación */
+    min-width: 100%; /* Asegura que la tabla también ocupe todo el ancho */
+  }
 
+  .field-row {
+    flex-direction: column; /* Hace que los filtros de tiempo se apilen */
+  }
+}
+
+/* Media Queries para pantallas pequeñas */
+@media (max-width: 600px) {
+  .filter-sidebar {
+    order: 1; /* Mueve la barra de filtros al inicio */
+    min-width: 100%; /* Hace que la barra ocupe todo el ancho */
+  }
+
+  .classes-table-container {
+    order: 2; /* Mueve la tabla a continuación */
+    min-width: 100%; /* Asegura que la tabla también ocupe todo el ancho */
+  }
+
+  .field-row {
+    flex-direction: column; /* Hace que los filtros de tiempo se apilen */
+  }
+}

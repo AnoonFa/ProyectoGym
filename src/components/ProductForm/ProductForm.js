@@ -149,11 +149,11 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
         <div className="modal-producto-container">
             <div className="modal-producto-content">
                 <form onSubmit={handleSubmit} className="modify-product-form-modal">
-                    <h2 className="form-title-modal">Modificar Producto</h2>
+                    <h2 className="form-title-modal">Añadir Producto</h2>
 
                     <div className="form-field-modal field-row-modal">
                         <div className="field-half-modal">
-                            <label className="form-product-modal">Nombre</label>
+                            <label className="form-product-modal">Nombre <span style={{ color: 'red' }}>*</span></label>
                             <input
                                 type="text"
                                 name="name"
@@ -175,7 +175,7 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
 
                     <div className="form-field-modal field-row-modal">
                         <div className="field-half-modal">
-                            <label className="form-product-modal">Precio</label>
+                            <label className="form-product-modal">Precio <span style={{ color: 'red' }}>*</span></label>
                             <input
                                 type="number"
                                 name="price"
@@ -199,7 +199,7 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
                     </div>
 
                     <div className="form-field-modal">
-                        <label className="form-product-modal">Descripción</label>
+                        <label className="form-product-modal">Descripción <span style={{ color: 'red' }}>*</span></label>
                         <textarea
                             name="description"
                             value={productData.description}
@@ -218,7 +218,7 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
                     </div>
 
                     <div className="form-field-modal">
-                        <label className="form-product-modal">URL de la imagen</label>
+                        <label className="form-product-modal">URL de la imagen <span style={{ color: 'red' }}>*</span></label>
                         <input
                             type="text"
                             name="image"
@@ -235,7 +235,7 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
                     </div>
 
                     <div className="form-field-modal">
-                        <label className="form-product-modal">Categoría</label>
+                        <label className="form-product-modal">Categoría <span style={{ color: 'red' }}>*</span></label>
                         <select
                             name="category"
                             value={productData.category}

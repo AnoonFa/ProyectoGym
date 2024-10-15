@@ -5,7 +5,7 @@ import Footer from '../Footer/Footer';
 import ClientClass from '../../pages/Client/ClassesPage/ClassesPage';
 import ProductsClient from '../../pages/Client/ProductsPage/ProductsPage';
 import RutinesPage from '../../pages/Client/RoutinesPage/RoutinesPage'; 
-import Carousel from '../../components/Carusel/Carusel';
+import Carousel from '../Carousel/Carousel';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import Plans from '../Plans/Plans';
@@ -32,23 +32,24 @@ const productsToShow = filteredProducts.length > 0 ? filteredProducts : products
             <>
 
               <Carousel />
-              
               <Planes /> 
-              <SearchBar />
               <CategoryCircles />
-             
-              <div className="products-container">
-          <h2>Productos</h2>
-          <div className="products-grid">
-            {productsToShow.length > 0 ? (
-              productsToShow.map((product, index) => (
-                <ProductCard key={index} product={product} />
-              ))
-            ) : (
-              <p>No hay productos disponibles.</p>
-            )}
-          </div>
-        </div>
+                  <div className="content-container">
+                    <div className="searchbar-container">
+                      <SearchBar />
+                    </div>
+                    <div className="products-section">
+                      <div className="products-grid">
+                        {productsToShow.length > 0 ? (
+                          productsToShow.map((product, index) => (
+                            <ProductCard key={index} product={product} />
+                          ))
+                        ) : (
+                          <p>No hay productos disponibles.</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
 
             </>
           }

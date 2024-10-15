@@ -228,6 +228,8 @@ const PerfilEditarModal = ({ onClose }) => {
             </div>
           </div>
 
+          {user.role === 'client' && (
+
           <div className="form-field field-row">
             <div className="field-half">
               <label className="form-label">Peso (kg)</label>
@@ -252,6 +254,7 @@ const PerfilEditarModal = ({ onClose }) => {
               />
             </div>
           </div>
+          )}
 
           <div className="form-field field-row">
             <div className="form-field">
