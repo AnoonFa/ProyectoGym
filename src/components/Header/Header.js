@@ -183,9 +183,12 @@ const Header = () => {
                   <p className="welcome-message">¡Hola, {user.username}!</p>
 
                   {/* Botón de editar perfil centrado */}
+                  {user.role === 'client' && (
+
                   <button className="edit-profile-btn" onClick={handleEditProfileClick}>
                     Editar Perfil
                   </button>
+                  )}
                   {showModal && (
                     <FullScreenEditProfileModal 
                       user={user} 

@@ -46,6 +46,10 @@ const MisClases = () => {
   const maxClassesToShow = 5; // Número máximo de clases a mostrar antes de habilitar "Ver más"
   const [openSnackbar, setOpenSnackbar] = useState(false);  // Estado para el Snackbar
   const [alertMessage, setAlertMessage] = useState('');     // Estado para el mensaje de alerta
+  const [sortOrder, setSortOrder] = useState({ field: 'nombre', direction: 'asc' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const classesPerPage = 5; // Número máximo de clases por página
+
 
 
 
@@ -78,16 +82,45 @@ const MisClases = () => {
   // Filtrar clases según los criterios de búsqueda
   const filteredResults = filteredClasses.filter(clase => {
     return (
-      (filters.nombre === '' || (clase.nombre && clase.nombre.toLowerCase().includes(filters.nombre.toLowerCase()))) &&
-      (filters.entrenador === '' || (clase.entrenador && clase.entrenador.toLowerCase().includes(filters.entrenador.toLowerCase()))) &&
-      (filters.startTime === '' || (clase.startTime && clase.startTime.includes(filters.startTime))) &&
-      (filters.endTime === '' || (clase.endTime && clase.endTime.includes(filters.endTime)))
+        (filters.nombre === '' || (clase.nombre && clase.nombre.toLowerCase().includes(filters.nombre.toLowerCase()))) &&
+        (filters.entrenador === '' || (clase.entrenador && clase.entrenador.toLowerCase().includes(filters.entrenador.toLowerCase()))) &&
+        (filters.startTime === '' || (clase.startTime && clase.startTime.includes(filters.startTime))) &&
+        (filters.endTime === '' || (clase.endTime && clase.endTime.includes(filters.endTime)))
     );
-  });
+});
   
 
-  // Clases a mostrar según el botón "Ver más/Ver menos"
-  const classesToShow = showMore ? filteredResults : filteredResults.slice(0, maxClassesToShow);
+  const sortedClasses = [...filteredResults].sort((a, b) => {
+    const fieldA = sortOrder.field === 'fecha' ? new Date(a.fecha) : a[sortOrder.field];
+    const fieldB = sortOrder.field === 'fecha' ? new Date(b.fecha) : b[sortOrder.field];
+    return sortOrder.direction === 'asc' ? (fieldA > fieldB ? 1 : -1) : (fieldA < fieldB ? 1 : -1);
+});
+
+  
+
+  // Calcula la cantidad total de páginas
+  const totalPages = Math.ceil(sortedClasses.length / classesPerPage);
+
+  // Clases a mostrar según la página actual
+  const classesToShow = sortedClasses.slice(
+    (currentPage - 1) * classesPerPage,
+    currentPage * classesPerPage
+  );
+
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(prevPage => prevPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(prevPage => prevPage - 1);
+    }
+  };
+
+
 
   // Función para limpiar los filtros
   const clearFilters = () => {
@@ -97,8 +130,18 @@ const MisClases = () => {
       startTime: '',
       endTime: ''
     });
-    setFilteredClasses(classes); // Restablecemos las clases sin filtros
+  
+    // Para clientes, restablecer a las clases a las que están inscritos
+    if (user.role === 'client') {
+      const userClasses = classes.filter(clase =>
+        clase.inscritos && clase.inscritos.some(inscrito => inscrito.idCliente === user.id)
+      );
+      setFilteredClasses(userClasses);
+    } else {
+      setFilteredClasses(classes); // Para administradores
+    }
   };
+  
 
   // Función para abrir el modal con la clase seleccionada
   const openModal = (clase) => {
@@ -278,78 +321,80 @@ const openPaymentModal = (inscrito) => {
 
 
 
-  
+const handleSortChange = (field) => {
+  const direction = sortOrder.field === field && sortOrder.direction === 'asc' ? 'desc' : 'asc';
+  setSortOrder({ field, direction });
+};
 
   return (
     <>
     
     <div className="mis-clases-container">
-      <div className="filter-sidebar">
-        <h3>Filtros</h3>
+  <div className="filter-sidebar">
+    <h3>Filtros</h3>
 
-        {/* Filtros de clase */}
-        <div className="filter-group">
-          <label>Nombre:</label>
-          <input
-            type="text"
-            name="nombre"
-            placeholder="Buscar por nombre"
-            value={filters.nombre}
-            onChange={handleFilterChange}
-          />
-        </div>
+    <div className="filter-group">
+      <label>Nombre:</label>
+      <input
+        type="text"
+        name="nombre"
+        placeholder="Buscar por nombre"
+        value={filters.nombre}
+        onChange={handleFilterChange}
+      />
+    </div>
 
-        <div className="filter-group">
-          <label>Entrenador:</label>
-          <input
-            type="text"
-            name="entrenador"
-            placeholder="Buscar por entrenador"
-            value={filters.entrenador}
-            onChange={handleFilterChange}
-          />
-        </div>
+    <div className="filter-group">
+      <label>Entrenador:</label>
+      <input
+        type="text"
+        name="entrenador"
+        placeholder="Buscar por entrenador"
+        value={filters.entrenador}
+        onChange={handleFilterChange}
+      />
+    </div>
 
-        <div className="field-row">
-          <div className="filter-group">
-            <label>Hora Inicio:</label>
-            <input
-              type="time"
-              name="startTime"
-              placeholder="Hora de inicio"
-              value={filters.startTime}
-              onChange={handleFilterChange}
-            />
-          </div>
-
-          <div className="filter-group">
-            <label>Hora Fin:</label>
-            <input
-              type="time"
-              name="endTime"
-              placeholder="Hora de fin"
-              value={filters.endTime}
-              onChange={handleFilterChange}
-            />
-          </div>
-        </div>
-
-
-        <button onClick={clearFilters} className="clear-filters-button">Limpiar Filtros</button>
+    <div className="field-row">
+      <div className="filter-group">
+        <label>Hora Inicio:</label>
+        <input
+          type="time"
+          name="startTime"
+          placeholder="Hora de inicio"
+          value={filters.startTime}
+          onChange={handleFilterChange}
+        />
       </div>
+
+      <div className="filter-group">
+        <label>Hora Fin:</label>
+        <input
+          type="time"
+          name="endTime"
+          placeholder="Hora de fin"
+          value={filters.endTime}
+          onChange={handleFilterChange}
+        />
+      </div>
+    </div>
+
+    <button onClick={clearFilters} className="clear-filters-button">Limpiar Filtros</button>
+  </div>
 
       {/* Tabla para mostrar las clases */}
       <div className="classes-table-container">
-        <table className="classes-table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Entrenador</th>
-              <th>Hora</th>
-              <th>Fecha</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
+          <table class="classes-table">
+            <thead>
+              <tr>
+              <th className={`sortable-header ${sortOrder.field === 'nombre' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('nombre')}>Nombre</th>
+              <th className={`sortable-header ${sortOrder.field === 'nombre' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('fecha')}>Entrenador</th>
+              <th className={`sortable-header ${sortOrder.field === 'time' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('time')}>Hora</th>
+              <th className={`sortable-header ${sortOrder.field === 'fecha' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('fecha')}>Fecha</th>
+
+                <th>Acciones</th>
+              </tr>
+            </thead>
           <tbody>
             {classesToShow.length > 0 ? (
               classesToShow.map(clase => (
@@ -408,6 +453,19 @@ const openPaymentModal = (inscrito) => {
             )}
           </tbody>
         </table>
+
+        {/* Controles de paginación */}
+        {totalPages > 1 && (
+          <div className="pagination">
+            <button onClick={handlePrevPage} disabled={currentPage === 1}>
+              Anterior
+            </button>
+            <span>Página {currentPage} de {totalPages}</span>
+            <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+              Siguiente
+            </button>
+          </div>
+        )}
 
         {showInscritos && (
   <div className="inscritos-list">

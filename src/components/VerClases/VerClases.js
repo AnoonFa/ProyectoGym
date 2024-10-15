@@ -63,13 +63,6 @@ const CalendarClases = () => {
   const [showAlert, setShowAlert] = useState(false); // Control de visibilidad de la alerta
   const [timeoutId, setTimeoutId] = useState(null);  // Guardar el ID del timeout
 
-   // Cargar entrenadores
-   useEffect(() => {
-    fetch('http://localhost:3001/employee')
-      .then(response => response.json())
-      .then(data => setEmployees(data))
-      .catch(error => console.error('Error cargando los entrenadores:', error));
-  }, []);
 
   const handleDeleteClass = (className) => {
     const updatedClasses = classes.filter((classItem) => classItem.nombre !== className);
@@ -117,8 +110,8 @@ const CalendarClases = () => {
         break;
 
       case 'entrenador':
-        if (!value) {
-          newErrors.entrenador = 'Debes seleccionar un entrenador.';
+        if (!value || value.length < 1 || value.length > 100) {
+          newErrors.entrenador = 'El nombre del Entrenador debe tener entre 1 y 100 caracteres.';
         } else {
           delete newErrors.entrenador;
         }
@@ -442,13 +435,14 @@ const CalendarClases = () => {
             <h2 className="form-title">Agregar Clase</h2>
             <div className="form-field field-row">
               <div className="field-half">
-                <label className='form-clases'>Nombre</label>
+                <label className='form-clases'>Nombre <span style={{ color: 'red' }}>*</span></label>
                 <input
                   type="text"
                   name="nombre"
                   value={newClass.nombre}
                   onChange={handleChange}
                   required
+                  placeholder='Nombre de la clase'
                   className="vkz-input-field"
                   maxLength="50"
                   minLength="3"
@@ -464,21 +458,20 @@ const CalendarClases = () => {
               <div className="form-field field-row">
 
               <div className="field-half">
-                <label className='form-clases'>Entrenador</label>
-                <select
+                <label className='form-clases'>Entrenador <span style={{ color: 'red' }}>*</span></label>
+                <input
+                  type="text"
                   name="entrenador"
+                  placeholder='Nombre del entrenador'
                   value={newClass.entrenador}
                   onChange={handleChange}
                   required
                   className="vkz-input-field"
-                >
-                  <option value="" disabled>Selecciona un entrenador</option>
-                  {employees.map((employee) => (
-                    <option key={employee.id} value={employee.usuario}>
-                      {employee.usuario}
-                    </option>
-                  ))}
-                </select>
+                  maxLength="100"
+                  minLength="1"
+                  autoFocus
+                />
+
                 {errors.entrenador && (
                   <Stack sx={{ width: '100%' }} spacing={2}>
                     <Alert severity="error">{errors.entrenador}</Alert>
@@ -488,7 +481,7 @@ const CalendarClases = () => {
             </div>
 
             <div className="form-field">
-              <label className='form-clases'>Fecha</label>
+              <label className='form-clases'>Fecha <span style={{ color: 'red' }}>*</span></label>
               <input
                 type="date"
                 name="day"
@@ -507,7 +500,7 @@ const CalendarClases = () => {
             {/* Agrupación de hora de inicio y final */}
             <div className="form-field field-row">
               <div className="field-half">
-                <label className='form-clases'>Hora de Inicio</label>
+                <label className='form-clases'>Hora de Inicio <span style={{ color: 'red' }}>*</span></label>
                 <input
                   type="time"
                   name="startTime"
@@ -522,7 +515,7 @@ const CalendarClases = () => {
                   )}
               </div>
               <div className="field-half">
-                <label className='form-clases'>Hora de Fin</label>
+                <label className='form-clases'>Hora de Fin <span style={{ color: 'red' }}>*</span></label>
                 <input
                   type="time"
                   name="endTime"
@@ -540,13 +533,14 @@ const CalendarClases = () => {
             
             <div className="form-field field-row">
               <div className="field-half">
-                <label className='form-clases'>Total de cupos</label>
+                <label className='form-clases'>Total de cupos <span style={{ color: 'red' }}>*</span></label>
                 <input
                   type="number"
                   name="totalCupos"
                   value={newClass.totalCupos}
                   onChange={handleChange}
                   required
+                  placeholder='Numero de cupos'
                   className="vkz-input-field"
                   min="1"
                 />
@@ -558,12 +552,13 @@ const CalendarClases = () => {
               </div>
               
               <div className="field-half">
-                <label className='form-clases'>Precio</label>
+                <label className='form-clases'>Precio <span style={{ color: 'red' }}>*</span></label>
                 <input
                   type="number"
                   name="precio"
                   value={newClass.precio}
                   onChange={handleChange}
+                  placeholder='Precio de la clase'
                   className="vkz-input-field"
                   min="0"
                 />
@@ -576,7 +571,7 @@ const CalendarClases = () => {
             </div>
             {/* Campo de descripción al final con contador de caracteres */}
             <div className="form-field">
-              <label className='form-clases'>Descripción</label>
+              <label className='form-clases'>Descripción <span style={{ color: 'red' }}>*</span></label>
               <textarea
                 name="descripcion"
                 value={newClass.descripcion}
@@ -584,6 +579,7 @@ const CalendarClases = () => {
                 required
                 className="vkz-input-field descripcion-field"
                 maxLength="200"
+                placeholder='Descripción de la clase'
                 minLength="30"
                 style={{ resize: 'vertical', maxHeight: '200px' }}
               />

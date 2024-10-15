@@ -1,30 +1,42 @@
 import React, { useState } from 'react';
+import ReactSlider from 'react-slider';
 import './SearchBar.css';
+import { Button, Modal } from '@mui/material';
+import ProductForm from '../ProductForm/ProductForm';
+import { useAuth } from '../../context/RoleContext';
 
-const SearchBar = ({ onSearch, onPriceRangeSelect }) => {
+const SearchBar = ({ onSearch, onPriceRangeSelect, onClearFilters }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [priceRange, setPriceRange] = useState(''); // Estado para el rango de precios
+  const [priceRange, setPriceRange] = useState([2500, 100000]); // Rango de precios inicial [min, max]
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal de añadir productos
+  const { user } = useAuth(); // Usamos el contexto de autenticación
 
-  // Actualizar el término de búsqueda
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    onSearch(e.target.value); // Notificar al componente padre del cambio
+    onSearch(e.target.value);
   };
 
-  // Actualizar el rango de precios
-  const handlePriceRangeChange = (e) => {
-    setPriceRange(e.target.value);
-    onPriceRangeSelect(e.target.value); // Notificar al componente padre del cambio
+  const handlePriceChange = (values) => {
+    setPriceRange(values);
+    onPriceRangeSelect(values[0], values[1]);
   };
+
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setPriceRange([2500, 100000]); // Reiniciar al rango predeterminado
+    onSearch('');
+    onPriceRangeSelect(2500, 100000);
+    onClearFilters(); // Llamar para limpiar todos los filtros
+  };
+
+  // Funciones para abrir y cerrar el modal de añadir productos
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   return (
     <div className="filter-bar">
-      <h2>Buscar Productos</h2>
-     
-      <hr />
-
-      {/* Filtro por nombre */}
-      <div className="filter-group"> <br/>
+      <h2 className='filtrarr-'>Filtrar por</h2>
+      <div className="filter-group-search">
         <label>Buscar</label>
         <input
           type="text"
@@ -34,17 +46,56 @@ const SearchBar = ({ onSearch, onPriceRangeSelect }) => {
         />
       </div>
 
-      {/* Filtrar por rango de precios */}
-      <div className="filter-group">
-        <label>Rango de precios</label>
-        <select value={priceRange} onChange={handlePriceRangeChange}>
-          <option value="">Todos</option>
-          <option value="0-5000">0 - 5,000</option>
-          <option value="5001-20000">5,001 - 20,000</option>
-          <option value="20001-50000">20,001 - 50,000</option>
-          <option value="50001-100000">50,001 - 100,000</option>
-        </select>
+      <div className="filter-group-search">
+        <label>Precio</label>
+        <ReactSlider
+          className="price-slider"
+          thumbClassName="price-thumb"
+          trackClassName="price-track"
+          min={2500}
+          max={100000}
+          value={priceRange}
+          onChange={handlePriceChange}
+          ariaLabel={['Min price', 'Max price']}
+          pearling
+          minDistance={1000}
+        />
+        <div className="price-values">
+          <span>{`$${priceRange[0].toLocaleString()}`}</span>
+          <span>{`$${priceRange[1].toLocaleString()}`}</span>
+        </div>
       </div>
+      <div className="butotnss">
+      <button className="clear-filters-btn" onClick={handleClearFilters}>
+        Limpiar Filtros
+      </button>
+
+      {/* Botón para abrir el modal de añadir productos */}
+      {user.role === 'admin' && (
+        <div className="add-product-button-container">
+          <button className='add-filters-btn' onClick={handleOpenModal}>
+            Añadir Producto
+          </button>
+        </div>
+      )}
+</div>
+      {/* Modal que contiene el formulario para añadir productos */}
+      <Modal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <div className="modal-container">
+          <ProductForm
+            initialProduct={null} // Como es añadir, no hay producto inicial
+            onSubmit={() => {
+              handleCloseModal(); // Cerrar modal tras enviar el formulario
+            }}
+            onCancel={handleCloseModal} // Cerrar modal si se cancela
+          />
+        </div>
+      </Modal>
     </div>
   );
 };

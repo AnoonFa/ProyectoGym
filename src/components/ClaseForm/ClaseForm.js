@@ -205,7 +205,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
 
       <div className="form-field field-row">
         <div className="field-half">
-          <label className="form-clases">Nombre</label>
+          <label className="form-clases">Nombre <span style={{ color: 'red' }}>*</span></label>
           <input
             type="text"
             name="nombre"
@@ -227,7 +227,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
 
       <div className="form-field field-row">
         <div className="field-half">
-          <label className="form-clases">Entrenador</label>
+          <label className="form-clases">Entrenador <span style={{ color: 'red' }}>*</span></label>
           <select
             name="entrenador"
             value={classData.entrenador}
@@ -253,7 +253,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
       </div>
 
       <div className="form-field">
-        <label className="form-clases">Fecha</label>
+        <label className="form-clases">Fecha <span style={{ color: 'red' }}>*</span></label>
         <input
           type="date"
           name="day"
@@ -271,7 +271,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
 
       <div className="form-field field-row">
         <div className="field-half">
-          <label className="form-clases">Hora de Inicio</label>
+          <label className="form-clases">Hora de Inicio <span style={{ color: 'red' }}>*</span></label>
           <input
             type="time"
             name="startTime"
@@ -286,7 +286,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
           )}
         </div>
         <div className="field-half">
-          <label className="form-clases">Hora de Fin</label>
+          <label className="form-clases">Hora de Fin <span style={{ color: 'red' }}>*</span></label>
           <input
             type="time"
             name="endTime"
@@ -304,7 +304,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
 
       <div className="form-field field-row">
         <div className="field-half">
-          <label className="form-clases">Total de cupos</label>
+          <label className="form-clases">Total de cupos <span style={{ color: 'red' }}>*</span></label>
           <input
             type="number"
             name="totalCupos"
@@ -322,7 +322,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
         </div>
 
         <div className="field-half">
-          <label className="form-clases">Precio</label>
+          <label className="form-clases">Precio <span style={{ color: 'red' }}>*</span></label>
           <input
             type="number"
             name="precio"
@@ -340,7 +340,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
       </div>
 
       <div className="form-field">
-        <label className="form-clases">Descripción</label>
+        <label className="form-clases">Descripción <span style={{ color: 'red' }}>*</span></label>
         <textarea
           name="descripcion"
           value={classData.descripcion}
