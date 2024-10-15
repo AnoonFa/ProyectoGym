@@ -54,20 +54,12 @@
       "password": "Soyesteban1234*",
       "correo": "estebanpineros43@gmail.com",
       "telefono": "3196699831",
-      "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":1,\"repeticiones\":30,\"descanso\":99,\"videoUrl\":\"https://youtu.be/wWK7j1o_Xa8?si=AJ-rYAmWKJfY9tEB\",\"thumbnailUrl\":\"https://img.youtube.com/vi/wWK7j1o_Xa8/0.jpg\"},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Remo con barra T\",\"series\":3,\"repeticiones\":10,\"descanso\":60}]",
-      "tickets": 14,
+      "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":1,\"repeticiones\":30,\"descanso\":99,\"videoUrl\":\"https://youtu.be/wWK7j1o_Xa8?si=AJ-rYAmWKJfY9tEB\",\"thumbnailUrl\":\"https://img.youtube.com/vi/wWK7j1o_Xa8/0.jpg\"},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Remo con barra T\",\"series\":5,\"repeticiones\":10,\"descanso\":60}]",
+      "tickets": 15,
       "fechaCreacion": "20/9/2024",
       "horaCreacion": "10:00 a.m.",
-      "planes": [
-        {
-          "id": "p2",
-          "name": "Trimestre",
-          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
-          "price": 130000,
-          "duration": "3 meses",
-          "image": "/assets/images/planes2.jpg"
-        }
-      ]
+      "planes": [],
+      "habilitado": true
     },
     {
       "id": "2",
@@ -96,7 +88,8 @@
           "duration": "1 mes",
           "image": "/assets/images/planes3.jpg"
         }
-      ]
+      ],
+      "habilitado": true
     },
     {
       "id": "3",
@@ -125,11 +118,12 @@
           "duration": "1 mes",
           "image": "/assets/images/planes1.jpg"
         }
-      ]
+      ],
+      "habilitado": false
     },
     {
       "id": "4",
-      "nombre": " Edsson Gabriel",
+      "nombre": " Edsson",
       "apellido": "Garzon Doncel",
       "tipoDocumento": "CC",
       "numeroDocumento": "597486559",
@@ -154,7 +148,8 @@
           "duration": "3 meses",
           "image": "/assets/images/planes2.jpg"
         }
-      ]
+      ],
+      "habilitado": true
     }
   ],
   "clases": [
@@ -217,9 +212,31 @@
       "day": "2024-10-08",
       "descripcion": "Participa en esta clase experimental, donde podrás contribuir a la creación de nuevas dinámicas de entrenamiento y bienestar.",
       "totalCupos": "30",
-      "cuposDisponibles": 30,
+      "cuposDisponibles": 29,
       "fecha": "2024-10-08",
       "precio": "9800",
+      "inscritos": [
+        {
+          "idCliente": "1",
+          "nombre": "Esteban Piñeros",
+          "correo": "estebanpineros43@gmail.com",
+          "fechaInscripcion": "2024-10-11T06:54:46.547Z",
+          "estadoPago": "inscrito pero no pagado"
+        }
+      ]
+    },
+    {
+      "id": "662e",
+      "nombre": "Bachata",
+      "entrenador": "Carolina",
+      "startTime": "15:23",
+      "endTime": "01:00",
+      "day": "2024-11-20",
+      "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis placerat ornare sollicitudin. Maecenas eleifend porta nunc. Nullam nulla justo, suscipit vel interdum ut, fringilla vel mi.",
+      "totalCupos": "10",
+      "cuposDisponibles": "10",
+      "fecha": "2024-11-20",
+      "precio": "5000",
       "inscritos": []
     }
   ],
@@ -317,6 +334,26 @@
       "date": "2024-09-19",
       "time": "17:24:23",
       "status": "Pagado"
+    },
+    {
+      "id": "4e56",
+      "clientId": "1",
+      "nombre": "Esteban Piñeros",
+      "quantity": 1,
+      "totalPrice": 12000,
+      "date": "2024-10-11",
+      "time": "01:44:36",
+      "status": "No Pagado"
+    },
+    {
+      "id": "507e",
+      "clientId": "1",
+      "nombre": "Esteban Piñeros",
+      "quantity": 1,
+      "totalPrice": 12000,
+      "date": "2024-10-11",
+      "time": "01:44:45",
+      "status": "No Pagado"
     }
   ],
   "productos": [

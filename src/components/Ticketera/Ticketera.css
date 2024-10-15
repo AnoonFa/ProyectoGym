@@ -469,3 +469,41 @@
     width: 100%;
   }
 }
+
+.pagination-ticket-admin {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-ticket-admin button {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination-ticket-admin button.active {
+  background-color: #2679f7;
+  color: white;
+  border-color: #2679f7;
+}
+
+.pagination-ticket-admin button:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+
+.pagination-ticket-admin button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.confirmacion-table-header {
+  cursor: pointer;
+}
+
+.confirmacion-table-header:hover {
+  background-color: #e0e0e0;
+}

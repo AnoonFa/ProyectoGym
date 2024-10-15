@@ -57,7 +57,6 @@ export const ClientCreationChart = () => {
           dataZoom: {
             yAxisIndex: 'none'
           },
-          restore: {},
           saveAsImage: {}
         }
       },

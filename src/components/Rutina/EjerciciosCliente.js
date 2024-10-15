@@ -6,10 +6,12 @@ import './RutinaAdminIndex.css';
 const EjerciciosCliente = ({ cliente }) => {
   const navigate = useNavigate();
   const [rutina, setRutina] = useState([]);
+  const [rutinaInicial, setRutinaInicial] = useState([]);
   const [clienteData, setClienteData] = useState(null);
   const [error, setError] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
   const [isEditing, setIsEditing] = useState(true);
+  const [hasChanges, setHasChanges] = useState(false);
 
   // Definición de rutinasIniciales
   const rutinasIniciales = {
@@ -69,9 +71,12 @@ const EjerciciosCliente = ({ cliente }) => {
           .then(data => {
             setClienteData(data);
             if (data.rutinas) {
-              setRutina(JSON.parse(data.rutinas));
+              const rutinaParseada = JSON.parse(data.rutinas);
+              setRutina(rutinaParseada);
+              setRutinaInicial(JSON.parse(JSON.stringify(rutinaParseada))); // Copia profunda
             } else if (data.tipoCuerpo && rutinasIniciales[data.tipoCuerpo]) {
               setRutina(rutinasIniciales[data.tipoCuerpo]);
+              setRutinaInicial(JSON.parse(JSON.stringify(rutinasIniciales[data.tipoCuerpo]))); // Copia profunda
             } else {
               setError(`No se encontró una rutina asignada para ${cliente.nombre}`);
             }
@@ -82,6 +87,11 @@ const EjerciciosCliente = ({ cliente }) => {
           });
       }
     }, [cliente]);
+  
+    useEffect(() => {
+      const cambios = JSON.stringify(rutina) !== JSON.stringify(rutinaInicial);
+      setHasChanges(cambios);
+    }, [rutina, rutinaInicial]);
   
     const handleInputChange = (index, field, value) => {
       if (field === 'series' || field === 'repeticiones' || field === 'descanso') {
@@ -227,11 +237,15 @@ const EjerciciosCliente = ({ cliente }) => {
           <Alert severity="success">Rutina actualizada con éxito</Alert>
         )}
         {!error && (
-          <button className="actualizar-btn" onClick={handleActualizar} disabled={!isEditing}>
-            Actualizar
-          </button>
-        )}
-      </div>
+        <button 
+          className="actualizar-btn" 
+          onClick={handleActualizar} 
+          disabled={!isEditing || !hasChanges}
+        >
+          Actualizar
+        </button>
+      )}
+    </div>
     );
   };
   

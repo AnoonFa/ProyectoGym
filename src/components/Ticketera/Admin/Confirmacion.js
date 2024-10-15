@@ -9,33 +9,50 @@ function AdminConfirmacion() {
     const [filteredTickets, setFilteredTickets] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [selectedTicket, setSelectedTicket] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [sortField, setSortField] = useState('');
+    const [sortOrder, setSortOrder] = useState('asc');
+    const ticketsPerPage = 4;
 
     useEffect(() => {
         fetchTickets();
     }, []);
 
     useEffect(() => {
-        filterTickets();
-    }, [searchTerm, tickets]);
+        filterAndSortTickets();
+    }, [searchTerm, tickets, sortField, sortOrder]);
 
     const fetchTickets = async () => {
         try {
             const response = await fetch('http://localhost:3001/ticketera');
             const data = await response.json();
-            setTickets(data.filter(ticket => ticket.status !== 'Pagado'));
+            setTickets(data);
         } catch (error) {
             console.error('Error fetching tickets:', error);
         }
     };
 
-    const filterTickets = () => {
+    const filterAndSortTickets = () => {
         let filtered = tickets;
         if (searchTerm.length > 0) {
             filtered = filtered.filter(ticket => 
                 ticket.nombre.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
-        setFilteredTickets(filtered.slice(0, 4));
+        if (sortField) {
+            filtered.sort((a, b) => {
+                if (a[sortField] < b[sortField]) return sortOrder === 'asc' ? -1 : 1;
+                if (a[sortField] > b[sortField]) return sortOrder === 'asc' ? 1 : -1;
+                return 0;
+            });
+        }
+        setFilteredTickets(filtered);
+        setCurrentPage(1);
+    };
+
+    const handleSort = (field) => {
+        setSortOrder(sortField === field && sortOrder === 'asc' ? 'desc' : 'asc');
+        setSortField(field);
     };
 
     const handleStatusChange = async (ticketId, newStatus) => {
@@ -102,6 +119,24 @@ function AdminConfirmacion() {
         }
     };
 
+    const indexOfLastTicket = currentPage * ticketsPerPage;
+    const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
+    const currentTickets = filteredTickets.slice(indexOfFirstTicket, indexOfLastTicket);
+    const totalPages = Math.ceil(filteredTickets.length / ticketsPerPage);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const getPaginationGroup = () => {
+        let start = Math.max(currentPage - 2, 1);
+        let end = Math.min(start + 4, totalPages);
+
+        if (end - start < 4) {
+            start = Math.max(end - 4, 1);
+        }
+
+        return new Array(end - start + 1).fill().map((_, idx) => start + idx);
+    };
+
     return (
         <>
             <Header />
@@ -123,42 +158,71 @@ function AdminConfirmacion() {
                         </div>
                     </div>
                     <div className="confirmacion-table-container">
-                        {filteredTickets.length > 0 ? (
-                            <table className="confirmacion-table">
-                                <thead>
-                                    <tr>
-                                        <th className="confirmacion-table-header">Nombre</th>
-                                        <th className="confirmacion-table-header">Cantidad</th>
-                                        <th className="confirmacion-table-header">Precio Total</th>
-                                        <th className="confirmacion-table-header">Fecha</th>
-                                        <th className="confirmacion-table-header">Hora</th>
-                                        <th className="confirmacion-table-header">Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {filteredTickets.map((ticket) => (
-                                        <tr key={ticket.id}>
-                                            <td className="confirmacion-table-cell">{ticket.nombre}</td>
-                                            <td className="confirmacion-table-cell">{ticket.quantity}</td>
-                                            <td className="confirmacion-table-cell">${ticket.totalPrice}</td>
-                                            <td className="confirmacion-table-cell">{ticket.date}</td>
-                                            <td className="confirmacion-table-cell">{ticket.time}</td>
-                                            <td className="confirmacion-table-cell">
-                                                <select 
-                                                    value={ticket.status} 
-                                                    onChange={(e) => handleStatusChange(ticket.id, e.target.value)}
-                                                    className="confirmacion-select"
-                                                >
-                                                    <option value="No Pagado">No Pagado</option>
-                                                    <option value="Pagado">Pagado</option>
-                                                </select>
-                                            </td>
+                        {currentTickets.length > 0 ? (
+                            <>
+                                <table className="confirmacion-table">
+                                    <thead>
+                                        <tr>
+                                            <th className="confirmacion-table-header" onClick={() => handleSort('nombre')}>
+                                                Nombre {sortField === 'nombre' && (sortOrder === 'asc' ? '▲' : '▼')}
+                                            </th>
+                                            <th className="confirmacion-table-header" onClick={() => handleSort('quantity')}>
+                                                Cantidad {sortField === 'quantity' && (sortOrder === 'asc' ? '▲' : '▼')}
+                                            </th>
+                                            <th className="confirmacion-table-header" onClick={() => handleSort('totalPrice')}>
+                                                Precio Total {sortField === 'totalPrice' && (sortOrder === 'asc' ? '▲' : '▼')}
+                                            </th>
+                                            <th className="confirmacion-table-header" onClick={() => handleSort('date')}>
+                                                Fecha {sortField === 'date' && (sortOrder === 'asc' ? '▲' : '▼')}
+                                            </th>
+                                            <th className="confirmacion-table-header" onClick={() => handleSort('time')}>
+                                                Hora {sortField === 'time' && (sortOrder === 'asc' ? '▲' : '▼')}
+                                            </th>
+                                            <th className="confirmacion-table-header">Estado</th>
                                         </tr>
+                                    </thead>
+                                    <tbody>
+                                        {currentTickets.map((ticket) => (
+                                            <tr key={ticket.id}>
+                                                <td className="confirmacion-table-cell">{ticket.nombre}</td>
+                                                <td className="confirmacion-table-cell">{ticket.quantity}</td>
+                                                <td className="confirmacion-table-cell">${ticket.totalPrice}</td>
+                                                <td className="confirmacion-table-cell">{ticket.date}</td>
+                                                <td className="confirmacion-table-cell">{ticket.time}</td>
+                                                <td className="confirmacion-table-cell">
+                                                    <select 
+                                                        value={ticket.status} 
+                                                        onChange={(e) => handleStatusChange(ticket.id, e.target.value)}
+                                                        className="confirmacion-select"
+                                                    >
+                                                        <option value="No Pagado">No Pagado</option>
+                                                        <option value="Pagado">Pagado</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                                <div className="pagination-ticket-admin">
+                                    <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
+                                        Anterior
+                                    </button>
+                                    {getPaginationGroup().map((number) => (
+                                        <button
+                                            key={number}
+                                            onClick={() => paginate(number)}
+                                            className={currentPage === number ? 'active' : ''}
+                                        >
+                                            {number}
+                                        </button>
                                     ))}
-                                </tbody>
-                            </table>
+                                    <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>
+                                        Siguiente
+                                    </button>
+                                </div>
+                            </>
                         ) : (
-                            <p className="no-tickets-message">No hay tickets que mostrar</p>
+                            <p className="no-tickets-message">No se encuentran tickets con ese nombre</p>
                         )}
                     </div>
                 </div>

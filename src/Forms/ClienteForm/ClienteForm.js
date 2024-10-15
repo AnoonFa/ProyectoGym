@@ -2,36 +2,32 @@ import React, { useState, useEffect } from 'react';
 import './ClienteForm.css';
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
-import eyeIcon from '../../assets/icons/OjoAbierto.png';
-import eyeOffIcon from '../../assets/icons/OjoBloqueado.png';
 
 const ClienteForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [currentId, setCurrentId] = useState(0);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
+    usuario: '',
     tipoDocumento: '',
     numeroDocumento: '',
-    sexo: '',
-    tipoCuerpo: '',
-    peso: '',
-    altura: '',
-    usuario: '',
-    password: '',
-    rutinas: '',
     correo: '',
     telefono: '',
+    sexo: '',
+    peso: '',
+    altura: '',
+    password: '',
     tickets: 0,
-    planes: []  // Añadir el nuevo campo aquí
+    planes: []
   });
-  
-  const [passwordError, setPasswordError] = useState('');
+
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState('');
   const [userWarning, setUserWarning] = useState('');
   const [documentError, setDocumentError] = useState('');
-  const [currentId, setCurrentId] = useState(0);
-  const navigate = useNavigate();
+  const [emailError, setEmailError] = useState('');
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -47,7 +43,37 @@ const ClienteForm = () => {
     };
 
     fetchClients();
+    generatePassword();
   }, []);
+
+  const generatePassword = () => {
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+    let password = "";
+    let hasUpperCase = false;
+    let hasSpecialChar = false;
+    let numberCount = 0;
+
+    while (password.length < 10 || !hasUpperCase || !hasSpecialChar || numberCount < 2) {
+      const randomChar = charset[Math.floor(Math.random() * charset.length)];
+      password += randomChar;
+
+      if (randomChar >= 'A' && randomChar <= 'Z') hasUpperCase = true;
+      if ("!@#$%^&*".includes(randomChar)) hasSpecialChar = true;
+      if (randomChar >= '0' && randomChar <= '9') numberCount++;
+
+      if (password.length >= 10 && (!hasUpperCase || !hasSpecialChar || numberCount < 2)) {
+        password = "";
+        hasUpperCase = false;
+        hasSpecialChar = false;
+        numberCount = 0;
+      }
+    }
+
+    setFormData(prevState => ({
+      ...prevState,
+      password: password
+    }));
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -75,6 +101,12 @@ const ClienteForm = () => {
         [name]: value
       }));
       checkUserExists(value);
+    } else if (name === 'correo') {
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+      validateEmail(value);
     } else {
       setFormData(prevState => ({
         ...prevState,
@@ -97,21 +129,14 @@ const ClienteForm = () => {
     }
   };
 
-  const validatePassword = (value) => {
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*\d.*\d)[^\s]{10,}$/;
-    if (!passwordRegex.test(value)) {
-      setPasswordError('La contraseña debe tener al menos 10 caracteres, 1 mayúscula, 1 caracter especial, 2 números y sin espacios.');
+  const validateEmail = (email) => {
+    const validDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com', 'icloud.com'];
+    const domain = email.split('@')[1];
+    if (!validDomains.includes(domain)) {
+      setEmailError('Por favor, utilice un dominio de correo electrónico válido.');
     } else {
-      setPasswordError('');
+      setEmailError('');
     }
-    setFormData(prevState => ({
-      ...prevState,
-      password: value
-    }));
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(prevState => !prevState);
   };
 
   const handleSubmit = async (e) => {
@@ -119,16 +144,12 @@ const ClienteForm = () => {
     setFormError('');
     setFormSuccess('');
 
-    const requiredFields = ['nombre', 'apellido', 'tipoDocumento', 'numeroDocumento', 'sexo', 'peso', 'altura', 'usuario', 'password', 'correo', 'telefono'];
+    const requiredFields = ['nombre', 'apellido', 'tipoDocumento', 'numeroDocumento', 'sexo', 'usuario', 'correo'];
     const isFormValid = requiredFields.every(field => formData[field].trim() !== '');
 
-    if (isFormValid && !passwordError && !userWarning && !documentError) {
-      if (formData.telefono.length !== 10) {
+    if (isFormValid && !userWarning && !documentError && !emailError) {
+      if (formData.telefono && formData.telefono.length !== 10) {
         setFormError('El número de teléfono debe tener exactamente 10 dígitos.');
-        return;
-      }
-      if (formData.peso.length < 2 || formData.altura.length < 2) {
-        setFormError('El peso y la altura deben tener al menos 2 dígitos.');
         return;
       }
       if (formData.numeroDocumento.length < 8) {
@@ -145,7 +166,8 @@ const ClienteForm = () => {
         id: currentId.toString(),
         fechaCreacion,
         horaCreacion,
-        planes: []  // Asegúrate de agregar este campo aquí
+        tickets: 0,
+        planes: []
       };
 
       try {
@@ -173,8 +195,10 @@ const ClienteForm = () => {
       setFormError('Por favor, elige un nombre de usuario diferente.');
     } else if (documentError) {
       setFormError('Por favor, corrige el número de documento.');
+    } else if (emailError) {
+      setFormError('Por favor, ingresa un correo electrónico válido.');
     } else {
-      setFormError('Por favor, completa todos los campos requeridos y asegúrate de que la contraseña cumpla con los requisitos.');
+      setFormError('Por favor, completa todos los campos requeridos.');
     }
   };
 
@@ -183,48 +207,51 @@ const ClienteForm = () => {
       <h2>Agregar Cliente</h2>
       <div className="unique-form-content">
         <div className="unique-form-fields">
-          <input type="text" name="nombre" placeholder="Nombre" required value={formData.nombre} onChange={handleInputChange} />
-          <input type="text" name="apellido" placeholder="Apellido" required value={formData.apellido} onChange={handleInputChange} />
-          <select name="tipoDocumento" required value={formData.tipoDocumento} onChange={handleInputChange}>
-            <option value="" disabled>Tipo de documento</option>
-            <option value="CC">CC</option>
-            <option value="TI">TI</option>
-            <option value="CE">CE</option>
-          </select>
-          <input type="number" name="numeroDocumento" placeholder="Número de documento" required value={formData.numeroDocumento} onChange={handleInputChange} />
-          <select name="sexo" required value={formData.sexo} onChange={handleInputChange}>
-            <option value="" disabled>Género</option>
-            <option value="Hombre">Masculino</option>
-            <option value="Mujer">Femenino</option>
-          </select>
-          <input type="email" name="correo" placeholder="Correo electrónico" required value={formData.correo} onChange={handleInputChange} />
-          <input type="tel" name="telefono" placeholder="Número telefónico" required value={formData.telefono} onChange={handleInputChange} minLength="10" maxLength="10" />
-          <input type="text" name="peso" placeholder="Peso (2-3 dígitos)" required value={formData.peso} onChange={handleInputChange} minLength="2" maxLength="3" />
-          <input type="text" name="altura" placeholder="Altura (3 dígitos)" required value={formData.altura} onChange={handleInputChange} minLength="3" maxLength="3" />
-          <input type="text" name="usuario" placeholder='Usuario' required value={formData.usuario} onChange={handleInputChange} />
-          <div className="unique-password-container">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              placeholder='Contraseña'
-              required
-              value={formData.password}
-              onChange={(e) => validatePassword(e.target.value)}
-            />
-            <img
-              src={showPassword ? eyeIcon : eyeOffIcon}
-              alt="Toggle Password Visibility"
-              className="unique-password-toggle-icon"
-              onClick={togglePasswordVisibility}
-            />
+          <div className="form-column">
+            <label htmlFor="nombre">Nombre <span className="required">*</span></label>
+            <input type="text" id="nombre" name="nombre" required value={formData.nombre} onChange={handleInputChange} title="Nombre del cliente" />
+
+            <label htmlFor="apellido">Apellido <span className="required">*</span></label>
+            <input type="text" id="apellido" name="apellido" required value={formData.apellido} onChange={handleInputChange} title="Apellido del cliente" />
+
+            <label htmlFor="usuario">Usuario <span className="required">*</span></label>
+            <input type="text" id="usuario" name="usuario" required value={formData.usuario} onChange={handleInputChange} title="Nombre de usuario" />
+
+            <label htmlFor="tipoDocumento">Tipo de documento <span className="required">*</span></label>
+            <select id="tipoDocumento" name="tipoDocumento" required value={formData.tipoDocumento} onChange={handleInputChange} title="Tipo de documento de identidad">
+              <option value="" disabled>Seleccione el tipo de documento</option>
+              <option value="CC">CC</option>
+              <option value="TI">TI</option>
+              <option value="CE">CE</option>
+            </select>
+
+            <label htmlFor="numeroDocumento">Número de Documento <span className="required">*</span></label>
+            <input type="text" id="numeroDocumento" name="numeroDocumento" required value={formData.numeroDocumento} onChange={handleInputChange} title="Número de documento de identidad" />
+          </div>
+
+          <div className="form-column">
+            <label htmlFor="correo">Correo Electrónico <span className="required">*</span></label>
+            <input type="email" id="correo" name="correo" required value={formData.correo} onChange={handleInputChange} title="Dirección de correo electrónico" />
+
+            <label htmlFor="telefono">Número telefónico</label>
+            <input type="tel" id="telefono" name="telefono" value={formData.telefono} onChange={handleInputChange} minLength="10" maxLength="10" title="Número de teléfono (opcional)" />
+
+            <label htmlFor="sexo">Género <span className="required">*</span></label>
+            <select id="sexo" name="sexo" required value={formData.sexo} onChange={handleInputChange} title="Género del cliente">
+              <option value="" disabled>Seleccione el género</option>
+              <option value="Hombre">Masculino</option>
+              <option value="Mujer">Femenino</option>
+            </select>
+
+            <label htmlFor="peso">Peso</label>
+            <input type="text" id="peso" name="peso" value={formData.peso} onChange={handleInputChange} minLength="2" maxLength="3" title="Peso en kilogramos (opcional)" />
+
+            <label htmlFor="altura">Altura</label>
+            <input type="text" id="altura" name="altura" value={formData.altura} onChange={handleInputChange} minLength="3" maxLength="3" title="Altura en centímetros (opcional)" />
           </div>
         </div>
 
-        {passwordError && (
-          <Alert severity="warning" style={{ marginTop: '10px' }}>
-            {passwordError}
-          </Alert>
-        )}
+        <input type="hidden" name="password" value={formData.password} />
 
         {userWarning && (
           <Alert severity="warning" style={{ marginTop: '10px' }}>
@@ -235,6 +262,12 @@ const ClienteForm = () => {
         {documentError && (
           <Alert severity="error" style={{ marginTop: '10px' }}>
             {documentError}
+          </Alert>
+        )}
+
+        {emailError && (
+          <Alert severity="error" style={{ marginTop: '10px' }}>
+            {emailError}
           </Alert>
         )}
 

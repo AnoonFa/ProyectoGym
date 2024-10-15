@@ -49,18 +49,27 @@ function AñadirRutina() {
   }, [numeroDocumento, clientes]);
 
   const handleClienteChange = (event) => {
-    setNumeroDocumento(event.target.value);
+    const value = event.target.value.replace(/\D/g, ''); // Solo permite números
+    setNumeroDocumento(value);
+    setClienteSeleccionado('');
+    if (value) {
+      const matches = clientes.filter(cliente => cliente.numeroDocumento.includes(value));
+      setCoincidencias(matches);
+      setShowList(true);
+    } else {
+      setCoincidencias([]);
+      setShowList(false);
+    }
+  };
+
+  const handleSelectCliente = (cliente) => {
+    setClienteSeleccionado(cliente);
+    setNumeroDocumento(`${cliente.nombre} ${cliente.apellido}`);
+    setShowList(false);
   };
 
   const handleCuerpoChange = (event) => {
     setCuerpoSeleccionado(event.target.value);
-  };
-
-  const handleSelectCliente = (cliente) => {
-    console.log('Cliente seleccionado:', `${cliente.nombre} ${cliente.apellido}`);
-    setClienteSeleccionado(`${cliente.nombre} ${cliente.apellido}`);
-    setNumeroDocumento(cliente.numeroDocumento);
-    setShowList(false);
   };
 
   const handleSubmit = (event) => {
@@ -159,12 +168,11 @@ function AñadirRutina() {
           <label className="form-label">
             Ingrese número de documento del cliente:
             <input
-              type="number"
+              type="text"
               value={numeroDocumento}
               className="InputNumber"
               onChange={handleClienteChange}
               placeholder="Número de documento"
-              pattern="[0-9]*"
             />
             {showList && (
               <ul className="client-list-Rutina">
@@ -188,9 +196,7 @@ function AñadirRutina() {
             </select>
           </label>
 
-          {error && (
-            <Alert severity="warning">{error}</Alert>
-          )}
+          {error && <Alert severity="warning">{error}</Alert>}
 
           {postResponse && (
             <Alert severity="info" className="post-response-alert">
@@ -202,7 +208,7 @@ function AñadirRutina() {
             <button type="submit" className="submit-button">Asignar</button>
           ) : (
             <Alert severity="success" className="confirmation-alert">
-              La rutina de {cuerpoSeleccionado} fue asignada para {clienteSeleccionado}
+              La rutina de {cuerpoSeleccionado} fue asignada para {clienteSeleccionado.nombre} {clienteSeleccionado.apellido}
             </Alert>
           )}
         </form>

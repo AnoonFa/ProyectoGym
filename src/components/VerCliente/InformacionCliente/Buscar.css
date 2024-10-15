@@ -1,19 +1,45 @@
 .buscar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
-  max-width: 100%;
-  text-align: center;
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+.alert-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  max-width: 300px;
+}
+
+.alert-container.error {
+  background-color: #f44336;
 }
 
 .search-box {
+  display: flex;
+  justify-content: space-between;
+  width: 92%;
   margin-bottom: 20px;
 }
 
 .search-input {
-  width: 100%;
+  width: 70%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
+}
+
+.sort-select {
+  width: 20%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .table-container {
@@ -24,107 +50,167 @@
 .client-table {
   width: 100%;
   border-collapse: collapse;
-  white-space: nowrap;
-  text-align: center; /* Centra el contenido de la tabla */
+  margin-bottom: 20px;
 }
 
-.client-table th,
-.client-table td {
+.client-table th, .client-table td {
   border: 1px solid #ddd;
-  padding: 12px;
-  text-align: center; /* Centra el contenido en las celdas */
+  padding: 10px;
+  text-align: center;
 }
 
 .client-table th {
   background-color: #f2f2f2;
-  font-weight: bold;
-  position: sticky;
-  top: 0;
-  z-index: 1;
 }
 
-.client-photo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
+.client-table tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
-.client-table input {
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  box-sizing: border-box; /* Asegura que el padding no expanda el ancho del input */
+.client-table tr:hover {
+  background-color: #f1f1f1;
 }
 
-.edit-button,
-.save-button,
-.disable-button {
-  padding: 5px 10px;
-  margin: 2px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
+.client-table td {
+  white-space: nowrap;
 }
 
-.edit-button {
-  background-color: #4CAF50;
-  color: white;
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
 }
 
-.save-button {
+.pagination button {
   background-color: #2679f7;
   color: white;
+  border: none;
+  padding: 8px 16px;
+  margin: 0 4px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  margin: 0 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination span.active {
+  font-weight: bold;
+  color: #2679f7;
+}
+
+.back-button {
+  background-color: #2679f7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #2561bc;
+}
+
+.enable-button, .disable-button {
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.enable-button {
+  background-color: #2679f7;
+}
+
+.enable-button:hover {
+  background-color: #2561bc;
 }
 
 .disable-button {
   background-color: #f44336;
-  color: white;
 }
 
-.alert-container {
+.disable-button:hover {
+  background-color: #e53935;
+}
+
+.modal-overlay-buscar {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 1000;
+  animation: fadeInScale 0.3s ease-out;
 }
 
-.volver-button-Buscar {
-  background-color: #2679f7;
-  color: #fff;
-  border: none;
+.modal-content-buscar {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+}
+
+.modal-content-buscar h2{
+  margin-bottom: 10px;
+}
+
+.modal-buttons-buscar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.modal-cancel-buscar, .modal-confirm-buscar {
   padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 20px;
-  font-size: 16px;
   transition: background-color 0.3s ease;
 }
 
-.volver-button-Buscar:hover {
-  background-color: #2561bc;
+.modal-cancel-buscar {
+  background-color: #f44336;
+  color: white;
 }
 
-/* Estilos responsivos */
-@media screen and (max-width: 1024px) {
-  .client-table {
-    font-size: 14px;
+.modal-confirm-buscar {
+  background-color: #2679f7;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .search-box {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .client-table th,
-  .client-table td {
+
+  .search-input, .sort-select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .client-table th, .client-table td {
     padding: 8px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .client-table {
-    font-size: 12px;
-  }
-  
-  .client-photo {
-    width: 30px;
-    height: 30px;
+    font-size: 14px;
   }
 }

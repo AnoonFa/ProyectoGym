@@ -36,7 +36,8 @@ const Login = () => {
                 nombre: data[0].nombre,
                 apellido: data[0].apellido,
                 correo: data[0].correo,
-                tickets: data[0].tickets || 0 // Asumiendo que los tickets se guardan en la base de datos
+                tickets: data[0].tickets || 0,
+                habilitado: data[0].habilitado !== false // Si no está definido, asumimos que está habilitado
               };
               break;
             }
@@ -44,12 +45,16 @@ const Login = () => {
         }
 
         if (userFound) {
-          setUser(userFound);
-          localStorage.setItem('user', JSON.stringify(userFound)); // Guardar en localStorage
-          if (userFound.role === 'client') {
-            navigate('/ClienteIndex');
-          } else if (userFound.role === 'admin' || userFound.role === 'employee') {
-            navigate('/adminEmpleadoIndex');
+          if (!userFound.habilitado) {
+            setLoginError('Tu cuenta se encuentra inhabilitada. Por favor, contacta a un administrador/empleado.');
+          } else {
+            setUser(userFound);
+            localStorage.setItem('user', JSON.stringify(userFound));
+            if (userFound.role === 'client') {
+              navigate('/ClienteIndex');
+            } else if (userFound.role === 'admin' || userFound.role === 'employee') {
+              navigate('/adminEmpleadoIndex');
+            }
           }
         } else {
           setLoginError('Usuario o contraseña incorrectos.');
@@ -64,10 +69,9 @@ const Login = () => {
   };
 
   const handleVolverIndex = () => {
-    navigate("/"); // Limpiar el mensaje del alert al cerrarlo
+    navigate("/");
   };
 
-  // Define la función togglePasswordVisibility
   const togglePasswordVisibility = () => {
     setShowPassword(prevState => !prevState);
   };
@@ -102,13 +106,9 @@ const Login = () => {
                   src={showPassword ? eyeIcon : eyeOffIcon}
                   alt="Toggle Password Visibility"
                   className="password-toggle-icon"
-                  onClick={togglePasswordVisibility} // Usa la función definida
+                  onClick={togglePasswordVisibility}
                 />
               </div>
-              {/*<div className="recordar">
-                <label><input type="checkbox" /> Recordar sesión</label>
-                <a href='#'>¿Olvido su contraseña?</a>
-              </div>*/}
               <button type="submit" className="btn">Iniciar sesión</button>
               {loginError && <Alert className='error-message' severity="error">{loginError}</Alert>}
             </form>
