@@ -54,7 +54,7 @@
       "password": "Soyesteban1234*",
       "correo": "estebanpineros43@gmail.com",
       "telefono": "3196699831",
-      "rutinas": "[{\"nombre\":\"Sentadillas\",\"series\":1,\"repeticiones\":30,\"descanso\":99,\"videoUrl\":\"https://youtu.be/wWK7j1o_Xa8?si=AJ-rYAmWKJfY9tEB\",\"thumbnailUrl\":\"https://img.youtube.com/vi/wWK7j1o_Xa8/0.jpg\"},{\"nombre\":\"Flexiones\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Fondos en paralelas\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Fondos en paralelas con peso\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Remo con mancuerna a una mano\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Elevaciones laterales con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Sentadillas frontales\",\"series\":3,\"repeticiones\":12,\"descanso\":60},{\"nombre\":\"Flexiones con pies elevados\",\"series\":3,\"repeticiones\":15,\"descanso\":45},{\"nombre\":\"Remo con barra T\",\"series\":5,\"repeticiones\":10,\"descanso\":60}]",
+      "rutinas": "",
       "tickets": 15,
       "fechaCreacion": "20/9/2024",
       "horaCreacion": "10:00 a.m.",
@@ -97,15 +97,15 @@
       "apellido": "Nazaret",
       "tipoDocumento": "TI",
       "numeroDocumento": "1032555698",
-      "sexo": "Mujer",
+      "sexo": "mujer",
       "tipoCuerpo": "Ectomorfo",
       "peso": "65",
       "altura": "168",
       "usuario": "Esteban",
-      "password": "Soyesteban1234*",
+      "password": "Soyesteban",
       "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
       "correo": "nanoespinosa13@gmail.com",
-      "telefono": "3146874784",
+      "telefono": "3146874747",
       "tickets": 3,
       "fechaCreacion": "08/9/2024",
       "horaCreacion": "10:00 a.m.",
@@ -119,7 +119,7 @@
           "image": "/assets/images/planes1.jpg"
         }
       ],
-      "habilitado": false
+      "habilitado": true
     },
     {
       "id": "4",
@@ -189,7 +189,6 @@
         }
       ]
     }
-
   ],
   "planes": [
     {
@@ -320,7 +319,7 @@
       "name": "Leggings Mujer",
       "description": "Leggings elásticos y transpirables para entrenamiento.",
       "price": 35000,
-      "image": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTWTu5XYiDaqzQBtqPm8bSFcypFjaLtQy3t7k-QlHLHele9KmDkqWgRyaHkyaJMcfQkvj77b1yoGWEGs9YHrZRZbC0l-amPYbM3yCXSG8eKbu61_1YAzYCq&usqp=CAE",
+      "image": "https://storage.googleapis.com/storage-unico/195251391462_1.jpg",
       "category": "ropa deportiva mujer",
       "id": "bc08"
     },
@@ -328,7 +327,7 @@
       "name": "Camiseta Deportiva Hombre",
       "description": "Camiseta ligera y transpirable para entrenamiento.",
       "price": 25000,
-      "image": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTqJ70pFb9srp6FqPva8RHu8FEXGEUvmu5EcLjAgMjFLlSuxYGTrdrisC6UxdfdrWV9fxzQexB16l319eu0nrOKFjZ393VwGDenZKPzrQwqWxlBwEpQwT8L5Q&usqp=CAE",
+      "image": "https://ae01.alicdn.com/kf/H72af9395c57a43f1941edf7a98f0c8afJ/Camiseta-deportiva-informal-para-hombre-y-mujer-camisa-personalizada-con-logotipo-de-grupo-privado-2021.png",
       "category": "ropa deportiva hombre",
       "id": "5088"
     },

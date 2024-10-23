@@ -6,6 +6,7 @@ import './ProductPagePersonal.css';
 import Footer from '../../../components/Footer/Footer';
 import Header from '../../../components/Header/Header';
 import ProductForm from '../../../components/ProductForm/ProductForm';
+import Relleno from '../../../components/Relleno/Relleno';
 
 const ProductPagePersonal = () => {
   const { category } = useParams();
@@ -23,6 +24,7 @@ const ProductPagePersonal = () => {
   return (
     <>
       <Header />
+      <Relleno/>
       <div className="product-page">
         <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
         <ProductForm />

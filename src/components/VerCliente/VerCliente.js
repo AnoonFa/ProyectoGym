@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Mostrar from './InformacionCliente/Buscar'; 
 import Alert from '@mui/material/Alert'; 
+import Relleno from '../Relleno/Relleno';
 
 function VerCliente() {
   const [showForm, setShowForm] = useState(false);
@@ -120,6 +121,7 @@ function VerCliente() {
   return (
     <>
       <Header />
+      <Relleno/>
       <div className={`vkz-container ${showForm ? 'with-form' : ''}`}>
         <div className="vkz-search-form-container">
           {showSearch && !showModal && (

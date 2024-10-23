@@ -1,0 +1,7 @@
+.Relleno {
+    position: relative;
+    width: 100%;
+    background: white;
+    height: 5vh;
+    display: flex;
+}

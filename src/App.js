@@ -3,11 +3,10 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { ProductsContext } from './context/ProductsContext';
-import Plans from "./components/Plans/Plans";
+import Plans from "./components/Relleno/Relleno";
 import RegisterForm from "./pages/Auth/RegisterPage/Register";
 import ClientPage from "./components/IndexCliente/IndexCliente";
 import AdminPage from "./components/adminEmpleadoIndex/adminEmpleadoIndex";
-import VerProducto from "./components/VerProductos/VerProductos";
 import Carousel from "./components/Carousel/Carousel";
 import VerClases from "./components/VerClases/VerClases";
 import PlanDetails from "./pages/Planes/VerPlan";
@@ -41,19 +40,45 @@ import MisPlanes from './pages/Planes/MisPlanes';
 import PlanesPage from './pages/Planes/planesPage';
 import ProductCard from './components/ProductCard/ProductCard';
 import AdminConfirmacion from './components/Ticketera/Admin/Confirmacion';
+import Relleno from './components/Relleno/Relleno';
 
 function App() {
+  const { filteredProducts, products, setFilteredProducts } = useContext(ProductsContext);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState(null);
+  const [priceRange, setPriceRange] = useState([0, 100000]);
   const [showModal, setShowModal] = useState(false);
 
-  const productsContext = useContext(ProductsContext);
-  const { filteredProducts = [], products = [] } = productsContext || {};
-
   useEffect(() => {
-    console.log("filteredProducts:", filteredProducts);
-    console.log("products:", products);
-  }, [filteredProducts, products]);
+    let filtered = products;
 
-  const productsToShow = filteredProducts.length > 0 ? filteredProducts : products;
+    if (categoryFilter) {
+      filtered = filtered.filter(product => product.category === categoryFilter);
+    }
+
+    if (searchTerm) {
+      filtered = filtered.filter(product => 
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (priceRange) {
+      const [min, max] = priceRange;
+      filtered = filtered.filter(product => product.price >= min && product.price <= max);
+    }
+
+    setFilteredProducts(filtered);
+  }, [categoryFilter, searchTerm, priceRange, products, setFilteredProducts]);
+
+  const handlePriceRangeSelect = (min, max) => {
+    setPriceRange([min, max]);
+  };
+
+  const handleClearFilters = () => {
+    setCategoryFilter(null);
+    setSearchTerm('');
+    setPriceRange([0, 100000]);
+  };
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -62,6 +87,8 @@ function App() {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+  const productsToShow = filteredProducts.length > 0 ? filteredProducts : products;
 
   return (
     
@@ -75,13 +102,21 @@ function App() {
                 <>
                 
                   <Header />
+                  <Relleno/>
                   <Carousel />
                   <Planes />
-                  <CategoryCircles />
+                    
+                  <CategoryCircles onCategorySelect={setCategoryFilter} />
                   <div className="content-container">
+                  <h2 className='nombre-productos'>Mira todos los productos que tenemos</h2>
                     <div className="searchbar-container">
-                      <SearchBar />
-                    </div>
+                    <SearchBar 
+                    onSearch={setSearchTerm} 
+                    onPriceRangeSelect={handlePriceRangeSelect} 
+                    onCategorySelect={setCategoryFilter}
+                    onClearFilters={handleClearFilters}
+                  />
+                  </div>
                     <div className="products-section">
                       <div className="products-grid">
                         {productsToShow.length > 0 ? (
@@ -107,7 +142,6 @@ function App() {
             <Route path="/adminEmpleadoIndex/*" element={<AdminPage />} />
             <Route path="/LoginP/*" element={<LoginP />} />
             <Route path="/Register/*" element={<RegisterForm />} />
-            <Route path="/VerProducto/*" element={<VerProducto />} />
             <Route path="/VerClases/*" element={<VerClases />} />
             <Route path="PlanDetails/:planId" element={<PlanDetails />} />
             <Route path="/ClasesPage/*" element={<ClasesPage />} />

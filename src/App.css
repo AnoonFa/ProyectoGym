@@ -55,7 +55,10 @@ html {
   }
 }
 
+.nombre-productos{
+  font-size: large;
 
+}
 /* Ajustes para el foooter siempre abajo*/
 .App {
   display: flex;

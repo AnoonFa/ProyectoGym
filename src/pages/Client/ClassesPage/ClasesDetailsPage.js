@@ -13,6 +13,7 @@ import Alert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 import useConfirm from '../../../components/useConfirm/useConfirm';
 import ConfirmationModal from '../../../components/useConfirm/ConfirmationModal';
+import Relleno from '../../../components/Relleno/Relleno';
 
 const convertTo12HourFormat = (time) => {
   if (!time || typeof time !== 'string') return 'Hora no disponible'; 
@@ -85,6 +86,12 @@ const ClassDetail = () => {
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   };
+
+
+    // Convertimos la fecha de la clase en un objeto Date para compararla con la fecha actual
+    const classDate = classDetail?.fecha ? new Date(classDetail.fecha) : null;
+    const hasClassPassed = classDate ? classDate < new Date() : false;
+  
 
   const handleReservation = () => {
     if (classDetail.cuposDisponibles > 0) {
@@ -285,6 +292,7 @@ const ClassDetail = () => {
     return (
       <>
         <Header />
+        <Relleno/>
         <div className="class-not-found">
           <div className="class-not-found-container">
             <h2>Clase no encontrada</h2>
@@ -381,6 +389,7 @@ const ClassDetail = () => {
   return (
     <>
       <Header />
+      <Relleno/>
       <div className="class-detail">
         <div className='tittlel'>
           <h1 className="class-title">{classDetail.nombre}</h1>
@@ -413,7 +422,7 @@ const ClassDetail = () => {
             <p className="class-price-large"><strong>Precio:</strong> {formatPrice(classDetail.precio)}</p>
             <p className="class-total-slots"><strong>Cupos Totales:</strong> {classDetail.totalCupos}</p>
             <p className="class-available-slots"><strong>Cupos Disponibles:</strong> {classDetail.cuposDisponibles}</p>
-            {user.role === 'client' && (
+            {user.role === 'client' && !hasClassPassed && (
               <div className="reservation-button">
                 {isUserEnrolled ? (
                   <button className="cancelar-button" onClick={handleCancelarInscripcion}>Cancelar Clase</button>

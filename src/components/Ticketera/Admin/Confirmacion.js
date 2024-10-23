@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 import '../Ticketera.css';
+import Relleno from '../../Relleno/Relleno';
 
 function AdminConfirmacion() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -140,6 +141,7 @@ function AdminConfirmacion() {
     return (
         <>
             <Header />
+            <Relleno/>
             <div className="confirmacion-container">
                 <div className="confirmacion-content">
                     <div className="confirmacion-form-section">

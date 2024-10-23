@@ -46,7 +46,7 @@ const MisClases = () => {
   const maxClassesToShow = 5; // Número máximo de clases a mostrar antes de habilitar "Ver más"
   const [openSnackbar, setOpenSnackbar] = useState(false);  // Estado para el Snackbar
   const [alertMessage, setAlertMessage] = useState('');     // Estado para el mensaje de alerta
-  const [sortOrder, setSortOrder] = useState({ field: 'nombre', direction: 'asc' });
+  const [sortOrder, setSortOrder] = useState({ field: 'nombre', direction: 'asc' },{ field: 'entrenador', direction: 'asc' }, );
   const [currentPage, setCurrentPage] = useState(1);
   const classesPerPage = 5; // Número máximo de clases por página
 
@@ -384,11 +384,11 @@ const handleSortChange = (field) => {
 
       {/* Tabla para mostrar las clases */}
       <div className="classes-table-container">
-          <table class="classes-table">
+          <table className="classes-table">
             <thead>
               <tr>
               <th className={`sortable-header ${sortOrder.field === 'nombre' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('nombre')}>Nombre</th>
-              <th className={`sortable-header ${sortOrder.field === 'nombre' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('fecha')}>Entrenador</th>
+              <th className={`sortable-header ${sortOrder.field === 'entrenador' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('entrenador')}>Entrenador</th>
               <th className={`sortable-header ${sortOrder.field === 'time' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('time')}>Hora</th>
               <th className={`sortable-header ${sortOrder.field === 'fecha' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('fecha')}>Fecha</th>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import Payments from '../../../components/Payments/Payments';
 import Footer from '../../../components/Footer/Footer';
+import Relleno from '../../../components/Relleno/Relleno';
 
 
 // Datos de prueba para pagos de clientes, cada pago tiene un userId
@@ -18,6 +19,7 @@ function ClientPayments() {
     return (
         <div>
         <Headers />
+        <Relleno/>
         <Payments userType="cliente" payments={clientPaymentsData} userId={currentUserId} />
         <Footer />
    </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation  } from 'react-router-dom';
 import './header.css';
 import logo from '../../assets/images/David&GoliatLogo.png';
@@ -16,7 +16,13 @@ const Header = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false); // Estado para el menú del perfil
 
   const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
+  
+  console.log('Usuario en Header:', user);
 
+  useEffect(() => {
+    // Log para verificar si el rol del usuario ha cambiado
+    console.log('Rol del usuario actualizado:', user.role);
+  }, [user]);
 
   const handleLoginClick = () => {
     navigate('/LoginP');

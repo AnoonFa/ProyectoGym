@@ -9,6 +9,7 @@ import Footer from '../../../components/Footer/Footer';
 import BattleRopeImage from '../../../assets/images/1366_2000.jpeg';
 import { Button, Modal } from '@mui/material';
 import { useAuth } from '../../../context/RoleContext';
+import Relleno from '../../../components/Relleno/Relleno';
 
 const ProductPage = () => {
   const { products, filteredProducts, setFilteredProducts } = useContext(ProductsContext);
@@ -52,6 +53,7 @@ const ProductPage = () => {
   return (
     <>
       <Header />
+      <Relleno/>
       <div className="album-page">
         <div className="banner-image">
           <img src={BattleRopeImage} alt="Fitness Image" className="full-width-image" />

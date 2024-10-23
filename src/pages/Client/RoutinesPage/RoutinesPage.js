@@ -1,11 +1,13 @@
   import React from 'react';
 import Header from '../../../components/Header/Header';
 import Footer from '../../../components/Footer/Footer';
+import Relleno from '../../../components/Relleno/Relleno';
 
 function RutinesPage() {
   return (
     <>
     <Header/>
+    <Relleno/>
     <section className="bg-background py-12 md:py-16 lg:py-20">
       <div className="container">
         <div className="flex flex-col items-center justify-center space-y-6 md:space-y-8 lg:space-y-10">

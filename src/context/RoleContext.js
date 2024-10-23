@@ -81,8 +81,21 @@ export const RoleProvider = ({ children }) => {
     }).catch(error => console.error('Error updating user tickets:', error));
   };
 
+  const logout = () => {
+    setUser({ 
+      role: 'nolog', 
+      username: null, 
+      id: null, 
+      nombre: null, 
+      apellido: null, 
+      correo: null,
+      tickets: 0 
+    });
+    localStorage.removeItem('user');
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, updateUserTickets }}>
+    <AuthContext.Provider value={{ user, setUser, logout ,updateUserTickets }}>
       {children}
     </AuthContext.Provider>
   );

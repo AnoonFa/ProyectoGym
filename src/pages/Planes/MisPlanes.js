@@ -3,6 +3,7 @@ import { useAuth } from '../../context/RoleContext'; // Para obtener el usuario 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import './MisPlanes.css'; // Asegúrate de tener un archivo CSS para estilos
+import Relleno from '../../components/Relleno/Relleno';
 
 const MisPlanes = () => {
   const { user } = useAuth(); // Obtener el usuario autenticado
@@ -53,6 +54,7 @@ const MisPlanes = () => {
   return (
     <div>
       <Header />
+      <Relleno/>
       <div className="mis-planes-container">
         <h1>Mis Planes</h1>
         {planes.length > 0 ? (

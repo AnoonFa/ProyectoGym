@@ -13,6 +13,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import './Payments1.css';
+import Relleno from '../../../components/Relleno/Relleno';
 
 export default function PaymentForm() {
   const navigate = useNavigate();
@@ -46,6 +47,7 @@ export default function PaymentForm() {
   return (
     <div>
       <Header />
+      <Relleno/>
       <div className="form-container">
         <Typography variant="h6" gutterBottom>
           Realizar Pago de Plan
