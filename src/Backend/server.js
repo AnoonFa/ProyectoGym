@@ -153,6 +153,177 @@ app.get('/check-user', (req, res) => {
     });
 });
 
+// Agregar esta nueva ruta para actualizar cliente
+app.put('/client/:id', (req, res) => {
+    const { id } = req.params;
+    const { tipoCuerpo, rutinas } = req.body;
+
+    const query = `
+        UPDATE client 
+        SET tipoCuerpo = ?, 
+            rutinas = ?
+        WHERE id = ?
+    `;
+
+    db.query(query, [tipoCuerpo, rutinas, id], (err, result) => {
+        if (err) {
+            console.error('Error al actualizar cliente:', err);
+            res.status(500).json({ 
+                error: 'Error al actualizar el cliente', 
+                details: err 
+            });
+            return;
+        }
+
+        if (result.affectedRows === 0) {
+            res.status(404).json({ 
+                message: 'Cliente no encontrado' 
+            });
+            return;
+        }
+
+        res.json({ 
+            message: 'Cliente actualizado exitosamente',
+            affectedRows: result.affectedRows
+        });
+    });
+});
+
+
+// Obtener todos los tickets
+app.get('/ticketera', (req, res) => {
+    const query = 'SELECT * FROM ticketera';
+    db.query(query, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        res.json(result);
+    });
+});
+
+// Obtener un ticket específico
+app.get('/ticketera/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'SELECT * FROM ticketera WHERE id = ?';
+    
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        if (result.length === 0) {
+            res.status(404).json({ message: 'Ticket no encontrado' });
+            return;
+        }
+        res.json(result[0]);
+    });
+});
+
+// Crear nuevo ticket
+app.post('/ticketera', (req, res) => {
+    const {
+        clientId,
+        nombre,
+        quantity,
+        totalPrice,
+        status
+    } = req.body;
+
+    // Generar un ID único de 10 caracteres
+    const id = Math.random().toString(36).substring(2, 12);
+    const date = new Date().toISOString().split('T')[0];
+    const time = new Date().toTimeString().split(' ')[0];
+
+    const query = `
+        INSERT INTO ticketera (
+            id, clientId, nombre, quantity, totalPrice,
+            date, time, status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    const values = [
+        id, clientId, nombre, quantity, totalPrice,
+        date, time, status || 'No Pagado'
+    ];
+
+    db.query(query, values, (err, result) => {
+        if (err) {
+            console.error('Error al crear ticket:', err);
+            res.status(500).json({ error: 'Error al crear el ticket', details: err });
+            return;
+        }
+        res.status(201).json({ 
+            message: 'Ticket creado exitosamente',
+            ticketId: id
+        });
+    });
+});
+
+// Actualizar estado del ticket
+app.put('/ticketera/:id', (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const query = 'UPDATE ticketera SET status = ? WHERE id = ?';
+
+    db.query(query, [status, id], (err, result) => {
+        if (err) {
+            console.error('Error al actualizar ticket:', err);
+            res.status(500).json({ error: 'Error al actualizar el ticket', details: err });
+            return;
+        }
+
+        if (result.affectedRows === 0) {
+            res.status(404).json({ message: 'Ticket no encontrado' });
+            return;
+        }
+
+        // Si el estado es "Pagado", actualizar los tickets del cliente
+        if (status === 'Pagado') {
+            const getTicketQuery = 'SELECT clientId, quantity FROM ticketera WHERE id = ?';
+            db.query(getTicketQuery, [id], (err, ticketResult) => {
+                if (err || ticketResult.length === 0) {
+                    console.error('Error al obtener información del ticket:', err);
+                    return;
+                }
+
+                const { clientId, quantity } = ticketResult[0];
+                const updateClientQuery = `
+                    UPDATE client 
+                    SET tickets = tickets + ? 
+                    WHERE id = ?
+                `;
+
+                db.query(updateClientQuery, [quantity, clientId], (err) => {
+                    if (err) {
+                        console.error('Error al actualizar tickets del cliente:', err);
+                    }
+                });
+            });
+        }
+
+        res.json({ 
+            message: 'Ticket actualizado exitosamente',
+            affectedRows: result.affectedRows
+        });
+    });
+});
+
+// Obtener tickets por cliente
+app.get('/ticketera/client/:clientId', (req, res) => {
+    const { clientId } = req.params;
+    const query = 'SELECT * FROM ticketera WHERE clientId = ?';
+    
+    db.query(query, [clientId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        res.json(result);
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

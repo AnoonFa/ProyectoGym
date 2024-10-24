@@ -8,14 +8,15 @@ const FormularioCliente = ({ onClienteSeleccionado }) => {
   const [clienteSeleccionado, setClienteSeleccionado] = useState(false);
 
   useEffect(() => {
-    // Obtener la lista de clientes desde el servidor
-    fetch('http://localhost:3001/client')
+    fetch('http://localhost:3005/client')
       .then(response => response.json())
       .then(data => {
         const clientesList = data.map(c => ({
           id: c.id,
           nombre: `${c.nombre} ${c.apellido}`,
-          numeroDocumento: c.numeroDocumento // Agregar numeroDocumento
+          numeroDocumento: c.numeroDocumento,
+          tipoCuerpo: c.tipoCuerpo,
+          rutinas: c.rutinas
         }));
         setClientes(clientesList);
       })
@@ -25,7 +26,6 @@ const FormularioCliente = ({ onClienteSeleccionado }) => {
   }, []);
 
   const handleSearchChange = (e) => {
-    // Aceptar solo números
     const input = e.target.value;
     if (!isNaN(input)) {
       setSearchTerm(input);
@@ -33,13 +33,13 @@ const FormularioCliente = ({ onClienteSeleccionado }) => {
   };
 
   const handleSelectCliente = (id) => {
+    const clienteSeleccionado = clientes.find(c => c.id === id);
     setCliente(id);
-    setSearchTerm(''); // Limpiar el término de búsqueda al seleccionar un cliente
-    onClienteSeleccionado(clientes.find(c => c.id === id));
-    setClienteSeleccionado(true); // Cliente seleccionado, cambiar el estado
+    setSearchTerm('');
+    onClienteSeleccionado(clienteSeleccionado);
+    setClienteSeleccionado(true);
   };
 
-  // Filtrar clientes por numeroDocumento
   const filteredClientes = clientes.filter(cliente =>
     cliente.numeroDocumento.includes(searchTerm)
   );
@@ -60,11 +60,11 @@ const FormularioCliente = ({ onClienteSeleccionado }) => {
             {filteredClientes.length > 0 ? (
               filteredClientes.map((cliente) => (
                 <li
-                  key={cliente.id}  // Usa el ID como clave
+                  key={cliente.id}
                   onClick={() => handleSelectCliente(cliente.id)}
                   className="dropdown-list-item"
                 >
-                  {cliente.nombre} {/* Mostrar nombre y apellido */}
+                  {cliente.nombre}
                 </li>
               ))
             ) : (

@@ -109,7 +109,7 @@ function AdminPage() {
 
       <Routes>
         <Route path="VerCliente" element={<VerCliente />} />
-        <Route path="VerProducto" element={<VerProducto />} />
+        {/* <Route path="VerProducto" element={<VerProducto />} /> */}        
         <Route path="VerClases" element={<VerClases />} />
         <Route path="/Planes/*" element={<Planes />} />
         <Route path="PlanDetails/:planId" element={<PlanDetails />} />

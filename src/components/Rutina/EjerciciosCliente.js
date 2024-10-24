@@ -61,7 +61,8 @@ const EjerciciosCliente = ({ cliente }) => {
     useEffect(() => {
       setError(null);
       if (cliente && cliente.id) {
-        fetch(`http://localhost:3001/client/${cliente.id}`)
+        // Cambiar el puerto a 3005 para coincidir con tu servidor
+        fetch(`http://localhost:3005/client/${cliente.id}`)
           .then(response => {
             if (!response.ok) {
               throw new Error('No se pudo obtener los datos del cliente');
@@ -71,12 +72,17 @@ const EjerciciosCliente = ({ cliente }) => {
           .then(data => {
             setClienteData(data);
             if (data.rutinas) {
-              const rutinaParseada = JSON.parse(data.rutinas);
-              setRutina(rutinaParseada);
-              setRutinaInicial(JSON.parse(JSON.stringify(rutinaParseada))); // Copia profunda
+              try {
+                const rutinaParseada = JSON.parse(data.rutinas);
+                setRutina(rutinaParseada);
+                setRutinaInicial(JSON.parse(JSON.stringify(rutinaParseada)));
+              } catch (e) {
+                console.error('Error al parsear las rutinas:', e);
+                setError('Error al cargar las rutinas del cliente');
+              }
             } else if (data.tipoCuerpo && rutinasIniciales[data.tipoCuerpo]) {
               setRutina(rutinasIniciales[data.tipoCuerpo]);
-              setRutinaInicial(JSON.parse(JSON.stringify(rutinasIniciales[data.tipoCuerpo]))); // Copia profunda
+              setRutinaInicial(JSON.parse(JSON.stringify(rutinasIniciales[data.tipoCuerpo])));
             } else {
               setError(`No se encontró una rutina asignada para ${cliente.nombre}`);
             }
@@ -105,11 +111,11 @@ const EjerciciosCliente = ({ cliente }) => {
     const handleActualizar = () => {
       if (clienteData) {
         const updatedClienteData = {
-          ...clienteData,
+          tipoCuerpo: clienteData.tipoCuerpo,
           rutinas: JSON.stringify(rutina)
         };
   
-        fetch(`http://localhost:3001/client/${clienteData.id}`, {
+        fetch(`http://localhost:3005/client/${clienteData.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

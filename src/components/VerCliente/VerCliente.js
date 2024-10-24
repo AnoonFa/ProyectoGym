@@ -6,6 +6,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Mostrar from './InformacionCliente/Buscar'; 
 import Alert from '@mui/material/Alert'; 
+import Relleno from '../Relleno/Relleno';
 
 function VerCliente() {
   const [showForm, setShowForm] = useState(false);
