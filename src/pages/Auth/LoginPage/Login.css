@@ -130,3 +130,42 @@
 .error-message {
     margin-top: 15px;
 }
+
+
+
+/* Estilo para el contenedor del checkbox */
+.contenedor-checkbox {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilo para el checkbox */
+  .contenedor-checkbox input[type="checkbox"] {
+    margin-right: 8px; /* Espacio entre el checkbox y el texto */
+  }
+  
+  /* Estilo para el texto del checkbox */
+  .contenedor-checkbox label {
+    font-size: 14px; /* Tamaño de fuente */
+    color: #333; /* Color del texto */
+  }
+  
+  /* Estilo para los enlaces */
+  .login-link {
+    color: #007bff; /* Color del enlace */
+    text-decoration: none; /* Sin subrayado */
+    transition: color 0.3s; /* Transición suave para el color */
+  }
+  
+  .login-link:hover {
+    color: #0056b3; /* Color del enlace al pasar el ratón */
+    text-decoration: underline; /* Subrayar al pasar el ratón */
+  }
+  
+  /* Separador entre enlaces */
+  .login-separator {
+    margin: 0 5px; /* Espaciado alrededor del separador */
+  }
+  

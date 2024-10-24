@@ -1,5 +1,4 @@
 .plans-container {
-  margin-top: 40px;
   position: relative;
   height: auto;
   padding: 50px;
@@ -55,7 +54,7 @@
   transition: background-color 0.3s ease;
   text-decoration: none;
   display: inline-block;
-  margin-bottom: 0px; /* Sin margen adicional */
+  margin-bottom: 5px; /* Margen inferior ajustado a 5px */
 }
 
 .mis-planes-button:hover {

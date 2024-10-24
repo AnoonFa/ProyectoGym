@@ -6,6 +6,7 @@ import './Ticketera.css';
 import nequi from '../../assets/images/Ejercicios/af2be4165905879.Y3JvcCwxNDAwLDEwOTUsMCwxNTI.png';
 import daviplata from '../../assets/images/Ejercicios/nequi-logo.png';
 import Alert from '@mui/material/Alert';
+import Relleno from '../Relleno/Relleno';
 
 function VerTicketera() {
   const { user } = useAuth();
@@ -115,6 +116,7 @@ function VerTicketera() {
   return (
     <>  
       <Header />
+      <Relleno/>
       <div className="ver-ticketera-container">
         <div className="ver-ticketera-grid">
           <div className="ver-ticketera-tickets">

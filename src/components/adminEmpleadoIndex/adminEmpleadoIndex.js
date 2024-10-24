@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import VerProducto from "../VerProductos/VerProductos";
 import VerCliente from "../VerCliente/VerCliente";
 import VerClases from "../VerClases/VerClases";
 import PlanDetails from "../../pages/Planes/VerPlan";
@@ -13,6 +12,7 @@ import { useAuth } from "../../context/RoleContext.js";
 import { TicketeraChart } from "../Graficos/Ticketeras.js";
 import { ClientCreationChart } from "../Graficos/Cliente.js";
 import { PlanesChart } from "../Graficos/Planes.js";
+import Relleno from "../Relleno/Relleno.js";
 
 function AdminPage() {
   const { user } = useAuth();
@@ -37,6 +37,7 @@ function AdminPage() {
   return (
     <>
       <Header />
+      <Relleno/>
       <div style={{
         marginTop: "100px",
         marginBottom: "3%",

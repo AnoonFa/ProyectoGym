@@ -3,9 +3,12 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import { useAuth } from '../../context/RoleContext'; // Importamos el hook de autenticación
 import './PerfilEditarModal.css';
+import ConfirmLogoutModal from '../Modal/ConfirmLogoutModal';
+import { useNavigate } from 'react-router-dom';
+
 
 const PerfilEditarModal = ({ onClose }) => {
-  const { user, setUser } = useAuth(); // Obtenemos el usuario y la función para actualizarlo
+  const { user, setUser, logout } = useAuth(); // Ahora obtenemos la función logout
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -22,6 +25,10 @@ const PerfilEditarModal = ({ onClose }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [alertType, setAlertType] = useState(null);
+  const [showConfirmLogout, setShowConfirmLogout] = useState(false); // Nuevo estado
+  const navigate = useNavigate();
+
+  console.log('Usuario en PerfilEditarModal:', user);
 
   // Función para mostrar alertas
   const showAlertWithTimeout = (type, message, timeout = 5000) => {
@@ -63,11 +70,11 @@ const PerfilEditarModal = ({ onClose }) => {
           setFormData({
             nombre: data.nombre || '',
             apellido: data.apellido || '',
-            genero: data.sexo || data.genero || '',
+            sexo: data.sexo || '',
             tipoCuerpo: data.tipoCuerpo || '',
             peso: data.peso || '',
             altura: data.altura || '',
-            password: '', // Contraseña en blanco por seguridad
+            password: data.password || '', // Contraseña en blanco por seguridad
             correo: data.correo || '',
             telefono: data.telefono || ''
           });
@@ -82,9 +89,9 @@ const PerfilEditarModal = ({ onClose }) => {
   const validateField = (field, value) => {
     const newErrors = { ...errors };
     switch (field) {
-      case 'genero':
-        if (!value) newErrors.genero = 'Debes seleccionar un género.';
-        else delete newErrors.genero;
+      case 'sexo':
+        if (!value) newErrors.sexo = 'Debes seleccionar un sexo.';
+        else delete newErrors.sexo;
         break;
       case 'password':
         if (value && value.length < 8) newErrors.password = 'La contraseña debe tener al menos 8 caracteres.';
@@ -118,51 +125,50 @@ const PerfilEditarModal = ({ onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (Object.keys(errors).length === 0) {
-      let apiUrl = '';
-      switch (user.role) {
-        case 'admin':
-          apiUrl = `http://localhost:3001/admin/${user.id}`;
-          break;
-        case 'employee':
-          apiUrl = `http://localhost:3001/employee/${user.id}`;
-          break;
-        case 'client':
-          apiUrl = `http://localhost:3001/client/${user.id}`;
-          break;
-        default:
-          console.error('Rol de usuario no reconocido');
-          return;
-      }
+    const hasChanges = Object.keys(formData).some(key => formData[key] !== user[key]);
 
-      fetch(apiUrl, {
-        method: 'PATCH', // PATCH para actualizar parcialmente
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Error al actualizar el perfil');
-          }
-          return response.json();
-        })
-        .then((updatedUser) => {
-          setUser(updatedUser); // Actualizamos el usuario en el contexto
-          showAlertWithTimeout('success', 'Perfil actualizado correctamente');
-          onClose(); // Cerrar el modal
-        })
-        .catch((error) => {
-          showAlertWithTimeout('error', `Error al actualizar el perfil: ${error.message}`);
-        });
-    } else {
-      showAlertWithTimeout('error', 'Error en el formulario, revisa los campos.');
+    if (!hasChanges) {
+      showAlertWithTimeout('info', 'Todos los datos están actualizados.');
+      return;
     }
+
+    setShowConfirmLogout(true); // Muestra el modal de confirmación
   };
+
+
+  const handleConfirmLogout = () => {
+    let apiUrl = `http://localhost:3001/client/${user.id}`;
+    fetch(apiUrl, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error('Error al actualizar el perfil');
+        return response.json();
+      })
+      .then((updatedUser) => {
+        setUser(updatedUser);
+        showAlertWithTimeout('success', 'Perfil actualizado correctamente');
+        logout(); // Cerrar sesión y limpiar localStorage
+        navigate('/LoginP/'); // Redirigir a la página de inicio de sesión
+      })
+      .catch((error) => {
+        showAlertWithTimeout('error', `Error: ${error.message}`);
+      });
+  };
+
+  
+
 
   return (
     <div className="modal-fondo-gris">
+      {showConfirmLogout && (
+        <ConfirmLogoutModal 
+          onConfirm={handleConfirmLogout} 
+          onCancel={() => setShowConfirmLogout(false)} 
+        />
+      )}
       <div className="contenido-modal">
         <h2 className="form-title">Editar Perfil</h2>
 
@@ -198,22 +204,52 @@ const PerfilEditarModal = ({ onClose }) => {
             </div>
           </div>
 
+
+          <div className="form-field field-row">
+            <div className="form-field">
+              <label className="form-label">Teléfono</label>
+              <input
+                type="tel"
+                name="telefono"
+                value={formData.telefono}
+                onChange={handleChange}
+                required
+                className="vkz-input-field"
+                max={10}
+              />
+              {errors.telefono && <span className="error-text">{errors.telefono}</span>}
+            </div>
+
+            <div className="form-field">
+              <label className="form-label">Correo</label>
+                <input
+                  type="email"
+                  name="correo"
+                  value={formData.correo}
+                  onChange={handleChange}
+                  required
+                  className="vkz-input-field"
+                />
+                {errors.correo && <span className="error-text">{errors.correo}</span>}
+            </div>
+          </div>
+
           <div className="form-field field-row">
             <div className="field-half">
-              <label className="form-label">Género</label>
+              <label className="form-label">Sexo</label>
               <select
-                name="genero"
-                value={formData.genero}
+                name="sexo"
+                value={formData.sexo}
                 onChange={handleChange}
                 className="vkz-input-field"
                 required
               >
-                <option value="">Selecciona un género</option>
+                <option value="">Selecciona un Sexo</option>
                 <option value="hombre">Hombre</option>
                 <option value="mujer">Mujer</option>
                 <option value="otro">Otro</option>
               </select>
-              {errors.genero && <span className="error-text">{errors.genero}</span>}
+              {errors.sexo && <span className="error-text">{errors.sexo}</span>}
             </div>
             <div className="field-half">
               <label className="form-label">Tipo de Cuerpo</label>
@@ -227,8 +263,6 @@ const PerfilEditarModal = ({ onClose }) => {
               />
             </div>
           </div>
-
-          {user.role === 'client' && (
 
           <div className="form-field field-row">
             <div className="field-half">
@@ -254,47 +288,9 @@ const PerfilEditarModal = ({ onClose }) => {
               />
             </div>
           </div>
-          )}
-
-          <div className="form-field field-row">
-            <div className="form-field">
-              <label className="form-label">Teléfono</label>
-              <input
-                type="tel"
-                name="telefono"
-                value={formData.telefono}
-                onChange={handleChange}
-                required
-                className="vkz-input-field"
-              />
-              {errors.telefono && <span className="error-text">{errors.telefono}</span>}
-            </div>
-
-            <div className="form-field">
-              <label className="form-label">Contraseña</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="vkz-input-field"
-              />
-              {errors.password && <span className="error-text">{errors.password}</span>}
-            </div>
-          </div>
 
           <div className="form-field">
-            <label className="form-label">Correo</label>
-            <input
-              type="email"
-              name="correo"
-              value={formData.correo}
-              onChange={handleChange}
-              required
-              className="vkz-input-field"
-            />
-            {errors.correo && <span className="error-text">{errors.correo}</span>}
+            
           </div>
 
           <div className="form-button">

@@ -14,13 +14,16 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
+  const [termsAccepted, setTermsAccepted] = useState(false); // Para el checkbox
   const navigate = useNavigate();
+  const [userFound, setUserFound] = useState(null); // Nuevo estado para almacenar el usuario encontrado
+
 
   const handleLogin = async () => {
     if (correo && password) {
       try {
         const roles = ['admin', 'employee', 'client'];
-        let userFound = null;
+        let foundUser = null;
 
         for (const role of roles) {
           const response = await fetch(`http://localhost:3001/${role}?correo=${correo}`);
@@ -28,7 +31,7 @@ const Login = () => {
 
           if (Array.isArray(data) && data.length > 0) {
             if (data.some(user => user.password === password)) {
-              userFound = {
+              foundUser = {
                 role,
                 username: data[0].usuario,
                 tipoCuerpo: data[0].tipoCuerpo,
@@ -44,18 +47,31 @@ const Login = () => {
           }
         }
 
-        if (userFound) {
-          if (!userFound.habilitado) {
-            setLoginError('Tu cuenta se encuentra inhabilitada. Por favor, contacta a un administrador/empleado.');
-          } else {
-            setUser(userFound);
-            localStorage.setItem('user', JSON.stringify(userFound));
-            if (userFound.role === 'client') {
-              navigate('/ClienteIndex');
-            } else if (userFound.role === 'admin' || userFound.role === 'employee') {
-              navigate('/adminEmpleadoIndex');
+        if (foundUser) {
+          setUserFound(foundUser);
+
+          if (!foundUser.habilitado) {
+            if (!termsAccepted) {
+              setLoginError('Debes aceptar los Términos y Condiciones y la Política de Privacidad para iniciar sesión.');
+              return;
             }
+
+            // Actualiza el estado en la base de datos
+            await fetch(`http://localhost:3001/${foundUser.role}/${foundUser.id}`, {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ habilitado: true }), // Actualiza habilitado a true
+            });
+
+            // Ahora marcamos habilitado localmente
+            foundUser.habilitado = true;
           }
+
+          setUser(foundUser);
+          localStorage.setItem('user', JSON.stringify(foundUser));
+          navigate(foundUser.role === 'client' ? '/ClienteIndex' : '/adminEmpleadoIndex');
         } else {
           setLoginError('Usuario o contraseña incorrectos.');
         }
@@ -67,6 +83,7 @@ const Login = () => {
       setLoginError('Por favor, completa todos los campos correctamente.');
     }
   };
+
 
   const handleVolverIndex = () => {
     navigate("/");
@@ -109,6 +126,23 @@ const Login = () => {
                   onClick={togglePasswordVisibility}
                 />
               </div>
+
+            {/* Checkbox para términos y condiciones */}
+              {(!userFound || !userFound.habilitado) && (
+                <div className="contenedor-checkbox">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    checked={termsAccepted}
+                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                  />
+                  <label htmlFor="terms">
+                    Acepto los <a href="/Terminos y Condiciones.pdf" className="login-link" target="_blank" rel="noopener noreferrer">Términos y Condiciones</a>
+                    <span className="login-separator">|</span>
+                    <a href="/Politica_de_Privacidad.pdf" className="login-link" target="_blank" rel="noopener noreferrer">Políticas de Privacidad</a>
+                  </label>
+                </div>
+              )}
               <button type="submit" className="btn">Iniciar sesión</button>
               {loginError && <Alert className='error-message' severity="error">{loginError}</Alert>}
             </form>

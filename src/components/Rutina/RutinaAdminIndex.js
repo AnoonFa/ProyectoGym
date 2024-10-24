@@ -6,6 +6,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './RutinaAdminIndex.css';
 import imageReferencia from '../../assets/images/Ejercicios/icono-del-calendario-y-reloj-104702326.jpg';
+import Relleno from '../Relleno/Relleno';
 
 const RutinaAdminIndex = () => {
   const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
@@ -36,6 +37,7 @@ const RutinaAdminIndex = () => {
   return (
     <>
       <Header />
+      <Relleno/>
       <div className={`rutina-admin-container ${expansionState} ${noMargin ? 'no-margin-bottom' : ''}`}>
         <h1>Rutinas</h1>
         <div className="button-container-rutina">

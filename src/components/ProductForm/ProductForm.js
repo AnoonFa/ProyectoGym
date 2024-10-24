@@ -225,6 +225,7 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
                             value={productData.image}
                             onChange={handleChange}
                             required
+                            placeholder='Url de la imagen sin fondo'
                             className="product-input-field-modal"
                         />
                         {errors.image && (

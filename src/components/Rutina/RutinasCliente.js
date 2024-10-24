@@ -45,6 +45,7 @@ import remoConMancuernaUnaMano from '../../assets/images/Ejercicios/Endomorfo/re
 import sentadilla from '../../assets/images/Ejercicios/Endomorfo/Sentadilla.png';
 import sentadillaFrontales from '../../assets/images/Ejercicios/Endomorfo/Sentadillas-frontales.jpg';
 import fondosenparalelasconpeso from '../../assets/images/Ejercicios/Endomorfo/Fondos-en-paralelas-con-peso.png';
+import Relleno from '../Relleno/Relleno';
 
 
 // Mapeo de ejercicios a imágenes
@@ -134,6 +135,7 @@ const RutinasCliente = () => {
   return (
     <>
       <Header />
+      <Relleno/>
       <div className="container">
         <h1 className="title">Mi rutina</h1>
         <div className="exercise-grid">

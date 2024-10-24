@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../../../components/Header/Header';
+import Relleno from '../../../components/Relleno/Relleno';
 
 const Container = styled.div`
   max-width: 600px;
@@ -67,6 +68,7 @@ const Comprobant = () => {
   return (
     <Container>
       <Header />
+      <Relleno/>
       <Title>GIMNASIO David & Goliat</Title>
       <Subtitle>Comprobante de Pago</Subtitle>
       <FormGroup>

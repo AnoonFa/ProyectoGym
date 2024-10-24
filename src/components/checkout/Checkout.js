@@ -8,7 +8,8 @@ import Footer from '../Footer/Footer';
 import { ClassesContext } from '../../context/ClasesContext';
 import { useAuth } from '../../context/RoleContext';
 import emailjs from 'emailjs-com';
-import db from '../../Backend/Api/db.json';
+import db from '../../Api/db.json';
+import Relleno from '../Relleno/Relleno';
 
 const steps = ['Método de pago', 'Revisar orden'];
 
@@ -175,6 +176,7 @@ export default function Checkout() {
   return (
     <>
       <Header />
+      <Relleno/>
       <CssBaseline />
       <main>
         <Paper

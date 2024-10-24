@@ -9,6 +9,7 @@ import planes3 from '../../assets/images/planes3.jpg';
 import planes4 from '../../assets/images/planes4.jpg';
 import { Snackbar, Alert } from '@mui/material';
 import { useAuth } from '../../context/RoleContext';
+import Relleno from '../../components/Relleno/Relleno';
 
 const Planes = () => {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ const Planes = () => {
   return (
     <div>
       <Header />
+      <Relleno/>
       <div className="plans-container">
 
         {/* Mostrar botón solo si el usuario es client */}
