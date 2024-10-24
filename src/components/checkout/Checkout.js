@@ -115,7 +115,7 @@ export default function Checkout() {
   };
 
   const buscarClientePorUsername = (username) => {
-    const clientes = require('../../Api/db.json').client;
+    const clientes = require('../../Backend/Api/db.json').client;
     return clientes.find(cliente => cliente.usuario === username); // Comparar con "usuario" de la base de datos
   };
 

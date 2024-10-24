@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
-import dbData from '../../Api/db.json';  // Importación directa del archivo JSON
+import dbData from '../../Backend/Api/db.json';  // Importación directa del archivo JSON
 
  export const PlanesChart = () => {
   const [option, setOption] = useState({});
