@@ -42,6 +42,8 @@ import PlanesPage from './pages/Planes/planesPage';
 import ProductCard from './components/ProductCard/ProductCard';
 import AdminConfirmacion from './components/Ticketera/Admin/Confirmacion';
 import Relleno from './components/Relleno/Relleno';
+import ChangePassword from './pages/Auth/LoginPage/Cambiar-contraseña';
+import ResetPassword from './pages/Auth/LoginPage/Cambiar-contraseña2';
 
 
 function App() {
@@ -143,6 +145,8 @@ function App() {
             <Route path="/adminEmpleadoIndex/*" element={<AdminPage />} />
             <Route path="/LoginP/*" element={<LoginP />} />
             <Route path="/terms" element={<TermsPage />} />
+            <Route path="/cambiar-contraseña" element={<ChangePassword />} />
+            <Route path="/restablecer-contraseña/:userId" element={<ResetPassword />} />
             <Route path="/Register/*" element={<RegisterForm />} />
             <Route path="/VerClases/*" element={<VerClases />} />
             <Route path="PlanDetails/:planId" element={<PlanDetails />} />

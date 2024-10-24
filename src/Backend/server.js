@@ -48,6 +48,27 @@ app.get('/client', (req, res) => {
     });
 });
 
+// Ruta para obtener cliente por correo
+app.get('/client', (req, res) => {
+    const { correo } = req.query;  // Ahora buscamos por 'correo'
+    let query = 'SELECT * FROM client';
+    let queryParams = [];
+
+    if (correo) {
+        query += ' WHERE correo = ?';  // Buscamos por el campo 'correo'
+        queryParams.push(correo);
+    }
+
+    db.query(query, queryParams, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        res.json(result);
+    });
+});
+
+
 // Ruta para obtener un cliente específico por ID
 app.get('/client/:id', (req, res) => {
     const { id } = req.params;
