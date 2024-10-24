@@ -12,6 +12,7 @@ import VerClases from "./components/VerClases/VerClases";
 import PlanDetails from "./pages/Planes/VerPlan";
 import RutinesPage from "./pages/Client/RoutinesPage/RoutinesPage";
 import LoginP from "./pages/Auth/LoginPage/LoginPage";
+import TermsPage from './pages/Auth/LoginPage/TermPage';
 import ProductsPage from "./pages/Client/ProductsPage/ProductsPage";
 import ClasesPage from "./pages/Client/ClassesPage/ClassesPage";
 import VerCliente from "./components/VerCliente/VerCliente";
@@ -41,6 +42,7 @@ import PlanesPage from './pages/Planes/planesPage';
 import ProductCard from './components/ProductCard/ProductCard';
 import AdminConfirmacion from './components/Ticketera/Admin/Confirmacion';
 import Relleno from './components/Relleno/Relleno';
+
 
 function App() {
   const { filteredProducts, products, setFilteredProducts } = useContext(ProductsContext);
@@ -108,7 +110,6 @@ function App() {
                     
                   <CategoryCircles onCategorySelect={setCategoryFilter} />
                   <div className="content-container">
-                  <h2 className='nombre-productos'>Mira todos los productos que tenemos</h2>
                     <div className="searchbar-container">
                     <SearchBar 
                     onSearch={setSearchTerm} 
@@ -141,6 +142,7 @@ function App() {
             <Route path="/ClienteIndex/*" element={<ClientPage />} />
             <Route path="/adminEmpleadoIndex/*" element={<AdminPage />} />
             <Route path="/LoginP/*" element={<LoginP />} />
+            <Route path="/terms" element={<TermsPage />} />
             <Route path="/Register/*" element={<RegisterForm />} />
             <Route path="/VerClases/*" element={<VerClases />} />
             <Route path="PlanDetails/:planId" element={<PlanDetails />} />
