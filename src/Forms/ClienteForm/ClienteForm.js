@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 
 const ClienteForm = () => {
-  const [currentId, setCurrentId] = useState(0);
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -18,9 +16,7 @@ const ClienteForm = () => {
     sexo: '',
     peso: '',
     altura: '',
-    password: '',
-    tickets: 0,
-    planes: []
+    password: ''
   });
 
   const [formError, setFormError] = useState('');
@@ -30,19 +26,6 @@ const ClienteForm = () => {
   const [emailError, setEmailError] = useState('');
 
   useEffect(() => {
-    const fetchClients = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/client');
-        const data = await response.json();
-        const maxId = data.reduce((max, client) => Math.max(max, parseInt(client.id, 10)), 0);
-        setCurrentId(maxId + 1);
-      } catch (error) {
-        console.error('Error fetching clients:', error);
-        setFormError('Error al cargar los datos de los clientes.');
-      }
-    };
-
-    fetchClients();
     generatePassword();
   }, []);
 
@@ -115,17 +98,17 @@ const ClienteForm = () => {
     }
   };
 
-  const checkUserExists = async (username) => {
+   const checkUserExists = async (username) => {
     try {
-      const response = await fetch(`http://localhost:3001/client?usuario=${username}`);
+      const response = await fetch(`http://localhost:3005/check-user?usuario=${username}`);
       const data = await response.json();
-      if (data.length > 0) {
-        setUserWarning('El usuario que se va a ingresar ya está en la base de datos, por favor modifíquelo');
+      if (data.exists) {
+        setUserWarning('El usuario ya existe en la base de datos');
       } else {
         setUserWarning('');
       }
     } catch (error) {
-      console.error('Error checking user:', error);
+      console.error('Error al verificar usuario:', error);
     }
   };
 
@@ -148,48 +131,31 @@ const ClienteForm = () => {
     const isFormValid = requiredFields.every(field => formData[field].trim() !== '');
 
     if (isFormValid && !userWarning && !documentError && !emailError) {
-      if (formData.telefono && formData.telefono.length !== 10) {
-        setFormError('El número de teléfono debe tener exactamente 10 dígitos.');
-        return;
-      }
-      if (formData.numeroDocumento.length < 8) {
-        setDocumentError('Número de documento inválido, por favor escribir nuevamente');
-        return;
-      }
-
-      const now = new Date();
-      const fechaCreacion = now.toLocaleDateString('es-ES');
-      const horaCreacion = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
-
-      const newClient = { 
-        ...formData,
-        id: currentId.toString(),
-        fechaCreacion,
-        horaCreacion,
-        tickets: 0,
-        planes: []
-      };
-
       try {
-        const response = await fetch('http://localhost:3001/client', {
+        const response = await fetch('http://localhost:3005/client', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(newClient),
+          body: JSON.stringify(formData),
         });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
 
         if (response.ok) {
           setFormSuccess('Cliente agregado exitosamente');
+          console.log('Cliente creado:', data);
           setTimeout(() => {
             navigate('/adminEmpleadoIndex');
           }, 2000);
-        } else {
-          setFormError('Error al agregar el cliente');
         }
       } catch (error) {
         console.error('Error:', error);
-        setFormError('Hubo un problema al agregar el cliente.');
+        setFormError('Error al conectar con el servidor: ' + error.message);
       }
     } else if (userWarning) {
       setFormError('Por favor, elige un nombre de usuario diferente.');

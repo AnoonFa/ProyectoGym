@@ -1,0 +1,24 @@
+
+ProyectoGym>npm install axios
+
+Terminal gitbash
+
+git clone https://github.com/AnoonFa/ProyectoGym.git
+cd ProyectoGym
+npm install
+npm start
+
+
+Terminal cmd - Api
+
+cd ProyectoGym
+npm install -g json-server
+json-server --watch src/Backend/Api/db.json --port 3001
+
+
+Terminal cmd - Backend
+
+ProyectoGym\src\Backend>npm install express mysql2 cors
+cd ProyectoGym/src/Backend
+npm init -y
+node server.js

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './VerCliente.css';
-import ClienteForm from '../../Forms/ClienteForm/ClienteForm'; 
+import ClienteForm from '../../Forms/ClienteForm/ClienteForm';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import Mostrar from './InformacionCliente/Buscar'; 
-import Alert from '@mui/material/Alert'; 
+import Mostrar from './InformacionCliente/Buscar';
+import Alert from '@mui/material/Alert';
 
 function VerCliente() {
   const [showForm, setShowForm] = useState(false);
@@ -20,22 +21,35 @@ function VerCliente() {
   const [alertType, setAlertType] = useState('');
   const [showAlert, setShowAlert] = useState(false);
 
+  const API_URL = 'http://localhost:3005';
+
+  // Función para mostrar alertas
+  const showAlertMessage = (message, type) => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setShowAlert(true);
+  };
+
+  // Cargar lista inicial de clientes
   useEffect(() => {
-    fetch('http://localhost:3001/client')
-      .then(response => response.json())
-      .then(data => {
-        const clientesList = data.map(c => ({
+    const fetchClientes = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/client`);
+        const clientesList = response.data.map(c => ({
           id: c.id,
           numeroDocumento: c.numeroDocumento,
           nombreCompleto: `${c.nombre} ${c.apellido}`
         }));
         setClientes(clientesList);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error al obtener los clientes:', error);
-      });
+        showAlertMessage('Error al cargar la lista de clientes', 'error');
+      }
+    };
+    fetchClientes();
   }, []);
 
+  // Filtrar clientes basado en el input
   useEffect(() => {
     setFilteredClientes(
       clientes.filter(cliente =>
@@ -45,8 +59,11 @@ function VerCliente() {
     setShowDropdown(userInput.length > 0);
   }, [userInput, clientes]);
 
+  // Actualizar cliente seleccionado
   useEffect(() => {
-    setSelectedClient(filteredClientes.find(cliente => cliente.numeroDocumento === userInput) || null);
+    setSelectedClient(
+      filteredClientes.find(cliente => cliente.numeroDocumento === userInput) || null
+    );
   }, [userInput, filteredClientes]);
 
   const handleAddClientClick = (event) => {
@@ -60,15 +77,13 @@ function VerCliente() {
     setUserInput(cliente.numeroDocumento);
     setSelectedClient(cliente);
     try {
-      const response = await fetch(`http://localhost:3001/client/${cliente.id}`);
-      const data = await response.json();
-      setClientInfo(data);
+      const response = await axios.get(`${API_URL}/client/${cliente.id}`);
+      setClientInfo(response.data);
       setShowModal(true);
       setShowForm(false);
     } catch (error) {
       console.error('Error fetching client data:', error);
-      setAlertMessage('Error al obtener la información del cliente');
-      setAlertType('error');
+      showAlertMessage('Error al obtener la información del cliente', 'error');
     }
     setShowDropdown(false);
   };
@@ -77,29 +92,25 @@ function VerCliente() {
     event.preventDefault();
 
     if (!userInput.trim()) {
-      setAlertMessage('Por favor, ingrese un número de documento.');
-      setAlertType('warning');
-      setShowAlert(true);
+      showAlertMessage('Por favor, ingrese un número de documento.', 'warning');
       return;
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/client?numeroDocumento=${userInput}`);
-      const data = await response.json();
-      if (data.length) {
-        setClientInfo(data[0]);
+      const response = await axios.get(`${API_URL}/client`, {
+        params: { numeroDocumento: userInput }
+      });
+      
+      if (response.data.length) {
+        setClientInfo(response.data[0]);
         setShowModal(true);
         setShowForm(false);
       } else {
-        setAlertMessage('Cliente no encontrado');
-        setAlertType('error');
-        setShowAlert(true);
+        showAlertMessage('Cliente no encontrado', 'warning');
       }
     } catch (error) {
       console.error('Error fetching client data:', error);
-      setAlertMessage('Error al buscar el cliente');
-      setAlertType('error');
-      setShowAlert(true);
+      showAlertMessage('Error al buscar el cliente', 'error');
     }
   };
 
@@ -113,7 +124,7 @@ function VerCliente() {
   };
 
   const handleInputChange = (e) => {
-    const value = e.target.value.replace(/\D/g, ''); // Solo permite dígitos
+    const value = e.target.value.replace(/\D/g, '');
     setUserInput(value);
   };
 

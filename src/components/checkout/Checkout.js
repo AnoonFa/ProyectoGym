@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 import { ClassesContext } from '../../context/ClasesContext';
 import { useAuth } from '../../context/RoleContext';
 import emailjs from 'emailjs-com';
-import db from '../../Api/db.json';
+import db from '../../Backend/Api/db.json';
 
 const steps = ['Método de pago', 'Revisar orden'];
 
@@ -114,7 +114,7 @@ export default function Checkout() {
   };
 
   const buscarClientePorUsername = (username) => {
-    const clientes = require('../../Api/db.json').client;
+    const clientes = require('../../Backend/Api/db.json').client;
     return clientes.find(cliente => cliente.usuario === username); // Comparar con "usuario" de la base de datos
   };
 
