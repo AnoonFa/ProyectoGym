@@ -117,14 +117,14 @@ const Productp1 = () => {
           </Alert>
         </div>
       )}
-      <div className="product-page">
-        <div className="product-details">
+      <div className="product-pages">
+        <div className="product-detailss">
           <img 
             src={loadImage(plan.image)} 
             alt={plan.name} 
-            className="product-image" 
+            className="product-images" 
           />
-          <div className="product-info">
+          <div className="product-infos">
             <h1>{plan.name}</h1>
             <p>{plan.description}</p>
             <h2>Beneficios Incluidos:</h2>
@@ -133,9 +133,9 @@ const Productp1 = () => {
                <li key={index}>{benefit}</li>
                 ))}
                </ul>
-            <p className="price">Desde <strong>${price}</strong></p>
-            <p className="note"> No se realizan reembolsos.</p>
-            <button className="cta-button" onClick={handleCheckout}>Comprar</button>
+            <p className="prices">Desde <strong>${price}</strong></p>
+            <p className="notes"> No se realizan reembolsos.</p>
+            <button className="cta-buttons" onClick={handleCheckout}>Comprar</button>
           </div>
         </div>
       </div>
@@ -148,9 +148,9 @@ const Productp1 = () => {
               ¿Estás seguro de comprar este plan por un total de ${price}?
               Recuerda pagar en el gimnasio dentro de un plazo de 1 día.
             </p>
-            <div className="modal-buttons">
-              <button className="cancel-button" onClick={() => setOpenModal(false)}>Cancelar</button>
-              <button className="confirm-button" onClick={handleConfirmPurchase}>Comprar</button>
+            <div className="modal-buttonss">
+              <button className="cancel-buttons" onClick={() => setOpenModal(false)}>Cancelar</button>
+              <button className="confirm-buttons" onClick={handleConfirmPurchase}>Comprar</button>
             </div>
           </div>
         </div>
