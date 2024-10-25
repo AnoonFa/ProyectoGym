@@ -507,7 +507,6 @@ app.get('/ticketera/:id', (req, res) => {
 app.post('/verify-ticket', async (req, res) => {
     const { ticketId, newStatus } = req.body;
 
-    // Iniciar transacción
     db.beginTransaction(async (err) => {
         if (err) {
             return res.status(500).json({
@@ -520,7 +519,7 @@ app.post('/verify-ticket', async (req, res) => {
         try {
             // 1. Obtener información del ticket
             const getTicketQuery = 'SELECT * FROM ticketera WHERE id = ?';
-            db.query(getTicketQuery, [ticketId], async (err, ticketResult) => {
+            db.query(getTicketQuery, [ticketId], (err, ticketResult) => {
                 if (err || ticketResult.length === 0) {
                     db.rollback();
                     return res.status(404).json({
@@ -531,18 +530,12 @@ app.post('/verify-ticket', async (req, res) => {
 
                 const ticket = ticketResult[0];
 
-                // 2. Verificar si el ticket ya está pagado
-                if (ticket.status === 'Pagado') {
-                    db.rollback();
-                    return res.status(400).json({
-                        success: false,
-                        message: 'El ticket ya está pagado'
-                    });
-                }
+                // 2. Si el nuevo estado es "Pagado" y el ticket no estaba ya en "Pagado", actualiza los tickets del cliente
+                const shouldUpdateClientTickets = newStatus === 'Pagado' && ticket.status !== 'Pagado';
 
                 // 3. Actualizar el estado del ticket
                 const updateTicketQuery = 'UPDATE ticketera SET status = ? WHERE id = ?';
-                db.query(updateTicketQuery, [newStatus, ticketId], async (err, updateResult) => {
+                db.query(updateTicketQuery, [newStatus, ticketId], (err) => {
                     if (err) {
                         db.rollback();
                         return res.status(500).json({
@@ -552,15 +545,15 @@ app.post('/verify-ticket', async (req, res) => {
                         });
                     }
 
-                    // 4. Si el estado es "Pagado", actualizar los tickets del cliente
-                    if (newStatus === 'Pagado') {
+                    // Si se debe actualizar los tickets del cliente
+                    if (shouldUpdateClientTickets) {
                         const updateClientQuery = `
                             UPDATE client 
                             SET tickets = tickets + ? 
                             WHERE id = ?
                         `;
                         
-                        db.query(updateClientQuery, [ticket.quantity, ticket.clientId], (err, clientResult) => {
+                        db.query(updateClientQuery, [ticket.quantity, ticket.clientId], (err) => {
                             if (err) {
                                 db.rollback();
                                 return res.status(500).json({
@@ -595,7 +588,7 @@ app.post('/verify-ticket', async (req, res) => {
                             });
                         });
                     } else {
-                        // Si no es "Pagado", simplemente commitear la actualización del estado
+                        // Commit si el estado solo se actualiza sin sumar tickets
                         db.commit((err) => {
                             if (err) {
                                 db.rollback();
@@ -627,20 +620,6 @@ app.post('/verify-ticket', async (req, res) => {
                 error: error
             });
         }
-    });
-});
-
-// Ruta para obtener tickets por cliente
-app.get('/ticketera/client/:clientId', (req, res) => {
-    const { clientId } = req.params;
-    const query = 'SELECT * FROM ticketera WHERE clientId = ? ORDER BY date DESC, time DESC';
-    
-    db.query(query, [clientId], (err, result) => {
-        if (err) {
-            res.status(500).json({ error: err });
-            return;
-        }
-        res.json(result);
     });
 });
 

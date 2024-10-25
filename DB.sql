@@ -95,6 +95,9 @@ productos (
 select * from client;
 select * from admin;
 select * from employee;
+select * from ticketera;
+
+
 
 
 INSERT INTO admin (id, usuario, password, cargo, correo) VALUES

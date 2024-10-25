@@ -57,13 +57,30 @@ function AdminConfirmacion() {
     };
 
     const handleStatusChange = async (ticketId, newStatus) => {
-        if (newStatus === 'Pagado') {
-            setSelectedTicket(tickets.find(ticket => ticket.id === ticketId));
-            setOpenModal(true);
-        } else {
-            await updateTicketStatus(ticketId, newStatus);
+        try {
+            const response = await fetch(`http://localhost:3005/verify-ticket`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ticketId, newStatus }),
+            });
+    
+            if (response.ok) {
+                if (newStatus === 'Pagado') {
+                    // Filtrar el ticket con estado "Pagado" de la tabla en la interfaz
+                    setFilteredTickets((prevTickets) => 
+                        prevTickets.filter((ticket) => ticket.id !== ticketId)
+                    );
+                } else {
+                    fetchTickets(); // Si es otro estado, actualizar la lista de tickets
+                }
+            } else {
+                console.error('Error al actualizar el estado del ticket');
+            }
+        } catch (error) {
+            console.error('Error:', error);
         }
     };
+    
 
     const updateTicketStatus = async (ticketId, newStatus) => {
         try {
@@ -80,7 +97,14 @@ function AdminConfirmacion() {
             });
 
             if (response.ok) {
-                fetchTickets();
+                // Actualizar tickets en la interfaz
+                if (newStatus === 'Pagado') {
+                    setFilteredTickets((prevTickets) =>
+                        prevTickets.filter((ticket) => ticket.id !== ticketId)
+                    );
+                } else {
+                    fetchTickets(); // Refrescar tickets si es otro estado
+                }
             } else {
                 console.error('Error al actualizar el estado del ticket');
             }
