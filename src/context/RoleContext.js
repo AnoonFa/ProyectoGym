@@ -29,13 +29,13 @@ export const RoleProvider = ({ children }) => {
       let apiUrl = '';
       switch (user.role) {
         case 'admin':
-          apiUrl = `http://localhost:3001/admin/${user.id}`;
+          apiUrl = `http://localhost:3005/admin/${user.id}`;
           break;
         case 'employee':
-          apiUrl = `http://localhost:3001/employee/${user.id}`;
+          apiUrl = `http://localhost:3005/employee/${user.id}`;
           break;
         case 'client':
-          apiUrl = `http://localhost:3001/client/${user.id}`;
+          apiUrl = `http://localhost:3005/client/${user.id}`;
           break;
         default:
           console.error('Rol de usuario no reconocido');
@@ -72,7 +72,7 @@ export const RoleProvider = ({ children }) => {
     });
 
     // Update tickets on the server
-    fetch(`http://localhost:3001/client/${user.id}`, {
+    fetch(`http://localhost:3005/client/${user.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export const RoleProvider = ({ children }) => {
     });
   
     // Aquí puedes enviar una petición a tu API si necesitas actualizar algo en el servidor
-    fetch(`http://localhost:3001/client/${user.id}`, {
+    fetch(`http://localhost:3005/client/${user.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

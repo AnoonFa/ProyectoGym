@@ -3,8 +3,6 @@ import { useAuth } from '../../context/RoleContext';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './Ticketera.css';
-import nequi from '../../assets/images/Ejercicios/af2be4165905879.Y3JvcCwxNDAwLDEwOTUsMCwxNTI.png';
-import daviplata from '../../assets/images/Ejercicios/nequi-logo.png';
 import Alert from '@mui/material/Alert';
 import Relleno from '../Relleno/Relleno';
 
@@ -16,11 +14,13 @@ function VerTicketera() {
   const [openModal, setOpenModal] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [availableTickets, setAvailableTickets] = useState(0);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('success');
 
   useEffect(() => {
     fetchUserInfo();
     fetchAvailableTickets();
-  }, []);
+  }, [user.id]); // Add dependency on user.id
 
   useEffect(() => {
     setPrice(12000 * quantity);
@@ -28,27 +28,32 @@ function VerTicketera() {
 
   const fetchUserInfo = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/${user.role}/${user.id}`);
+      const response = await fetch(`http://localhost:3005/client/${user.id}`);
+      if (!response.ok) {
+        throw new Error('Error fetching user info');
+      }
       const data = await response.json();
       
-      // Debug para ver los datos devueltos por la API
-      console.log('Datos de usuario:', data);
-      
-      // Verifica si nombre y apellido existen, si no, muestra un error.
       if (data.nombre && data.apellido) {
         setUserName(`${data.nombre} ${data.apellido}`);
       } else {
-        console.error('Nombre o apellido faltantes en los datos devueltos por la API.');
+        console.error('Nombre o apellido faltantes en los datos');
         setUserName('Nombre no disponible');
       }
     } catch (error) {
       console.error('Error fetching user info:', error);
+      setAlertMessage('Error al cargar la información del usuario');
+      setAlertSeverity('error');
+      setShowAlert(true);
     }
-};
+  };
 
   const fetchAvailableTickets = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/${user.role}/${user.id}`);
+      const response = await fetch(`http://localhost:3005/client/${user.id}`);
+      if (!response.ok) {
+        throw new Error('Error fetching tickets');
+      }
       const data = await response.json();
       setAvailableTickets(data.tickets || 0);
     } catch (error) {
@@ -66,18 +71,15 @@ function VerTicketera() {
 
   const handleConfirmPurchase = async () => {
     try {
-      const currentDate = new Date();
       const purchaseData = {
         clientId: user.id,
-        nombre: userName,  // Aquí usamos la variable userName
+        nombre: userName,
         quantity: quantity,
         totalPrice: price,
-        date: currentDate.toISOString().split('T')[0],
-        time: currentDate.toTimeString().split(' ')[0],
         status: 'No Pagado'
       };
   
-      const response = await fetch('http://localhost:3001/ticketera', {
+      const response = await fetch('http://localhost:3005/ticketera', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,22 +89,27 @@ function VerTicketera() {
   
       if (response.ok) {
         const data = await response.json();
-        console.log(data.message);
         setOpenModal(false);
+        setAlertMessage('Tickets comprados exitosamente. Por favor, pague en el gimnasio para confirmar su compra.');
+        setAlertSeverity('success');
         setShowAlert(true);
         setQuantity(1);
         setPrice(12000);
-        setTimeout(() => setShowAlert(false), 3000);
+        
+        // Actualizar los tickets disponibles
+        fetchAvailableTickets();
       } else {
         const errorData = await response.json();
-        console.error('Error al registrar la compra de tickets:', errorData);
+        throw new Error(errorData.error || 'Error al registrar la compra');
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
+      setAlertMessage('Error al procesar la compra. Por favor, intente nuevamente.');
+      setAlertSeverity('error');
+      setShowAlert(true);
     }
   };
 
-  
   const handleCancelPurchase = () => {
     setOpenModal(false);
     setQuantity(1);
@@ -122,9 +129,6 @@ function VerTicketera() {
           <div className="ver-ticketera-tickets">
             <h2 className="ver-ticketera-title">Mis Tickets</h2>
             <p className="ver-ticketera-text">Tienes {availableTickets} tickets disponibles</p>
-           {/*  <img src={nequi} alt="logo nequi" />
-            <img src={daviplata} alt="logo daviplata" />
-            <p> 3115927446 </p>*/}
           </div>
 
           <div className="ver-ticketera-compra">
@@ -148,7 +152,7 @@ function VerTicketera() {
                     id="quantity"
                     type="number"
                     value={quantity}
-                    onChange={(e) => setQuantity(parseInt(e.target.value))}
+                    onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
                     className="ver-ticketera-input ver-ticketera-input-number"
                   />
                   <button 
@@ -188,7 +192,7 @@ function VerTicketera() {
 
       {showAlert && (
         <Alert 
-          severity="success" 
+          severity={alertSeverity}
           className="alert-Ticket"
           action={
             <button className="alert-close-button" onClick={handleCloseAlert}>
@@ -196,7 +200,7 @@ function VerTicketera() {
             </button>
           }
         >
-          Tickets comprados exitosamente. Por favor, pague en el gimnasio para confirmar su compra.
+          {alertMessage}
         </Alert>
       )}
 

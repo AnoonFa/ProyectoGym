@@ -93,22 +93,15 @@ productos (
 );
 
 select * from client;
+select * from admin;
+select * from employee;
 
-INSERT INTO client (
-    id, nombre, apellido, tipoDocumento, numeroDocumento, sexo, peso, altura, usuario, password, correo, telefono,  tickets, fechaCreacion, horaCreacion, habilitado
-) VALUES
-(
-    1, 'Esteban', 'Piñeros', 'CC', '1029142018', 'Hombre', 20, 211, 'InsanoXD', 'Soyesteban1234*', 'estebanpineros43@gmail.com', '3196699831', 
-    15, '2024-09-20', '10:00:00', TRUE
-),
-(
-    2, 'Alejandro', 'Espinosa', 'TI', '1067948521', 'Hombre',  74, 123, 'ozuna', 'Soyesteban2111*', 'estebanpineros41@gmail.com', '3196699831', 
-    5, '2024-09-01', '09:30:00', TRUE
-),
-(
-    3, 'Sofia', 'Nazaret', 'TI', '1032555698', 'Mujer',  65, 168, 'Esteban', 'Soyesteban1234*', 'nanoespinosa13@gmail.com', '3146874784', 
-    3, '2024-09-08', '10:00:00', FALSE
-);
+
+INSERT INTO admin (id, usuario, password, cargo, correo) VALUES
+(1, 'Juan', 'Soyadmin1234*', 'admin', 'admins1@gmail.com'),
+(2, 'admin1234', 'Soyadmin1234*', 'admin', 'admins2@gmail.com'),
+(3, 'Carlos', 'Soyadmin1234*', 'admin', 'admins3@gmail.com');
+
 
 
 INSERT INTO employee (id, name, usuario, password, cargo, correo) VALUES

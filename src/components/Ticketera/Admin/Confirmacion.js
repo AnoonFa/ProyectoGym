@@ -25,7 +25,7 @@ function AdminConfirmacion() {
 
     const fetchTickets = async () => {
         try {
-            const response = await fetch('http://localhost:3001/ticketera');
+            const response = await fetch('http://localhost:3005/ticketera');
             const data = await response.json();
             setTickets(data);
         } catch (error) {
@@ -67,11 +67,11 @@ function AdminConfirmacion() {
 
     const updateTicketStatus = async (ticketId, newStatus) => {
         try {
-            const ticketResponse = await fetch(`http://localhost:3001/ticketera/${ticketId}`);
+            const ticketResponse = await fetch(`http://localhost:3005/ticketera/${ticketId}`);
             const currentTicket = await ticketResponse.json();
             const updatedTicket = { ...currentTicket, status: newStatus };
 
-            const response = await fetch(`http://localhost:3001/ticketera/${ticketId}`, {
+            const response = await fetch(`http://localhost:3005/ticketera/${ticketId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -100,11 +100,11 @@ function AdminConfirmacion() {
 
     const updateClientTickets = async (ticket) => {
         try {
-            const clientResponse = await fetch(`http://localhost:3001/client/${ticket.clientId}`);
+            const clientResponse = await fetch(`http://localhost:3005/client/${ticket.clientId}`);
             const clientData = await clientResponse.json();
             const updatedTickets = clientData.tickets + ticket.quantity;
 
-            const updateResponse = await fetch(`http://localhost:3001/client/${ticket.clientId}`, {
+            const updateResponse = await fetch(`http://localhost:3005/client/${ticket.clientId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -136,6 +136,15 @@ function AdminConfirmacion() {
         }
 
         return new Array(end - start + 1).fill().map((_, idx) => start + idx);
+    };
+
+    const formatDate = (date) => {
+        const newDate = new Date(date);
+        return `${newDate.getFullYear()}-${String(newDate.getMonth() + 1).padStart(2, '0')}-${String(newDate.getDate()).padStart(2, '0')}`;
+    };
+
+    const formatCurrency = (value) => {
+        return `$${value.toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
     };
 
     return (
@@ -175,7 +184,7 @@ function AdminConfirmacion() {
                                                 Precio Total {sortField === 'totalPrice' && (sortOrder === 'asc' ? '▲' : '▼')}
                                             </th>
                                             <th className="confirmacion-table-header" onClick={() => handleSort('date')}>
-                                                Fecha {sortField === 'date' && (sortOrder === 'asc' ? '▲' : '▼')}
+                                                Fecha {sortField === 'date' && (sortOrder === 'asc' ? '▲' : '▼')} (Año-Mes-Día)
                                             </th>
                                             <th className="confirmacion-table-header" onClick={() => handleSort('time')}>
                                                 Hora {sortField === 'time' && (sortOrder === 'asc' ? '▲' : '▼')}
@@ -188,8 +197,8 @@ function AdminConfirmacion() {
                                             <tr key={ticket.id}>
                                                 <td className="confirmacion-table-cell">{ticket.nombre}</td>
                                                 <td className="confirmacion-table-cell">{ticket.quantity}</td>
-                                                <td className="confirmacion-table-cell">${ticket.totalPrice}</td>
-                                                <td className="confirmacion-table-cell">{ticket.date}</td>
+                                                <td className="confirmacion-table-cell">{formatCurrency(ticket.totalPrice)}</td>
+                                                <td className="confirmacion-table-cell">{formatDate(ticket.date)}</td>
                                                 <td className="confirmacion-table-cell">{ticket.time}</td>
                                                 <td className="confirmacion-table-cell">
                                                     <select 
@@ -236,7 +245,7 @@ function AdminConfirmacion() {
                         <h2>Confirmación de Pago</h2>
                         <p>
                             ¿Estás seguro que {selectedTicket.nombre} pagó los tickets 
-                            por el precio total de ${selectedTicket.totalPrice}?
+                            por el precio total de {formatCurrency(selectedTicket.totalPrice)}?
                         </p>
                         <div className="modal-buttons">
                             <button className="cancel-button" onClick={() => setOpenModal(false)}>Cancelar</button>

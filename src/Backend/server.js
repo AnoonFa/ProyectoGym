@@ -176,8 +176,7 @@ app.post('/login', (req, res) => {
                 foundUser = {
                     role,
                     id: results[0].id,
-                    nombre: results[0].nombre,
-                    apellido: results[0].apellido,
+                    username: results[0].usuario, // Usar el campo usuario directamente
                     correo: results[0].correo,
                     tickets: results[0].tickets || 0,
                     habilitado: results[0].habilitado !== false
@@ -187,7 +186,6 @@ app.post('/login', (req, res) => {
             callback(null, null);
         });
     };
-    
 
     // Iterar sobre las tablas y encontrar el usuario
     const checkAllRoles = (index) => {
@@ -389,6 +387,253 @@ app.put('/ticketera/:id', (req, res) => {
 app.get('/ticketera/client/:clientId', (req, res) => {
     const { clientId } = req.params;
     const query = 'SELECT * FROM ticketera WHERE clientId = ?';
+    
+    db.query(query, [clientId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        res.json(result);
+    });
+});
+
+
+// Ruta para obtener admin por ID
+app.get('/admin/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'SELECT * FROM admin WHERE id = ?';
+    
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        if (result.length === 0) {
+            res.status(404).json({ message: 'Admin no encontrado' });
+            return;
+        }
+        res.json(result[0]);
+    });
+});
+
+// Ruta para obtener employee por ID
+app.get('/employee/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'SELECT * FROM employee WHERE id = ?';
+    
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        if (result.length === 0) {
+            res.status(404).json({ message: 'Empleado no encontrado' });
+            return;
+        }
+        res.json(result[0]);
+    });
+});
+
+// Modificar la ruta existente de actualización de cliente para manejar tickets y password
+app.patch('/client/:id', (req, res) => {
+    const { id } = req.params;
+    const { tickets, password } = req.body;
+    
+    let query = 'UPDATE client SET';
+    const queryParams = [];
+    
+    if (tickets !== undefined) {
+        query += ' tickets = ?';
+        queryParams.push(tickets);
+    }
+    
+    if (password !== undefined) {
+        if (tickets !== undefined) query += ',';
+        query += ' password = ?';
+        queryParams.push(password);
+    }
+    
+    query += ' WHERE id = ?';
+    queryParams.push(id);
+
+    db.query(query, queryParams, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        if (result.affectedRows === 0) {
+            res.status(404).json({ message: 'Cliente no encontrado' });
+            return;
+        }
+        res.json({ 
+            message: 'Cliente actualizado exitosamente',
+            affectedRows: result.affectedRows
+        });
+    });
+});
+
+
+// Ruta para obtener todos los tickets
+app.get('/ticketera', (req, res) => {
+    const query = 'SELECT * FROM ticketera ORDER BY date DESC, time DESC';
+    db.query(query, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        res.json(result);
+    });
+});
+
+// Ruta para obtener un ticket específico
+app.get('/ticketera/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'SELECT * FROM ticketera WHERE id = ?';
+    
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        if (result.length === 0) {
+            res.status(404).json({ message: 'Ticket no encontrado' });
+            return;
+        }
+        res.json(result[0]);
+    });
+});
+
+// Ruta para verificar y actualizar el estado de un ticket
+app.post('/verify-ticket', async (req, res) => {
+    const { ticketId, newStatus } = req.body;
+
+    // Iniciar transacción
+    db.beginTransaction(async (err) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: 'Error al iniciar la transacción',
+                error: err
+            });
+        }
+
+        try {
+            // 1. Obtener información del ticket
+            const getTicketQuery = 'SELECT * FROM ticketera WHERE id = ?';
+            db.query(getTicketQuery, [ticketId], async (err, ticketResult) => {
+                if (err || ticketResult.length === 0) {
+                    db.rollback();
+                    return res.status(404).json({
+                        success: false,
+                        message: 'Ticket no encontrado'
+                    });
+                }
+
+                const ticket = ticketResult[0];
+
+                // 2. Verificar si el ticket ya está pagado
+                if (ticket.status === 'Pagado') {
+                    db.rollback();
+                    return res.status(400).json({
+                        success: false,
+                        message: 'El ticket ya está pagado'
+                    });
+                }
+
+                // 3. Actualizar el estado del ticket
+                const updateTicketQuery = 'UPDATE ticketera SET status = ? WHERE id = ?';
+                db.query(updateTicketQuery, [newStatus, ticketId], async (err, updateResult) => {
+                    if (err) {
+                        db.rollback();
+                        return res.status(500).json({
+                            success: false,
+                            message: 'Error al actualizar el ticket',
+                            error: err
+                        });
+                    }
+
+                    // 4. Si el estado es "Pagado", actualizar los tickets del cliente
+                    if (newStatus === 'Pagado') {
+                        const updateClientQuery = `
+                            UPDATE client 
+                            SET tickets = tickets + ? 
+                            WHERE id = ?
+                        `;
+                        
+                        db.query(updateClientQuery, [ticket.quantity, ticket.clientId], (err, clientResult) => {
+                            if (err) {
+                                db.rollback();
+                                return res.status(500).json({
+                                    success: false,
+                                    message: 'Error al actualizar los tickets del cliente',
+                                    error: err
+                                });
+                            }
+
+                            // Commit de la transacción si todo sale bien
+                            db.commit((err) => {
+                                if (err) {
+                                    db.rollback();
+                                    return res.status(500).json({
+                                        success: false,
+                                        message: 'Error al finalizar la transacción',
+                                        error: err
+                                    });
+                                }
+
+                                res.json({
+                                    success: true,
+                                    message: 'Ticket verificado y actualizado correctamente',
+                                    ticketInfo: {
+                                        id: ticket.id,
+                                        clientId: ticket.clientId,
+                                        quantity: ticket.quantity,
+                                        newStatus: newStatus,
+                                        updateDate: new Date()
+                                    }
+                                });
+                            });
+                        });
+                    } else {
+                        // Si no es "Pagado", simplemente commitear la actualización del estado
+                        db.commit((err) => {
+                            if (err) {
+                                db.rollback();
+                                return res.status(500).json({
+                                    success: false,
+                                    message: 'Error al finalizar la transacción',
+                                    error: err
+                                });
+                            }
+
+                            res.json({
+                                success: true,
+                                message: 'Estado del ticket actualizado correctamente',
+                                ticketInfo: {
+                                    id: ticket.id,
+                                    newStatus: newStatus,
+                                    updateDate: new Date()
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        } catch (error) {
+            db.rollback();
+            res.status(500).json({
+                success: false,
+                message: 'Error en el proceso de verificación',
+                error: error
+            });
+        }
+    });
+});
+
+// Ruta para obtener tickets por cliente
+app.get('/ticketera/client/:clientId', (req, res) => {
+    const { clientId } = req.params;
+    const query = 'SELECT * FROM ticketera WHERE clientId = ? ORDER BY date DESC, time DESC';
     
     db.query(query, [clientId], (err, result) => {
         if (err) {

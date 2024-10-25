@@ -10,14 +10,19 @@ import FullScreenEditProfileModal from '../editProfile/PerfilEditarModal';
 
 
 const Header = () => {
-  const { user, setUser } = useAuth(); // Usamos el contexto de autenticación
+  const { user, setUser } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation(); // Obtiene la ruta actual
-  const [showProfileMenu, setShowProfileMenu] = useState(false); // Estado para el menú del perfil
-
-  const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
+  const location = useLocation();
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   
   console.log('Usuario en Header:', user);
+
+  
+  const getDisplayName = () => {
+    return user?.username || 'Usuario';
+  };
+
 
   useEffect(() => {
     // Log para verificar si el rol del usuario ha cambiado
@@ -49,7 +54,8 @@ const Header = () => {
   };
 
   const getInitials = (name) => {
-    return name ? name.charAt(0).toUpperCase() : '?';
+    if (!name) return '?';
+    return name.charAt(0).toUpperCase();
   };
 
   const stringToColor = (str) => {
@@ -161,32 +167,34 @@ const Header = () => {
             <div className="profile-section">
               <div
                 className="profile-avatar"
-                style={{ backgroundColor: stringToColor(user?.username || 'default') }} // Usamos 'default' si user.username es undefined
+                style={{ backgroundColor: stringToColor(getDisplayName()) }}
                 onClick={handleProfileClick}
               >
-                {getInitials(user?.username || 'Usuario')} {/* Muestra la inicial o 'Usuario' si username no existe */}
+                {getInitials(getDisplayName())}
               </div>
 
               {showProfileMenu && (
                 <div className="profile-menu">
                   {/* Botón de cerrar (X) en la esquina superior derecha */}
                   <button className="close-menu-btn" 
-                  onClick={handleProfileClick}
-                  title='boton para cerrar perfil'
+                    onClick={handleProfileClick}
+                    title='boton para cerrar perfil'
                   >
                     <FontAwesomeIcon icon={faTimes} />
                   </button>
 
                   {/* Correo del usuario justo encima de la foto de perfil */}
-                  <p className="profile-email">{user.email}</p>
+                  <p className="profile-email">{user.correo}</p>
                   
                   {/* Imagen o inicial del usuario */}
-                  <div className="profile-avatar-large" style={{ backgroundColor: stringToColor(user.username) }}>
-                    {getInitials(user.username)}
+                  <div className="profile-avatar-large" 
+                    style={{ backgroundColor: stringToColor(getDisplayName()) }}
+                  >
+                    {getInitials(getDisplayName())}
                   </div>
 
                   {/* Mensaje de bienvenida */}
-                  <p className="welcome-message">¡Hola, {user.username}!</p>
+                  <p className="welcome-message">¡Hola, {getDisplayName()}!</p>
 
                   {/* Botón de editar perfil centrado */}
                   {user.role === 'client' && (
