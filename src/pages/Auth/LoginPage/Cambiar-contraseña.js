@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import emailjs from 'emailjs-com';
+import './ChangePassword.css'; // Importa el CSS
 
 const ChangePassword = () => {
-  const [correo, setCorreo] = useState(''); // Cambiamos a usar 'correo'
+  const [correo, setCorreo] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -28,10 +29,10 @@ const ChangePassword = () => {
             return;
         }
 
-        const user = data[0]; // Tomamos al primer usuario de la respuesta
+        const user = data[0];
 
         if (user.correo) {
-            const resetLink = `http://localhost:3001/restablecer-contraseña/${user.id}`;
+            const resetLink = `http://localhost:3000/restablecer-contraseña/${user.id}`;
             
             const emailDetails = {
                 to_name: user.nombre,
@@ -59,21 +60,22 @@ const ChangePassword = () => {
   };
 
   return (
-    <div>
-      <h2>Cambiar Contraseña</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="blinking-container"> {/* Contenedor blanco centrado */}
+      <h2 className="h2-flashing">Cambiar Contraseña</h2>
+      <form className="form-ninja" onSubmit={handleSubmit}>
         <div>
           <input
-            type="email"  // Cambiamos el input para el correo
+            className="input-squid" // Estilo para el input
+            type="email"
             placeholder="Correo electrónico"
             value={correo}
             onChange={(e) => setCorreo(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Enviar</button>
-        {message && <Alert severity="success">{message}</Alert>}
-        {error && <Alert severity="error">{error}</Alert>}
+        <button className="button-frog" type="submit">Enviar</button>
+        {message && <Alert className="alert-magic" severity="success">{message}</Alert>}
+        {error && <Alert className="alert-magic" severity="error">{error}</Alert>}
       </form>
     </div>
   );

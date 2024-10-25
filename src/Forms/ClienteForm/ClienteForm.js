@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './ClienteForm.css';
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
+import emailjs from 'emailjs-com'; // Asegúrate de importar EmailJS
+
 
 const ClienteForm = () => {
   const navigate = useNavigate();
@@ -98,7 +100,7 @@ const ClienteForm = () => {
     }
   };
 
-   const checkUserExists = async (username) => {
+  const checkUserExists = async (username) => {
     try {
       const response = await fetch(`http://localhost:3005/check-user?usuario=${username}`);
       const data = await response.json();
@@ -149,6 +151,26 @@ const ClienteForm = () => {
         if (response.ok) {
           setFormSuccess('Cliente agregado exitosamente');
           console.log('Cliente creado:', data);
+
+          // Aquí es donde se envía el correo
+          const emailDetails = {
+            to_name: formData.nombre,
+            to_email: formData.correo,
+            from_name: 'Gimnasio David & Goliat',
+            from_email: 'gimnasiodavidgoliat@gmail.com',
+            reply_to: 'gimnasiodavidgoliat@gmail.com',
+            password: formData.password // Asegúrate de encriptar esta contraseña antes de enviarla
+          };
+
+          emailjs.send('service_pvx889u', 'template_bj5eedi', emailDetails, 'rncnnJK5UsTDQ-RqW')
+            .then(() => {
+              console.log(`Se ha enviado un correo a: ${formData.correo}`);
+            })
+            .catch(() => {
+              console.error('Error al enviar el correo.');
+              setError('Error al enviar el correo. Intenta nuevamente.');
+            });
+
           setTimeout(() => {
             navigate('/adminEmpleadoIndex');
           }, 2000);

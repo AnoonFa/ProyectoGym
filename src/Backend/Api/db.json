@@ -104,7 +104,7 @@
       "usuario": "Esteban",
       "password": "Soyesteban",
       "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
-      "correo": "nanoespinosa13@gmail.com",
+      "correo": "nanoespinosa12@gmail.com",
       "telefono": "3146874747",
       "tickets": 3,
       "fechaCreacion": "08/9/2024",
@@ -119,7 +119,7 @@
           "image": "/assets/images/planes1.jpg"
         }
       ],
-      "habilitado": true
+      "habilitado": false
     },
     {
       "id": "4",
@@ -160,8 +160,8 @@
       "startTime": "08:40",
       "endTime": "09:40",
       "descripcion": "Disfruta de una energía revitalizante con esta clase de Zumba, perfecta para empezar el día con buen ritmo y mucha alegría.",
-      "totalCupos": "12",
-      "cuposDisponibles": "121",
+      "totalCupos": "20",
+      "cuposDisponibles": "20",
       "fecha": "2024-09-11",
       "precio": "10000",
       "inscritos": [],
@@ -176,7 +176,7 @@
       "day": "2024-09-15",
       "descripcion": "Disfruta de una experiencia transformadora con nuestras sesiones de yoga, diseñadas para calmar la mente y fortalecer el cuerpo.",
       "totalCupos": "20",
-      "cuposDisponibles": 19,
+      "cuposDisponibles": "19",
       "fecha": "2024-09-15",
       "precio": "6500",
       "inscritos": [

@@ -131,7 +131,10 @@
     margin-top: 15px;
 }
 
-
+.forgot-password {
+    margin: 10px;
+    font-size: -1rem;
+}
 
 /* Estilo para el contenedor del checkbox */
 .contenedor-checkbox {

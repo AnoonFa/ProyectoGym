@@ -1,15 +1,18 @@
 /* Formulario de añadir clase */
 .modify-class-form {
-    position: relative;
-    display: grid;
-    right: 7%;
-    width: 128%;
-    gap: 12px;
-    background-color: rgba(255, 255, 255, 0.95);
-    margin-top: 30px;
-    padding: 20px 20px 12px;
-    border-radius: 10px;
-    border: 1px solid #e4e4e4;
+  position: relative;
+  display: grid;
+  width: 100%; /* Cambiar a 100% para responsividad */
+  max-width: 600px; /* Limitar ancho máximo para pantallas grandes */
+  max-height: 756px; /* Limitar altura máxima para el formulario */
+  margin: 30px auto; /* Centrar el formulario */
+  gap: 12px;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px; /* Padding uniforme */
+  border-radius: 10px;
+  border: 1px solid #e4e4e4;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Agregar sombra para profundidad */
+  overflow-y: auto; /* Agregar scroll si el contenido excede la altura máxima */
 }
   
   /* Button styles */
@@ -87,3 +90,15 @@
     top: -12%;
     justify-content: space-between;
   }
+
+  @media (max-width: 600px) {
+    .field-half {
+        flex: 1 1 100%; /* Apilar campos en pantallas pequeñas */
+    }
+
+    .form-button {
+        flex-direction: column; /* Apilar botones verticalmente */
+        gap: 10px;
+    }
+}
+

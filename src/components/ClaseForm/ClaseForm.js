@@ -201,6 +201,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
 
   return (
     <form onSubmit={handleSubmit} className="modify-class-form">
+
       <h2 className="form-title">Modificar Clase</h2>
 
       <div className="form-field field-row">
@@ -377,6 +378,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
           </Alert>
         </Stack>
       )}
+     
     </form>
   );
 };

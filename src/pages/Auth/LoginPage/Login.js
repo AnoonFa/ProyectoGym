@@ -113,7 +113,7 @@ const Login = () => {
                   onClick={togglePasswordVisibility}
                 />
               </div>
-              <p className="forgot-password" onClick={handleForgotPassword}>¿Olvidaste tu contraseña? Ingresa Aqui</p>
+              <p className="forgot-password" onClick={handleForgotPassword}>¿Olvidaste tu contraseña? Ingresa Aquí</p>
 
               <button type="submit" className="btn">Iniciar sesión</button>
               {loginError && <Alert className='error-message' severity="error">{loginError}</Alert>}

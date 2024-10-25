@@ -1,0 +1,186 @@
+:root {
+    font-size: 16px; /* Tamaño base de fuente */
+}
+
+.product-page {
+    padding: 2rem;
+    background-color: #f9f9f9;
+    min-height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.product-details {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border-radius: 8px;
+    max-width: 1000px;
+    width: 100%;
+    transition: transform 0.3s ease;
+    margin-top: 1rem;
+}
+
+.product-image {
+    height: auto;
+    width: 45%; 
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+.product-info {
+    margin-top: 40px;
+    width: 50%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.75rem;
+}
+
+.product-info h1 {
+    font-size: 2rem;
+    color: #333;
+    font-weight: bold;
+    letter-spacing: 0.03rem;
+}
+
+.product-info h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 0.03rem;
+}
+
+.product-info ul {
+    list-style-type: square;
+    padding-left: 1rem;
+}
+
+.product-info ul li {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-info p {
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #555;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 0.5rem;
+}
+
+.note {
+    font-size: 0.875rem;
+    color: #888;
+    margin-top: -0.25rem;
+    margin-bottom: 1rem;
+}
+
+.cta-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button:hover {
+    background-color: #2561bc;
+    transform: translateY(-2px);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+}
+
+/* Ajustes adicionales para pantallas pequeñas */
+@media (max-width: 768px) {
+    .product-details {
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem;
+    }
+
+    .product-image, .product-info {
+        width: 100%;
+    }
+
+    .product-info {
+        text-align: center;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .cta-button {
+        align-self: center;
+    }
+
+    .product-info h1,
+    .product-info h2 {
+        font-size: 1.5rem; /* Reducir el tamaño de fuente en pantallas pequeñas */
+    }
+
+    .price {
+        font-size: 1.2rem; /* Ajustar el tamaño del precio en pantallas pequeñas */
+    }
+}
+
+/* Ajustes para pantallas medianas */
+@media (max-width: 1200px) {
+    .product-page {
+        padding: 1.5rem;
+    }
+
+    .product-details {
+        gap: 1rem;
+    }
+
+    .product-info h1,
+    .product-info h2 {
+        font-size: 1.75rem; /* Tamaño intermedio en pantallas medianas */
+    }
+
+    .price {
+        font-size: 1.4rem; /* Ajustar el tamaño del precio en pantallas medianas */
+    }
+}
+
+/* Nuevas media queries para pantallas aún más pequeñas (móviles pequeños) */
+@media (max-width: 480px) {
+    .product-details {
+        padding: 1rem;
+    }
+
+    .product-info h1,
+    .product-info h2 {
+        font-size: 1.25rem; /* Fuente más pequeña en pantallas muy pequeñas */
+    }
+
+    .price {
+        font-size: 1rem;
+    }
+
+    .cta-button {
+        padding: 0.5rem 1rem; /* Botón más pequeño en pantallas pequeñas */
+        font-size: 0.875rem;
+    }
+}
