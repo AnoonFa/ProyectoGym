@@ -17,49 +17,38 @@ export const RoleProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    if (user && user.username) {
-      localStorage.setItem('user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('user'); // Limpia localStorage si no hay un usuario establecido
+    if (!user || !user.id) return; // Verifica que user.id esté definido
+  
+    let apiUrl = '';
+    switch (user.role) {
+      case 'admin':
+        apiUrl = `http://localhost:3001/admin/${user.id}`;
+        break;
+      case 'employee':
+        apiUrl = `http://localhost:3001/employee/${user.id}`;
+        break;
+      case 'client':
+        apiUrl = `http://localhost:3001/client/${user.id}`;
+        break;
+      default:
+        console.error('Rol de usuario no reconocido');
+        return;
     }
-      
-      
-
-      // Aquí construimos la URL de la API según el rol del usuario
-      let apiUrl = '';
-      switch (user.role) {
-        case 'admin':
-          apiUrl = `http://localhost:3001/admin/${user.id}`;
-          break;
-        case 'employee':
-          apiUrl = `http://localhost:3001/employee/${user.id}`;
-          break;
-        case 'client':
-          apiUrl = `http://localhost:3001/client/${user.id}`;
-          break;
-        default:
-          console.error('Rol de usuario no reconocido');
-          return;
-      }
-
-      // Fetch para obtener los datos del usuario, según el rol
-      if (user.id) {
-        fetch(apiUrl)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error(`Error ${response.status}: ${response.statusText}`);
-            }
-            return response.json();
-          })
-          .then(data => {
-            setUser(prevUser => ({
-              ...prevUser,
-              tickets: data.tickets || 0
-            }));
-          })
-          .catch(error => console.error('Error fetching user tickets:', error));
-      }
-    }, [user.username, user.id, user.role]);
+  
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        return response.json();
+      })
+      .then(data => {
+        setUser(prevUser => ({
+          ...prevUser,
+          tickets: data.tickets || 0
+        }));
+      })
+      .catch(error => console.error('Error fetching user tickets:', error));
+  }, [user.id, user.role]); // Añadir dependencia user.role
+  
   
   const updateUserTickets = (newTicketCount) => {
     setUser(prevUser => {
