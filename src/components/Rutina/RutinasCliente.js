@@ -105,7 +105,7 @@ const RutinasCliente = () => {
 
   useEffect(() => {
     if (user && user.id) {
-      fetch(`http://localhost:3001/client/${user.id}`)
+      fetch(`http://localhost:3005/client/${user.id}`)
         .then(response => response.json())
         .then(data => {
           console.log("Rutina obtenida:", data);

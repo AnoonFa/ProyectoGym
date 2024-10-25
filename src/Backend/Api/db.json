@@ -58,7 +58,16 @@
       "tickets": 15,
       "fechaCreacion": "20/9/2024",
       "horaCreacion": "10:00 a.m.",
-      "planes": [],
+      "planes": [
+        {
+          "id": "p2",
+          "name": "Trimestre",
+          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
+          "price": 130000,
+          "duration": "3 meses",
+          "image": "/assets/images/planes2.jpg"
+        }
+      ],
       "habilitado": true
     },
     {

@@ -161,8 +161,8 @@ app.post('/login', (req, res) => {
         return;
     }
 
-    // Consultar las tablas en orden para buscar al usuario
-    const roles = ['admin', 'employee', 'client'];
+    // Modificado para solo buscar en admin y client
+    const roles = ['admin', 'client'];
     let foundUser = null;
 
     const checkUserInRole = (role, callback) => {
@@ -176,8 +176,10 @@ app.post('/login', (req, res) => {
                 foundUser = {
                     role,
                     id: results[0].id,
-                    username: results[0].usuario, // Usar el campo usuario directamente
+                    username: results[0].usuario,
                     correo: results[0].correo,
+                    nombre: results[0].nombre || null, // Agregado para clientes
+                    apellido: results[0].apellido || null, // Agregado para clientes
                     tickets: results[0].tickets || 0,
                     habilitado: results[0].habilitado !== false
                 };
@@ -416,6 +418,7 @@ app.get('/admin/:id', (req, res) => {
     });
 });
 
+/*
 // Ruta para obtener employee por ID
 app.get('/employee/:id', (req, res) => {
     const { id } = req.params;
@@ -432,7 +435,7 @@ app.get('/employee/:id', (req, res) => {
         }
         res.json(result[0]);
     });
-});
+});*/
 
 // Modificar la ruta existente de actualización de cliente para manejar tickets y password
 app.patch('/client/:id', (req, res) => {

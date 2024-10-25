@@ -93,23 +93,18 @@ const ejerciciosImagenes = {
 const EjercicioModal = ({ ejercicio, tipoCuerpo, onClose }) => {
     const [isClosing, setIsClosing] = useState(false);
 
-        // Función para cerrar con animación
-        const handleClose = () => {
-            setIsClosing(true); // Activar la animación de cierre
-            setTimeout(() => {
-            onClose(); // Llamar a onClose después de la animación
-            }, 300); // 300ms para que coincida con la duración de la animación
-        };
+    // Función para cerrar con animación
+    const handleClose = () => {
+        setIsClosing(true);
+        setTimeout(onClose, 300);
+    };
 
 
-  // Función para normalizar los nombres de los ejercicios (eliminar acentos, reemplazar espacios y pasar a minúsculas)
-  const normalizeString = (str) => {
-    return str
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // Elimina acentos
-      .replace(/\s+/g, '_') // Reemplaza espacios por guiones bajos
-      .toLowerCase(); // Convierte a minúsculas
-  };
+    // Función para normalizar los nombres de los ejercicios con validación
+    const normalizeString = (str) => {
+        if (!str || typeof str !== 'string') return '';
+        return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '_');
+    };
 
   useEffect(() => {
     // Evitar que el fondo se desplace al abrir el modal
@@ -122,6 +117,23 @@ const EjercicioModal = ({ ejercicio, tipoCuerpo, onClose }) => {
   }, []);
 
   const getEjercicioInfo = (tipoCuerpo, nombre) => {
+    const tipoCuerpoNormalized = normalizeString(tipoCuerpo);
+    const nombreEjercicioNormalized = normalizeString(nombre);
+
+    console.log("Tipo de cuerpo normalizado:", tipoCuerpoNormalized);
+    console.log("Nombre del ejercicio normalizado:", nombreEjercicioNormalized);
+
+    const info = infoEjercicios[tipoCuerpoNormalized]?.[nombreEjercicioNormalized];
+    
+    if (!info) {
+        console.warn("Información no encontrada para:", tipoCuerpoNormalized, nombreEjercicioNormalized);
+    }
+
+    return info || {};
+};
+
+const infoAdicional = getEjercicioInfo(tipoCuerpo, ejercicio.nombre);
+
     console.log('Tipo de cuerpo:', tipoCuerpo);
     console.log('Nombre del ejercicio:', nombre);
 
@@ -308,68 +320,76 @@ const EjercicioModal = ({ ejercicio, tipoCuerpo, onClose }) => {
             },
         }
     };
-    
     const tipoCuerpoNormalized = normalizeString(tipoCuerpo);
     const nombreEjercicioNormalized = normalizeString(nombre);
 
     // Devuelve la información del ejercicio o un objeto vacío si no existe
-    return infoEjercicios[tipoCuerpoNormalized]?.[nombreEjercicioNormalized] || {};
+    return infoEjercicios[tipoCuerpoNormalized]?.[nombreEjercicioNormalized] || {};    
   };
 
   // Obtener la información adicional del ejercicio seleccionado
   const infoAdicional = getEjercicioInfo(tipoCuerpo, ejercicio.nombre);
 
+
   // Función para extraer el ID del video de YouTube
   const getYouTubeId = (url) => {
+    if (!url || typeof url !== 'string') return null;
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
     return (match && match[2].length === 11) ? match[2] : null;
-  };
-
-  // Obtener el ID del video de YouTube
-  const videoId = ejercicio.videoUrl ? getYouTubeId(ejercicio.videoUrl) : null;
-
-  return (
-    <div className={`exercise-modal-overlay ${isClosing ? 'closing' : ''}`}>
-      <div className="exercise-modal-content">
-      <button className="exercise-modal-close" onClick={handleClose}>X</button>
-        <h2 className="exercise-modal-title">{ejercicio.nombre}</h2>
-        <img
-          src={ejerciciosImagenes[ejercicio.nombre] || '/src/assets/images/placeholder.png'}
-          alt={ejercicio.nombre}
-          className="exercise-modal-image"
-        />
-        <div className="exercise-modal-details">
-          <h3>POSICIÓN INICIAL</h3>
-          <p>{infoAdicional.posicionInicial || 'No disponible'}</p>
-          <h3>EJECUCIÓN</h3>
-          <p>{infoAdicional.ejecucion || 'No disponible'}</p>
-          <h3>CONSEJOS</h3>
-          <p>{infoAdicional.consejo || 'No disponible'}</p>
-          <h3>DETALLES</h3>
-          <p>Series: {ejercicio.series}</p>
-          <p>Repeticiones: {ejercicio.repeticiones || '-'}</p>
-          <p>Descanso: {ejercicio.descanso} s</p>
-          {videoId && (
-            <div>
-              <h3>Video</h3>
-              <div className="video-container">
-                <iframe
-                  width="570"
-                  height="315"
-                  src={`https://www.youtube.com/embed/${videoId}`}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
 };
+
+const videoId = ejercicio.videoUrl ? getYouTubeId(ejercicio.videoUrl) : null;
+
+useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+        document.body.style.overflow = 'auto';
+    };
+}, []);
+
+
+return (
+    <div className={`exercise-modal-overlay ${isClosing ? 'closing' : ''}`}>
+        <div className="exercise-modal-content">
+            <button className="exercise-modal-close" onClick={handleClose}>X</button>
+            <h2 className="exercise-modal-title">{ejercicio.nombre}</h2>
+            <img
+                src={ejerciciosImagenes[ejercicio.nombre] || '/src/assets/images/placeholder.png'}
+                alt={ejercicio.nombre}
+                className="exercise-modal-image"
+            />
+            <div className="exercise-modal-details">
+                <h3>POSICIÓN INICIAL</h3>
+                <p>{infoAdicional.posicionInicial || 'No disponible'}</p>
+                <h3>EJECUCIÓN</h3>
+                <p>{infoAdicional.ejecucion || 'No disponible'}</p>
+                <h3>CONSEJOS</h3>
+                <p>{infoAdicional.consejo || 'No disponible'}</p>
+                <h3>DETALLES</h3>
+                <p>Series: {ejercicio.series || '-'}</p>
+                <p>Repeticiones: {ejercicio.repeticiones || '-'}</p>
+                <p>Descanso: {ejercicio.descanso || '-'} s</p>
+                {videoId && (
+                    <div>
+                        <h3>Video</h3>
+                        <div className="video-container">
+                            <iframe
+                                width="570"
+                                height="315"
+                                src={`https://www.youtube.com/embed/${videoId}`}
+                                title="YouTube video player"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            ></iframe>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    </div>
+);
+
 
 export default EjercicioModal;
