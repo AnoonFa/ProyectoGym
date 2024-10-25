@@ -38,6 +38,7 @@ import CalendarClases from './components/VerClases/VerClases';
 import Checkout from './components/checkout/Checkout';
 import MisClases from './pages/Client/ClassesPage/MisClases';
 import MisPlanes from './pages/Planes/MisPlanes';
+import Productp1 from './components/Product/Productp1';
 import PlanesPage from './pages/Planes/planesPage';
 import ProductCard from './components/ProductCard/ProductCard';
 import AdminConfirmacion from './components/Ticketera/Admin/Confirmacion';
@@ -160,6 +161,7 @@ function App() {
             <Route path="/VerTicketera/*" element={<VerTicketera />} />
             <Route path="/PlanesPage/*" element={<PlanesPage />} />
             <Route path="/MisPlanes/*" element={<MisPlanes />} />
+            <Route path="/Productp1/:planId" element={<Productp1 />} />
             <Route path="/RutinaAdminIndex/*" element={<RutinaAdminIndex />} />
             <Route path="/Payments/*" element={<Payments />} />
             <Route path="/RutinasCliente/*" element={<RutinasCliente />} />
