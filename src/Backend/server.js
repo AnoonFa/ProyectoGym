@@ -89,8 +89,21 @@ app.get('/client/:id', (req, res) => {
 
 // Ruta para obtener todos los clientes
 app.get('/client', (req, res) => {
-    const query = 'SELECT * FROM client';
-    db.query(query, (err, result) => {
+    const { numeroDocumento, correo } = req.query;
+    let query = 'SELECT * FROM client WHERE 1=1';  // Always true condition to append other conditions
+    let queryParams = [];
+
+    if (numeroDocumento) {
+        query += ' AND numeroDocumento = ?';
+        queryParams.push(numeroDocumento);
+    }
+
+    if (correo) {
+        query += ' AND correo = ?';
+        queryParams.push(correo);
+    }
+
+    db.query(query, queryParams, (err, result) => {
         if (err) {
             res.status(500).json({ error: err });
             return;
@@ -138,6 +151,68 @@ app.post('/client', (req, res) => {
         });
     });
 });
+
+// Ruta para iniciar sesión
+app.post('/login', (req, res) => {
+    const { correo, password } = req.body;
+    
+    if (!correo || !password) {
+        res.status(400).json({ error: 'Correo y contraseña son requeridos' });
+        return;
+    }
+
+    // Consultar las tablas en orden para buscar al usuario
+    const roles = ['admin', 'employee', 'client'];
+    let foundUser = null;
+
+    const checkUserInRole = (role, callback) => {
+        const query = `SELECT * FROM ${role} WHERE correo = ?`;
+        db.query(query, [correo], (err, results) => {
+            if (err) {
+                console.error('Error en la consulta:', err);
+                return callback(err);
+            }
+            if (results.length > 0 && results[0].password === password) {
+                foundUser = {
+                    role,
+                    id: results[0].id,
+                    nombre: results[0].nombre,
+                    apellido: results[0].apellido,
+                    correo: results[0].correo,
+                    tickets: results[0].tickets || 0,
+                    habilitado: results[0].habilitado !== false
+                };
+                return callback(null, foundUser);
+            }
+            callback(null, null);
+        });
+    };
+    
+
+    // Iterar sobre las tablas y encontrar el usuario
+    const checkAllRoles = (index) => {
+        if (index >= roles.length) {
+            if (foundUser) {
+                res.status(200).json(foundUser);
+            } else {
+                res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
+            }
+            return;
+        }
+        checkUserInRole(roles[index], (err, user) => {
+            if (err) {
+                res.status(500).json({ error: 'Error en el servidor' });
+            } else if (user) {
+                res.status(200).json(user);
+            } else {
+                checkAllRoles(index + 1);
+            }
+        });
+    };
+
+    checkAllRoles(0); // Empezar con el primer rol
+});
+
 
 // Ruta para verificar usuario existente
 app.get('/check-user', (req, res) => {
