@@ -206,9 +206,10 @@
       "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un mes",
       "price": 50000,
       "image": "/assets/images/planes1.jpg",
-      "duration": "1 mes",
+      "duration": "1 ",
+      "startDate": "2024-11-05T00:00:00.000Z",
       "benefits": [
-        " Tu plan de entrenamiento personalizado",
+        "Tu plan de entrenamiento personalizado",
         "Goliath Health (Seguimiento a tu progreso)",
         "Clases grupales con profesores",
         "Acceso a todas las áreas de la sede"
@@ -220,7 +221,8 @@
       "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
       "price": 130000,
       "image": "/assets/images/planes2.jpg",
-      "duration": "3 meses",
+      "duration": "3",
+      "startDate": "2024-11-05T00:00:00.000Z",
       "benefits": [
         "Tu plan de entrenamiento personalizado",
         "Goliath Health (Seguimiento a tu progreso)",
@@ -234,9 +236,10 @@
       "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante seis meses",
       "price": 280000,
       "image": "/assets/images/planes3.jpg",
-      "duration": "6 meses",
+      "duration": "6",
+      "startDate": "2024-11-05T00:00:00.000Z",
       "benefits": [
-        "Smart Fit App (Tu plan de entrenamiento personalizado)",
+        "Tu plan de entrenamiento personalizado",
         "Goliath Health (Seguimiento a tu progreso)",
         "Clases grupales con profesores",
         "Acceso a todas las áreas de la sede"
@@ -248,9 +251,10 @@
       "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un año",
       "price": 550000,
       "image": "/assets/images/planes4.jpg",
-      "duration": "12 meses",
+      "duration": "12",
+      "startDate": "2024-11-05T00:00:00.000Z",
       "benefits": [
-        "Smart Fit App (Tu plan de entrenamiento personalizado)",
+        "Tu plan de entrenamiento personalizado",
         "Goliath Health (Seguimiento a tu progreso)",
         "Clases grupales con profesores",
         "Acceso a todas las áreas de la sede"

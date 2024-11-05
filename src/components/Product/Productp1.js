@@ -49,7 +49,9 @@ const Productp1 = () => {
     try {
       const clientResponse = await fetch(`http://localhost:3001/client/${user.id}`);
       const clientData = await clientResponse.json();
-
+  
+      const startDate = new Date().toISOString(); // Fecha de inicio en formato ISO
+  
       const newPlan = {
         id: plan.id,
         name: plan.name,
@@ -57,38 +59,35 @@ const Productp1 = () => {
         price: plan.price,
         duration: plan.duration || '1 mes',
         image: plan.image,
+        startDate // Agregamos la fecha de inicio
       };
-
+  
       const updatedClient = {
         ...clientData,
-        planes: [...clientData.planes, newPlan],
+        planes: [...clientData.planes, newPlan]
       };
-
+  
       const updateResponse = await fetch(`http://localhost:3001/client/${user.id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(updatedClient),
+        body: JSON.stringify(updatedClient)
       });
-
+  
       if (updateResponse.ok) {
-        const data = await updateResponse.json();
-        console.log('Plan añadido al cliente:', data);
         setOpenModal(false);
         setShowAlert(true);
         setTimeout(() => {
           setShowAlert(false);
           navigate('/MisPlanes');
         }, 3000);
-      } else {
-        const errorData = await updateResponse.json();
-        console.error('Error al actualizar el cliente:', errorData);
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
     }
   };
+  
 
   const loadImage = (imagePath) => {
     try {
@@ -106,36 +105,27 @@ const Productp1 = () => {
     <div>
       <Header />
       {showAlert && (
-        <div style={{
-          position: 'fixed',
-          top: '20px',
-          right: '20px',
-          zIndex: 1000
-        }}>
+        <div style={{ position: 'fixed', top: '20px', right: '20px', zIndex: 1000 }}>
           <Alert severity="success" onClose={() => setShowAlert(false)}>
             Compra realizada con éxito. Por favor, paga en el gimnasio para confirmar.
           </Alert>
         </div>
       )}
-      <div className="product-pages">
-        <div className="product-detailss">
-          <img 
-            src={loadImage(plan.image)} 
-            alt={plan.name} 
-            className="product-images" 
-          />
-          <div className="product-infos">
+      <div className="product-page">
+        <div className="product-details">
+          <img src={loadImage(plan.image)} alt={plan.name} className="product-image" />
+          <div className="product-info">
             <h1>{plan.name}</h1>
             <p>{plan.description}</p>
             <h2>Beneficios Incluidos:</h2>
-               <ul>
-               {plan.benefits.map((benefit, index) => (
-               <li key={index}>{benefit}</li>
-                ))}
-               </ul>
-            <p className="prices">Desde <strong>${price}</strong></p>
-            <p className="notes"> No se realizan reembolsos.</p>
-            <button className="cta-buttons" onClick={handleCheckout}>Comprar</button>
+            <ul>
+              {plan.benefits.map((benefit, index) => (
+                <li key={index}>{benefit}</li>
+              ))}
+            </ul>
+            <p className="price">Desde <strong>${price}</strong></p>
+            <p className="note"> No se realizan reembolsos.</p>
+            <button className="cta-button" onClick={handleCheckout}>Comprar</button>
           </div>
         </div>
       </div>
@@ -148,9 +138,9 @@ const Productp1 = () => {
               ¿Estás seguro de comprar este plan por un total de ${price}?
               Recuerda pagar en el gimnasio dentro de un plazo de 1 día.
             </p>
-            <div className="modal-buttonss">
-              <button className="cancel-buttons" onClick={() => setOpenModal(false)}>Cancelar</button>
-              <button className="confirm-buttons" onClick={handleConfirmPurchase}>Comprar</button>
+            <div className="modal-buttons">
+              <button className="cancel-button" onClick={() => setOpenModal(false)}>Cancelar</button>
+              <button className="confirm-button" onClick={handleConfirmPurchase}>Comprar</button>
             </div>
           </div>
         </div>
