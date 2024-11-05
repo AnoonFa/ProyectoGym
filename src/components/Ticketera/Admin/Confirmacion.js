@@ -27,7 +27,9 @@ function AdminConfirmacion() {
         try {
             const response = await fetch('http://localhost:3005/ticketera');
             const data = await response.json();
-            setTickets(data);
+            // Filtrar para mostrar solo tickets no pagados
+            const unpaidTickets = data.filter(ticket => ticket.status !== 'Pagado');
+            setTickets(unpaidTickets);
         } catch (error) {
             console.error('Error fetching tickets:', error);
         }
@@ -57,92 +59,71 @@ function AdminConfirmacion() {
     };
 
     const handleStatusChange = async (ticketId, newStatus) => {
-        try {
-            const response = await fetch(`http://localhost:3005/verify-ticket`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ticketId, newStatus }),
-            });
-    
-            if (response.ok) {
-                if (newStatus === 'Pagado') {
-                    // Filtrar el ticket con estado "Pagado" de la tabla en la interfaz
-                    setFilteredTickets((prevTickets) => 
-                        prevTickets.filter((ticket) => ticket.id !== ticketId)
-                    );
+        // Si el nuevo estado es "Pagado", mostrar el modal de confirmación
+        if (newStatus === 'Pagado') {
+            const ticket = tickets.find(t => t.id === ticketId);
+            setSelectedTicket(ticket);
+            setOpenModal(true);
+        } else {
+            try {
+                const response = await fetch(`http://localhost:3005/verify-ticket`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ticketId, newStatus }),
+                });
+        
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        fetchTickets(); // Actualizar la lista completa de tickets
+                    } else {
+                        console.error('Error al actualizar el estado:', result.message);
+                    }
                 } else {
-                    fetchTickets(); // Si es otro estado, actualizar la lista de tickets
+                    console.error('Error en la respuesta del servidor');
                 }
-            } else {
-                console.error('Error al actualizar el estado del ticket');
+            } catch (error) {
+                console.error('Error:', error);
             }
-        } catch (error) {
-            console.error('Error:', error);
         }
     };
     
 
-    const updateTicketStatus = async (ticketId, newStatus) => {
-        try {
-            const ticketResponse = await fetch(`http://localhost:3005/ticketera/${ticketId}`);
-            const currentTicket = await ticketResponse.json();
-            const updatedTicket = { ...currentTicket, status: newStatus };
-
-            const response = await fetch(`http://localhost:3005/ticketera/${ticketId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedTicket),
-            });
-
-            if (response.ok) {
-                // Actualizar tickets en la interfaz
-                if (newStatus === 'Pagado') {
-                    setFilteredTickets((prevTickets) =>
-                        prevTickets.filter((ticket) => ticket.id !== ticketId)
-                    );
-                } else {
-                    fetchTickets(); // Refrescar tickets si es otro estado
-                }
-            } else {
-                console.error('Error al actualizar el estado del ticket');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
 
     const handleConfirmPayment = async () => {
         if (selectedTicket) {
-            await updateTicketStatus(selectedTicket.id, 'Pagado');
-            await updateClientTickets(selectedTicket);
-            setOpenModal(false);
-            fetchTickets();
-        }
-    };
-
-    const updateClientTickets = async (ticket) => {
-        try {
-            const clientResponse = await fetch(`http://localhost:3005/client/${ticket.clientId}`);
-            const clientData = await clientResponse.json();
-            const updatedTickets = clientData.tickets + ticket.quantity;
-
-            const updateResponse = await fetch(`http://localhost:3005/client/${ticket.clientId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ tickets: updatedTickets }),
-            });
-
-            if (!updateResponse.ok) {
-                console.error('Error al actualizar los tickets del cliente');
+            try {
+                const response = await fetch(`http://localhost:3005/verify-ticket`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        ticketId: selectedTicket.id, 
+                        newStatus: 'Pagado' 
+                    }),
+                });
+    
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        // Actualizar el estado local
+                        setFilteredTickets(prevTickets => 
+                            prevTickets.filter(ticket => ticket.id !== selectedTicket.id)
+                        );
+                        setTickets(prevTickets => 
+                            prevTickets.filter(ticket => ticket.id !== selectedTicket.id)
+                        );
+                    } else {
+                        console.error('Error al actualizar el estado:', result.message);
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
             }
-        } catch (error) {
-            console.error('Error al actualizar los tickets del cliente:', error);
+            setOpenModal(false);
+            setSelectedTicket(null);
         }
     };
+
 
     const indexOfLastTicket = currentPage * ticketsPerPage;
     const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
@@ -225,14 +206,15 @@ function AdminConfirmacion() {
                                                 <td className="confirmacion-table-cell">{formatDate(ticket.date)}</td>
                                                 <td className="confirmacion-table-cell">{ticket.time}</td>
                                                 <td className="confirmacion-table-cell">
-                                                    <select 
-                                                        value={ticket.status} 
-                                                        onChange={(e) => handleStatusChange(ticket.id, e.target.value)}
-                                                        className="confirmacion-select"
-                                                    >
-                                                        <option value="No Pagado">No Pagado</option>
-                                                        <option value="Pagado">Pagado</option>
-                                                    </select>
+                                                <select 
+                                                    value={ticket.status} 
+                                                    onChange={(e) => handleStatusChange(ticket.id, e.target.value)}
+                                                    className="confirmacion-select"
+                                                    disabled={ticket.status === 'Pagado'} // Deshabilitar si ya está pagado
+                                                >
+                                                    <option value="No Pagado">No Pagado</option>
+                                                    <option value="Pagado">Pagado</option>
+                                                </select>
                                                 </td>
                                             </tr>
                                         ))}

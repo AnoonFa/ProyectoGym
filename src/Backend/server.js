@@ -71,19 +71,28 @@ app.get('/client', (req, res) => {
 
 // Ruta para obtener un cliente específico por ID
 app.get('/client/:id', (req, res) => {
-    const { id } = req.params;
-    const query = 'SELECT * FROM client WHERE id = ?';
-    
+    const { id } = req.params; // Get the client ID from the request parameters
+
+    const query = `
+        SELECT id, nombre, apellido, tipoDocumento, numeroDocumento, sexo, 
+               tipoCuerpo, peso, altura, usuario, password, correo, telefono, 
+               rutinas, tickets, fechaCreacion, horaCreacion, habilitado
+        FROM client 
+        WHERE id = ?`; // SQL query to select all necessary fields, filtered by ID
+
     db.query(query, [id], (err, result) => {
         if (err) {
-            res.status(500).json({ error: err });
+            console.error('Error fetching client details:', err);
+            res.status(500).json({ error: 'Error fetching client details' });
             return;
         }
+
         if (result.length === 0) {
-            res.status(404).json({ message: 'Cliente no encontrado' });
+            res.status(404).json({ message: 'Client not found' });
             return;
         }
-        res.json(result[0]);
+
+        res.json(result[0]); // Send the client's data as JSON
     });
 });
 
@@ -265,9 +274,9 @@ app.put('/client/:id', (req, res) => {
 });
 
 
-// Obtener todos los tickets
+// Obtener todos los tickets (ordenados por fecha y hora)
 app.get('/ticketera', (req, res) => {
-    const query = 'SELECT * FROM ticketera';
+    const query = 'SELECT * FROM ticketera ORDER BY date DESC, time DESC';
     db.query(query, (err, result) => {
         if (err) {
             res.status(500).json({ error: err });
@@ -292,6 +301,20 @@ app.get('/ticketera/:id', (req, res) => {
             return;
         }
         res.json(result[0]);
+    });
+});
+
+// Obtener tickets por cliente
+app.get('/ticketera/client/:clientId', (req, res) => {
+    const { clientId } = req.params;
+    const query = 'SELECT * FROM ticketera WHERE clientId = ?';
+    
+    db.query(query, [clientId], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        res.json(result);
     });
 });
 
@@ -335,177 +358,6 @@ app.post('/ticketera', (req, res) => {
     });
 });
 
-// Actualizar estado del ticket
-app.put('/ticketera/:id', (req, res) => {
-    const { id } = req.params;
-    const { status } = req.body;
-
-    const query = 'UPDATE ticketera SET status = ? WHERE id = ?';
-
-    db.query(query, [status, id], (err, result) => {
-        if (err) {
-            console.error('Error al actualizar ticket:', err);
-            res.status(500).json({ error: 'Error al actualizar el ticket', details: err });
-            return;
-        }
-
-        if (result.affectedRows === 0) {
-            res.status(404).json({ message: 'Ticket no encontrado' });
-            return;
-        }
-
-        // Si el estado es "Pagado", actualizar los tickets del cliente
-        if (status === 'Pagado') {
-            const getTicketQuery = 'SELECT clientId, quantity FROM ticketera WHERE id = ?';
-            db.query(getTicketQuery, [id], (err, ticketResult) => {
-                if (err || ticketResult.length === 0) {
-                    console.error('Error al obtener información del ticket:', err);
-                    return;
-                }
-
-                const { clientId, quantity } = ticketResult[0];
-                const updateClientQuery = `
-                    UPDATE client 
-                    SET tickets = tickets + ? 
-                    WHERE id = ?
-                `;
-
-                db.query(updateClientQuery, [quantity, clientId], (err) => {
-                    if (err) {
-                        console.error('Error al actualizar tickets del cliente:', err);
-                    }
-                });
-            });
-        }
-
-        res.json({ 
-            message: 'Ticket actualizado exitosamente',
-            affectedRows: result.affectedRows
-        });
-    });
-});
-
-// Obtener tickets por cliente
-app.get('/ticketera/client/:clientId', (req, res) => {
-    const { clientId } = req.params;
-    const query = 'SELECT * FROM ticketera WHERE clientId = ?';
-    
-    db.query(query, [clientId], (err, result) => {
-        if (err) {
-            res.status(500).json({ error: err });
-            return;
-        }
-        res.json(result);
-    });
-});
-
-
-// Ruta para obtener admin por ID
-app.get('/admin/:id', (req, res) => {
-    const { id } = req.params;
-    const query = 'SELECT * FROM admin WHERE id = ?';
-    
-    db.query(query, [id], (err, result) => {
-        if (err) {
-            res.status(500).json({ error: err });
-            return;
-        }
-        if (result.length === 0) {
-            res.status(404).json({ message: 'Admin no encontrado' });
-            return;
-        }
-        res.json(result[0]);
-    });
-});
-
-/*
-// Ruta para obtener employee por ID
-app.get('/employee/:id', (req, res) => {
-    const { id } = req.params;
-    const query = 'SELECT * FROM employee WHERE id = ?';
-    
-    db.query(query, [id], (err, result) => {
-        if (err) {
-            res.status(500).json({ error: err });
-            return;
-        }
-        if (result.length === 0) {
-            res.status(404).json({ message: 'Empleado no encontrado' });
-            return;
-        }
-        res.json(result[0]);
-    });
-});*/
-
-// Modificar la ruta existente de actualización de cliente para manejar tickets y password
-app.patch('/client/:id', (req, res) => {
-    const { id } = req.params;
-    const { tickets, password } = req.body;
-    
-    let query = 'UPDATE client SET';
-    const queryParams = [];
-    
-    if (tickets !== undefined) {
-        query += ' tickets = ?';
-        queryParams.push(tickets);
-    }
-    
-    if (password !== undefined) {
-        if (tickets !== undefined) query += ',';
-        query += ' password = ?';
-        queryParams.push(password);
-    }
-    
-    query += ' WHERE id = ?';
-    queryParams.push(id);
-
-    db.query(query, queryParams, (err, result) => {
-        if (err) {
-            res.status(500).json({ error: err });
-            return;
-        }
-        if (result.affectedRows === 0) {
-            res.status(404).json({ message: 'Cliente no encontrado' });
-            return;
-        }
-        res.json({ 
-            message: 'Cliente actualizado exitosamente',
-            affectedRows: result.affectedRows
-        });
-    });
-});
-
-
-// Ruta para obtener todos los tickets
-app.get('/ticketera', (req, res) => {
-    const query = 'SELECT * FROM ticketera ORDER BY date DESC, time DESC';
-    db.query(query, (err, result) => {
-        if (err) {
-            res.status(500).json({ error: err });
-            return;
-        }
-        res.json(result);
-    });
-});
-
-// Ruta para obtener un ticket específico
-app.get('/ticketera/:id', (req, res) => {
-    const { id } = req.params;
-    const query = 'SELECT * FROM ticketera WHERE id = ?';
-    
-    db.query(query, [id], (err, result) => {
-        if (err) {
-            res.status(500).json({ error: err });
-            return;
-        }
-        if (result.length === 0) {
-            res.status(404).json({ message: 'Ticket no encontrado' });
-            return;
-        }
-        res.json(result[0]);
-    });
-});
-
 // Ruta para verificar y actualizar el estado de un ticket
 app.post('/verify-ticket', async (req, res) => {
     const { ticketId, newStatus } = req.body;
@@ -533,7 +385,16 @@ app.post('/verify-ticket', async (req, res) => {
 
                 const ticket = ticketResult[0];
 
-                // 2. Si el nuevo estado es "Pagado" y el ticket no estaba ya en "Pagado", actualiza los tickets del cliente
+                // Verificar si el ticket ya está pagado
+                if (ticket.status === 'Pagado') {
+                    db.rollback();
+                    return res.status(400).json({
+                        success: false,
+                        message: 'No se puede modificar un ticket que ya está pagado'
+                    });
+                }
+
+                // 2. Verificar si se deben actualizar los tickets del cliente
                 const shouldUpdateClientTickets = newStatus === 'Pagado' && ticket.status !== 'Pagado';
 
                 // 3. Actualizar el estado del ticket
@@ -626,6 +487,81 @@ app.post('/verify-ticket', async (req, res) => {
     });
 });
 
+// Actualizar cliente (tickets y password)
+app.patch('/client/:id', (req, res) => {
+    const { id } = req.params;
+    const { tickets, password } = req.body;
+    
+    let query = 'UPDATE client SET';
+    const queryParams = [];
+    
+    if (tickets !== undefined) {
+        query += ' tickets = ?';
+        queryParams.push(tickets);
+    }
+    
+    if (password !== undefined) {
+        if (tickets !== undefined) query += ',';
+        query += ' password = ?';
+        queryParams.push(password);
+    }
+    
+    query += ' WHERE id = ?';
+    queryParams.push(id);
+
+    db.query(query, queryParams, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        if (result.affectedRows === 0) {
+            res.status(404).json({ message: 'Cliente no encontrado' });
+            return;
+        }
+        res.json({ 
+            message: 'Cliente actualizado exitosamente',
+            affectedRows: result.affectedRows
+        });
+    });
+});
+
+// Obtener admin por ID
+app.get('/admin/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'SELECT * FROM admin WHERE id = ?';
+    
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        if (result.length === 0) {
+            res.status(404).json({ message: 'Admin no encontrado' });
+            return;
+        }
+        res.json(result[0]);
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
+/*
+// Ruta para obtener employee por ID
+app.get('/employee/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'SELECT * FROM employee WHERE id = ?';
+    
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err });
+            return;
+        }
+        if (result.length === 0) {
+            res.status(404).json({ message: 'Empleado no encontrado' });
+            return;
+        }
+        res.json(result[0]);
+    });
+});*/

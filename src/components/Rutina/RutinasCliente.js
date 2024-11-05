@@ -5,10 +5,11 @@ import './RutinaAdminIndex.css';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import EjercicioModal from './Modal/EjercicioModal';
+import Relleno from '../Relleno/Relleno';
 
-// Importa todas las imágenes que necesites
+/* Images for Exercise Types */
 
-/* Ectomorfo */
+// Ectomorfo
 import curlBicepsBarraZImg from '../../assets/images/Ejercicios/Ectomorfo/curl-de-biceps-con-barra-en-z-y-w.png';
 import curlBicepsMartilloImg from '../../assets/images/Ejercicios/Ectomorfo/curl-de-biceps-martillo.png';
 import elevacionesLateralesImg from '../../assets/images/Ejercicios/Ectomorfo/elevacion-lateral.png';
@@ -22,7 +23,7 @@ import zancadasconSalto from '../../assets/images/Ejercicios/Ectomorfo/Zancadas-
 import zancadas from '../../assets/images/Ejercicios/Ectomorfo/Zancadas.png';
 import curldebícepsconbarraW from '../../assets/images/Ejercicios/Ectomorfo/Curl-de-bíceps-con-barra-W.png';
 
-/* Mesomorfo */
+// Mesomorfo
 import dominadasconAgarreAnchoyEstrecho from '../../assets/images/Ejercicios/Mesomorfo/dominadas-con-Agarre-Ancho-y-Estrecho.png';
 import dominadasconPesoAñadido from '../../assets/images/Ejercicios/Mesomorfo/Dominadas-con-Peso-Añadido.png';
 import dominadas from '../../assets/images/Ejercicios/Mesomorfo/dominadas.jpg';
@@ -35,7 +36,7 @@ import pressbancaagarrecerrado from '../../assets/images/Ejercicios/Mesomorfo/pr
 import RemoconBarraconAgarreInvertido from '../../assets/images/Ejercicios/Mesomorfo/Remo-con-Barra-con-Agarre-Invertido.jpg';
 import remoconbarradepie from '../../assets/images/Ejercicios/Mesomorfo/remo-con-barra-de-pie.png';
 
-/* Endomorfo */
+// Endomorfo
 import flexionesConPiesElevados from '../../assets/images/Ejercicios/Endomorfo/flexiones-con-pies-elevados.png';
 import flexiones from '../../assets/images/Ejercicios/Endomorfo/flexiones.png';
 import fondosEnParalelas from '../../assets/images/Ejercicios/Endomorfo/fondos-en-paralelas.png';
@@ -45,55 +46,44 @@ import remoConMancuernaUnaMano from '../../assets/images/Ejercicios/Endomorfo/re
 import sentadilla from '../../assets/images/Ejercicios/Endomorfo/Sentadilla.png';
 import sentadillaFrontales from '../../assets/images/Ejercicios/Endomorfo/Sentadillas-frontales.jpg';
 import fondosenparalelasconpeso from '../../assets/images/Ejercicios/Endomorfo/Fondos-en-paralelas-con-peso.png';
-import Relleno from '../Relleno/Relleno';
 
-
-// Mapeo de ejercicios a imágenes
+// Mapping of exercises to images
 const ejerciciosImagenes = {
-
-  /* Ectomorfo */
   'Elevaciones laterales': elevacionesLateralesImg,
   'Curl de bíceps con barra Z': curlBicepsBarraZImg,
   'Curl de bíceps con martillo': curlBicepsMartilloImg,
   'Elevaciones laterales con banda elástica': elevacionesLateralesconBandaElástica,
   'Extensión de tríceps por encima de la cabeza': extensióndetrícepsporencimadelacabeza,
   'Press francés con mancuerna': pressfrances,
-  'Press francés con barra': pressFrancésconBarra ,
+  'Press francés con barra': pressFrancésconBarra,
   'Remo al mentón con barra': remoalmentón,
   'Zancadas bulgaras': zancadas,
   'Zancadas con salto': zancadasconSalto,
   'Zancadas con peso': zancadasconmancuernas,
-  'Curl de bíceps con barra W' : curldebícepsconbarraW,
-
-  /* Mesomorfo */
-
-  'Peso muerto' : pesomuerto,
-  'Press de banca inclinado' : pressdebancainclinado,
-  'Dominadas' : dominadas,
-  'Remo con barra' : remoconbarradepie,
-  'Peso muerto rumano' : pesomuerto,
-  'Press de banca declinado' : presspectoraldeclinado,
-  'Dominadas con agarre ancho' : dominadasconAgarreAnchoyEstrecho,
-  'Peso muerto sumo' : pesomuertosumo,
-  'Press de banca cerrado' : pressbancaagarrecerrado,
-  'Dominadas con agarre estrecho' : dominadasconAgarreAnchoyEstrecho,
-  'Remo con barra con agarre invertido' : RemoconBarraconAgarreInvertido,
-  'Peso muerto convencional' : pesomuertoconbarraconvencional,
-  'Dominadas con peso añadido' : dominadasconPesoAñadido,
-
-  /* Endomorfo */
-
-  'Sentadillas' : sentadilla,
-  'Flexiones' : flexiones,
-  'Fondos en paralelas' : fondosEnParalelas,
-  'Remo con mancuerna' : remoConMacuerna,
-  'Fondos en paralelas con peso' : fondosenparalelasconpeso,
-  'Remo con mancuerna a una mano' : remoConMancuernaUnaMano,
-  'Elevaciones laterales con mancuerna' : elevacionesLateralesImg,
-  'Sentadillas frontales' : sentadillaFrontales,
-  'Flexiones con pies elevados' : flexionesConPiesElevados,
-  'Remo con barra T' : remoConBarraT
-
+  'Curl de bíceps con barra W': curldebícepsconbarraW,
+  'Peso muerto': pesomuerto,
+  'Press de banca inclinado': pressdebancainclinado,
+  'Dominadas': dominadas,
+  'Remo con barra': remoconbarradepie,
+  'Peso muerto rumano': pesomuerto,
+  'Press de banca declinado': presspectoraldeclinado,
+  'Dominadas con agarre ancho': dominadasconAgarreAnchoyEstrecho,
+  'Peso muerto sumo': pesomuertosumo,
+  'Press de banca cerrado': pressbancaagarrecerrado,
+  'Dominadas con agarre estrecho': dominadasconAgarreAnchoyEstrecho,
+  'Remo con barra con agarre invertido': RemoconBarraconAgarreInvertido,
+  'Peso muerto convencional': pesomuertoconbarraconvencional,
+  'Dominadas con peso añadido': dominadasconPesoAñadido,
+  'Sentadillas': sentadilla,
+  'Flexiones': flexiones,
+  'Fondos en paralelas': fondosEnParalelas,
+  'Remo con mancuerna': remoConMacuerna,
+  'Fondos en paralelas con peso': fondosenparalelasconpeso,
+  'Remo con mancuerna a una mano': remoConMancuernaUnaMano,
+  'Elevaciones laterales con mancuerna': elevacionesLateralesImg,
+  'Sentadillas frontales': sentadillaFrontales,
+  'Flexiones con pies elevados': flexionesConPiesElevados,
+  'Remo con barra T': remoConBarraT
 };
 
 const RutinasCliente = () => {
@@ -102,25 +92,22 @@ const RutinasCliente = () => {
   const [rutina, setRutina] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedEjercicio, setSelectedEjercicio] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     if (user && user.id) {
       fetch(`http://localhost:3005/client/${user.id}`)
         .then(response => response.json())
         .then(data => {
-          console.log("Rutina obtenida:", data);
+          setUserData(data); // Store fetched user data, including tipoCuerpo
           const rutinasParsed = data.rutinas ? JSON.parse(data.rutinas) : [];
           setRutina(rutinasParsed);
         })
         .catch(error => {
-          console.error('Error al obtener la rutina del cliente:', error);
+          console.error('Error fetching client routine:', error);
         });
     }
   }, [user]);
-
-  const handleVolver = () => {
-    navigate('/ClienteIndex');
-  };
 
   const openModal = (ejercicio) => {
     setSelectedEjercicio(ejercicio);
@@ -135,7 +122,7 @@ const RutinasCliente = () => {
   return (
     <>
       <Header />
-      <Relleno/>
+      <Relleno />
       <div className="container">
         <h1 className="title">Mi rutina</h1>
         <div className="exercise-grid">
@@ -154,12 +141,12 @@ const RutinasCliente = () => {
             <p className='no-exercises'>No se encontraron ejercicios en tu rutina.</p>
           )}
         </div>
-        <button className="retuarn-btn-cliente" onClick={handleVolver}>Volver</button>
+        <button className="return-btn-cliente" onClick={() => navigate('/ClienteIndex')}>Volver</button>
       </div>
-      {modalOpen && selectedEjercicio && (
+      {modalOpen && selectedEjercicio && userData?.tipoCuerpo && (
         <EjercicioModal
           ejercicio={selectedEjercicio}
-          tipoCuerpo={user.tipoCuerpo}
+          tipoCuerpo={userData.tipoCuerpo}
           onClose={closeModal}
         />
       )}
