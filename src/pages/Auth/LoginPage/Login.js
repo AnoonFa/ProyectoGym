@@ -64,6 +64,9 @@ const Login = () => {
     setShowPassword(prevState => !prevState);
   };
 
+  const handleRegistroClick = () => {
+    navigate('/ClienteForm/'); 
+  };
   return (
     <div className="app-container-login">
       <div className="fondo-wrapper">
@@ -97,8 +100,10 @@ const Login = () => {
                   onClick={togglePasswordVisibility}
                 />
               </div>
-              <p className="forgot-password" onClick={handleForgotPassword}>¿Olvidaste tu contraseña? Ingresa Aquí</p>
-
+              <div className="links-container">
+                  <p className="forgot-password" onClick={handleForgotPassword}>¿Olvidaste tu contraseña?</p>
+                  <p className="register-link" onClick={handleRegistroClick}>Registrate</p>
+              </div>
               <button type="submit" className="btn">Iniciar sesión</button>
               {loginError && <Alert className='error-message' severity="error">{loginError}</Alert>}
             </form>

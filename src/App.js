@@ -156,7 +156,7 @@ function App() {
             <Route path="/products/:category" element={<ProductPagePersonal />} />
             <Route path="/RutinesClient/*" element={<RutinesPage />} />
             <Route path="/VerCliente/*" element={<VerCliente />} />
-            <Route path="/ClienteForm/*" element={<ClienteForm />} />
+            <Route path="/ClienteForm/" element={<ClienteForm />} />
             <Route path="/Comprobant/*" element={<Comprobant />} />
             <Route path="/VerTicketera/*" element={<VerTicketera />} />
             <Route path="/PlanesPage/*" element={<PlanesPage />} />

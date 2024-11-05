@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './VerCliente.css';
-import ClienteForm from '../../Forms/ClienteForm/ClienteForm';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Mostrar from './InformacionCliente/Buscar'; 
 import Alert from '@mui/material/Alert'; 
 import Relleno from '../Relleno/Relleno';
 
+// Componente principal para ver y buscar clientes
 function VerCliente() {
-  const [showForm, setShowForm] = useState(false);
-  const [showSearch, setShowSearch] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [clientInfo, setClientInfo] = useState(null);
-  const [userInput, setUserInput] = useState('');
-  const [clientes, setClientes] = useState([]);
-  const [filteredClientes, setFilteredClientes] = useState([]);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedClient, setSelectedClient] = useState(null);
-  const [alertMessage, setAlertMessage] = useState(null);
-  const [alertType, setAlertType] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
+  // Estados para controlar la visibilidad y la información del cliente
+  const [showForm, setShowForm] = useState(false); // Controla si se muestra el formulario
+  const [showSearch, setShowSearch] = useState(true); // Controla si se muestra la búsqueda
+  const [showModal, setShowModal] = useState(false); // Controla si se muestra el modal con información del cliente
+  const [clientInfo, setClientInfo] = useState(null); // Almacena la información del cliente seleccionado
+  const [userInput, setUserInput] = useState(''); // Almacena el input del usuario
+  const [clientes, setClientes] = useState([]); // Lista de clientes
+  const [filteredClientes, setFilteredClientes] = useState([]); // Lista filtrada de clientes
+  const [showDropdown, setShowDropdown] = useState(false); // Controla si se muestra el dropdown de clientes filtrados
+  const [selectedClient, setSelectedClient] = useState(null); // Cliente seleccionado
+  const [alertMessage, setAlertMessage] = useState(null); // Mensaje de alerta
+  const [alertType, setAlertType] = useState(''); // Tipo de alerta (error, warning, etc.)
+  const [showAlert, setShowAlert] = useState(false); // Controla si se muestra la alerta
 
-  const API_URL = 'http://localhost:3005';
+  const API_URL = 'http://localhost:3005'; // URL de la API
 
   // Función para mostrar alertas
   const showAlertMessage = (message, type) => {
@@ -31,7 +32,7 @@ function VerCliente() {
     setShowAlert(true);
   };
 
-  // Cargar lista inicial de clientes
+  // Efecto para cargar la lista inicial de clientes
   useEffect(() => {
     const fetchClientes = async () => {
       try {
@@ -39,7 +40,7 @@ function VerCliente() {
         const clientesList = response.data.map(c => ({
           id: c.id,
           numeroDocumento: c.numeroDocumento,
-          nombreCompleto: `${c.nombre} ${c.apellido}`
+          nombreCompleto: `${c.nombre} ${c.apellido}` // Combina nombre y apellido
         }));
         setClientes(clientesList);
       } catch (error) {
@@ -48,49 +49,44 @@ function VerCliente() {
       }
     };
     fetchClientes();
-  }, []);
+  }, []); // Ejecuta solo una vez al montar el componente
 
-  // Filtrar clientes basado en el input
+  // Efecto para filtrar clientes basado en el input
   useEffect(() => {
     setFilteredClientes(
       clientes.filter(cliente =>
-        cliente.numeroDocumento.includes(userInput)
+        cliente.numeroDocumento.includes(userInput) // Filtra por número de documento
       )
     );
-    setShowDropdown(userInput.length > 0);
+    setShowDropdown(userInput.length > 0); // Muestra el dropdown si hay input
   }, [userInput, clientes]);
 
-  // Actualizar cliente seleccionado
+  // Efecto para actualizar el cliente seleccionado
   useEffect(() => {
     setSelectedClient(
       filteredClientes.find(cliente => cliente.numeroDocumento === userInput) || null
     );
   }, [userInput, filteredClientes]);
 
-  const handleAddClientClick = (event) => {
-    event.preventDefault();
-    setShowForm(true);
-    setShowSearch(true);
-    setShowModal(false);
-  };
-
+  // Función para manejar la selección de un cliente del dropdown
   const handleSelectCliente = async (cliente) => {
-    setUserInput(cliente.numeroDocumento);
-    setSelectedClient(cliente);
+    setUserInput(cliente.numeroDocumento); // Establece el input con el número de documento
+    setSelectedClient(cliente); // Establece el cliente seleccionado
     try {
-      const response = await axios.get(`${API_URL}/client/${cliente.id}`);
+      const response = await axios.get(`${API_URL}/client/${cliente.id}`); // Obtiene la información del cliente
       setClientInfo(response.data);
-      setShowModal(true);
-      setShowForm(false);
+      setShowModal(true); // Muestra el modal con la información
+      setShowForm(false); // Oculta el formulario
     } catch (error) {
       console.error('Error fetching client data:', error);
       showAlertMessage('Error al obtener la información del cliente', 'error');
     }
-    setShowDropdown(false);
+    setShowDropdown(false); // Oculta el dropdown
   };
 
+  // Función para manejar la búsqueda del cliente
   const handleSearchClick = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Previene el comportamiento por defecto del formulario
 
     if (!userInput.trim()) {
       showAlertMessage('Por favor, ingrese un número de documento.', 'warning');
@@ -103,11 +99,11 @@ function VerCliente() {
       });
       
       if (response.data.length) {
-        setClientInfo(response.data[0]);
-        setShowModal(true);
-        setShowForm(false);
+        setClientInfo(response.data[0]); // Establece la información del cliente encontrado
+        setShowModal(true); // Muestra el modal
+        setShowForm(false); // Oculta el formulario
       } else {
-        showAlertMessage('Cliente no encontrado', 'warning');
+        showAlertMessage('Cliente no encontrado', 'warning'); // Mensaje si no se encuentra el cliente
       }
     } catch (error) {
       console.error('Error fetching client data:', error);
@@ -115,17 +111,20 @@ function VerCliente() {
     }
   };
 
+  // Función para cerrar el modal
   const handleCloseModal = () => {
     setShowModal(false);
     setClientInfo(null);
   };
 
+  // Función para cerrar la alerta
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
 
+  // Función para manejar el cambio en el input del número de documento
   const handleInputChange = (e) => {
-    const value = e.target.value.replace(/\D/g, '');
+    const value = e.target.value.replace(/\D/g, ''); // Permite solo dígitos
     setUserInput(value);
   };
 
@@ -157,7 +156,7 @@ function VerCliente() {
                       className="vkz-input-field"
                       value={userInput}
                       onChange={handleInputChange}
-                      onFocus={() => setShowDropdown(true)}
+                      onFocus={() => setShowDropdown(true)} // Muestra el dropdown al enfocar
                       type="text"
                     />
                     {showDropdown && userInput && (
@@ -166,7 +165,7 @@ function VerCliente() {
                           filteredClientes.map(cliente => (
                             <li
                               key={cliente.id}
-                              onClick={() => handleSelectCliente(cliente)}
+                              onClick={() => handleSelectCliente(cliente)} // Maneja la selección del cliente
                               className="dropdown-list-item-Cliente"
                             >
                               {cliente.nombreCompleto}
@@ -179,20 +178,12 @@ function VerCliente() {
                         )}
                       </ul>
                     )}
-                    <div className="vkz-button-group">
                       <button 
                         onClick={handleSearchClick} 
                         className="vkz-button-Buscar"
                       >
                         Buscar
                       </button>
-                      <button 
-                        onClick={handleAddClientClick} 
-                        className="vkz-button-Agregar"
-                      >
-                        Agregar Cliente
-                      </button>
-                    </div>
                   </div>
                 </div>
               </form>
@@ -200,13 +191,13 @@ function VerCliente() {
           )}
 
           {showModal && (
-            <Mostrar clientInfo={clientInfo} onClose={handleCloseModal} />
+            <Mostrar clientInfo={clientInfo} onClose={handleCloseModal} /> // Muestra el modal con la información del cliente
           )}
         </div>
 
         {showForm && (
           <div className="vkz-form-right-container">
-            <ClienteForm />
+            <ClienteForm /> // Componente para agregar un nuevo cliente
           </div>
         )}
       </div>

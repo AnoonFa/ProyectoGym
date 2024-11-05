@@ -105,7 +105,7 @@ const ClienteForm = () => {
       const response = await fetch(`http://localhost:3005/check-user?usuario=${username}`);
       const data = await response.json();
       if (data.exists) {
-        setUserWarning('El usuario ya existe en la base de datos');
+        setUserWarning('Ese usuario ya esta ocupado, por favor cambialo');
       } else {
         setUserWarning('');
       }
@@ -149,7 +149,7 @@ const ClienteForm = () => {
         const data = await response.json();
 
         if (response.ok) {
-          setFormSuccess('Cliente agregado exitosamente');
+          setFormSuccess('Registro con exito');
           console.log('Cliente creado:', data);
 
           // Aquí es donde se envía el correo
@@ -172,7 +172,7 @@ const ClienteForm = () => {
             });
 
           setTimeout(() => {
-            navigate('/adminEmpleadoIndex');
+            navigate('/');
           }, 2000);
         }
       } catch (error) {
@@ -192,20 +192,20 @@ const ClienteForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="unique-cliente-form">
-      <h2>Agregar Cliente</h2>
+      <h2>Formulario</h2>
       <div className="unique-form-content">
         <div className="unique-form-fields">
           <div className="form-column">
-            <label htmlFor="nombre">Nombre <span className="required">*</span></label>
+            <label htmlFor="nombre">Nombre <span className="required">(Obligatorio)</span></label>
             <input type="text" id="nombre" name="nombre" required value={formData.nombre} onChange={handleInputChange} title="Nombre del cliente" />
 
-            <label htmlFor="apellido">Apellido <span className="required">*</span></label>
+            <label htmlFor="apellido">Apellido <span className="required">(Obligatorio)</span></label>
             <input type="text" id="apellido" name="apellido" required value={formData.apellido} onChange={handleInputChange} title="Apellido del cliente" />
 
-            <label htmlFor="usuario">Usuario <span className="required">*</span></label>
+            <label htmlFor="usuario">Usuario <span className="required">(Obligatorio)</span></label>
             <input type="text" id="usuario" name="usuario" required value={formData.usuario} onChange={handleInputChange} title="Nombre de usuario" />
 
-            <label htmlFor="tipoDocumento">Tipo de documento <span className="required">*</span></label>
+            <label htmlFor="tipoDocumento">Tipo de documento <span className="required">(Obligatorio)</span></label>
             <select id="tipoDocumento" name="tipoDocumento" required value={formData.tipoDocumento} onChange={handleInputChange} title="Tipo de documento de identidad">
               <option value="" disabled>Seleccione el tipo de documento</option>
               <option value="CC">CC</option>
@@ -213,18 +213,18 @@ const ClienteForm = () => {
               <option value="CE">CE</option>
             </select>
 
-            <label htmlFor="numeroDocumento">Número de Documento <span className="required">*</span></label>
+            <label htmlFor="numeroDocumento">Número de Documento <span className="required">(Obligatorio)</span></label>
             <input type="text" id="numeroDocumento" name="numeroDocumento" required value={formData.numeroDocumento} onChange={handleInputChange} title="Número de documento de identidad" />
           </div>
 
           <div className="form-column">
-            <label htmlFor="correo">Correo Electrónico <span className="required">*</span></label>
+            <label htmlFor="correo">Correo Electrónico <span className="required">(Obligatorio)</span></label>
             <input type="email" id="correo" name="correo" required value={formData.correo} onChange={handleInputChange} title="Dirección de correo electrónico" />
 
             <label htmlFor="telefono">Número telefónico</label>
             <input type="tel" id="telefono" name="telefono" value={formData.telefono} onChange={handleInputChange} minLength="10" maxLength="10" title="Número de teléfono (opcional)" />
 
-            <label htmlFor="sexo">Género <span className="required">*</span></label>
+            <label htmlFor="sexo">Género <span className="required">(Obligatorio)</span></label>
             <select id="sexo" name="sexo" required value={formData.sexo} onChange={handleInputChange} title="Género del cliente">
               <option value="" disabled>Seleccione el género</option>
               <option value="Hombre">Masculino</option>
@@ -272,7 +272,7 @@ const ClienteForm = () => {
         )}
       </div>
       <div className="unique-form-buttons">
-        <button type="submit" className="unique-add-button">Agregar</button>
+        <button type="submit" className="unique-add-button">Registrarme</button>
       </div>
     </form>
   );

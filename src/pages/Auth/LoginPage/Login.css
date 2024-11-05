@@ -131,9 +131,26 @@
     margin-top: 15px;
 }
 
-.forgot-password {
-    margin: 10px;
-    font-size: -1rem;
+
+/* Contenedor para los enlaces */
+.links-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Espacio entre los enlaces */
+    margin: 15px 0;
+    font-size: 0.9em;
+}
+
+.forgot-password, 
+.register-link {
+    color: #2679f7; /* Color azul que se muestra en la imagen */
+    cursor: pointer;
+    margin: 0; /* Quita los márgenes individuales */
+}
+
+.forgot-password:hover, 
+.register-link:hover {
+    text-decoration: underline;
 }
 
 /* Estilo para el contenedor del checkbox */
