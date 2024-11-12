@@ -64,7 +64,7 @@ const ClassDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:3001/clases?nombre=${className}`)
+    fetch(`http://localhost:3005/clases?nombre=${className}`)
       .then(response => response.json())
       .then(data => {
         if (data.length > 0) {
@@ -104,7 +104,7 @@ const ClassDetail = () => {
         onConfirm: () => {
           const fechaInscripcion = new Date().toISOString();
       
-          fetch(`http://localhost:3001/client?id=${user.id}`)
+          fetch(`http://localhost:3005/client?id=${user.id}`)
             .then(response => response.json())
             .then(clientData => {
               if (clientData.length > 0) {
@@ -122,7 +122,7 @@ const ClassDetail = () => {
                   }]
                 };
       
-                fetch(`http://localhost:3001/clases/${classDetail.id}`, {
+                fetch(`http://localhost:3005/clases/${classDetail.id}`, {
                   method: 'PUT',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify(updatedClass)
@@ -177,7 +177,7 @@ const ClassDetail = () => {
             )
           };
   
-          const classResponse = await fetch(`http://localhost:3001/clases/${classDetail.id}`, {
+          const classResponse = await fetch(`http://localhost:3005/clases/${classDetail.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedClass)
@@ -187,7 +187,7 @@ const ClassDetail = () => {
   
           // Actualizar los tickets del usuario
           const newTicketCount = user.tickets + 1;
-          const userResponse = await fetch(`http://localhost:3001/client/${user.id}`, {
+          const userResponse = await fetch(`http://localhost:3005/client/${user.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ tickets: newTicketCount })
@@ -258,7 +258,7 @@ const ClassDetail = () => {
 
     const handleSubmitClass = (updatedClass) => {
       // Save the updated class details
-      fetch(`http://localhost:3001/clases/${updatedClass.id}`, {
+      fetch(`http://localhost:3005/clases/${updatedClass.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedClass),
@@ -332,7 +332,7 @@ const ClassDetail = () => {
               ]
             };
   
-            const classResponse = await fetch(`http://localhost:3001/clases/${classDetail.id}`, {
+            const classResponse = await fetch(`http://localhost:3005/clases/${classDetail.id}`, {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(updatedClass)
@@ -342,7 +342,7 @@ const ClassDetail = () => {
   
             // Luego, actualizamos los tickets del usuario
             const newTicketCount = user.tickets - 1;
-            const userResponse = await fetch(`http://localhost:3001/client/${user.id}`, {
+            const userResponse = await fetch(`http://localhost:3005/client/${user.id}`, {
               method: 'PATCH',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ tickets: newTicketCount })

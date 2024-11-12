@@ -174,7 +174,7 @@ const calculateTimeRemaining = (inscripcionDate) => {
 };
 
   const handleUpdateClass = (updatedClassData) => {
-    fetch(`http://localhost:3001/clases/${selectedClass.id}`, {
+    fetch(`http://localhost:3005/clases/${selectedClass.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedClassData),
@@ -202,7 +202,7 @@ const handleCancelClass = (clase) => {
     inscritos: clase.inscritos.filter(inscrito => inscrito.id !== user.id)  // Remover al cliente de la lista de inscritos
   };
 
-  fetch(`http://localhost:3001/clases/${clase.id}`, {
+  fetch(`http://localhost:3005/clases/${clase.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updatedClass)
@@ -224,12 +224,8 @@ const handleCancelClass = (clase) => {
 
   const formatDate = (date) => {
     if (!date) return 'Fecha no disponible';
-    const dateParts = date.split('-'); // Asumiendo formato 'YYYY-MM-DD'
-    const year = dateParts[0];
-    const month = dateParts[1] - 1; // Los meses en JS van de 0 a 11
-    const day = dateParts[2];
-    const formattedDate = new Date(Date.UTC(year, month, day));
-    return formattedDate.toLocaleDateString('es-ES', { timeZone: 'UTC' });
+    const formattedDate = new Date(date);  // Adjust date parsing for MySQL format
+    return formattedDate.toLocaleDateString('es-ES');
   };
   
 
@@ -274,7 +270,7 @@ const handleCancelClass = (clase) => {
 
   console.log("Enviando clase actualizada al servidor:", updatedClass);
 
-  fetch(`http://localhost:3001/clases/${selectedClass.id}`, {
+  fetch(`http://localhost:3005/clases/${selectedClass.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updatedClass)

@@ -543,25 +543,114 @@ app.get('/admin/:id', (req, res) => {
     });
 });
 
+
+
+
+// obtener clases
+app.get('/clases', (req, res) => {
+    const query = "SELECT * FROM clases";
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error al obtener clases:', err);
+            res.status(500).json({ error: 'Error al obtener clases' });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+// obtener empleados
+app.get('/empleados', (req, res) => {
+    const query = "SELECT id, name FROM employee";
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error al obtener empleados:', err);
+            res.status(500).json({ error: 'Error al obtener empleados' });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+// Validar horario del gimnasio
+const validarHorarioGimnasio = (fecha, horaInicio, horaFin) => {
+    const dia = new Date(fecha).getDay();
+    
+    const [inicioHora, inicioMin] = horaInicio.split(':').map(Number);
+    const [finHora, finMin] = horaFin.split(':').map(Number);
+    const inicioMinutos = inicioHora * 60 + inicioMin;
+    const finMinutos = finHora * 60 + finMin;
+
+    const horarios = {
+        semana: { inicio: 6 * 60, fin: 16 * 60 },
+        sabado: { inicio: 8 * 60, fin: 16 * 60 },
+        domingo: { inicio: 6 * 60, fin: 12 * 60 }
+    };
+
+    if (dia === 0) {
+        return inicioMinutos >= horarios.domingo.inicio && finMinutos <= horarios.domingo.fin;
+    } else if (dia === 6) {
+        return inicioMinutos >= horarios.sabado.inicio && finMinutos <= horarios.sabado.fin;
+    } else {
+        return inicioMinutos >= horarios.semana.inicio && finMinutos <= horarios.semana.fin;
+    }
+};
+
+// Crear nueva clase
+app.post('/clases', (req, res) => {
+    const { nombre, entrenador, startTime, endTime, descripcion, totalCupos, fecha, precio } = req.body;
+
+    const [inicioHora, inicioMin] = startTime.split(':').map(Number);
+    const [finHora, finMin] = endTime.split(':').map(Number);
+    const inicioMinutos = inicioHora * 60 + inicioMin;
+    const finMinutos = finHora * 60 + finMin;
+
+    if (finMinutos <= inicioMinutos) {
+        return res.status(400).json({ 
+            error: 'La hora de fin debe ser posterior a la hora de inicio' 
+        });
+    }
+
+    if (!validarHorarioGimnasio(fecha, startTime, endTime)) {
+        return res.status(400).json({ 
+            error: 'El horario está fuera del horario de operación del gimnasio' 
+        });
+    }
+
+    const id = Date.now().toString();
+
+    const query = `
+        INSERT INTO clases (id, nombre, entrenador, startTime, endTime, descripcion, 
+                          totalCupos, cuposDisponibles, fecha, precio, day) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    db.query(
+        query, 
+        [id, nombre, entrenador, startTime, endTime, descripcion, 
+         totalCupos, totalCupos, fecha, precio, fecha],
+        (err, results) => {
+            if (err) {
+                console.error('Error al crear clase:', err);
+                res.status(500).json({ error: 'Error al crear la clase' });
+                return;
+            }
+            res.status(201).json({ 
+                id, 
+                nombre, 
+                entrenador, 
+                startTime, 
+                endTime, 
+                descripcion, 
+                totalCupos,
+                cuposDisponibles: totalCupos,
+                fecha,
+                precio
+            });
+        }
+    );
+});
+
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
-
-/*
-// Ruta para obtener employee por ID
-app.get('/employee/:id', (req, res) => {
-    const { id } = req.params;
-    const query = 'SELECT * FROM employee WHERE id = ?';
-    
-    db.query(query, [id], (err, result) => {
-        if (err) {
-            res.status(500).json({ error: err });
-            return;
-        }
-        if (result.length === 0) {
-            res.status(404).json({ message: 'Empleado no encontrado' });
-            return;
-        }
-        res.json(result[0]);
-    });
-});*/

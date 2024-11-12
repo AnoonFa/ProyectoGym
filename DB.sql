@@ -65,7 +65,7 @@ CREATE TABLE clases (
     cuposDisponibles INT,
     fecha DATE,
     precio DECIMAL(10, 2),
-    day DATE
+    day DATE	
 );
 
 -- Tabla ticketera
@@ -96,7 +96,11 @@ select * from client;
 select * from admin;
 select * from employee;
 select * from ticketera;
+select * from clases;	
 
+delete from clases;
+
+SET SQL_SAFE_UPDATES = 0;
 
 
 

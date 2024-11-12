@@ -63,6 +63,95 @@ const CalendarClases = () => {
   const [showAlert, setShowAlert] = useState(false); // Control de visibilidad de la alerta
   const [timeoutId, setTimeoutId] = useState(null);  // Guardar el ID del timeout
 
+   // Cargar empleados al montar el componente
+  useEffect(() => {
+    fetch('http://localhost:3005/empleados')
+      .then(response => response.json())
+      .then(data => setEmployees(data))
+      .catch(error => console.error('Error al cargar empleados:', error));
+  }, []);
+
+
+ // Validación de horarios
+ const validateTimeRange = (startTime, endTime, day) => {
+  if (!startTime || !endTime || !day) return true;
+
+  const [startHour, startMinute] = startTime.split(':');
+  const [endHour, endMinute] = endTime.split(':');
+  
+  const start = new Date(day);
+  start.setHours(startHour, startMinute);
+  
+  const end = new Date(day);
+  end.setHours(endHour, endMinute);
+
+  if (end <= start) {
+    setErrors(prev => ({
+      ...prev,
+      timeLogic: 'La hora de fin de la clase no tiene lógica con la hora de inicio'
+    }));
+    return false;
+  }
+
+  // Convertir a minutos para facilitar comparación
+  const startInMinutes = parseInt(startHour) * 60 + parseInt(startMinute);
+  const endInMinutes = parseInt(endHour) * 60 + parseInt(endMinute);
+  
+  const dayOfWeek = new Date(day).getDay();
+  
+  // Validar según el día
+  let isValid = true;
+  if (dayOfWeek === 0) { // Domingo
+    if (startInMinutes < 6 * 60 || endInMinutes > 12 * 60) {
+      setErrors(prev => ({
+        ...prev,
+        timeRange: 'Esta clase no se puede crear porque no está dentro del horario del gimnasio'
+      }));
+      isValid = false;
+    }
+  } else if (dayOfWeek === 6) { // Sábado
+    if (startInMinutes < 8 * 60 || endInMinutes > 16 * 60) {
+      setErrors(prev => ({
+        ...prev,
+        timeRange: 'Esta clase no se puede crear porque no está dentro del horario del gimnasio'
+      }));
+      isValid = false;
+    }
+  } else { // Lunes a Viernes
+    if (startInMinutes < 6 * 60 || endInMinutes > 16 * 60) {
+      setErrors(prev => ({
+        ...prev,
+        timeRange: 'Esta clase no se puede crear porque no está dentro del horario del gimnasio'
+      }));
+      isValid = false;
+    }
+  }
+
+  if (isValid) {
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors.timeLogic;
+      delete newErrors.timeRange;
+      return newErrors;
+    });
+  }
+
+    return isValid;
+};
+
+useEffect(() => {
+  const fetchClasses = async () => {
+    try {
+      const response = await fetch('http://localhost:3005/clases');
+      const data = await response.json();
+      setClasses(data);  // Ensures classes persist across page refreshes
+    } catch (error) {
+      console.error('Error fetching classes:', error);
+    }
+  };
+
+  fetchClasses();
+}, []);
 
   const handleDeleteClass = (className) => {
     const updatedClasses = classes.filter((classItem) => classItem.nombre !== className);
@@ -211,10 +300,20 @@ const CalendarClases = () => {
     setErrors(newErrors);
   };
 
+   // Modificar handleChange para incluir validación de horarios
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewClass({ ...newClass, [name]: value });
-    validateField(name, value);  // Validación en tiempo real
+    const updatedClass = { ...newClass, [name]: value };
+    setNewClass(updatedClass);
+
+    // Validar horarios cuando cambian
+    if (name === 'startTime' || name === 'endTime' || name === 'day') {
+      if (updatedClass.startTime && updatedClass.endTime && updatedClass.day) {
+        validateTimeRange(updatedClass.startTime, updatedClass.endTime, updatedClass.day);
+      }
+    }
+
+    validateField(name, value);
   };
 
    // Función para mostrar la alerta con un temporizador
@@ -270,7 +369,7 @@ const CalendarClases = () => {
       };
 
       // Enviar la nueva clase al servidor mediante una solicitud POST
-      fetch('http://localhost:3001/clases', {
+      fetch('http://localhost:3005/clases', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(nuevaClase),
@@ -302,7 +401,7 @@ const CalendarClases = () => {
         showAlertWithTimeout('success', `Clase "${newClass.nombre}" añadida correctamente.`);
       })
       .catch(error => {
-        showAlertWithTimeout('error', 'Error al agregar la clase.');
+        showAlertWithTimeout('error', 'Error al agregar la clase, por favor verifica bien todos los campos');
         console.error('Error al agregar la clase:', error);
       });
     } else {
@@ -450,35 +549,34 @@ const CalendarClases = () => {
                 />
                 {errors.nombre && (
                   <Stack sx={{ width: '100%' }} spacing={2}>
-                    <Alert severity="error">{errors.nombre}</Alert>
+                    <Alert variant="outlined" severity="error">{errors.nombre}</Alert>
                   </Stack>
                 )}
               </div>
               </div>
+
               <div className="form-field field-row">
-
-              <div className="field-half">
-                <label className='form-clases'>Entrenador <span style={{ color: 'red' }}>*</span></label>
-                <input
-                  type="text"
-                  name="entrenador"
-                  placeholder='Nombre del entrenador'
-                  value={newClass.entrenador}
-                  onChange={handleChange}
-                  required
-                  className="vkz-input-field"
-                  maxLength="100"
-                  minLength="1"
-                  autoFocus
-                />
-
-                {errors.entrenador && (
-                  <Stack sx={{ width: '100%' }} spacing={2}>
-                    <Alert severity="error">{errors.entrenador}</Alert>
-                  </Stack>
-                )}
+                <div className="field-half">
+                  <label className='form-clases'>Entrenador <span style={{ color: 'red' }}>*</span></label>
+                  <select
+                    name="entrenador"
+                    value={newClass.entrenador}
+                    onChange={handleChange}
+                    required
+                    className="vkz-input-field"
+                  >
+                    <option value="">Seleccione un Entrenador</option>
+                    {employees.map(emp => (
+                      <option key={emp.id} value={emp.name}>
+                        {emp.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.entrenador && (
+                    <Alert variant="outlined" severity="error">{errors.entrenador}</Alert>
+                  )}
+                </div>
               </div>
-            </div>
 
             <div className="form-field">
               <label className='form-clases'>Fecha <span style={{ color: 'red' }}>*</span></label>
@@ -492,44 +590,46 @@ const CalendarClases = () => {
               />
               {errors.day && (
                 <Stack sx={{ width: '100%' }} spacing={2}>
-                  <Alert severity="error">{errors.day}</Alert>
+                  <Alert variant="outlined" severity="error">{errors.day}</Alert>
                 </Stack>
               )}
             </div>
 
             {/* Agrupación de hora de inicio y final */}
             <div className="form-field field-row">
-              <div className="field-half">
-                <label className='form-clases'>Hora de Inicio <span style={{ color: 'red' }}>*</span></label>
-                <input
-                  type="time"
-                  name="startTime"
-                  value={newClass.startTime}
-                  onChange={handleChange}
-                  className="vkz-input-field"
-                />
-                    {errors.time && (
-                    <Stack sx={{ width: '100%' }} spacing={2}>
-                      <Alert severity="error">{errors.time}</Alert>
-                    </Stack>
-                  )}
-              </div>
-              <div className="field-half">
-                <label className='form-clases'>Hora de Fin <span style={{ color: 'red' }}>*</span></label>
-                <input
-                  type="time"
-                  name="endTime"
-                  value={newClass.endTime}
-                  onChange={handleChange}
-                  className="vkz-input-field"
-                />
-                {errors.time && (
-                  <Stack sx={{ width: '100%' }} spacing={2}>
-                    <Alert severity="error">{errors.time}</Alert>
-                  </Stack>
-                )}
-              </div>
-            </div>
+             <div className="field-half">
+               <label className='form-clases'>Hora de Inicio <span style={{ color: 'red' }}>*</span></label>
+               <input
+                 type="time"
+                 name="startTime"
+                 value={newClass.startTime}
+                 onChange={handleChange}
+                 required
+                 className="vkz-input-field"
+               />
+             </div>
+             <div className="field-half">
+               <label className='form-clases'>Hora de Fin <span style={{ color: 'red' }}>*</span></label>
+               <input
+                 type="time"
+                 name="endTime"
+                 value={newClass.endTime}
+                 onChange={handleChange}
+                 required
+                 className="vkz-input-field"
+               />
+               {errors.timeLogic && (
+                 <Alert variant="outlined" severity="warning">
+                   {errors.timeLogic}
+                 </Alert>
+               )}
+               {errors.timeRange && (
+                 <Alert variant="outlined" severity="info">
+                   {errors.timeRange}
+                 </Alert>
+               )}
+             </div>
+           </div>
             
             <div className="form-field field-row">
               <div className="field-half">
@@ -546,7 +646,7 @@ const CalendarClases = () => {
                 />
                 {errors.totalCupos && (
                   <Stack sx={{ width: '100%' }} spacing={2}>
-                    <Alert severity="error">{errors.totalCupos}</Alert>
+                    <Alert variant="outlined" severity="error">{errors.totalCupos}</Alert>
                   </Stack>
                 )}
               </div>
@@ -564,7 +664,7 @@ const CalendarClases = () => {
                 />
                 {errors.precio && (
                   <Stack sx={{ width: '100%' }} spacing={2}>
-                    <Alert severity="error">{errors.precio}</Alert>
+                    <Alert variant="outlined" severity="error">{errors.precio}</Alert>
                   </Stack>
                 )}
               </div>
@@ -586,7 +686,7 @@ const CalendarClases = () => {
               <div className="char-counter">{newClass.descripcion.length}/200</div>
               {errors.descripcion && (
                 <Stack sx={{ width: '100%' }} spacing={2}>
-                  <Alert severity="error">{errors.descripcion}</Alert>
+                  <Alert variant="outlined" severity="error">{errors.descripcion}</Alert>
                 </Stack>
               )}
             </div>
