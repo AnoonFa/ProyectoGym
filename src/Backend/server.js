@@ -651,6 +651,124 @@ app.post('/clases', (req, res) => {
     );
 });
 
+// Actualizar clase existente
+app.put('/clases/:id', (req, res) => {
+    const { id } = req.params;
+    const { 
+        nombre, 
+        entrenador, 
+        startTime, 
+        endTime, 
+        descripcion, 
+        totalCupos, 
+        fecha, 
+        precio 
+    } = req.body;
+
+    // Validar que el horario sea válido
+    const [inicioHora, inicioMin] = startTime.split(':').map(Number);
+    const [finHora, finMin] = endTime.split(':').map(Number);
+    const inicioMinutos = inicioHora * 60 + inicioMin;
+    const finMinutos = finHora * 60 + finMin;
+
+    if (finMinutos <= inicioMinutos) {
+        return res.status(400).json({ 
+            error: 'La hora de fin debe ser posterior a la hora de inicio' 
+        });
+    }
+
+    // Validar horario del gimnasio
+    if (!validarHorarioGimnasio(fecha, startTime, endTime)) {
+        return res.status(400).json({ 
+            error: 'El horario está fuera del horario de operación del gimnasio' 
+        });
+    }
+
+    // Verificar que el entrenador exista por nombre en lugar de usuario
+    const checkTrainerQuery = 'SELECT id FROM employee WHERE name = ?';
+    db.query(checkTrainerQuery, [entrenador], (err, trainerResults) => {
+        if (err) {
+            console.error('Error al verificar entrenador:', err);
+            return res.status(500).json({ error: 'Error al verificar entrenador' });
+        }
+
+        if (trainerResults.length === 0) {
+            return res.status(400).json({ error: 'El entrenador especificado no existe' });
+        }
+
+        // Verificar si la clase existe y obtener cupos disponibles actuales
+        const getClassQuery = 'SELECT totalCupos, cuposDisponibles FROM clases WHERE id = ?';
+        db.query(getClassQuery, [id], (err, classResults) => {
+            if (err) {
+                console.error('Error al obtener información de la clase:', err);
+                return res.status(500).json({ error: 'Error al obtener información de la clase' });
+            }
+
+            if (classResults.length === 0) {
+                return res.status(404).json({ error: 'Clase no encontrada' });
+            }
+
+            const currentClass = classResults[0];
+            // Calcular nuevos cupos disponibles manteniendo la proporción
+            const cuposOcupados = currentClass.totalCupos - currentClass.cuposDisponibles;
+            const nuevosCuposDisponibles = Math.max(0, totalCupos - cuposOcupados);
+
+            // Actualizar la clase
+            const updateQuery = `
+                UPDATE clases 
+                SET nombre = ?,
+                    entrenador = ?,
+                    startTime = ?,
+                    endTime = ?,
+                    descripcion = ?,
+                    totalCupos = ?,
+                    cuposDisponibles = ?,
+                    fecha = ?,
+                    precio = ?,
+                    day = ?
+                WHERE id = ?
+            `;
+
+            db.query(
+                updateQuery,
+                [
+                    nombre,
+                    entrenador,
+                    startTime,
+                    endTime,
+                    descripcion,
+                    totalCupos,
+                    nuevosCuposDisponibles,
+                    fecha,
+                    precio,
+                    fecha,
+                    id
+                ],
+                (err, results) => {
+                    if (err) {
+                        console.error('Error al actualizar clase:', err);
+                        return res.status(500).json({ error: 'Error al actualizar la clase' });
+                    }
+
+                    // Enviar respuesta con los datos actualizados
+                    res.json({
+                        id,
+                        nombre,
+                        entrenador,
+                        startTime,
+                        endTime,
+                        descripcion,
+                        totalCupos,
+                        cuposDisponibles: nuevosCuposDisponibles,
+                        fecha,
+                        precio
+                    });
+                }
+            );
+        });
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

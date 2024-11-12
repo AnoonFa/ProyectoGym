@@ -65,12 +65,12 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
   }, [initialClass]);
   
 
-  // Load employees (trainers)
+  // Cargar empleados al montar el componente
   useEffect(() => {
-    fetch('http://localhost:3001/employee')
-      .then((response) => response.json())
-      .then((data) => setEmployees(data))
-      .catch((error) => console.error('Error loading trainers:', error));
+    fetch('http://localhost:3005/empleados')
+      .then(response => response.json())
+      .then(data => setEmployees(data))
+      .catch(error => console.error('Error al cargar empleados:', error));
   }, []);
 
   // Real-time validation
@@ -152,7 +152,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
     validateField(name, value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
@@ -165,16 +165,33 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
       classData.descripcion &&
       classData.totalCupos
     ) {
-      const updatedClass = {
-        ...initialClass, // Keep fields that are not modified
-        ...classData, // Update modified fields
-      };
-      onSubmit(updatedClass);
-      showAlertWithTimeout('success', 'Cambios guardados exitosamente.');
+      try {
+        const response = await fetch(`http://localhost:3005/clases/${initialClass.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...classData,
+            fecha: classData.day
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Error al actualizar la clase');
+        }
+
+        const updatedClass = await response.json();
+        onSubmit(updatedClass);
+        showAlertWithTimeout('success', 'Cambios guardados exitosamente.');
+      } catch (error) {
+        showAlertWithTimeout('error', error.message);
+      }
     } else {
       showAlertWithTimeout('error', 'Error en el formulario, revisa los campos.');
     }
-  };
+};
 
   // Show alert with timeout
   const showAlertWithTimeout = (type, message, timeout = 5000) => {
@@ -230,20 +247,20 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
         <div className="field-half">
           <label className="form-clases">Entrenador <span style={{ color: 'red' }}>*</span></label>
           <select
-            name="entrenador"
-            value={classData.entrenador}
-            onChange={handleChange}
-            required
-            className="vkz-input-field"
+              name="entrenador"
+              value={classData.entrenador}
+              onChange={handleChange}
+              required
+              className="vkz-input-field"
           >
-            <option value="" disabled>
-              Selecciona un entrenador
-            </option>
-            {employees.map((employee) => (
-              <option key={employee.id} value={employee.usuario}>
-                {employee.usuario}
+              <option value="" disabled>
+                  Selecciona un entrenador
               </option>
-            ))}
+              {employees.map(emp => (
+                      <option key={emp.id} value={emp.name}>
+                        {emp.name}
+                      </option>
+                    ))}
           </select>
           {errors.entrenador && (
             <Stack sx={{ width: '100%' }} spacing={2}>

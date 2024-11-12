@@ -143,10 +143,14 @@ useEffect(() => {
   const fetchClasses = async () => {
     try {
       const response = await fetch('http://localhost:3005/clases');
+      if (!response.ok) {
+        throw new Error('Error al obtener clases');
+      }
       const data = await response.json();
-      setClasses(data);  // Ensures classes persist across page refreshes
+      setClasses(data);
+      console.log(data); // Verifica que las clases se cargan correctamente
     } catch (error) {
-      console.error('Error fetching classes:', error);
+      console.error('Error al cargar clases:', error);
     }
   };
 
@@ -162,8 +166,8 @@ useEffect(() => {
   useEffect(() => {
     if (classes.length > 0) {
       const mappedClasses = classes.map((clase) => {
-        const startDate = new Date(`${clase.fecha}T${clase.startTime}:00`);
-        const endDate = new Date(`${clase.fecha}T${clase.endTime}:00`);
+        const startDate = new Date(`${clase.fecha.split('T')[0]}T${clase.startTime}`);
+        const endDate = new Date(`${clase.fecha.split('T')[0]}T${clase.endTime}`);
   
         return {
           title: clase.nombre,
@@ -174,9 +178,11 @@ useEffect(() => {
           id: clase.id,
         };
       });
+      
+      console.log('Mapped Classes:', mappedClasses); // Verifica la salida
       setEvents(mappedClasses);
     }
-  }, [classes]);  // Monitorea cambios en 'classes'  // Monitorea cambios en 'classes'
+  }, [classes]);
 
   const handleEventClick = (event) => {
     navigate(`/ClassDetail/${event.title}`);
@@ -445,6 +451,9 @@ useEffect(() => {
     setShowForm(false);  // Oculta el formulario
   };
 
+
+  console.log(events);
+
   return (
 <div className={`calendar-container ${showForm ? 'form-visible' : ''}`}>
   <div className="header-container">
@@ -509,7 +518,7 @@ useEffect(() => {
         endAccessor="end"
         style={{ height: 600 }}
         onSelectEvent={handleEventClick}
-        formats={formats}  // Formatos personalizados para 12 horas
+        formats={formats}
         messages={{
           next: 'Siguiente',
           previous: 'Anterior',
@@ -523,8 +532,8 @@ useEffect(() => {
           event: 'Evento',
           noEventsInRange: 'No hay eventos en este rango',
           showMore: (total) => `+ Ver más (${total})`,
-          }}
-        />
+        }}
+      />
       </div>
 
       {/* Formulario para agregar clase */}
