@@ -20,7 +20,7 @@ const Planes = () => {
     // Aquí deberías realizar una solicitud para verificar si el cliente tiene un plan activo.
     const fetchClientPlans = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/client/${user.id}`);
+        const response = await fetch(`http://localhost:3005/client/${user.id}`);
         const clientData = await response.json();
 
         // Verifica si el cliente ya tiene un plan activo
