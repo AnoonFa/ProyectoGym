@@ -37,7 +37,13 @@ const Login = () => {
 
                 setUser(foundUser);
                 localStorage.setItem('user', JSON.stringify(foundUser));
-                navigate(foundUser.role === 'client' ? '/ClienteIndex' : '/adminEmpleadoIndex');
+
+                // Redirección según el rol del usuario
+                if (foundUser.role === 'client') {
+                    navigate('/ClienteIndex');
+                } else if (foundUser.role === 'admin' || foundUser.role === 'employee') {
+                    navigate('/adminEmpleadoIndex');
+                }
             } else {
                 setLoginError('Usuario o contraseña incorrectos.');
             }
@@ -49,6 +55,7 @@ const Login = () => {
         setLoginError('Por favor, completa todos los campos correctamente.');
     }
 };
+  
 
   
 

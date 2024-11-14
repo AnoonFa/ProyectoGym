@@ -64,8 +64,9 @@
           "name": "Trimestre",
           "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
           "price": 130000,
-          "duration": "3 meses",
-          "image": "/assets/images/planes2.jpg"
+          "duration": "3",
+          "image": "/assets/images/planes2.jpg",
+          "startDate": "2024-11-14T21:34:56.204Z"
         }
       ],
       "habilitado": true
@@ -208,6 +209,7 @@
       "image": "/assets/images/planes1.jpg",
       "duration": "1 ",
       "startDate": "2024-11-05T00:00:00.000Z",
+      "endDate": "",
       "benefits": [
         "Tu plan de entrenamiento personalizado",
         "Goliath Health (Seguimiento a tu progreso)",
@@ -223,6 +225,7 @@
       "image": "/assets/images/planes2.jpg",
       "duration": "3",
       "startDate": "2024-11-05T00:00:00.000Z",
+      "endDate": "",
       "benefits": [
         "Tu plan de entrenamiento personalizado",
         "Goliath Health (Seguimiento a tu progreso)",
@@ -238,6 +241,7 @@
       "image": "/assets/images/planes3.jpg",
       "duration": "6",
       "startDate": "2024-11-05T00:00:00.000Z",
+      "endDate": "",
       "benefits": [
         "Tu plan de entrenamiento personalizado",
         "Goliath Health (Seguimiento a tu progreso)",
@@ -253,6 +257,7 @@
       "image": "/assets/images/planes4.jpg",
       "duration": "12",
       "startDate": "2024-11-05T00:00:00.000Z",
+      "endDate": "",
       "benefits": [
         "Tu plan de entrenamiento personalizado",
         "Goliath Health (Seguimiento a tu progreso)",

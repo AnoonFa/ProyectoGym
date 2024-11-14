@@ -170,8 +170,8 @@ app.post('/login', (req, res) => {
         return;
     }
 
-    // Modificado para solo buscar en admin y client
-    const roles = ['admin', 'client'];
+    // Añadido para incluir al usuario con rol 'employee'
+    const roles = ['admin', 'client', 'employee'];
     let foundUser = null;
 
     const checkUserInRole = (role, callback) => {
@@ -187,8 +187,8 @@ app.post('/login', (req, res) => {
                     id: results[0].id,
                     username: results[0].usuario,
                     correo: results[0].correo,
-                    nombre: results[0].nombre || null, // Agregado para clientes
-                    apellido: results[0].apellido || null, // Agregado para clientes
+                    nombre: results[0].nombre || null,  // Para clientes y empleados
+                    apellido: results[0].apellido || null, // Para clientes y empleados
                     tickets: results[0].tickets || 0,
                     habilitado: results[0].habilitado !== false
                 };
@@ -198,7 +198,7 @@ app.post('/login', (req, res) => {
         });
     };
 
-    // Iterar sobre las tablas y encontrar el usuario
+    // Itera sobre los roles y encuentra el usuario
     const checkAllRoles = (index) => {
         if (index >= roles.length) {
             if (foundUser) {
@@ -219,8 +219,29 @@ app.post('/login', (req, res) => {
         });
     };
 
-    checkAllRoles(0); // Empezar con el primer rol
+    checkAllRoles(0); // Comienza con el primer rol en la lista
 });
+
+
+app.get('/planes/:planId', (req, res) => {
+    const { planId } = req.params;
+    
+    const sqlQuery = 'SELECT * FROM planes WHERE id = ?';
+    
+    db.query(sqlQuery, [planId], (err, result) => {
+        if (err) {
+            console.error('Error al obtener el plan:', err);
+            res.status(500).json({ error: 'Error al obtener los datos del plan', details: err });
+            return;
+        }
+        if (result.length > 0) {
+            res.json(result[0]);
+        } else {
+            res.status(404).json({ error: 'Plan no encontrado' });
+        }
+    });
+});
+
 
 
 // Ruta para verificar usuario existente
@@ -558,7 +579,7 @@ app.get('/clases', (req, res) => {
         res.json(results);
     });
 });
-
+  
 // obtener empleados
 app.get('/empleados', (req, res) => {
     const query = "SELECT id, name FROM employee";
@@ -768,6 +789,242 @@ app.put('/clases/:id', (req, res) => {
         });
     });
 });
+
+// Nuevo endpoint para crear inscripción
+app.post('/inscripciones', (req, res) => {
+    const { clientId, claseId } = req.body;
+
+    // Primero verificamos si el cliente existe
+    const checkClientQuery = 'SELECT id FROM client WHERE id = ?';
+    db.query(checkClientQuery, [clientId], (err, clientResults) => {
+        if (err) {
+            console.error('Error al verificar cliente:', err);
+            return res.status(500).json({ error: 'Error al verificar cliente' });
+        }
+
+        if (clientResults.length === 0) {
+            return res.status(404).json({ error: 'Cliente no encontrado' });
+        }
+
+        // Luego verificamos si la clase existe y tiene cupos disponibles
+        const checkClassQuery = 'SELECT id, cuposDisponibles FROM clases WHERE id = ?';
+        db.query(checkClassQuery, [claseId], (err, classResults) => {
+            if (err) {
+                console.error('Error al verificar clase:', err);
+                return res.status(500).json({ error: 'Error al verificar clase' });
+            }
+
+            if (classResults.length === 0) {
+                return res.status(404).json({ error: 'Clase no encontrada' });
+            }
+
+            if (classResults[0].cuposDisponibles <= 0) {
+                return res.status(400).json({ error: 'No hay cupos disponibles' });
+            }
+
+            // Verificamos si el cliente ya está inscrito en esta clase
+            const checkInscripcionQuery = 'SELECT id FROM inscripciones WHERE clientId = ? AND claseId = ?';
+            db.query(checkInscripcionQuery, [clientId, claseId], (err, inscripcionResults) => {
+                if (err) {
+                    console.error('Error al verificar inscripción:', err);
+                    return res.status(500).json({ error: 'Error al verificar inscripción' });
+                }
+
+                if (inscripcionResults.length > 0) {
+                    return res.status(400).json({ error: 'Ya estás inscrito en esta clase' });
+                }
+
+                // Si todo está bien, creamos la inscripción
+                const inscripcion = {
+                    clientId,
+                    claseId,
+                    fechaInscripcion: new Date(),
+                    estadoPago: 'pendiente'
+                };
+
+                const createInscripcionQuery = 'INSERT INTO inscripciones SET ?';
+                db.query(createInscripcionQuery, inscripcion, (err, result) => {
+                    if (err) {
+                        console.error('Error al crear inscripción:', err);
+                        return res.status(500).json({ error: 'Error al crear inscripción' });
+                    }
+
+                    // Actualizamos los cupos disponibles de la clase
+                    const updateCuposQuery = 'UPDATE clases SET cuposDisponibles = cuposDisponibles - 1 WHERE id = ?';
+                    db.query(updateCuposQuery, [claseId], (err) => {
+                        if (err) {
+                            console.error('Error al actualizar cupos:', err);
+                            return res.status(500).json({ error: 'Error al actualizar cupos' });
+                        }
+
+                        res.status(201).json({
+                            message: 'Inscripción creada exitosamente',
+                            inscripcionId: result.insertId,
+                            ...inscripcion
+                        });
+                    });
+                });
+            });
+        });
+    });
+});
+
+// Endpoint para obtener las inscripciones de un cliente
+app.get('/inscripciones/cliente/:clientId', (req, res) => {
+    const { clientId } = req.params;
+    
+    const query = `
+        SELECT i.*, c.nombre as nombreClase, c.fecha, c.startTime, c.endTime, c.entrenador 
+        FROM inscripciones i 
+        JOIN clases c ON i.claseId = c.id 
+        WHERE i.clientId = ?
+    `;
+    
+    db.query(query, [clientId], (err, results) => {
+        if (err) {
+            console.error('Error al obtener inscripciones:', err);
+            return res.status(500).json({ error: 'Error al obtener inscripciones' });
+        }
+        res.json(results);
+    });
+});
+
+// Endpoint para actualizar el estado de pago de una inscripción
+app.patch('/inscripciones/:id', (req, res) => {
+    const { id } = req.params;
+    const { estadoPago } = req.body;
+    
+    const query = 'UPDATE inscripciones SET estadoPago = ? WHERE id = ?';
+    db.query(query, [estadoPago, id], (err, result) => {
+        if (err) {
+            console.error('Error al actualizar estado de pago:', err);
+            return res.status(500).json({ error: 'Error al actualizar estado de pago' });
+        }
+        
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Inscripción no encontrada' });
+        }
+        
+        res.json({ message: 'Estado de pago actualizado exitosamente' });
+    });
+});
+
+
+// Endpoint para cancelar una inscripción
+app.delete('/inscripciones/:id', (req, res) => {
+    const { id } = req.params;
+    
+    // Primero obtenemos la información de la inscripción
+    const getInscripcionQuery = `
+        SELECT i.*, c.cuposDisponibles 
+        FROM inscripciones i 
+        JOIN clases c ON i.claseId = c.id 
+        WHERE i.id = ?
+    `;
+    
+    db.query(getInscripcionQuery, [id], (err, results) => {
+        if (err) {
+            console.error('Error al obtener inscripción:', err);
+            return res.status(500).json({ error: 'Error al obtener inscripción' });
+        }
+        
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Inscripción no encontrada' });
+        }
+        
+        const inscripcion = results[0];
+        
+        // Iniciamos una transacción para asegurar la integridad de los datos
+        db.beginTransaction(err => {
+            if (err) {
+                console.error('Error al iniciar transacción:', err);
+                return res.status(500).json({ error: 'Error al iniciar transacción' });
+            }
+            
+            // Eliminamos la inscripción
+            const deleteQuery = 'DELETE FROM inscripciones WHERE id = ?';
+            db.query(deleteQuery, [id], (err) => {
+                if (err) {
+                    return db.rollback(() => {
+                        console.error('Error al eliminar inscripción:', err);
+                        res.status(500).json({ error: 'Error al eliminar inscripción' });
+                    });
+                }
+                
+                // Actualizamos los cupos disponibles
+                const updateCuposQuery = 'UPDATE clases SET cuposDisponibles = cuposDisponibles + 1 WHERE id = ?';
+                db.query(updateCuposQuery, [inscripcion.claseId], (err) => {
+                    if (err) {
+                        return db.rollback(() => {
+                            console.error('Error al actualizar cupos:', err);
+                            res.status(500).json({ error: 'Error al actualizar cupos' });
+                        });
+                    }
+                    
+                    // Confirmamos la transacción
+                    db.commit(err => {
+                        if (err) {
+                            return db.rollback(() => {
+                                console.error('Error al confirmar transacción:', err);
+                                res.status(500).json({ error: 'Error al confirmar transacción' });
+                            });
+                        }
+                        
+                        res.json({ 
+                            message: 'Inscripción cancelada exitosamente',
+                            inscripcionId: id
+                        });
+                    });
+                });
+            });
+        });
+    });
+});
+
+// Función para limpiar inscripciones vencidas
+const limpiarInscripcionesVencidas = () => {
+    const query = `
+        DELETE i FROM inscripciones i
+        WHERE i.estadoPago = 'pendiente'
+        AND TIMESTAMPDIFF(HOUR, i.fechaInscripcion, NOW()) >= 24
+    `;
+    
+    db.query(query, (err, result) => {
+        if (err) {
+            console.error('Error al limpiar inscripciones vencidas:', err);
+            return;
+        }
+        
+        if (result.affectedRows > 0) {
+            console.log(`Se eliminaron ${result.affectedRows} inscripciones vencidas`);
+            
+            // Actualizamos los cupos disponibles para las clases afectadas
+            const updateCuposQuery = `
+                UPDATE clases c
+                JOIN (
+                    SELECT claseId, COUNT(*) as count
+                    FROM inscripciones i
+                    WHERE i.estadoPago = 'pendiente'
+                    AND TIMESTAMPDIFF(HOUR, i.fechaInscripcion, NOW()) >= 24
+                    GROUP BY claseId
+                ) deleted ON c.id = deleted.claseId
+                SET c.cuposDisponibles = c.cuposDisponibles + deleted.count
+            `;
+            
+            db.query(updateCuposQuery, (err) => {
+                if (err) {
+                    console.error('Error al actualizar cupos después de limpieza:', err);
+                }
+            });
+        }
+    });
+};
+
+// Ejecutar la limpieza cada hora
+setInterval(limpiarInscripcionesVencidas, 3600000);
+
+// Ejecutar la limpieza al iniciar el servidor
+limpiarInscripcionesVencidas();
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);

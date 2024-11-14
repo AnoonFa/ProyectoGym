@@ -12,7 +12,7 @@ const PlanCard = ({ image, title, description, price, onClick }) => {
   useEffect(() => {
     const fetchClientPlans = async () => {
       try {
-        const response = await fetch(`http://localhost:3005/client/${user.id}`);
+        const response = await fetch(`http://localhost:3001/client/${user.id}`);
         const clientData = await response.json();
 
         // Verificamos si el cliente tiene planes activos

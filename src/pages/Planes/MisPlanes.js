@@ -13,7 +13,7 @@ const MisPlanes = () => {
   useEffect(() => {
     const fetchUserPlans = async () => {
       try {
-        const response = await fetch(`http://localhost:3005/client/${user.id}`);
+        const response = await fetch(`http://localhost:3001/client/${user.id}`);
         const data = await response.json();
 
         if (data.planes) {

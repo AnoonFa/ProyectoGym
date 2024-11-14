@@ -93,134 +93,102 @@ const ClassDetail = () => {
     const hasClassPassed = classDate ? classDate < new Date() : false;
   
 
-  const handleReservation = () => {
-    if (classDetail.cuposDisponibles > 0) {
-      openConfirm({
-        title: 'Confirmar Reserva',
-        message: 'Debes pagar en el gimnasio dentro de un plazo de 1 día. Horarios del gimnasio:\n' +
-          'Lunes a Viernes: 06:00 AM - 04:00 PM\n' +
-          'Sábados: 08:00 AM - 04:00 PM\n' +
-          'Domingos: 06:00 AM - 12:00 PM.',
-        onConfirm: () => {
-          const fechaInscripcion = new Date().toISOString();
-      
-          fetch(`http://localhost:3005/client?id=${user.id}`)
-            .then(response => response.json())
-            .then(clientData => {
-              if (clientData.length > 0) {
-                const cliente = clientData[0];
-      
-                const updatedClass = {
-                  ...classDetail,
-                  cuposDisponibles: classDetail.cuposDisponibles - 1,
-                  inscritos: [...classDetail.inscritos, {
-                    idCliente: cliente.id,
-                    nombre: `${cliente.nombre} ${cliente.apellido}`,
-                    correo: cliente.correo,
-                    fechaInscripcion: fechaInscripcion,
-                    estadoPago: 'inscrito pero no pagado'
-                  }]
-                };
-      
-                fetch(`http://localhost:3005/clases/${classDetail.id}`, {
-                  method: 'PUT',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(updatedClass)
-                })
-                .then(() => {
-                  setClassDetail(updatedClass);
-                  updateClass(updatedClass);
-                  setIsUserEnrolled(true); // Actualizar el estado de inscripción
-                  setAlertMessage('Te has inscrito con éxito. Recuerda pagar en el gimnasio.');
-                  setOpenSnackbar(true);
-                })
-                .catch(error => {
-                  console.error('Error al reservar la clase:', error);
-                  setAlertMessage('Ocurrió un error al reservar. Por favor, intenta nuevamente.');
-                  setOpenSnackbar(true);
-                });
-              } else {
-                setAlertMessage('No se encontró el cliente.');
-                setOpenSnackbar(true);
+    const handleReservation = () => {
+      if (classDetail.cuposDisponibles > 0) {
+        openConfirm({
+          title: 'Confirmar Reserva',
+          message: 'Debes pagar en el gimnasio dentro de un plazo de 1 día. Horarios del gimnasio:\n' +
+            'Lunes a Viernes: 06:00 AM - 04:00 PM\n' +
+            'Sábados: 08:00 AM - 04:00 PM\n' +
+            'Domingos: 06:00 AM - 12:00 PM.',
+          onConfirm: () => {
+            // Crear la inscripción
+            fetch('http://localhost:3005/inscripciones', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                clientId: user.id,
+                claseId: classDetail.id
+              })
+            })
+            .then(response => {
+              if (!response.ok) {
+                return response.json().then(err => Promise.reject(err));
               }
+              return response.json();
+            })
+            .then(data => {
+              setIsUserEnrolled(true);
+              setClassDetail(prev => ({
+                ...prev,
+                cuposDisponibles: prev.cuposDisponibles - 1
+              }));
+              setAlertMessage('Te has inscrito con éxito. Recuerda pagar en el gimnasio.');
+              setOpenSnackbar(true);
             })
             .catch(error => {
-              console.error('Error al buscar el cliente:', error);
-              setAlertMessage('Ocurrió un error al buscar el cliente. Intenta nuevamente.');
+              console.error('Error al reservar:', error);
+              setAlertMessage(error.error || 'Ocurrió un error al reservar. Por favor, intenta nuevamente.');
               setOpenSnackbar(true);
             });
-  
-          closeConfirm(); 
+    
+            closeConfirm();
+          },
+          onCancel: () => {
+            closeConfirm();
+          }
+        });
+      } else {
+        setAlertMessage('No hay cupos disponibles.');
+        setOpenSnackbar(true);
+      }
+    };
+
+    const handleCancelarInscripcion = () => {
+      openConfirm({
+        title: 'Confirmar Cancelación',
+        message: '¿Estás seguro de que deseas cancelar tu inscripción?',
+        onConfirm: async () => {
+          try {
+            // Primero obtenemos la inscripción del usuario para esta clase
+            const inscripcionesResponse = await fetch(`http://localhost:3005/inscripciones/cliente/${user.id}`);
+            const inscripciones = await inscripcionesResponse.json();
+            const inscripcion = inscripciones.find(i => i.claseId === classDetail.id);
+            
+            if (!inscripcion) {
+              throw new Error('No se encontró la inscripción');
+            }
+    
+            // Cancelamos la inscripción
+            const response = await fetch(`http://localhost:3005/inscripciones/${inscripcion.id}`, {
+              method: 'DELETE'
+            });
+    
+            if (!response.ok) {
+              throw new Error('Error al cancelar la inscripción');
+            }
+    
+            setIsUserEnrolled(false);
+            setClassDetail(prev => ({
+              ...prev,
+              cuposDisponibles: prev.cuposDisponibles + 1
+            }));
+    
+            setAlertMessage('Tu inscripción ha sido cancelada exitosamente.');
+            setOpenSnackbar(true);
+          } catch (error) {
+            console.error('Error cancelando la inscripción:', error);
+            setAlertMessage('Hubo un error al cancelar tu inscripción. Inténtalo de nuevo.');
+            setOpenSnackbar(true);
+          }
+    
+          closeConfirm();
         },
         onCancel: () => {
           closeConfirm();
         }
       });
-    } else {
-      setAlertMessage('No hay cupos disponibles.');
-      setOpenSnackbar(true);
-    }
-  };
-
-  const handleCancelarInscripcion = () => {
-    openConfirm({
-      title: 'Confirmar Cancelación',
-      message: '¿Estás seguro de que deseas cancelar tu inscripción? Se te devolverá el ticket.',
-      onConfirm: async () => {
-        try {
-          // Actualizar la clase
-          const updatedClass = {
-            ...classDetail,
-            cuposDisponibles: classDetail.cuposDisponibles + 1,
-            inscritos: classDetail.inscritos.filter(inscrito => 
-              inscrito?.correo?.trim().toLowerCase() !== user?.correo?.trim().toLowerCase()
-            )
-          };
-  
-          const classResponse = await fetch(`http://localhost:3005/clases/${classDetail.id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedClass)
-          });
-  
-          if (!classResponse.ok) throw new Error('Error al actualizar la clase');
-  
-          // Actualizar los tickets del usuario
-          const newTicketCount = user.tickets + 1;
-          const userResponse = await fetch(`http://localhost:3005/client/${user.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ tickets: newTicketCount })
-          });
-  
-          if (!userResponse.ok) throw new Error('Error al actualizar los tickets del usuario');
-  
-          const updatedUser = await userResponse.json();
-  
-          // Actualizar estados locales
-          setClassDetail(updatedClass);
-          updateClass(updatedClass);
-          setUser(prevUser => ({
-            ...prevUser,
-            tickets: updatedUser.tickets
-          }));
-          setIsUserEnrolled(false);  // Cambiar el estado de inscripción
-  
-          setAlertMessage('Tu inscripción ha sido cancelada y se te ha devuelto el ticket.');
-          setOpenSnackbar(true);
-        } catch (error) {
-          console.error('Error cancelando la inscripción:', error);
-          setAlertMessage('Hubo un error al cancelar tu inscripción. Inténtalo de nuevo.');
-          setOpenSnackbar(true);
-        }
-  
-        closeConfirm();
-      },
-      onCancel: () => {
-        closeConfirm();
-      }
-    });
-  };
+    };
 
     const handleFilterChange = (e) => {
       const { name, value } = e.target;
