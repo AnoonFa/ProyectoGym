@@ -569,8 +569,17 @@ app.get('/admin/:id', (req, res) => {
 
 // obtener clases
 app.get('/clases', (req, res) => {
-    const query = "SELECT * FROM clases";
-    db.query(query, (err, results) => {
+    const { nombre } = req.query;
+
+    let query = "SELECT * FROM clases";
+    const params = [];
+
+    if (nombre) {
+        query += " WHERE nombre = ?";
+        params.push(nombre.trim());
+    }
+
+    db.query(query, params, (err, results) => {
         if (err) {
             console.error('Error al obtener clases:', err);
             res.status(500).json({ error: 'Error al obtener clases' });
@@ -579,6 +588,7 @@ app.get('/clases', (req, res) => {
         res.json(results);
     });
 });
+
   
 // obtener empleados
 app.get('/empleados', (req, res) => {

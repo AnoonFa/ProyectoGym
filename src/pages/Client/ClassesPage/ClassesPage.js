@@ -13,10 +13,7 @@ return(
         <Header />
         <Relleno/>
         <CalendarClases />
-        
         <Footer />
     </div>
-)
-
-
-}
+    
+)}
