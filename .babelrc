@@ -1,9 +1,9 @@
-  {
-    "presets": [
-      "react-app"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-private-property-in-object",
-      "@babel/plugin-proposal-private-methods"
-    ]
-  }
+{
+  "presets": [
+    "react-app"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-private-property-in-object",
+    "@babel/plugin-proposal-private-methods"
+  ]
+}
