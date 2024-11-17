@@ -2,8 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
 
-// Obtener la URL de la base de datos desde la variable de entorno de Heroku
-const dbUrl = process.env.JAWSDB_URL;
+// Despliegue
+const url = require('url');
+
 
 const app = express();
 const PORT = process.env.PORT || 3005;
@@ -12,10 +13,26 @@ const PORT = process.env.PORT || 3005;
 app.use(cors());
 app.use(express.json());
 
+// Obtener la URL de la base de datos desde la variable de entorno de Heroku
+const dbUrl = process.env.JAWSDB_URL;
+
 // Si JAWSDB_URL está disponible (en Heroku), usaremos esa conexión
-const db = mysql.createConnection(dbUrl);
+// Parsear la URL para extraer la información de conexión
+const dbParams = url.parse(dbUrl);
+const [username, password] = dbParams.auth.split(':');
+const dbName = dbParams.pathname.split('/')[1];
+const dbHost = dbParams.hostname;
+const dbPort = dbParams.port;
 // mysql://vmdlgmcmgh7azdmh:a6apzim09v1v7ca1@wvulqmhjj9tbtc1w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/vcmdb0gjowzzxrcq
 
+// Configurar la conexión con los parámetros extraídos
+const db = mysql.createConnection({
+    host: dbHost,
+    user: username,
+    password: password,
+    database: dbName,
+    port: dbPort || 3306 // Si no se especifica el puerto, usamos el puerto por defecto (3306)
+});
 
 // const db = mysql.createConnection({
 //     host: 'localhost',
@@ -35,6 +52,14 @@ db.connect((err) => {
 // Ruta para verificar que el servidor está funcionando
 app.get('/test', (req, res) => {
     res.json({ message: 'Servidor funcionando correctamente' });
+});
+
+db.query('SELECT 1 + 1 AS result', (err, results) => {
+    if (err) {
+        console.error('Error al hacer la consulta:', err);
+    } else {
+        console.log('Resultado de la consulta:', results);
+    }
 });
 
 // Ruta modificada para obtener clientes con filtro opcional por número de documento
