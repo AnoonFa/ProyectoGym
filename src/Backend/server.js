@@ -2,18 +2,37 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
 
+//Despliegue
+const url = require('url');
+const url = require('url');
+
+// Parsear la URL para obtener las credenciales
+const dbParams = url.parse(dbUrl);
+const [username, password] = dbParams.auth.split(':');
+const dbName = dbParams.pathname.split('/')[1];
+
+
 const app = express();
 const PORT = 3005;
 
 app.use(cors());
 app.use(express.json());
+// const db = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'ProyectoGym'
+// });
 
+// Configuración de la conexión
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'ProyectoGym'
+    host: dbParams.hostname,
+    user: username,
+    password: password,
+    database: dbName
 });
+// mysql://vmdlgmcmgh7azdmh:a6apzim09v1v7ca1@wvulqmhjj9tbtc1w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/vcmdb0gjowzzxrcq
+
 
 db.connect((err) => {
     if (err) {
