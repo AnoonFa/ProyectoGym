@@ -92,13 +92,24 @@ productos (
     category VARCHAR(255)
 );
 
+CREATE TABLE inscripciones (
+    id INT PRIMARY KEY auto_increment not null,
+    clientId INT,
+    claseId VARCHAR(10),
+    fechaInscripcion DATETIME,
+    estadoPago VARCHAR(50),
+    FOREIGN KEY (clientId) REFERENCES client(id),
+    FOREIGN KEY (claseId) REFERENCES clases(id)
+);
+
 select * from client;
 select * from admin;
 select * from employee;
 select * from ticketera;
-select * from clases;	
+select * from clases;
+select * from inscripciones;	
+select * from planes;
 
-delete from clases;
 
 SET SQL_SAFE_UPDATES = 0;
 

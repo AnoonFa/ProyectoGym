@@ -64,14 +64,21 @@ const ClassDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Limpiar datos previos al cambiar de clase
+    setClassDetail(null);
+    setIsUserEnrolled(false);
+  
     fetch(`http://localhost:3005/clases?nombre=${className}`)
       .then(response => response.json())
       .then(data => {
         if (data.length > 0) {
-          setClassDetail(data[0]);
-          setIsUserEnrolled(data[0].inscritos.some(inscrito => 
+          const clase = data[0];
+          setClassDetail(clase);
+          setIsUserEnrolled(clase.inscritos.some(inscrito =>
             inscrito?.correo?.trim().toLowerCase() === user?.correo?.trim().toLowerCase()
           ));
+        } else {
+          setClassDetail(null); // En caso de que no haya datos
         }
       })
       .catch(error => console.error('Error cargando los detalles de la clase:', error));
@@ -131,6 +138,8 @@ const ClassDetail = () => {
               setAlertMessage(error.error || 'Ocurrió un error al reservar. Por favor, intenta nuevamente.');
               setOpenSnackbar(true);
             });
+            setIsUserEnrolled(true);
+            localStorage.setItem(`enrollment_${classDetail.id}`, true); // Guardar inscripción
     
             closeConfirm();
           },
@@ -143,6 +152,13 @@ const ClassDetail = () => {
         setOpenSnackbar(true);
       }
     };
+
+    useEffect(() => {
+      const storedEnrollment = JSON.parse(localStorage.getItem(`enrollment_${classDetail?.id}`));
+      if (storedEnrollment) {
+        setIsUserEnrolled(storedEnrollment);
+      }
+    }, [classDetail?.id]);
 
     const handleCancelarInscripcion = () => {
       openConfirm({
@@ -176,6 +192,8 @@ const ClassDetail = () => {
     
             setAlertMessage('Tu inscripción ha sido cancelada exitosamente.');
             setOpenSnackbar(true);
+            setIsUserEnrolled(false);
+            localStorage.removeItem(`enrollment_${classDetail.id}`); // Eliminar inscripción almacenada
           } catch (error) {
             console.error('Error cancelando la inscripción:', error);
             setAlertMessage('Hubo un error al cancelar tu inscripción. Inténtalo de nuevo.');
@@ -393,15 +411,15 @@ const ClassDetail = () => {
             {user.role === 'client' && !hasClassPassed && (
               <div className="reservation-button">
                 {isUserEnrolled ? (
-                  <button className="cancelar-button" onClick={handleCancelarInscripcion}>Cancelar Clase</button>
-                ) : (
-                  <>
-                    <button className="buy-button" onClick={handleReservation}>Reservar</button>
-                    {user.tickets > 0 && (
-                      <button className="buy-button" onClick={handleGastarTicket}>Gastar Ticket</button>
-                    )}
-                  </>
-                )}
+                <button className="cancelar-button" onClick={handleCancelarInscripcion}>Cancelar Clase</button>
+              ) : (
+                <>
+                  <button className="buy-button" onClick={handleReservation}>Reservar</button>
+                  {user.tickets > 0 && (
+                    <button className="buy-button" onClick={handleGastarTicket}>Gastar Ticket</button>
+                  )}
+                </>
+              )}
               </div>
             )}
           </div>

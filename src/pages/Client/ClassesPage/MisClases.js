@@ -149,9 +149,46 @@ const MisClases = () => {
     setIsModalOpen(true);
   };
 
+  useEffect(() => {
+    if (user.role === 'client') {
+      fetch(`http://localhost:3005/client-classes/${user.id}`)
+        .then(response => response.json())
+        .then(data => {
+          setFilteredClasses(data);
+        })
+        .catch(error => {
+          console.error('Error fetching client classes:', error);
+        });
+    } else if (user.role === 'admin') {
+      setFilteredClasses(classes);
+    }
+  }, [user, classes]);
+
   const handleShowInscritos = (clase) => {
-    setSelectedClass(clase);  // Asignar la clase seleccionada
-    setShowInscritos(clase);
+    setSelectedClass(clase);
+    
+    // Hacer la petición al nuevo endpoint
+    fetch(`http://localhost:3005/inscripciones/${clase.id}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al obtener inscripciones');
+        }
+        return response.json();
+      })
+      .then(inscripciones => {
+        // Actualizar la clase seleccionada con las inscripciones obtenidas
+        const claseConInscritos = {
+          ...clase,
+          inscritos: inscripciones
+        };
+        setShowInscritos(claseConInscritos);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // Mostrar un mensaje de error al usuario
+        setAlertMessage('Error al cargar la lista de inscritos');
+        setOpenSnackbar(true);
+      });
   };
   
 
@@ -252,55 +289,50 @@ const handleCancelClass = (clase) => {
     setOpenSnackbar(false);
   };
 
- // Función para autorizar el pago
- const authorizePayment = () => {
-  if (!selectedClass) {
-    console.error("selectedClass es null o undefined");
-    return;
-  }
-
-  console.log("Confirmando el pago para:", selectedInscrito);  // Verifica los datos de selectedInscrito
-
-  const updatedClass = {
-    ...selectedClass,
-    inscritos: selectedClass.inscritos.map(inscrito =>
-      inscrito.id === selectedInscrito.id ? { ...inscrito, estadoPago: 'pagado' } : inscrito
-    )
-  };
-
-  console.log("Enviando clase actualizada al servidor:", updatedClass);
-
-  fetch(`http://localhost:3005/clases/${selectedClass.id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updatedClass)
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Error en la actualización del pago');
+    // Función para autorizar el pago
+  const authorizePayment = () => {
+    if (!selectedClass || !selectedInscrito) {
+      console.error("selectedClass o selectedInscrito es null o undefined");
+      return;
     }
-    return response.json();
-  })
-  .then(() => {
-    // Actualiza la clase en el estado
-    setClasses(classes.map(c => c.id === selectedClass.id ? updatedClass : c));
-    setIsPaymentModalOpen(false);
 
-    // Muestra la alerta de éxito
-    setAlertMessage(`El pago para ${selectedInscrito.nombre} ha sido autorizado correctamente.`);
-    setOpenSnackbar(true);
+    fetch(`http://localhost:3005/inscripciones/${selectedInscrito.id}/pago`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error en la actualización del pago');
+      }
+      return response.json();
+    })
+    .then(inscripcionActualizada => {
+      // Actualizar la lista de inscritos con el nuevo estado de pago
+      fetch(`http://localhost:3005/inscripciones/${selectedClass.id}`)
+        .then(response => response.json())
+        .then(inscripciones => {
+          const claseActualizada = {
+            ...selectedClass,
+            inscritos: inscripciones
+          };
 
-    // Actualiza la lista de inscritos dinámicamente sin recargar
-    setShowInscritos(updatedClass);
-  })
-  .catch(error => {
-    console.error('Error autorizando el pago:', error);
+          // Actualizar el estado local
+          setShowInscritos(claseActualizada);
 
-    // Muestra la alerta de error
-    setAlertMessage('Ocurrió un error al autorizar el pago. Intenta nuevamente.');
-    setOpenSnackbar(true);
-  });
-};
+          // Cerrar el modal y mostrar mensaje de éxito
+          setIsPaymentModalOpen(false);
+          setAlertMessage(`El pago para ${selectedInscrito.nombre} ha sido autorizado correctamente.`);
+          setOpenSnackbar(true);
+        });
+    })
+    .catch(error => {
+      console.error('Error autorizando el pago:', error);
+      setAlertMessage('Ocurrió un error al autorizar el pago. Intenta nuevamente.');
+      setOpenSnackbar(true);
+    });
+  };
 
 
 
@@ -383,11 +415,10 @@ const handleSortChange = (field) => {
           <table className="classes-table">
             <thead>
               <tr>
-              <th className={`sortable-header ${sortOrder.field === 'nombre' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('nombre')}>Nombre</th>
-              <th className={`sortable-header ${sortOrder.field === 'entrenador' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('entrenador')}>Entrenador</th>
-              <th className={`sortable-header ${sortOrder.field === 'time' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('time')}>Hora</th>
-              <th className={`sortable-header ${sortOrder.field === 'fecha' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('fecha')}>Fecha</th>
-
+                <th className={`sortable-header ${sortOrder.field === 'nombre' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('nombre')}>Nombre</th>
+                <th className={`sortable-header ${sortOrder.field === 'entrenador' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('entrenador')}>Entrenador</th>
+                <th className={`sortable-header ${sortOrder.field === 'time' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('time')}>Hora</th>
+                <th className={`sortable-header ${sortOrder.field === 'fecha' ? sortOrder.direction : ''}`} onClick={() => handleSortChange('fecha')}>Fecha</th>
                 <th>Acciones</th>
               </tr>
             </thead>
