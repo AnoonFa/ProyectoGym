@@ -849,7 +849,7 @@ app.post('/inscripciones', (req, res) => {
                     clientId,
                     claseId,
                     fechaInscripcion: new Date(),
-                    estadoPago: 'pendiente'
+                    estadoPago: 'inscrito pero no pagado'
                 };
 
                 const createInscripcionQuery = 'INSERT INTO inscripciones SET ?';
@@ -1035,6 +1035,183 @@ setInterval(limpiarInscripcionesVencidas, 3600000);
 
 // Ejecutar la limpieza al iniciar el servidor
 limpiarInscripcionesVencidas();
+
+// Endpoint para obtener todas las inscripciones de una clase específica
+app.get('/inscripciones/:claseId', (req, res) => {
+    const { claseId } = req.params;
+    
+    const query = `
+        SELECT 
+            i.id,
+            i.clientId,
+            i.fechaInscripcion,
+            i.estadoPago,
+            c.nombre,
+            c.apellido,
+            c.correo
+        FROM inscripciones i
+        JOIN client c ON i.clientId = c.id
+        WHERE i.claseId = ?
+    `;
+    
+    db.query(query, [claseId], (err, results) => {
+        if (err) {
+            console.error('Error al obtener inscripciones:', err);
+            return res.status(500).json({ error: 'Error al obtener inscripciones' });
+        }
+        
+        // Formatea los resultados
+        const inscripciones = results.map(inscripcion => ({
+            id: inscripcion.id,
+            idCliente: inscripcion.clientId,
+            nombre: `${inscripcion.nombre} ${inscripcion.apellido}`,
+            correo: inscripcion.correo,
+            fechaInscripcion: inscripcion.fechaInscripcion,
+            estadoPago: inscripcion.estadoPago
+        }));
+        
+        res.json(inscripciones);
+    });
+});
+
+// Endpoint para actualizar el estado de pago de una inscripción
+app.patch('/inscripciones/:inscripcionId/pago', (req, res) => {
+    const { inscripcionId } = req.params;
+    
+    const query = `
+        UPDATE inscripciones 
+        SET estadoPago = 'pagado'
+        WHERE id = ?
+    `;
+    
+    db.query(query, [inscripcionId], (err, result) => {
+        if (err) {
+            console.error('Error al actualizar el estado de pago:', err);
+            return res.status(500).json({ error: 'Error al actualizar el estado de pago' });
+        }
+        
+        // Obtener la inscripción actualizada
+        const getUpdatedInscripcion = `
+            SELECT 
+                i.id,
+                i.clientId,
+                i.fechaInscripcion,
+                i.estadoPago,
+                c.nombre,
+                c.apellido,
+                c.correo
+            FROM inscripciones i
+            JOIN client c ON i.clientId = c.id
+            WHERE i.id = ?
+        `;
+        
+        db.query(getUpdatedInscripcion, [inscripcionId], (err, results) => {
+            if (err) {
+                console.error('Error al obtener la inscripción actualizada:', err);
+                return res.status(500).json({ error: 'Error al obtener la inscripción actualizada' });
+            }
+            
+            if (results.length === 0) {
+                return res.status(404).json({ error: 'Inscripción no encontrada' });
+            }
+            
+            const inscripcionActualizada = {
+                id: results[0].id,
+                idCliente: results[0].clientId,
+                nombre: `${results[0].nombre} ${results[0].apellido}`,
+                correo: results[0].correo,
+                fechaInscripcion: results[0].fechaInscripcion,
+                estadoPago: results[0].estadoPago
+            };
+            
+            res.json(inscripcionActualizada);
+        });
+    });
+});
+
+
+// Ruta para obtener las clases en las que está inscrito un cliente
+app.get('/client-classes/:clientId', (req, res) => {
+    const clientId = req.params.clientId;
+    const query = `
+        SELECT c.*, 
+               i.id as inscripcionId,
+               i.fechaInscripcion,
+               i.estadoPago,
+               cl.nombre as clienteNombre,
+               cl.apellido as clienteApellido,
+               cl.correo as clienteCorreo
+        FROM inscripciones i
+        JOIN clases c ON i.claseId = c.id
+        JOIN client cl ON i.clientId = cl.id
+        WHERE i.clientId = ?
+        ORDER BY c.fecha DESC, c.startTime ASC`;
+
+    db.query(query, [clientId], (err, results) => {
+        if (err) {
+            console.error('Error al obtener las clases del cliente:', err);
+            return res.status(500).json({ 
+                error: 'Error al obtener las clases del cliente',
+                details: err.message 
+            });
+        }
+
+        // Transformar los resultados para que coincidan con el formato esperado por el frontend
+        const classesWithInscriptions = results.map(row => ({
+            id: row.id,
+            nombre: row.nombre,
+            entrenador: row.entrenador,
+            startTime: row.startTime,
+            endTime: row.endTime,
+            descripcion: row.descripcion,
+            totalCupos: row.totalCupos,
+            cuposDisponibles: row.cuposDisponibles,
+            fecha: row.fecha,
+            precio: row.precio,
+            day: row.day,
+            inscritos: [{
+                id: row.inscripcionId,
+                idCliente: clientId,
+                nombre: `${row.clienteNombre} ${row.clienteApellido}`,
+                correo: row.clienteCorreo,
+                fechaInscripcion: row.fechaInscripcion,
+                estadoPago: row.estadoPago
+            }]
+        }));
+
+        res.json(classesWithInscriptions);
+    });
+});
+
+// Ruta para obtener los detalles de las inscripciones de una clase específica
+app.get('/inscripciones/:claseId', (req, res) => {
+    const claseId = req.params.claseId;
+    const query = `
+        SELECT 
+            i.id,
+            i.clientId as idCliente,
+            CONCAT(c.nombre, ' ', c.apellido) as nombre,
+            c.correo,
+            i.fechaInscripcion,
+            i.estadoPago
+        FROM inscripciones i
+        JOIN client c ON i.clientId = c.id
+        WHERE i.claseId = ?
+        ORDER BY i.fechaInscripcion DESC`;
+
+    db.query(query, [claseId], (err, results) => {
+        if (err) {
+            console.error('Error al obtener las inscripciones:', err);
+            return res.status(500).json({ 
+                error: 'Error al obtener las inscripciones',
+                details: err.message 
+            });
+        }
+
+        res.json(results);
+    });
+});
+
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
