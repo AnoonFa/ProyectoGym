@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import { useAuth } from '../../context/RoleContext';
-
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import './MisPlanes.css';
@@ -10,6 +9,47 @@ const MisPlanes = () => {
   const { user } = useAuth();
   const [planes, setPlanes] = useState([]);
 
+  // Calcula la fecha de expiración del plan y retorna en formato ISO y visualización
+  const calculateEndDate = (startDate, duration) => {
+    const parsedStartDate = new Date(startDate);
+
+    if (isNaN(parsedStartDate)) {
+      console.error("Fecha de inicio inválida:", startDate);
+      return { formatted: 'Fecha de expiración desconocida', iso: null };
+    }
+
+    const durationMonths = parseInt(duration, 10);
+    if (isNaN(durationMonths)) {
+      console.error("Duración inválida:", duration);
+      return { formatted: 'Fecha de expiración desconocida', iso: null };
+    }
+
+    // Calcular la fecha de expiración
+    const endDate = add(parsedStartDate, { months: durationMonths });
+    const formattedEndDate = format(endDate, 'dd/MM/yyyy');
+
+    return {
+      formatted: formattedEndDate,
+      iso: endDate.toISOString(),
+    };
+  };
+
+  // Actualiza la fecha de expiración en el db.json
+  const updatePlanEndDate = async (planId, endDate) => {
+    try {
+      await fetch(`http://localhost:3001/planes/${planId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ endDate }),
+      });
+      console.log(`Fecha de expiración actualizada para el plan ${planId}`);
+    } catch (error) {
+      console.error(`Error al actualizar la fecha de expiración del plan ${planId}:`, error);
+    }
+  };
+
   useEffect(() => {
     const fetchUserPlans = async () => {
       try {
@@ -17,7 +57,21 @@ const MisPlanes = () => {
         const data = await response.json();
 
         if (data.planes) {
-          setPlanes(data.planes);
+          // Actualizar endDate si no está registrado
+          const updatedPlans = await Promise.all(
+            data.planes.map(async (plan) => {
+              const { formatted, iso } = calculateEndDate(plan.startDate, plan.duration);
+              
+              // Si el campo endDate está vacío, lo actualizamos
+              if (!plan.endDate) {
+                await updatePlanEndDate(plan.id, iso);
+              }
+
+              return { ...plan, endDate: iso, formattedEndDate: formatted };
+            })
+          );
+          
+          setPlanes(updatedPlans);
         } else {
           console.error("El usuario no tiene planes asignados.");
         }
@@ -31,28 +85,7 @@ const MisPlanes = () => {
     }
   }, [user]);
 
-  // Calcula la fecha de expiración del plan
-  const calculateEndDate = (startDate, duration) => {
-    const parsedStartDate = new Date(startDate);
-    if (isNaN(parsedStartDate)) {
-      console.error("Fecha de inicio inválida:", startDate);
-      return 'Fecha de expiración desconocida';
-    }
-
-    switch (duration) {
-      case '1 mes':
-        return format(add(parsedStartDate, { months: 1 }), 'dd/MM/yyyy');
-      case '3 meses':
-        return format(add(parsedStartDate, { months: 3 }), 'dd/MM/yyyy');
-      case '6 meses':
-        return format(add(parsedStartDate, { months: 6 }), 'dd/MM/yyyy');
-      case '1 año':
-        return format(add(parsedStartDate, { years: 1 }), 'dd/MM/yyyy');
-      default:
-        return 'Fecha de expiración desconocida';
-    }
-  };
-
+  // Cargar la imagen del plan
   const loadImage = (planId) => {
     try {
       switch (planId) {
@@ -87,7 +120,7 @@ const MisPlanes = () => {
                   <h2>{plan.name}</h2>
                   <p>{plan.description}</p>
                   <p className="price"><strong>Precio:</strong> ${plan.price}</p>
-                  <p><strong>Fecha de expiración:</strong> {calculateEndDate(plan.startDate, plan.duration)}</p>
+                  <p><strong>Fecha de expiración:</strong> {plan.formattedEndDate}</p>
                 </div>
               </div>
             ))}
