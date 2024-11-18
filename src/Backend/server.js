@@ -3,7 +3,7 @@ const cors = require('cors');
 const mysql = require('mysql2');
 
 // Despliegue
-const url = require('url');
+// const url = require('url');
 
 
 const app = express();
@@ -14,32 +14,32 @@ app.use(cors());
 app.use(express.json());
 
 // Obtener la URL de la base de datos desde la variable de entorno de Heroku
-const dbUrl = process.env.JAWSDB_URL;
+// const dbUrl = process.env.JAWSDB_URL;
 
 // Si JAWSDB_URL está disponible (en Heroku), usaremos esa conexión
 // Parsear la URL para extraer la información de conexión
-const dbParams = url.parse(dbUrl);
-const [username, password] = dbParams.auth.split(':');
-const dbName = dbParams.pathname.split('/')[1];
-const dbHost = dbParams.hostname;
-const dbPort = dbParams.port;
+// const dbParams = url.parse(dbUrl);
+// const [username, password] = dbParams.auth.split(':');
+// const dbName = dbParams.pathname.split('/')[1];
+// const dbHost = dbParams.hostname;
+// const dbPort = dbParams.port;
 // mysql://vmdlgmcmgh7azdmh:a6apzim09v1v7ca1@wvulqmhjj9tbtc1w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/vcmdb0gjowzzxrcq
 
 // Configurar la conexión con los parámetros extraídos
-const db = mysql.createConnection({
-    host: dbHost,
-    user: username,
-    password: password,
-    database: dbName,
-    port: dbPort || 3306 // Si no se especifica el puerto, usamos el puerto por defecto (3306)
-});
-
 // const db = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: '',
-//     database: 'ProyectoGym'
+//     host: dbHost,
+//     user: username,
+//     password: password,
+//     database: dbName,
+//     port: dbPort || 3306 // Si no se especifica el puerto, usamos el puerto por defecto (3306)
 // });
+
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'ProyectoGym'
+});
 
 db.connect((err) => {
     if (err) {
@@ -1060,12 +1060,12 @@ setInterval(limpiarInscripcionesVencidas, 3600000);
 // Ejecutar la limpieza al iniciar el servidor
 limpiarInscripcionesVencidas();
 
-// app.listen(PORT, () => {
-//     console.log(`Servidor corriendo en http://localhost:${PORT}`);
-// });
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
 
 
 // Iniciar el servidor despliegue
-app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Servidor escuchando en el puerto ${PORT}`);
+// });
