@@ -184,6 +184,32 @@
   font-style: italic;
 }
 
+.search-type-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.search-type-btn {
+  padding: 8px 16px;
+  border: 1px solid #2679f7;
+  background-color: white;
+  color: #2679f7;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-type-btn.active {
+  background-color: #2679f7;
+  color: white;
+}
+
+.search-type-btn:hover {
+  background-color: rgba(38, 121, 247, 0.1);
+}
+
 @media (max-width: 768px) {
   .vkz-container,
   .vkz-container.with-sidebar {
