@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { ProductsContext } from '../../../context/ProductsContext';
-import ProductCard from '../../../components/ProductCard/ProductCard';
+import ProductCard from '../../../components/Productos/ProductCard/ProductCard';
 import './ProductPagePersonal.css';
 import Footer from '../../../components/Footer/Footer';
 import Header from '../../../components/Header/Header';
-import ProductForm from '../../../components/ProductForm/ProductForm';
+import ProductForm from '../../../components/Productos/ProductForm/ProductForm';
 import Relleno from '../../../components/Relleno/Relleno';
 
 const ProductPagePersonal = () => {

@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import VerCliente from "../VerCliente/VerCliente";
-import VerClases from "../VerClases/VerClases";
+import VerClases from "../Clases/VerClases/VerClases.js";
 import PlanDetails from "../../pages/Planes/VerPlan";
 import RutinaAdminIndex from "../Rutina/RutinaAdminIndex";
 import Payments from "../Payments/Payments";

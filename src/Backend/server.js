@@ -2,10 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
 
-// Despliegue
-// const url = require('url');
-
-
 const app = express();
 const PORT = process.env.PORT || 3005;
 
@@ -13,26 +9,44 @@ const PORT = process.env.PORT || 3005;
 app.use(cors());
 app.use(express.json());
 
-// Obtener la URL de la base de datos desde la variable de entorno de Heroku
-// const dbUrl = process.env.JAWSDB_URL;
+/* 
+   Despliegue
+   const url = require('url')
+   
+   Obtener la URL de la base de datos desde la variable de entorno de Heroku
+   const dbUrl = process.env.JAWSDB_URL
+   Si JAWSDB_URL está disponible (en Heroku), usaremos esa conexión
+   Parsear la URL para extraer la información de conexión
+   const dbParams = url.parse(dbUrl);
+   const [username, password] = dbParams.auth.split(':');
+   const dbName = dbParams.pathname.split('/')[1];
+   const dbHost = dbParams.hostname;
+   const dbPort = dbParams.port;
+   mysql://vmdlgmcmgh7azdmh:a6apzim09v1v7ca1@wvulqmhjj9tbtc1w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/vcmdb0gjowzzxrc
 
-// Si JAWSDB_URL está disponible (en Heroku), usaremos esa conexión
-// Parsear la URL para extraer la información de conexión
-// const dbParams = url.parse(dbUrl);
-// const [username, password] = dbParams.auth.split(':');
-// const dbName = dbParams.pathname.split('/')[1];
-// const dbHost = dbParams.hostname;
-// const dbPort = dbParams.port;
-// mysql://vmdlgmcmgh7azdmh:a6apzim09v1v7ca1@wvulqmhjj9tbtc1w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/vcmdb0gjowzzxrcq
+   Configurar la conexión con los parámetros extraídos
+   const db = mysql.createConnection({
+       host: dbHost,
+       user: username,
+       password: password,
+       database: dbName,
+       port: dbPort || 3306 // Si no se especifica el puerto, usamos el puerto por defecto (3306)
+   });
 
-// Configurar la conexión con los parámetros extraídos
-// const db = mysql.createConnection({
-//     host: dbHost,
-//     user: username,
-//     password: password,
-//     database: dbName,
-//     port: dbPort || 3306 // Si no se especifica el puerto, usamos el puerto por defecto (3306)
-// });
+   db.query('SELECT 1 + 1 AS result', (err, results) => {
+       if (err) {
+           console.error('Error al hacer la consulta:', err);
+       } else {
+           console.log('Resultado de la consulta:', results);
+       }
+   });
+   
+   
+   app.listen(PORT, () => {
+       console.log(`Servidor escuchando en el puerto ${PORT}`);
+   });
+
+*/
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -54,13 +68,6 @@ app.get('/test', (req, res) => {
     res.json({ message: 'Servidor funcionando correctamente' });
 });
 
-db.query('SELECT 1 + 1 AS result', (err, results) => {
-    if (err) {
-        console.error('Error al hacer la consulta:', err);
-    } else {
-        console.log('Resultado de la consulta:', results);
-    }
-});
 
 // Ruta modificada para obtener clientes con filtro opcional por número de documento
 app.get('/client', (req, res) => {
@@ -1246,13 +1253,141 @@ app.get('/inscripciones/:claseId', (req, res) => {
     });
 });
 
+// Ruta para crear un nuevo producto
+app.post('/productos', (req, res) => {
+    const { name, description, price, image, category } = req.body;
+    
+    // Obtener el ID del usuario logueado 
+    const createdBy = req.body.createdBy;  
+
+    // Validar que todos los campos requeridos estén presentes
+    if (!name || !description || !price || !image || !category || !createdBy) {
+        return res.status(400).json({ 
+            error: 'Todos los campos son obligatorios, incluyendo el ID del admin' 
+        });
+    }
+
+    const query = `
+        INSERT INTO productos 
+        (name, description, price, image, category, createdBy) 
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    const values = [name, description, price, image, category, createdBy];
+
+    db.query(query, values, (err, result) => {
+        if (err) {
+            console.error('Error al crear el producto:', err);
+            return res.status(500).json({ 
+                error: 'Error interno del servidor al crear el producto',
+                details: err.message 
+            });
+        }
+
+        // Obtener el ID del producto recién insertado
+        const newProductId = result.insertId;
+
+        // Consultar el producto recién creado para devolverlo
+        const selectQuery = 'SELECT * FROM productos WHERE id = ?';
+        db.query(selectQuery, [newProductId], (selectErr, products) => {
+            if (selectErr) {
+                console.error('Error al recuperar el producto:', selectErr);
+                return res.status(500).json({ 
+                    error: 'Error al recuperar el producto creado',
+                    details: selectErr.message 
+                });
+            }
+
+            res.status(201).json(products[0]);
+        });
+    });
+});
+
+// Ruta para obtener todos los productos con información del admin
+app.get('/productos', (req, res) => {
+    const query = `
+        SELECT 
+            p.id, 
+            p.name, 
+            p.description, 
+            p.price, 
+            p.image, 
+            p.category, 
+            p.createdBy,
+            a.usuario as admin_name,
+            a.correo as admin_email
+        FROM 
+            productos p
+        LEFT JOIN 
+            admin a ON p.createdBy = a.id
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error al obtener los productos:', err);
+            return res.status(500).json({ 
+                error: 'Error interno del servidor al obtener los productos',
+                details: err.message 
+            });
+        }
+
+        // Formatear los resultados para que sean más amigables
+        const formattedProducts = results.map(product => ({
+            id: product.id,
+            name: product.name,
+            description: product.description,
+            price: parseFloat(product.price),
+            image: product.image,
+            category: product.category,
+            createdBy: {
+                id: product.createdBy,
+                name: product.admin_name,
+                email: product.admin_email
+            }
+        }));
+
+        res.status(200).json(formattedProducts);
+    });
+});
+
+// Ruta para eliminar un producto por su ID
+app.delete('/productos/:id', (req, res) => {
+    const productId = req.params.id;
+
+    // Verificar si se proporcionó un ID válido
+    if (!productId) {
+        return res.status(400).json({ 
+            error: 'Se requiere un ID de producto válido' 
+        });
+    }
+
+    // Consulta SQL para eliminar el producto
+    const deleteQuery = 'DELETE FROM productos WHERE id = ?';
+
+    db.query(deleteQuery, [productId], (err, result) => {
+        if (err) {
+            console.error('Error al eliminar el producto:', err);
+            return res.status(500).json({ 
+                error: 'Error interno del servidor al eliminar el producto',
+                details: err.message 
+            });
+        }
+
+        // Verificar si se eliminó algún producto
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ 
+                error: 'Producto no encontrado' 
+            });
+        }
+
+        // Producto eliminado exitosamente
+        res.status(200).json({ 
+            message: 'Producto eliminado exitosamente',
+            productId: productId 
+        });
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
-
-
-// Iniciar el servidor despliegue
-// app.listen(PORT, () => {
-//     console.log(`Servidor escuchando en el puerto ${PORT}`);
-// });

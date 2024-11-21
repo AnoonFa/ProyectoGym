@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from '../../../components/Header/Header';
 import Footer from '../../../components/Footer/Footer';
-import CalendarClases from '../../../components/VerClases/VerClases';
+import CalendarClases from '../../../components/Clases/VerClases/VerClases';
 import Relleno from '../../../components/Relleno/Relleno';
 
 

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import SearchBar from '../../../components/SearchBar/SearchBar';
-import CategoryCircles from '../../../components/CategoryCircles/CategoryCircles';
-import ProductCard from '../../../components/ProductCard/ProductCard';
+import SearchBar from '../../../components/Productos/SearchBar/SearchBar';
+import CategoryCircles from '../../../components/Productos/CategoryCircles/CategoryCircles';
+import ProductCard from '../../../components/Productos/ProductCard/ProductCard';
 import { ProductsContext } from '../../../context/ProductsContext';
 import './ProdcutPage.css';
 import Header from '../../../components/Header/Header';

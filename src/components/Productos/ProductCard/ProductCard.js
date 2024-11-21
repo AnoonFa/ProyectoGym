@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import './ProductCard.css';
-import { useAuth } from '../../context/RoleContext';
-import { ProductsContext } from '../../context/ProductsContext';
+import { useAuth } from '../../../context/RoleContext';
+import { ProductsContext } from '../../../context/ProductsContext';
 
 const ProductCard = ({ product }) => {
     const { user } = useAuth();
@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
 
     const handleDelete = (e) => {
         e.stopPropagation();
-        deleteProduct(product.name);
+        deleteProduct(product.id);  // Cambiar de product.name a product.id
     };
 
     return (

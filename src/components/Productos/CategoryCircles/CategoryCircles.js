@@ -1,10 +1,10 @@
 import React from 'react';
 import './CategoryCircles.css';
-import RopaDeportivaMujerImg from '../../assets/images/mujerdeportiva_-removebg-preview.png';
-import RopaDeportivaHombreImg from '../../assets/images/hombredeportiva-removebg-preview.png';
-import SuplementosImg from '../../assets/images/suplementos.png';
-import BebidasImg from '../../assets/images/aguas.png';
-import AccesoriosImg from '../../assets/images/accesorios-removebg-preview.png';
+import RopaDeportivaMujerImg from '../../../assets/images/mujerdeportiva_-removebg-preview.png';
+import RopaDeportivaHombreImg from '../../../assets/images/hombredeportiva-removebg-preview.png';
+import SuplementosImg from '../../../assets/images/suplementos.png';
+import BebidasImg from '../../../assets/images/aguas.png';
+import AccesoriosImg from '../../../assets/images/accesorios-removebg-preview.png';
 
 const categories = [
   { name: 'Ropa Deportiva Mujer', img: RopaDeportivaMujerImg, category: 'ropa deportiva mujer' },

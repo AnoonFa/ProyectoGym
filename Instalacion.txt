@@ -8,6 +8,8 @@ cd ProyectoGym
 npm install
 npm start
 
+rm -rf node_modules 
+rm -rf package-lock.json
 
 Terminal cmd - Api
 

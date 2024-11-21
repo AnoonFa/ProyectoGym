@@ -11,7 +11,7 @@ export const ProductsProvider = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/productos');
+        const response = await axios.get('http://localhost:3005/productos');
         console.log('Productos obtenidos:', response.data); // Debug: Verifica si los datos llegan
         setProducts(response.data);
       } catch (error) {
@@ -25,7 +25,7 @@ export const ProductsProvider = ({ children }) => {
   // Función para agregar un producto a la API
   const addProduct = async (product) => {
     try {
-      const response = await axios.post('http://localhost:3001/productos', product);
+      const response = await axios.post('http://localhost:3005/productos', product);
       setProducts([...products, response.data]); // Agregar el nuevo producto al estado local
     } catch (error) {
       console.error('Error al agregar el producto:', error);
@@ -33,15 +33,15 @@ export const ProductsProvider = ({ children }) => {
   };
 
   // Eliminar un producto de la API y actualizar el estado
-  const deleteProduct = async (productName) => {
+  const deleteProduct = async (productId) => {
     try {
-      const productToDelete = products.find(product => product.name === productName);
-      if (productToDelete) {
-        await axios.delete(`http://localhost:3001/productos/${productToDelete.id}`);
-        setProducts(products.filter(product => product.name !== productName)); // Eliminar del estado local
-      }
+        // Eliminar de la base de datos usando el ID
+        await axios.delete(`http://localhost:3005/productos/${productId}`);
+        
+        // Actualizar el estado local eliminando el producto
+        setProducts(products.filter(product => product.id !== productId));
     } catch (error) {
-      console.error('Error al eliminar el producto:', error);
+        console.error('Error al eliminar el producto:', error);
     }
   };
 

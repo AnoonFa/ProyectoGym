@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { ClassesContext } from '../../context/ClasesContext';
+import { ClassesContext } from '../../../context/ClasesContext';
 import { useNavigate } from 'react-router-dom';
 import './VerClases.css';
-import MisClases from '../../pages/Client/ClassesPage/MisClases';
+import MisClases from '../../../pages/Client/ClassesPage/MisClases';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import { useAuth } from '../../context/RoleContext'; 
+import { useAuth } from '../../../context/RoleContext'; 
 import 'moment/locale/es';
 
 moment.locale('es'); // Configura moment para español

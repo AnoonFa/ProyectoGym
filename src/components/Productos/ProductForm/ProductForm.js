@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import { ProductsContext } from '../../context/ProductsContext';
-import { useAuth } from '../../context/RoleContext';
+import { ProductsContext } from '../../../context/ProductsContext';
+import { useAuth } from '../../../context/RoleContext';
 import './ProductForm.css';
 
 const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
@@ -91,15 +91,16 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
         const updatedProduct = {
           ...initialProduct,
           ...productData,
+          createdBy: user.id,  // Añadir el ID del usuario logueado
         };
     
         // Asegúrate de que `onSubmit` esté haciendo correctamente la llamada a la API
-        fetch('http://localhost:3001/productos', {
-          method: initialProduct?.id ? 'PUT' : 'POST',  // Si el producto existe, usa PUT, de lo contrario POST
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updatedProduct),
+        fetch('http://localhost:3005/productos', {
+            method: initialProduct?.id ? 'PUT' : 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedProduct),
         })
         .then((response) => {
           if (!response.ok) {

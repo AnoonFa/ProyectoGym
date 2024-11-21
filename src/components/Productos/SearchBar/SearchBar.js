@@ -3,7 +3,7 @@ import ReactSlider from 'react-slider';
 import './SearchBar.css';
 import { Button, Modal } from '@mui/material';
 import ProductForm from '../ProductForm/ProductForm';
-import { useAuth } from '../../context/RoleContext';
+import { useAuth } from '../../../context/RoleContext';
 
 const SearchBar = ({ onSearch, onPriceRangeSelect, onClearFilters }) => {
   const [searchTerm, setSearchTerm] = useState('');

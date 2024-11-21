@@ -6,7 +6,7 @@ import './MisClases.css';
 import Modal from '@mui/material/Modal';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import ClaseForm from '../../../components/ClaseForm/ClaseForm';
+import ClaseForm from '../../../components/Clases/ClaseForm/ClaseForm';
 import Header from '../../../components/Header/Header';
 import Footer from '../../../components/Footer/Footer';
 
