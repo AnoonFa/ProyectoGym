@@ -12,7 +12,7 @@ const PerfilEditarModal = ({ onClose }) => {
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
-    genero: '',
+    sexo: '',
     tipoCuerpo: '',
     peso: '',
     altura: '',
@@ -46,13 +46,13 @@ const PerfilEditarModal = ({ onClose }) => {
       let apiUrl = '';
       switch (user.role) {
         case 'admin':
-          apiUrl = `http://localhost:3001/admin/${user.id}`;
+          apiUrl = `http://localhost:3005/admin/${user.id}`;
           break;
         case 'employee':
-          apiUrl = `http://localhost:3001/employee/${user.id}`;
+          apiUrl = `http://localhost:3005/employee/${user.id}`;
           break;
         case 'client':
-          apiUrl = `http://localhost:3001/client/${user.id}`;
+          apiUrl = `http://localhost:3005/client/${user.id}`;
           break;
         default:
           console.error('Rol de usuario no reconocido');
@@ -135,29 +135,34 @@ const PerfilEditarModal = ({ onClose }) => {
     setShowConfirmLogout(true); // Muestra el modal de confirmación
   };
 
-
   const handleConfirmLogout = () => {
-    let apiUrl = `http://localhost:3001/client/${user.id}`;
+    let apiUrl = `http://localhost:3005/client/${user.id}`;
+  
     fetch(apiUrl, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData), // Enviamos los datos del formulario
     })
       .then((response) => {
-        if (!response.ok) throw new Error('Error al actualizar el perfil');
+        console.log('Respuesta del servidor:', response); // Ver la respuesta completa
+        if (!response.ok) {
+          throw new Error('Error al actualizar el perfil');
+        }
         return response.json();
       })
       .then((updatedUser) => {
-        setUser(updatedUser);
+        console.log('Usuario actualizado:', updatedUser); // Ver el usuario actualizado
+        setUser(updatedUser); // Actualizamos el estado del usuario
         showAlertWithTimeout('success', 'Perfil actualizado correctamente');
         logout(); // Cerrar sesión y limpiar localStorage
         navigate('/LoginP/'); // Redirigir a la página de inicio de sesión
       })
-      .catch((error) => {
-        showAlertWithTimeout('error', `Error: ${error.message}`);
-      });
-  };
+      
+  };console.log('Datos a enviar:', formData);
 
+  
   
 
 
@@ -236,7 +241,7 @@ const PerfilEditarModal = ({ onClose }) => {
 
           <div className="form-field field-row">
             <div className="field-half">
-              <label className="form-label">Sexo</label>
+              <label className="form-label">Genero</label>
               <select
                 name="sexo"
                 value={formData.sexo}
@@ -244,7 +249,7 @@ const PerfilEditarModal = ({ onClose }) => {
                 className="vkz-input-field"
                 required
               >
-                <option value="">Selecciona un Sexo</option>
+                <option value="">Selecciona un Genero</option>
                 <option value="hombre">Hombre</option>
                 <option value="mujer">Mujer</option>
                 <option value="otro">Otro</option>
@@ -257,7 +262,8 @@ const PerfilEditarModal = ({ onClose }) => {
                 type="text"
                 name="tipoCuerpo"
                 value={formData.tipoCuerpo}
-                disabled // Campo no editable
+                onChange={handleChange}
+
                 required
                 className="vkz-input-field"
               />
@@ -271,8 +277,8 @@ const PerfilEditarModal = ({ onClose }) => {
                 type="number"
                 name="peso"
                 value={formData.peso}
-                disabled // Campo no editable
-                required
+                onChange={handleChange}
+                required // Campo no editable
                 className="vkz-input-field"
               />
             </div>
@@ -282,8 +288,9 @@ const PerfilEditarModal = ({ onClose }) => {
                 type="number"
                 name="altura"
                 value={formData.altura}
-                disabled // Campo no editable
+                onChange={handleChange}
                 required
+                 // Campo no editable
                 className="vkz-input-field"
               />
             </div>

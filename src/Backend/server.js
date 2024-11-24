@@ -1388,6 +1388,44 @@ app.delete('/productos/:id', (req, res) => {
     });
 });
 
+// Ruta para actualizar el perfil del clienteapp.patch('/client/:id', (req, res) => {
+app.patch('/client/:id', (req, res) => {
+
+  const { id } = req.params;
+  const { nombre, apellido, sexo, tipoCuerpo, peso, altura, correo, telefono } = req.body;
+
+  console.log('Datos recibidos:', req.body);  // Ver los datos recibidos
+  console.log('ID del cliente:', id);  // Verificar si el ID es correcto
+
+  const sql = `UPDATE client SET
+    nombre = ?, 
+    apellido = ?, 
+    sexo = ?, 
+    tipoCuerpo = ?, 
+    peso = ?, 
+    altura = ?, 
+    correo = ?, 
+    telefono = ?
+  WHERE id = ?`;
+
+  const values = [nombre, apellido, sexo, tipoCuerpo, peso, altura, correo, telefono, id];
+
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      console.error('Error en la consulta:', err);
+      return res.status(500).json({ error: 'Error al actualizar el perfil' });
+    }
+
+    console.log('Resultado de la consulta:', result);  // Ver el resultado de la consulta
+    if (result.affectedRows > 0) {
+      // Si affectedRows > 0, la base de datos se actualizó
+      return res.status(200).json({ message: 'Cliente actualizado exitosamente' });
+    } else {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+  });
+});
+
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
