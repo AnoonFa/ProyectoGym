@@ -19,6 +19,7 @@ CREATE TABLE employee (
     password VARCHAR(40),
     cargo VARCHAR(8),
     correo VARCHAR(30),
+    habilitado BOOLEAN,
     createdBy Int,
     foreign key (createdBy) references admin (id)
 );
@@ -126,7 +127,7 @@ INSERT INTO admin (id, usuario, password, cargo, correo) VALUES
 
 
 
-INSERT INTO employee (id, name, usuario, password, cargo, correo) VALUES
-(1, 'Daniel Lopez', 'Daniel', 'Soyempleado1234*', 'employee', 'admins3@gmail.com'),
-(2, 'Carolina Rodriguez', 'Carolina', 'Soyempleado1234*', 'employee', NULL);
+INSERT INTO employee (id, name, usuario, password, cargo, correo, habilitado) VALUES
+(1, 'Daniel Lopez', 'Daniel', 'Soyempleado1234*', 'employee', 'admins3@gmail.com', 1),
+(2, 'Carolina Rodriguez', 'Carolina', 'Soyempleado1234*', 'employee', NULL, 1);
 

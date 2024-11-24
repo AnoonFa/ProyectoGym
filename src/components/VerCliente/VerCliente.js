@@ -145,7 +145,7 @@ function VerCliente() {
               )}
               <form className='vkz-form'>
                 <div className="vkz-form-content">
-                  <h1 className="vkz-form-title">Buscar cliente</h1>
+                  <h1 className="vkz-form-title">Buscar</h1>
                   <div className="vkz-input-group">
                     <label htmlFor="Usuario" className="vkz-input-label">
                       Número de Documento

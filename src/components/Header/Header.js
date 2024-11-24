@@ -127,7 +127,7 @@ const Header = () => {
               <button onClick={() => handleNavigation('/ClasesPage/')} className={`Profile ${isActive('/ClasesPage/')}`}>Clases</button>
               <button onClick={() => handleNavigation('/planesPage')} className={`Profile ${isActive('/planesPage')}`}>Planes</button>
               <button onClick={() => handleNavigation('/RutinaAdminIndex')} className={`Profile ${isActive('/RutinaAdminIndex')}`}>Rutinas</button>
-              <button onClick={() => handleNavigation('/VerCliente')} className={`Profile ${isActive('/VerCliente')}`}>Cliente</button>
+              <button onClick={() => handleNavigation('/VerCliente')} className={`Profile ${isActive('/VerCliente')}`}>Buscador</button>
               <button onClick={() => handleNavigation('/ProductsPage')} className={`Profile ${isActive('/ProductsPage')}`}>Productos</button>
               <button onClick={() => handleNavigation('/AdminConfirmacion')} className={`Profile ${isActive('/Ticketera')}`}>Ticketera</button>
             </>
