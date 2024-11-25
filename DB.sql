@@ -115,19 +115,13 @@ select * from inscripciones;
 select * from planes;
 select * from productos;
 
-
 SET SQL_SAFE_UPDATES = 0;
-
-
 
 INSERT INTO admin (id, usuario, password, cargo, correo) VALUES
 (1, 'Juan', 'Soyadmin1234*', 'admin', 'admins1@gmail.com'),
 (2, 'admin1234', 'Soyadmin1234*', 'admin', 'admins2@gmail.com'),
 (3, 'Carlos', 'Soyadmin1234*', 'admin', 'admins3@gmail.com');
 
-
-
 INSERT INTO employee (id, name, usuario, password, cargo, correo, habilitado) VALUES
 (1, 'Daniel Lopez', 'Daniel', 'Soyempleado1234*', 'employee', 'admins3@gmail.com', 1),
 (2, 'Carolina Rodriguez', 'Carolina', 'Soyempleado1234*', 'employee', NULL, 1);
-

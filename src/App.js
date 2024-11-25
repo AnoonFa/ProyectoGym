@@ -4,13 +4,11 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { ProductsContext } from './context/ProductsContext';
 import Plans from "./components/Relleno/Relleno";
-import RegisterForm from "./pages/Auth/RegisterPage/Register";
 import ClientPage from "./components/IndexCliente/IndexCliente";
 import AdminPage from "./components/adminEmpleadoIndex/adminEmpleadoIndex";
 import Carousel from "./components/Carousel/Carousel";
 import VerClases from "./components/Clases/VerClases/VerClases";
 import PlanDetails from "./pages/Planes/VerPlan";
-import RutinesPage from "./pages/Client/RoutinesPage/RoutinesPage";
 import LoginP from "./pages/Auth/LoginPage/LoginPage";
 import TermsPage from './pages/Auth/LoginPage/TermPage';
 import ProductsPage from "./pages/Client/ProductsPage/ProductsPage";
@@ -30,8 +28,6 @@ import './App.css';
 import Modal from './components/Modal/Modal';
 import VerTicketera from './components/Ticketera/VerTicketera';
 import Planes from './pages/Planes/Planes';
-import Comprobant from './pages/Client/PaymentsPage/Comprobant';
-import Payments from './pages/Client/PaymentsPage/PaymentsPage';
 import RutinasCliente from './components/Rutina/RutinasCliente';
 import ClassDetail from './pages/Client/ClassesPage/ClasesDetailsPage';
 import CalendarClases from './components/Clases/VerClases/VerClases';
@@ -140,29 +136,24 @@ function App() {
               }
             />
             <Route path="/MisClases/*" element={<MisClases />} />
-            <Route path="/Checkout/*" element={<Checkout />} />
             <Route path="/ClienteIndex/*" element={<ClientPage />} />
             <Route path="/adminEmpleadoIndex/*" element={<AdminPage />} />
             <Route path="/LoginP/*" element={<LoginP />} />
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/cambiar-contraseña" element={<ChangePassword />} />
             <Route path="/restablecer-contraseña/:userId" element={<ResetPassword />} />
-            <Route path="/Register/*" element={<RegisterForm />} />
             <Route path="/VerClases/*" element={<VerClases />} />
             <Route path="PlanDetails/:planId" element={<PlanDetails />} />
             <Route path="/ClasesPage/*" element={<ClasesPage />} />
             <Route path="/ProductsPage/*" element={<ProductsPage />} />
             <Route path="/products/:category" element={<ProductPagePersonal />} />
-            <Route path="/RutinesClient/*" element={<RutinesPage />} />
             <Route path="/VerCliente/*" element={<VerCliente />} />
             <Route path="/ClienteForm/" element={<ClienteForm />} />
-            <Route path="/Comprobant/*" element={<Comprobant />} />
             <Route path="/VerTicketera/*" element={<VerTicketera />} />
             <Route path="/PlanesPage/*" element={<PlanesPage />} />
             <Route path="/MisPlanes/*" element={<MisPlanes />} />
             <Route path="/Productp1/:planId" element={<Productp1 />} />
             <Route path="/RutinaAdminIndex/*" element={<RutinaAdminIndex />} />
-            <Route path="/Payments/*" element={<Payments />} />
             <Route path="/RutinasCliente/*" element={<RutinasCliente />} />
             <Route path="/" element={<CalendarClases />} />
             <Route path="/ClassDetail/:className" element={<ClassDetail />} />

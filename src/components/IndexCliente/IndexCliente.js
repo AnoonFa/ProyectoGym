@@ -4,7 +4,6 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ClientClass from '../../pages/Client/ClassesPage/ClassesPage';
 import ProductsClient from '../../pages/Client/ProductsPage/ProductsPage';
-import RutinesPage from '../../pages/Client/RoutinesPage/RoutinesPage'; 
 import Carousel from '../Carousel/Carousel';
 import SearchBar from '../Productos/SearchBar/SearchBar';
 import ProductCard from '../Productos/ProductCard/ProductCard';

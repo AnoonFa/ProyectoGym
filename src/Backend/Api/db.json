@@ -1,409 +1,301 @@
 {
-  "admin": [
-    {
-      "id": "1",
-      "usuario": "Juan",
-      "password": "Soyadmin1234*",
-      "cargo": "admin",
-      "correo": "admins1@gmail.com"
-    },
-    {
-      "id": "2",
-      "usuario": "admin1234",
-      "password": "Soyadmin1234*",
-      "cargo": "admin",
-      "correo": "admins2@gmail.com"
-    },
-    {
-      "id": "3",
-      "usuario": "Carlos",
-      "password": "Soyadmin1234*",
-      "cargo": "admin",
-      "correo": "admins3@gmail.com"
-    }
-  ],
-  "employee": [
-    {
-      "id": "1",
-      "name": "Daniel Lopez",
-      "usuario": "Daniel",
-      "password": "Soyempleado1234*",
-      "cargo": "employee",
-      "correo": "admins3@gmail.com"
-    },
-    {
-      "id": "2",
-      "name": "Carolina Rodriguez",
-      "usuario": "Carolina",
-      "password": "Soyempleado1234*",
-      "cargo": "employee"
-    }
-  ],
-  "client": [
-    {
-      "id": "1",
-      "nombre": "Esteban",
-      "apellido": "Piñeros",
-      "tipoDocumento": "CC",
-      "numeroDocumento": "1029142018",
-      "sexo": "Hombre",
-      "tipoCuerpo": "Endomorfo",
-      "peso": "20",
-      "altura": "211",
-      "usuario": "InsanoXD",
-      "password": "Soyesteban1234*",
-      "correo": "estebanpineros43@gmail.com",
-      "telefono": "3196699831",
-      "rutinas": "",
-      "tickets": 15,
-      "fechaCreacion": "20/9/2024",
-      "horaCreacion": "10:00 a.m.",
-      "planes": [
-        {
-          "id": "p2",
-          "name": "Trimestre",
-          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
-          "price": 130000,
-          "duration": "3",
-          "image": "/assets/images/planes2.jpg",
-          "startDate": "2024-11-14T21:34:56.204Z"
-        }
-      ],
-      "habilitado": true
-    },
-    {
-      "id": "2",
-      "nombre": "Alejandro",
-      "apellido": "Espinosa",
-      "tipoDocumento": "TI",
-      "numeroDocumento": "1067948521",
-      "sexo": "Hombre",
-      "tipoCuerpo": "Mesomorfo",
-      "peso": "74",
-      "altura": "123",
-      "usuario": "ozuna",
-      "password": "Soyesteban2111*",
-      "correo": "estebanpineros41@gmail.com",
-      "telefono": "3196699831",
-      "rutinas": "[{\"nombre\":\"Peso muerto\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto rumano\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Press de banca declinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con agarre ancho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Peso muerto sumo\",\"series\":3,\"repeticiones\":6,\"descanso\":90},{\"nombre\":\"Press de banca cerrado\",\"series\":3,\"repeticiones\":12,\"descanso\":90},{\"nombre\":\"Dominadas con agarre estrecho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra con agarre invertido\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto convencional\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con peso añadido\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120}]",
-      "tickets": 5,
-      "fechaCreacion": "01/9/2024",
-      "horaCreacion": "09:30 a.m.",
-      "planes": [
-        {
-          "id": "p3",
-          "name": "Semestre",
-          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante seis meses",
-          "price": 280000,
-          "duration": "1 mes",
-          "image": "/assets/images/planes3.jpg"
-        }
-      ],
-      "habilitado": true
-    },
-    {
-      "id": "3",
-      "nombre": "Sofia",
-      "apellido": "Nazaret",
-      "tipoDocumento": "TI",
-      "numeroDocumento": "1012350597",
-      "sexo": "mujer",
-      "tipoCuerpo": "Ectomorfo",
-      "peso": "65",
-      "altura": "168",
-      "usuario": "Esteban",
-      "password": "Soyesteban",
-      "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
-      "correo": "nanoespinosa12@gmail.com",
-      "telefono": "3146874747",
-      "tickets": 3,
-      "fechaCreacion": "08/9/2024",
-      "horaCreacion": "10:00 a.m.",
-      "planes": [
-        {
-          "id": "p1",
-          "name": "Mensualidad",
-          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un mes",
-          "price": 50000,
-          "duration": "1 mes",
-          "image": "/assets/images/planes1.jpg"
-        }
-      ],
-      "habilitado": false
-    },
-    {
-      "id": "4",
-      "nombre": " Edsson",
-      "apellido": "Garzon Doncel",
-      "tipoDocumento": "CC",
-      "numeroDocumento": "597486559",
-      "sexo": "Hombre",
-      "tipoCuerpo": "Ectomorfo",
-      "peso": "56",
-      "altura": "126",
-      "usuario": "elmarika",
-      "password": "Soyesteban1029*",
-      "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
-      "correo": "estebanpineros42@gmail.com",
-      "telefono": "3146874784",
-      "tickets": 5,
-      "fechaCreacion": "18/9/2024",
-      "horaCreacion": "05:29 p.m.",
-      "planes": [
-        {
-          "id": "p2",
-          "name": "Trimestre",
-          "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
-          "price": 130000,
-          "duration": "3 meses",
-          "image": "/assets/images/planes2.jpg"
-        }
-      ],
-      "habilitado": true
-    }
-  ],
-  "clases": [
-    {
-      "id": "69a6",
-      "nombre": "Zumba Mañanero",
-      "entrenador": "Carolina",
-      "startTime": "08:40",
-      "endTime": "09:40",
-      "descripcion": "Disfruta de una energía revitalizante con esta clase de Zumba, perfecta para empezar el día con buen ritmo y mucha alegría.",
-      "totalCupos": "20",
-      "cuposDisponibles": "20",
-      "fecha": "2024-09-11",
-      "precio": "10000",
-      "inscritos": [],
-      "day": "2024-09-11"
-    },
-    {
-      "id": "14f8",
-      "nombre": "Yoga mensual",
-      "entrenador": "Arolina",
-      "startTime": "11:35",
-      "endTime": "02:15",
-      "day": "2024-09-15",
-      "descripcion": "Disfruta de una experiencia transformadora con nuestras sesiones de yoga, diseñadas para calmar la mente y fortalecer el cuerpo.",
-      "totalCupos": "20",
-      "cuposDisponibles": "19",
-      "fecha": "2024-09-15",
-      "precio": "6500",
-      "inscritos": [
-        {
-          "idCliente": "4",
-          "nombre": " Edsson Gabriel Garzon Doncel",
-          "correo": "estebanpineros42@gmail.com",
-          "fechaInscripcion": "2024-09-19T22:24:37.755Z",
-          "estadoPago": "inscrito pero no pagado"
-        }
-      ]
-    }
-  ],
-  "planes": [
-    {
-      "id": "p1",
-      "name": "Mensualidad",
-      "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un mes",
-      "price": 50000,
-      "image": "/assets/images/planes1.jpg",
-      "duration": "1 ",
-      "startDate": "2024-11-05T00:00:00.000Z",
-      "endDate": "",
-      "benefits": [
-        "Tu plan de entrenamiento personalizado",
-        "Goliath Health (Seguimiento a tu progreso)",
-        "Clases grupales con profesores",
-        "Acceso a todas las áreas de la sede"
-      ]
-    },
-    {
-      "id": "p2",
-      "name": "Trimestre",
-      "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
-      "price": 130000,
-      "image": "/assets/images/planes2.jpg",
-      "duration": "3",
-      "startDate": "2024-11-05T00:00:00.000Z",
-      "endDate": "",
-      "benefits": [
-        "Tu plan de entrenamiento personalizado",
-        "Goliath Health (Seguimiento a tu progreso)",
-        "Clases grupales con profesores",
-        "Acceso a todas las áreas de la sede"
-      ]
-    },
-    {
-      "id": "p3",
-      "name": "Semestre",
-      "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante seis meses",
-      "price": 280000,
-      "image": "/assets/images/planes3.jpg",
-      "duration": "6",
-      "startDate": "2024-11-05T00:00:00.000Z",
-      "endDate": "",
-      "benefits": [
-        "Tu plan de entrenamiento personalizado",
-        "Goliath Health (Seguimiento a tu progreso)",
-        "Clases grupales con profesores",
-        "Acceso a todas las áreas de la sede"
-      ]
-    },
-    {
-      "id": "p4",
-      "name": "Año",
-      "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un año",
-      "price": 550000,
-      "image": "/assets/images/planes4.jpg",
-      "duration": "12",
-      "startDate": "2024-11-05T00:00:00.000Z",
-      "endDate": "",
-      "benefits": [
-        "Tu plan de entrenamiento personalizado",
-        "Goliath Health (Seguimiento a tu progreso)",
-        "Clases grupales con profesores",
-        "Acceso a todas las áreas de la sede"
-      ]
-    }
-  ],
-  "ticketera": [
-    {
-      "id": "94b7",
-      "clientId": "1",
-      "nombre": "Esteban Piñeros",
-      "quantity": 1,
-      "totalPrice": 12000,
-      "date": "2024-09-13",
-      "time": "18:41:03",
-      "status": "No Pagado"
-    },
-    {
-      "id": "2b64",
-      "clientId": "1",
-      "nombre": "Esteban Piñeros",
-      "quantity": 5,
-      "totalPrice": 60000,
-      "date": "2024-09-13",
-      "time": "18:41:07",
-      "status": "Pagado"
-    },
-    {
-      "id": "133d",
-      "clientId": "2",
-      "nombre": "Alejandro Espinosa",
-      "quantity": 9,
-      "totalPrice": 108000,
-      "date": "2024-09-13",
-      "time": "18:46:02",
-      "status": "No Pagado"
-    },
-    {
-      "id": "c830",
-      "clientId": "2",
-      "nombre": "Alejandro Espinosa",
-      "quantity": 5,
-      "totalPrice": 60000,
-      "date": "2024-09-13",
-      "time": "18:46:07",
-      "status": "Pagado"
-    },
-    {
-      "id": "4499",
-      "clientId": "7",
-      "nombre": "Edsson Doncel",
-      "quantity": 3,
-      "totalPrice": 36000,
-      "date": "2024-09-14",
-      "time": "19:01:16",
-      "status": "Pagado"
-    },
-    {
-      "id": "56ce",
-      "clientId": "4",
-      "nombre": " Edsson Gabriel Garzon Doncel",
-      "quantity": 5,
-      "totalPrice": 60000,
-      "date": "2024-09-19",
-      "time": "17:24:23",
-      "status": "Pagado"
-    },
-    {
-      "id": "4e56",
-      "clientId": "1",
-      "nombre": "Esteban Piñeros",
-      "quantity": 1,
-      "totalPrice": 12000,
-      "date": "2024-10-11",
-      "time": "01:44:36",
-      "status": "No Pagado"
-    },
-    {
-      "id": "507e",
-      "clientId": "1",
-      "nombre": "Esteban Piñeros",
-      "quantity": 1,
-      "totalPrice": 12000,
-      "date": "2024-10-11",
-      "time": "01:44:45",
-      "status": "No Pagado"
-    }
-  ],
-  "productos": [
-    {
-      "name": "Top Deportivo Mujer",
-      "description": "Top de alta compresión para mayor soporte durante el ejercicio.",
-      "price": 20000,
-      "image": "https://acdn.mitiendanube.com/stores/144/702/products/top-fit-frente1-30a52a9052d60237cc16335596123822-1024-1024.jpg",
-      "category": "ropa deportiva mujer",
-      "id": "03d7"
-    },
-    {
-      "name": "Leggings Mujer",
-      "description": "Leggings elásticos y transpirables para entrenamiento.",
-      "price": 35000,
-      "image": "https://storage.googleapis.com/storage-unico/195251391462_1.jpg",
-      "category": "ropa deportiva mujer",
-      "id": "bc08"
-    },
-    {
-      "name": "Camiseta Deportiva Hombre",
-      "description": "Camiseta ligera y transpirable para entrenamiento.",
-      "price": 25000,
-      "image": "https://ae01.alicdn.com/kf/H72af9395c57a43f1941edf7a98f0c8afJ/Camiseta-deportiva-informal-para-hombre-y-mujer-camisa-personalizada-con-logotipo-de-grupo-privado-2021.png",
-      "category": "ropa deportiva hombre",
-      "id": "5088"
-    },
-    {
-      "name": "Shorts Deportivos Hombre",
-      "description": "Shorts de secado rápido y ligeros para entrenamientos intensos.",
-      "price": 30000,
-      "image": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRGeoRxWx6FyZnv-22QPrZV55hZO3guBj9wcmJ2zjdbopr-bd8tmdXE0r2A1z3D1BIQpYjiGVmrHvN_HzNDh8uEElKarJQVnU9IeTboWBzQC3ypelYdsK1C&usqp=CAE",
-      "category": "ropa deportiva hombre",
-      "id": "50c8"
-    },
-    {
-      "name": "Agua Cristal",
-      "description": "Agua pura y refrescante, ideal para mantenerte hidratado durante el día.",
-      "price": 2000,
-      "image": "https://coopasan.com.co/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTUxMzY4NCwicHVyIjoiYmxvYl9pZCJ9fQ==--ee6f0a9e4ce292b68c8dc4b9e2812d3dbd547be6/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJwbmciLCJyZXNpemVfdG9fZml0IjpbODAwLDgwMF19LCJwdXIiOiJ2YXJpYXRpb24ifX0=--cef66509c9cdc75663c0eefd9421db1d2ea4fead/ME00047.png?locale=es",
-      "category": "bebidas",
-      "id": "6582"
-    },
-    {
-      "name": "Proteína Whey",
-      "description": "Suplemento de proteína whey para ganar masa muscular.",
-      "price": 60000,
-      "image": "https://puntfitnessbcn.com/wp-content/uploads/2021/05/Optimum-Nutrition-Proteina-Whey-%E2%80%93-Proteina-de-suero-de-leche-Gold-Standard-todos-los-tamanos-doble-reich-chocolate.png",
-      "category": "suplementos",
-      "id": "18b3"
-    },
-    {
-      "name": "Creatina Monohidratada",
-      "description": "Suplemento de creatina para mejorar el rendimiento deportivo.",
-      "price": 35000,
-      "image": "https://cdnx.jumpseller.com/alimentos-naturales-vida-sana-sas/image/47187559/CREATINA-MONOHYDRATE-3000-150g-HEALTHY-SPORTS.png?1724256525",
-      "category": "suplementos",
-      "id": "ad82"
-    }
-  ]
-}
+    "admin": [
+      {
+        "id": "1",
+        "usuario": "Juan",
+        "password": "Soyadmin1234*",
+        "cargo": "admin",
+        "correo": "admins1@gmail.com"
+      },
+      {
+        "id": "2",
+        "usuario": "admin1234",
+        "password": "Soyadmin1234*",
+        "cargo": "admin",
+        "correo": "admins2@gmail.com"
+      },
+      {
+        "id": "3",
+        "usuario": "Carlos",
+        "password": "Soyadmin1234*",
+        "cargo": "admin",
+        "correo": "admins3@gmail.com"
+      }
+    ],
+    "employee": [
+      {
+        "id": "1",
+        "name": "Daniel Lopez",
+        "usuario": "Daniel",
+        "password": "Soyempleado1234*",
+        "cargo": "employee",
+        "correo": "admins3@gmail.com"
+      },
+      {
+        "id": "2",
+        "name": "Carolina Rodriguez",
+        "usuario": "Carolina",
+        "password": "Soyempleado1234*",
+        "cargo": "employee"
+      }
+    ],
+    "client": [
+      {
+        "id": "1",
+        "nombre": "Esteban",
+        "apellido": "Piñeros",
+        "tipoDocumento": "CC",
+        "numeroDocumento": "1029142018",
+        "sexo": "Hombre",
+        "tipoCuerpo": "Endomorfo",
+        "peso": "20",
+        "altura": "211",
+        "usuario": "InsanoXD",
+        "password": "Soyesteban1234*",
+        "correo": "estebanpineros43@gmail.com",
+        "telefono": "3196699831",
+        "rutinas": "",
+        "tickets": 15,
+        "fechaCreacion": "20/9/2024",
+        "horaCreacion": "10:00 a.m.",
+        "planes": [
+          {
+            "id": "p2",
+            "name": "Trimestre",
+            "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
+            "price": 130000,
+            "duration": "3",
+            "image": "/assets/images/planes2.jpg",
+            "startDate": "2024-11-14T21:34:56.204Z"
+          }
+        ],
+        "habilitado": true
+      },
+      {
+        "id": "2",
+        "nombre": "Alejandro",
+        "apellido": "Espinosa",
+        "tipoDocumento": "TI",
+        "numeroDocumento": "1067948521",
+        "sexo": "Hombre",
+        "tipoCuerpo": "Mesomorfo",
+        "peso": "74",
+        "altura": "123",
+        "usuario": "ozuna",
+        "password": "Soyesteban2111*",
+        "correo": "estebanpineros41@gmail.com",
+        "telefono": "3196699831",
+        "rutinas": "[{\"nombre\":\"Peso muerto\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto rumano\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Press de banca declinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con agarre ancho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Peso muerto sumo\",\"series\":3,\"repeticiones\":6,\"descanso\":90},{\"nombre\":\"Press de banca cerrado\",\"series\":3,\"repeticiones\":12,\"descanso\":90},{\"nombre\":\"Dominadas con agarre estrecho\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120},{\"nombre\":\"Remo con barra con agarre invertido\",\"series\":3,\"repeticiones\":10,\"descanso\":60},{\"nombre\":\"Peso muerto convencional\",\"series\":3,\"repeticiones\":5,\"descanso\":90},{\"nombre\":\"Press de banca inclinado\",\"series\":3,\"repeticiones\":8,\"descanso\":90},{\"nombre\":\"Dominadas con peso añadido\",\"series\":\"Máximo de repeticiones\",\"repeticiones\":null,\"descanso\":120}]",
+        "tickets": 5,
+        "fechaCreacion": "01/9/2024",
+        "horaCreacion": "09:30 a.m.",
+        "planes": [
+          {
+            "id": "p3",
+            "name": "Semestre",
+            "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante seis meses",
+            "price": 280000,
+            "duration": "1 mes",
+            "image": "/assets/images/planes3.jpg"
+          }
+        ],
+        "habilitado": true
+      },
+      {
+        "id": "3",
+        "nombre": "Sofia",
+        "apellido": "Nazaret",
+        "tipoDocumento": "TI",
+        "numeroDocumento": "1012350597",
+        "sexo": "mujer",
+        "tipoCuerpo": "Ectomorfo",
+        "peso": "65",
+        "altura": "168",
+        "usuario": "Esteban",
+        "password": "Soyesteban",
+        "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
+        "correo": "nanoespinosa12@gmail.com",
+        "telefono": "3146874747",
+        "tickets": 3,
+        "fechaCreacion": "08/9/2024",
+        "horaCreacion": "10:00 a.m.",
+        "planes": [
+          {
+            "id": "p1",
+            "name": "Mensualidad",
+            "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un mes",
+            "price": 50000,
+            "duration": "1 mes",
+            "image": "/assets/images/planes1.jpg"
+          }
+        ],
+        "habilitado": false
+      },
+      {
+        "id": "4",
+        "nombre": " Edsson",
+        "apellido": "Garzon Doncel",
+        "tipoDocumento": "CC",
+        "numeroDocumento": "597486559",
+        "sexo": "Hombre",
+        "tipoCuerpo": "Ectomorfo",
+        "peso": "56",
+        "altura": "126",
+        "usuario": "elmarika",
+        "password": "Soyesteban1029*",
+        "rutinas": "[{\"nombre\":\"Elevaciones laterales\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra Z\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Extensión de tríceps por encima de la cabeza\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas bulgaras\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Elevaciones laterales con banda elástica\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Curl de bíceps con martillo\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Press francés con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con peso\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Remo al mentón con barra\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Curl de bíceps con barra W\",\"series\":3,\"repeticiones\":15,\"descanso\":30},{\"nombre\":\"Press francés con mancuerna\",\"series\":3,\"repeticiones\":12,\"descanso\":30},{\"nombre\":\"Zancadas con salto\",\"series\":3,\"repeticiones\":10,\"descanso\":30}]",
+        "correo": "estebanpineros42@gmail.com",
+        "telefono": "3146874784",
+        "tickets": 5,
+        "fechaCreacion": "18/9/2024",
+        "horaCreacion": "05:29 p.m.",
+        "planes": [
+          {
+            "id": "p2",
+            "name": "Trimestre",
+            "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
+            "price": 130000,
+            "duration": "3 meses",
+            "image": "/assets/images/planes2.jpg"
+          }
+        ],
+        "habilitado": true
+      }
+    ],
+    "clases": [
+      {
+        "id": "69a6",
+        "nombre": "Zumba Mañanero",
+        "entrenador": "Carolina",
+        "startTime": "08:40",
+        "endTime": "09:40",
+        "descripcion": "Disfruta de una energía revitalizante con esta clase de Zumba, perfecta para empezar el día con buen ritmo y mucha alegría.",
+        "totalCupos": "20",
+        "cuposDisponibles": "20",
+        "fecha": "2024-09-11",
+        "precio": "10000",
+        "inscritos": [],
+        "day": "2024-09-11"
+      },
+      {
+        "id": "14f8",
+        "nombre": "Yoga mensual",
+        "entrenador": "Arolina",
+        "startTime": "11:35",
+        "endTime": "02:15",
+        "day": "2024-09-15",
+        "descripcion": "Disfruta de una experiencia transformadora con nuestras sesiones de yoga, diseñadas para calmar la mente y fortalecer el cuerpo.",
+        "totalCupos": "20",
+        "cuposDisponibles": "19",
+        "fecha": "2024-09-15",
+        "precio": "6500",
+        "inscritos": [
+          {
+            "idCliente": "4",
+            "nombre": " Edsson Gabriel Garzon Doncel",
+            "correo": "estebanpineros42@gmail.com",
+            "fechaInscripcion": "2024-09-19T22:24:37.755Z",
+            "estadoPago": "inscrito pero no pagado"
+          }
+        ]
+      }
+    ],
+    "planes": [
+      {
+        "id": "p1",
+        "name": "Mensualidad",
+        "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un mes",
+        "price": 50000,
+        "image": "/assets/images/planes1.jpg",
+        "duration": "1 ",
+        "startDate": "2024-11-05T00:00:00.000Z",
+        "endDate": "",
+        "benefits": [
+          "Tu plan de entrenamiento personalizado",
+          "Goliath Health (Seguimiento a tu progreso)",
+          "Clases grupales con profesores",
+          "Acceso a todas las áreas de la sede"
+        ]
+      },
+      {
+        "id": "p2",
+        "name": "Trimestre",
+        "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante tres meses",
+        "price": 130000,
+        "image": "/assets/images/planes2.jpg",
+        "duration": "3",
+        "startDate": "2024-11-05T00:00:00.000Z",
+        "endDate": "",
+        "benefits": [
+          "Tu plan de entrenamiento personalizado",
+          "Goliath Health (Seguimiento a tu progreso)",
+          "Clases grupales con profesores",
+          "Acceso a todas las áreas de la sede"
+        ]
+      },
+      {
+        "id": "p3",
+        "name": "Semestre",
+        "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante seis meses",
+        "price": 280000,
+        "image": "/assets/images/planes3.jpg",
+        "duration": "6",
+        "startDate": "2024-11-05T00:00:00.000Z",
+        "endDate": "",
+        "benefits": [
+          "Tu plan de entrenamiento personalizado",
+          "Goliath Health (Seguimiento a tu progreso)",
+          "Clases grupales con profesores",
+          "Acceso a todas las áreas de la sede"
+        ]
+      },
+      {
+        "id": "p4",
+        "name": "Año",
+        "description": "En este plan te ofrecemos nuestros servicios de máquinas, asesorías y rutinas personalizadas durante un año",
+        "price": 550000,
+        "image": "/assets/images/planes4.jpg",
+        "duration": "12",
+        "startDate": "2024-11-05T00:00:00.000Z",
+        "endDate": "",
+        "benefits": [
+          "Tu plan de entrenamiento personalizado",
+          "Goliath Health (Seguimiento a tu progreso)",
+          "Clases grupales con profesores",
+          "Acceso a todas las áreas de la sede"
+        ]
+      }
+    ],
+    "ticketera": [
+      {
+        "id": "94b7",
+        "clientId": "1",
+        "nombre": "Esteban Piñeros",
+        "quantity": 1,
+        "totalPrice": 12000,
+        "date": "2024-09-13",
+        "time": "18:41:03",
+        "status": "No Pagado"
+      },
+      {
+        "id": "2b64",
+        "clientId": "1",
+        "nombre": "Esteban Piñeros",
+        "quantity": 5,
+        "totalPrice": 60000,
+        "date": "2024-09-13",
+        "time": "18:41:07",
+        "status": "Pagado"
+      },
+      {
+        "id": "133d",
+        "clientId": "2",
+        "nombre": "Alejandro Espinosa",
+        "quantity": 9,
+        "totalPrice": 108000,
+        "date": "2024-09-13",
+        "time": "18:46:02",
+        "status": "No Pagado"
+      }
+    ]
+  }

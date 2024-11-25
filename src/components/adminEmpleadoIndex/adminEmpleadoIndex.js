@@ -6,7 +6,6 @@ import VerCliente from "../VerCliente/VerCliente";
 import VerClases from "../Clases/VerClases/VerClases.js";
 import PlanDetails from "../../pages/Planes/VerPlan";
 import RutinaAdminIndex from "../Rutina/RutinaAdminIndex";
-import Payments from "../Payments/Payments";
 import Planes from "../../pages/Planes/Planes";
 import { useAuth } from "../../context/RoleContext.js";
 import { TicketeraChart } from "../Graficos/Ticketeras.js";
@@ -114,7 +113,6 @@ function AdminPage() {
         <Route path="/Planes/*" element={<Planes />} />
         <Route path="PlanDetails/:planId" element={<PlanDetails />} />
         <Route path="RutinaAdminIndex" element={<RutinaAdminIndex />} />
-        <Route path="Payments" element={<Payments />} />
       </Routes>
       <Footer />
     </>
