@@ -18,7 +18,7 @@ function AñadirRutina() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:3005/client')
+    fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/client')
       .then(response => response.json())
       .then(data => {
         setClientes(data);
@@ -131,7 +131,7 @@ function AñadirRutina() {
       rutinas: JSON.stringify(rutinasActualizadas[cuerpoSeleccionado] || [])
     };
 
-    fetch(`http://localhost:3005/client/${clienteSeleccionado.id}`, {
+    fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/client/${clienteSeleccionado.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(datosActualizados)

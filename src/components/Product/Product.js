@@ -19,7 +19,7 @@ const Productp1 = () => {
   useEffect(() => {
     const fetchPlan = async () => {
       try {
-        const response = await fetch(`http://localhost:3005/planes/${planId}`);
+        const response = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/planes/${planId}`);
         if (!response.ok) {
           throw new Error('Error al obtener los datos del plan');
         }

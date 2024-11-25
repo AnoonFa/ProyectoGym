@@ -95,7 +95,7 @@ const ProductForm = ({ initialProduct, onSubmit, onCancel }) => {
         };
     
         // Asegúrate de que `onSubmit` esté haciendo correctamente la llamada a la API
-        fetch('http://localhost:3005/productos', {
+        fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/productos', {
             method: initialProduct?.id ? 'PUT' : 'POST',
             headers: {
               'Content-Type': 'application/json',

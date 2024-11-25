@@ -62,7 +62,7 @@ const EjerciciosCliente = ({ cliente }) => {
       setError(null);
       if (cliente && cliente.id) {
         // Cambiar el puerto a 3005 para coincidir con tu servidor
-        fetch(`http://localhost:3005/client/${cliente.id}`)
+        fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/client/${cliente.id}`)
           .then(response => {
             if (!response.ok) {
               throw new Error('No se pudo obtener los datos del cliente');
@@ -115,7 +115,7 @@ const EjerciciosCliente = ({ cliente }) => {
           rutinas: JSON.stringify(rutina)
         };
   
-        fetch(`http://localhost:3005/client/${clienteData.id}`, {
+        fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/client/${clienteData.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

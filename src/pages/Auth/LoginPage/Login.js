@@ -20,7 +20,7 @@ const Login = () => {
   const handleLogin = async () => {
     if (correo && password) {
         try {
-            const response = await fetch('http://localhost:3005/login', {
+            const response = await fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ correo, password }),

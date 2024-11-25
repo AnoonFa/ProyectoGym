@@ -102,7 +102,7 @@ const ClienteForm = () => {
 
   const checkUserExists = async (username) => {
     try {
-      const response = await fetch(`http://localhost:3005/check-user?usuario=${username}`);
+      const response = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/check-user?usuario=${username}`);
       const data = await response.json();
       if (data.exists) {
         setUserWarning('Ese usuario ya esta ocupado, por favor cambialo');
@@ -134,7 +134,7 @@ const ClienteForm = () => {
 
     if (isFormValid && !userWarning && !documentError && !emailError) {
       try {
-        const response = await fetch('http://localhost:3005/client', {
+        const response = await fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/client', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

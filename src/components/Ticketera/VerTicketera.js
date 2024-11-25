@@ -28,7 +28,7 @@ function VerTicketera() {
 
   const fetchUserInfo = async () => {
     try {
-      const response = await fetch(`http://localhost:3005/client/${user.id}`);
+      const response = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/client/${user.id}`);
       if (!response.ok) {
         throw new Error('Error fetching user info');
       }
@@ -50,7 +50,7 @@ function VerTicketera() {
 
   const fetchAvailableTickets = async () => {
     try {
-      const response = await fetch(`http://localhost:3005/client/${user.id}`);
+      const response = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/client/${user.id}`);
       if (!response.ok) {
         throw new Error('Error fetching tickets');
       }
@@ -79,7 +79,7 @@ function VerTicketera() {
         status: 'No Pagado'
       };
   
-      const response = await fetch('http://localhost:3005/ticketera', {
+      const response = await fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/ticketera', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

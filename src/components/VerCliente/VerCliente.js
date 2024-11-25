@@ -23,7 +23,7 @@ function VerCliente() {
   const [alertType, setAlertType] = useState(''); // Tipo de alerta (error, warning, etc.)
   const [showAlert, setShowAlert] = useState(false); // Controla si se muestra la alerta
 
-  const API_URL = 'http://localhost:3005'; // URL de la API
+  const API_URL = 'https://gimnasio-david-goliat-018399150974.herokuapp.com'; // URL de la API
 
   // Función para mostrar alertas
   const showAlertMessage = (message, type) => {

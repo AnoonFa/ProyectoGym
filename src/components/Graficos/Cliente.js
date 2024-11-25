@@ -10,7 +10,7 @@ export const ClientCreationChart = () => {
 
   const fetchClientData = async () => {
     try {
-      const response = await fetch('http://localhost:3005/client');
+      const response = await fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/client');
       const data = await response.json();
       const processedData = processClientData(data);
       updateChartOption(processedData);

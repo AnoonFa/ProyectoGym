@@ -151,7 +151,7 @@ const MisClases = () => {
 
   useEffect(() => {
     if (user.role === 'client') {
-      fetch(`http://localhost:3005/client-classes/${user.id}`)
+      fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/client-classes/${user.id}`)
         .then(response => response.json())
         .then(data => {
           setFilteredClasses(data);
@@ -168,7 +168,7 @@ const MisClases = () => {
     setSelectedClass(clase);
     
     // Hacer la petición al nuevo endpoint
-    fetch(`http://localhost:3005/inscripciones/${clase.id}`)
+    fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/inscripciones/${clase.id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Error al obtener inscripciones');
@@ -211,7 +211,7 @@ const calculateTimeRemaining = (inscripcionDate) => {
 };
 
   const handleUpdateClass = (updatedClassData) => {
-    fetch(`http://localhost:3005/clases/${selectedClass.id}`, {
+    fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/clases/${selectedClass.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedClassData),
@@ -239,7 +239,7 @@ const handleCancelClass = (clase) => {
     inscritos: clase.inscritos.filter(inscrito => inscrito.id !== user.id)  // Remover al cliente de la lista de inscritos
   };
 
-  fetch(`http://localhost:3005/clases/${clase.id}`, {
+  fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/clases/${clase.id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updatedClass)
@@ -296,7 +296,7 @@ const handleCancelClass = (clase) => {
       return;
     }
 
-    fetch(`http://localhost:3005/inscripciones/${selectedInscrito.id}/pago`, {
+    fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/inscripciones/${selectedInscrito.id}/pago`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
@@ -310,7 +310,7 @@ const handleCancelClass = (clase) => {
     })
     .then(inscripcionActualizada => {
       // Actualizar la lista de inscritos con el nuevo estado de pago
-      fetch(`http://localhost:3005/inscripciones/${selectedClass.id}`)
+      fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/inscripciones/${selectedClass.id}`)
         .then(response => response.json())
         .then(inscripciones => {
           const claseActualizada = {

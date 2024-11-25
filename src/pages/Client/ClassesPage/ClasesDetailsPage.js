@@ -68,7 +68,7 @@ const ClassDetail = () => {
     setClassDetail(null);
     setIsUserEnrolled(false);
   
-    fetch(`http://localhost:3005/clases?nombre=${className}`)
+    fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/clases?nombre=${className}`)
       .then(response => response.json())
       .then(data => {
         if (data.length > 0) {
@@ -110,7 +110,7 @@ const ClassDetail = () => {
             'Domingos: 06:00 AM - 12:00 PM.',
           onConfirm: () => {
             // Crear la inscripción
-            fetch('http://localhost:3005/inscripciones', {
+            fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/inscripciones', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -167,7 +167,7 @@ const ClassDetail = () => {
         onConfirm: async () => {
           try {
             // Primero obtenemos la inscripción del usuario para esta clase
-            const inscripcionesResponse = await fetch(`http://localhost:3005/inscripciones/cliente/${user.id}`);
+            const inscripcionesResponse = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/inscripciones/cliente/${user.id}`);
             const inscripciones = await inscripcionesResponse.json();
             const inscripcion = inscripciones.find(i => i.claseId === classDetail.id);
             
@@ -176,7 +176,7 @@ const ClassDetail = () => {
             }
     
             // Cancelamos la inscripción
-            const response = await fetch(`http://localhost:3005/inscripciones/${inscripcion.id}`, {
+            const response = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/inscripciones/${inscripcion.id}`, {
               method: 'DELETE'
             });
     
@@ -244,7 +244,7 @@ const ClassDetail = () => {
 
     const handleSubmitClass = (updatedClass) => {
       // Save the updated class details
-      fetch(`http://localhost:3005/clases/${updatedClass.id}`, {
+      fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/clases/${updatedClass.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedClass),
@@ -318,7 +318,7 @@ const ClassDetail = () => {
               ]
             };
   
-            const classResponse = await fetch(`http://localhost:3005/clases/${classDetail.id}`, {
+            const classResponse = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/clases/${classDetail.id}`, {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(updatedClass)
@@ -328,7 +328,7 @@ const ClassDetail = () => {
   
             // Luego, actualizamos los tickets del usuario
             const newTicketCount = user.tickets - 1;
-            const userResponse = await fetch(`http://localhost:3005/client/${user.id}`, {
+            const userResponse = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/client/${user.id}`, {
               method: 'PATCH',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ tickets: newTicketCount })
