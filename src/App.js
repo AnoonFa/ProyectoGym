@@ -35,7 +35,6 @@ import Payments from './pages/Client/PaymentsPage/PaymentsPage';
 import RutinasCliente from './components/Rutina/RutinasCliente';
 import ClassDetail from './pages/Client/ClassesPage/ClasesDetailsPage';
 import CalendarClases from './components/Clases/VerClases/VerClases';
-import Checkout from './components/checkout/Checkout';
 import MisClases from './pages/Client/ClassesPage/MisClases';
 import MisPlanes from './pages/Planes/MisPlanes';
 import Productp1 from './components/Product/Productp1';
