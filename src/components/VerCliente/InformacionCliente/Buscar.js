@@ -85,13 +85,35 @@ const Buscar = ({ clientInfo, onClose }) => {
           value={searchTermClients}
           onChange={(e) => setSearchTermClients(e.target.value)}
         />
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="sort-select"
+        >
+          <option value="">Ordenar por...</option>
+          <option value="asc">Nombre (A-Z)</option>
+          <option value="desc">Nombre (Z-A)</option>
+        </select>
+      </div>
+      <div className="table-container">
         <table className="client-table">
           <thead>
-            <tr>
+          <tr>
               <th>Nombre</th>
               <th>Apellido</th>
+              <th>Tipo Doc.</th>
+              <th>Número Doc.</th>
               <th>Correo</th>
-              {/* Más columnas según sea necesario */}
+              <th>Teléfono</th>
+              <th>Género</th>
+              <th>Tipo Cuerpo</th>
+              <th>Peso</th>
+              <th>Altura</th>
+              <th>Usuario</th>
+              <th>Tickets</th>
+              {/* <th>Fecha Creación</th>
+              <th>Estado</th> */}
+              <th>Acción</th>
             </tr>
           </thead>
           <tbody>
@@ -99,15 +121,31 @@ const Buscar = ({ clientInfo, onClose }) => {
               <tr key={client.id}>
                 <td>{client.nombre}</td>
                 <td>{client.apellido}</td>
+                <td>{client.tipoDocumento}</td>
+                <td>{client.numeroDocumento}</td>
                 <td>{client.correo}</td>
+                <td>{client.telefono}</td>
+                <td>{client.sexo}</td>
+                <td>{client.tipoCuerpo}</td>
+                <td>{client.peso}</td>
+                <td>{client.altura}</td>
+                <td>{client.usuario}</td>
+                <td>{client.tickets || 0}</td>
+                <td>
+                  <button onClick={() => handleToggleStatus(client)} className={client.habilitado ? "disable-button" : "enable-button"}>
+                    {client.habilitado ? 'Inhabilitar' : 'Habilitar'}
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
         <div className="pagination">
           <button onClick={() => setCurrentPageClients(prev => Math.max(prev - 1, 1))}>
             Anterior
           </button>
+          
           <button
             onClick={() =>
               setCurrentPageClients(prev =>
@@ -118,7 +156,7 @@ const Buscar = ({ clientInfo, onClose }) => {
             Siguiente
           </button>
         </div>
-      </div>
+
 
       {/* Tabla de Empleados */}
       <div className="table-section">
@@ -129,24 +167,46 @@ const Buscar = ({ clientInfo, onClose }) => {
           value={searchTermEmployees}
           onChange={(e) => setSearchTermEmployees(e.target.value)}
         />
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="sort-select"
+        >
+          <option value="">Ordenar por...</option>
+          <option value="asc">Nombre (A-Z)</option>
+          <option value="desc">Nombre (Z-A)</option>
+        </select>
+      </div>
+      <div className="table-container">
         <table className="employee-table">
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>Apellido</th>
+              <th>Usuario</th>
               <th>Cargo</th>
+              <th>Correo</th>
+              <th>Creado por</th>
+              <th>Estado</th>
               {/* Más columnas según sea necesario */}
             </tr>
           </thead>
           <tbody>
             {currentEmployees.map(employee => (
               <tr key={employee.id}>
-                <td>{employee.name}</td>
+                <td>{employee.usuario}</td>
                 <td>{employee.cargo}</td>
+                <td>{employee.correo}</td>
+                <td>{employee.createdBy}</td>
+                <td>
+                  <button onClick={() => handleToggleStatus(employee)} className={employee.habilitado ? "disable-button" : "enable-button"}>
+                    {employee.habilitado ? 'Inhabilitar' : 'Habilitar'}
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
         <div className="pagination">
           <button onClick={() => setCurrentPageEmployees(prev => Math.max(prev - 1, 1))}>
             Anterior
@@ -162,7 +222,6 @@ const Buscar = ({ clientInfo, onClose }) => {
           </button>
         </div>
       </div>
-    </div>
   );
 };
 
