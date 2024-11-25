@@ -28,13 +28,14 @@ const Login = () => {
 
             if (response.ok) {
                 const foundUser = await response.json();
-                setUserFound(foundUser);
-
-                if (!foundUser.habilitado) {
+                
+                // Si el usuario está deshabilitado, redirigirlo a la página de términos
+                if (foundUser.habilitado === false) {
                     navigate('/terms', { state: { user: foundUser } });
                     return;
                 }
 
+                setUserFound(foundUser);
                 setUser(foundUser);
                 localStorage.setItem('user', JSON.stringify(foundUser));
 
@@ -45,7 +46,8 @@ const Login = () => {
                     navigate('/adminEmpleadoIndex');
                 }
             } else {
-                setLoginError('Usuario o contraseña incorrectos.');
+                const errorData = await response.json();
+                setLoginError(errorData.error || 'Usuario o contraseña incorrectos.');
             }
         } catch (error) {
             console.error('Error:', error);

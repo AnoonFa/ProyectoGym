@@ -149,7 +149,7 @@ const ClienteForm = () => {
         const data = await response.json();
 
         if (response.ok) {
-          setFormSuccess('Registro con exito');
+          setFormSuccess('Registro con exito, te mandamos un correo con tu información y tu contraseña');
           console.log('Cliente creado:', data);
 
           // Aquí es donde se envía el correo

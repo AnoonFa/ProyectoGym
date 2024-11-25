@@ -262,8 +262,7 @@ const PerfilEditarModal = ({ onClose }) => {
                 type="text"
                 name="tipoCuerpo"
                 value={formData.tipoCuerpo}
-                onChange={handleChange}
-
+                disabled
                 required
                 className="vkz-input-field"
               />
@@ -278,7 +277,7 @@ const PerfilEditarModal = ({ onClose }) => {
                 name="peso"
                 value={formData.peso}
                 onChange={handleChange}
-                required // Campo no editable
+                 // Campo no editable
                 className="vkz-input-field"
               />
             </div>
@@ -289,7 +288,7 @@ const PerfilEditarModal = ({ onClose }) => {
                 name="altura"
                 value={formData.altura}
                 onChange={handleChange}
-                required
+                
                  // Campo no editable
                 className="vkz-input-field"
               />

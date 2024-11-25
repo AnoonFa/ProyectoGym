@@ -137,6 +137,20 @@ app.get('/client/:id', (req, res) => {
     });
 });
 
+// Ruta para obtener empleados
+app.get('/employee', (req, res) => {
+    const query = 'SELECT * FROM employee';
+    db.query(query, (err, result) => {
+      if (err) {
+        console.error('Error al consultar los empleados:', err);
+        res.status(500).json({ error: err });
+        return;
+      }
+      res.json(result);
+    });
+  });
+  
+
 // Ruta para obtener todos los clientes
 app.get('/client', (req, res) => {
     const { numeroDocumento, correo } = req.query;
@@ -202,16 +216,15 @@ app.post('/client', (req, res) => {
     });
 });
 
-// Ruta para iniciar sesión
 app.post('/login', (req, res) => {
     const { correo, password } = req.body;
-    
+
     if (!correo || !password) {
         res.status(400).json({ error: 'Correo y contraseña son requeridos' });
         return;
     }
 
-    // Añadido para incluir al usuario con rol 'employee'
+    // Lista de roles que se van a verificar
     const roles = ['admin', 'client', 'employee'];
     let foundUser = null;
 
@@ -223,6 +236,12 @@ app.post('/login', (req, res) => {
                 return callback(err);
             }
             if (results.length > 0 && results[0].password === password) {
+                // Comprobar si el usuario está habilitado
+                    // Comprobar si el usuario está habilitado (1 para habilitado, 0 para deshabilitado)
+                    if (results[0].habilitado === 0) {
+                        return callback(null, { habilitado: false });
+                    }
+
                 foundUser = {
                     role,
                     id: results[0].id,
@@ -253,7 +272,11 @@ app.post('/login', (req, res) => {
             if (err) {
                 res.status(500).json({ error: 'Error en el servidor' });
             } else if (user) {
-                res.status(200).json(user);
+                if (user.habilitado === false) {
+                    res.status(401).json({ error: 'Usuario deshabilitado' });
+                } else {
+                    res.status(200).json(user);
+                }
             } else {
                 checkAllRoles(index + 1);
             }
