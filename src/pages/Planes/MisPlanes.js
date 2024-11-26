@@ -37,7 +37,7 @@ const MisPlanes = () => {
   // Actualiza la fecha de expiración en el db.json
   const updatePlanEndDate = async (planId, endDate) => {
     try {
-      await fetch(`http://localhost:3001/planes/${planId}`, {
+      await fetch(`http://localhost:3005/planes/${planId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
