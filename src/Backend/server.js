@@ -1,13 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
-
-const app = express();
-const PORT = process.env.PORT || 3005;
-
-
-app.use(cors());
-app.use(express.json());
+const { Sequelize, DataTypes } = require('sequelize');
 
 /* 
    Despliegue
@@ -48,26 +42,160 @@ app.use(express.json());
 
 */
 
+const app = express();
+const PORT = process.env.PORT || 3005;
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+
+// Configuración de Sequelize
+const sequelize = new Sequelize('nombre_base_datos', 'root', 'Alek122334', {
+    host: '127.0.0.1', // Dirección de tu servidor MySQL
+    dialect: 'mysql',  // Dialecto que utiliza Sequelize
+    port: 3006,        // Puerto personalizado de tu servidor MySQL
+  });
+
+// Verificar conexión con Sequelize
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Conexión establecida correctamente con la base de datos.');
+  })
+  .catch((error) => {
+    console.error('Error al conectarse a la base de datos:', error);
+  });
+
+// Conexión directa con MySQL
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
-    database: 'ProyectoGym'
+    password: 'Alek122334',
+    database: 'ProyectoGym',
 });
 
 db.connect((err) => {
     if (err) {
-        console.error('Error al conectarse a la base de datos:', err);
+        console.error('Error al conectarse a la base de datos con MySQL2:', err);
         return;
     }
-    console.log('Conexión exitosa a MySQL');
+    console.log('Conexión exitosa a MySQL con MySQL2');
 });
+// Sincronizar modelos con la base de datos
+sequelize.sync({ alter: true })
+    .then(() => console.log('Modelos sincronizados con la base de datos'))
+    .catch((err) => console.error('Error al sincronizar modelos:', err));
 
-// Ruta para verificar que el servidor está funcionando
+// Rutas
+
+// Verificar funcionamiento del servidor
 app.get('/test', (req, res) => {
     res.json({ message: 'Servidor funcionando correctamente' });
 });
 
+// Exportar la instancia para usar en otros módulos
+module.exports = sequelize;
+
+// Definición de modelos con Sequelize
+const PlanModel = sequelize.define('planes', {
+    id: { type: DataTypes.STRING(10), primaryKey: true },
+    name: { type: DataTypes.STRING, allowNull: false },
+    description: { type: DataTypes.TEXT },
+    price: { type: DataTypes.INTEGER, allowNull: false },
+    image: { type: DataTypes.STRING },
+    duration: { type: DataTypes.INTEGER },
+    startDate: { type: DataTypes.DATE },
+    endDate: { type: DataTypes.DATE },
+    benefits: { type: DataTypes.TEXT },
+});
+
+const ClienteModel = sequelize.define('client', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    nombre: { type: DataTypes.STRING(20) },
+    apellido: { type: DataTypes.STRING(20) },
+    tipoDocumento: { type: DataTypes.STRING(3) },
+    numeroDocumento: { type: DataTypes.STRING(20) },
+    sexo: { type: DataTypes.STRING(10) },
+    tipoCuerpo: { type: DataTypes.STRING(20) },
+    peso: { type: DataTypes.INTEGER },
+    altura: { type: DataTypes.INTEGER },
+    usuario: { type: DataTypes.STRING(40) },
+    password: { type: DataTypes.STRING(40) },
+    correo: { type: DataTypes.STRING(40) },
+    telefono: { type: DataTypes.STRING(10) },
+    rutinas: { type: DataTypes.TEXT },
+    tickets: { type: DataTypes.INTEGER },
+    fechaCreacion: { type: DataTypes.DATE },
+    horaCreacion: { type: DataTypes.TIME },
+    habilitado: { type: DataTypes.BOOLEAN },
+    planes: { type: DataTypes.TEXT },
+});
+
+
+
+
+// Obtener datos de un plan
+app.get('/planes/:id', async (req, res) => {
+    try {
+        const plan = await PlanModel.findByPk(req.params.id);
+        if (!plan) {
+            return res.status(404).json({ message: 'Plan no encontrado' });
+        }
+        res.json(plan);
+    } catch (err) {
+        res.status(500).json({ message: 'Error al obtener el plan', error: err });
+    }
+});
+
+// Actualizar fecha de expiración de un plan
+app.patch('/planes/:id', async (req, res) => {
+    try {
+        const { endDate } = req.body;
+        const [updated] = await PlanModel.update({ endDate }, { where: { id: req.params.id } });
+        if (!updated) {
+            return res.status(404).json({ message: 'Plan no encontrado' });
+        }
+        res.json({ message: 'Fecha de expiración actualizada exitosamente' });
+    } catch (err) {
+        res.status(500).json({ message: 'Error al actualizar el plan', error: err });
+    }
+});
+
+// Verificar si un cliente tiene un plan activo
+app.get('/client/:id/activePlan', async (req, res) => {
+    try {
+        const cliente = await ClienteModel.findByPk(req.params.id);
+        if (!cliente) {
+            return res.status(404).json({ message: 'Cliente no encontrado' });
+        }
+        const planes = cliente.planes ? JSON.parse(cliente.planes) : [];
+        const activePlan = planes.find((plan) => new Date(plan.endDate) > new Date());
+        res.json({ hasActivePlan: !!activePlan });
+    } catch (err) {
+        res.status(500).json({ message: 'Error al verificar el plan activo', error: err });
+    }
+});
+
+// Añadir un plan a un cliente
+app.post('/client/:id/planes', async (req, res) => {
+    try {
+        const cliente = await ClienteModel.findByPk(req.params.id);
+        if (!cliente) {
+            return res.status(404).json({ message: 'Cliente no encontrado' });
+        }
+        const planesActuales = cliente.planes ? JSON.parse(cliente.planes) : [];
+        planesActuales.push(req.body);
+
+        await ClienteModel.update(
+            { planes: JSON.stringify(planesActuales) },
+            { where: { id: req.params.id } }
+        );
+
+        res.json({ message: 'Plan añadido exitosamente' });
+    } catch (err) {
+        res.status(500).json({ message: 'Error al añadir el plan', error: err });
+    }
+});
 
 // Ruta modificada para obtener clientes con filtro opcional por número de documento
 app.get('/client', (req, res) => {
