@@ -7,7 +7,7 @@ export const ClassesProvider = ({ children }) => {
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
-    fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/clases')
+    fetch('http://localhost:3005/clases')
       .then(response => {
         if (!response.ok) {
           throw new Error('Error en la respuesta del servidor');
@@ -28,7 +28,7 @@ export const ClassesProvider = ({ children }) => {
   }, []);
 
   const updateClass = (updatedClass) => {
-    fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/clases/${updatedClass.id}`, {
+    fetch(`http://localhost:3005/clases/${updatedClass.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedClass),
@@ -43,7 +43,7 @@ export const ClassesProvider = ({ children }) => {
         setClasses(prevClasses => prevClasses.map(clase => clase.id === data.id ? data : clase));
 
         // Recargar los datos después de la actualización para asegurar que los cambios se reflejan
-        fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/clases')
+        fetch('http://localhost:3005/clases')
           .then(response => response.json())
           .then(data => setClasses(data))
           .catch(error => console.error('Error recargando las clases:', error));

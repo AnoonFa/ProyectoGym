@@ -10,7 +10,7 @@ export const TicketeraChart = () => {
 
   const fetchTicketeraData = async () => {
     try {
-      const response = await fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/ticketera');
+      const response = await fetch('http://localhost:3005/ticketera');
       const data = await response.json();
       const processedData = processTicketeraData(data);
       updateChartOption(processedData);

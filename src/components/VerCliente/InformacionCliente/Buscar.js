@@ -14,7 +14,7 @@ const Buscar = ({ clientInfo, onClose }) => {
   const [currentPageEmployees, setCurrentPageEmployees] = useState(1);
   const clientsPerPage = 7;
   const employeesPerPage = 7;
-  const API_URL = 'https://gimnasio-david-goliat-018399150974.herokuapp.com';
+  const API_URL = 'http://localhost:3005';
 
   // Cargar datos de clientes y empleados
   useEffect(() => {

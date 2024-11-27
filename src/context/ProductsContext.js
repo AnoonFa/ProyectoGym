@@ -11,7 +11,7 @@ export const ProductsProvider = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://gimnasio-david-goliat-018399150974.herokuapp.com/productos');
+        const response = await axios.get('http://localhost:3005/productos');
         console.log('Productos obtenidos:', response.data); // Debug: Verifica si los datos llegan
         setProducts(response.data);
       } catch (error) {
@@ -25,7 +25,7 @@ export const ProductsProvider = ({ children }) => {
   // Función para agregar un producto a la API
   const addProduct = async (product) => {
     try {
-      const response = await axios.post('https://gimnasio-david-goliat-018399150974.herokuapp.com/productos', product);
+      const response = await axios.post('http://localhost:3005/productos', product);
       setProducts([...products, response.data]); // Agregar el nuevo producto al estado local
     } catch (error) {
       console.error('Error al agregar el producto:', error);
@@ -36,7 +36,7 @@ export const ProductsProvider = ({ children }) => {
   const deleteProduct = async (productId) => {
     try {
         // Eliminar de la base de datos usando el ID
-        await axios.delete(`https://gimnasio-david-goliat-018399150974.herokuapp.com/productos/${productId}`);
+        await axios.delete(`http://localhost:3005/productos/${productId}`);
         
         // Actualizar el estado local eliminando el producto
         setProducts(products.filter(product => product.id !== productId));

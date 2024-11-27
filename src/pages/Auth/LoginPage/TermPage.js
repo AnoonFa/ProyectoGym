@@ -14,7 +14,7 @@ const TermsPage = () => {
   const handleAccept = async () => {
     try {
       // Marcar al usuario como habilitado cuando acepta
-      const response = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/${user.role}/${user.id}`, {
+      const response = await fetch(`http://localhost:3005/${user.role}/${user.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

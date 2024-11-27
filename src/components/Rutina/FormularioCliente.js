@@ -8,7 +8,7 @@ const FormularioCliente = ({ onClienteSeleccionado }) => {
   const [clienteSeleccionado, setClienteSeleccionado] = useState(false);
 
   useEffect(() => {
-    fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/client')
+    fetch('http://localhost:3005/client')
       .then(response => response.json())
       .then(data => {
         const clientesList = data.map(c => ({

@@ -25,7 +25,7 @@ function AdminConfirmacion() {
 
     const fetchTickets = async () => {
         try {
-            const response = await fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/ticketera');
+            const response = await fetch('http://localhost:3005/ticketera');
             const data = await response.json();
             // Filtrar para mostrar solo tickets no pagados
             const unpaidTickets = data.filter(ticket => ticket.status !== 'Pagado');
@@ -66,7 +66,7 @@ function AdminConfirmacion() {
             setOpenModal(true);
         } else {
             try {
-                const response = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/verify-ticket`, {
+                const response = await fetch(`http://localhost:3005/verify-ticket`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ticketId, newStatus }),
@@ -93,7 +93,7 @@ function AdminConfirmacion() {
     const handleConfirmPayment = async () => {
         if (selectedTicket) {
             try {
-                const response = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/verify-ticket`, {
+                const response = await fetch(`http://localhost:3005/verify-ticket`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 

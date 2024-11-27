@@ -65,7 +65,7 @@ const CalendarClases = () => {
 
    // Cargar empleados al montar el componente
   useEffect(() => {
-    fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/empleados')
+    fetch('http://localhost:3005/empleados')
       .then(response => response.json())
       .then(data => setEmployees(data))
       .catch(error => console.error('Error al cargar empleados:', error));
@@ -142,7 +142,7 @@ const CalendarClases = () => {
 useEffect(() => {
   const fetchClasses = async () => {
     try {
-      const response = await fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/clases');
+      const response = await fetch('http://localhost:3005/clases');
       if (!response.ok) {
         throw new Error('Error al obtener clases');
       }
@@ -375,7 +375,7 @@ useEffect(() => {
       };
 
       // Enviar la nueva clase al servidor mediante una solicitud POST
-      fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/clases', {
+      fetch('http://localhost:3005/clases', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(nuevaClase),

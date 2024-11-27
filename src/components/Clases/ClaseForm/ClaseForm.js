@@ -67,7 +67,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
 
   // Cargar empleados al montar el componente
   useEffect(() => {
-    fetch('https://gimnasio-david-goliat-018399150974.herokuapp.com/empleados')
+    fetch('http://localhost:3005/empleados')
       .then(response => response.json())
       .then(data => setEmployees(data))
       .catch(error => console.error('Error al cargar empleados:', error));
@@ -166,7 +166,7 @@ const ClaseForm = ({ initialClass, onSubmit, onCancel }) => {
       classData.totalCupos
     ) {
       try {
-        const response = await fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/clases/${initialClass.id}`, {
+        const response = await fetch(`http://localhost:3005/clases/${initialClass.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

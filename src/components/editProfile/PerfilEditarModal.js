@@ -46,13 +46,13 @@ const PerfilEditarModal = ({ onClose }) => {
       let apiUrl = '';
       switch (user.role) {
         case 'admin':
-          apiUrl = `https://gimnasio-david-goliat-018399150974.herokuapp.com/admin/${user.id}`;
+          apiUrl = `http://localhost:3005/admin/${user.id}`;
           break;
         case 'employee':
-          apiUrl = `https://gimnasio-david-goliat-018399150974.herokuapp.com/employee/${user.id}`;
+          apiUrl = `http://localhost:3005/employee/${user.id}`;
           break;
         case 'client':
-          apiUrl = `https://gimnasio-david-goliat-018399150974.herokuapp.com/client/${user.id}`;
+          apiUrl = `http://localhost:3005/client/${user.id}`;
           break;
         default:
           console.error('Rol de usuario no reconocido');
@@ -136,7 +136,7 @@ const PerfilEditarModal = ({ onClose }) => {
   };
 
   const handleConfirmLogout = () => {
-    let apiUrl = `https://gimnasio-david-goliat-018399150974.herokuapp.com/client/${user.id}`;
+    let apiUrl = `http://localhost:3005/client/${user.id}`;
   
     fetch(apiUrl, {
       method: 'PATCH',

@@ -96,7 +96,7 @@ const RutinasCliente = () => {
 
   useEffect(() => {
     if (user && user.id) {
-      fetch(`https://gimnasio-david-goliat-018399150974.herokuapp.com/client/${user.id}`)
+      fetch(`http://localhost:3005/client/${user.id}`)
         .then(response => response.json())
         .then(data => {
           setUserData(data); // Store fetched user data, including tipoCuerpo
