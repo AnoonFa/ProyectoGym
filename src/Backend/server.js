@@ -1,47 +1,44 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
-
-const app = express();
-const PORT = process.env.PORT || 3005;
+const { Sequelize, DataTypes } = require('sequelize');
 
 
-app.use(cors());
-app.use(express.json());
-
-
-   Despliegue
-   const url = require('url')
+// //    Despliegue
+//    const url = require('url')
    
-//    Obtener la URL de la base de datos desde la variable de entorno de Heroku
-   const dbUrl = process.env.JAWSDB_URL
-//    Si JAWSDB_URL está disponible (en Heroku), usaremos esa conexión
-//    Parsear la URL para extraer la información de conexión
-   const dbParams = url.parse(dbUrl);
-   const [username, password] = dbParams.auth.split(':');
-   const dbName = dbParams.pathname.split('/')[1];
-   const dbHost = dbParams.hostname;
-   const dbPort = dbParams.port;
-   mysql://vmdlgmcmgh7azdmh:a6apzim09v1v7ca1@wvulqmhjj9tbtc1w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/vcmdb0gjowzzxrc
+// //    Obtener la URL de la base de datos desde la variable de entorno de Heroku
+//    const dbUrl = process.env.JAWSDB_URL
+// //    Si JAWSDB_URL está disponible (en Heroku), usaremos esa conexión
+// //    Parsear la URL para extraer la información de conexión
+//    const dbParams = url.parse(dbUrl);
+//    const [username, password] = dbParams.auth.split(':');
+//    const dbName = dbParams.pathname.split('/')[1];
+//    const dbHost = dbParams.hostname;
+//    const dbPort = dbParams.port;
+//    mysql://vmdlgmcmgh7azdmh:a6apzim09v1v7ca1@wvulqmhjj9tbtc1w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/vcmdb0gjowzzxrc
 
-//    Configurar la conexión con los parámetros extraídos
-   const db = mysql.createConnection({
-       host: dbHost,
-       user: username,
-       password: password,
-       database: dbName,
-       port: dbPort || 3306 // Si no se especifica el puerto, usamos el puerto por defecto (3306)
-   });
+// //    Configurar la conexión con los parámetros extraídos
+//    const db = mysql.createConnection({
+//        host: dbHost,
+//        user: username,
+//        password: password,
+//        database: dbName,
+//        port: dbPort || 3306 // Si no se especifica el puerto, usamos el puerto por defecto (3306)
+//    });
 
-   db.query('SELECT 1 + 1 AS result', (err, results) => {
-       if (err) {
-           console.error('Error al hacer la consulta:', err);
-       } else {
-           console.log('Resultado de la consulta:', results);
-       }
-   });
+//    db.query('SELECT 1 + 1 AS result', (err, results) => {
+//        if (err) {
+//            console.error('Error al hacer la consulta:', err);
+//        } else {
+//            console.log('Resultado de la consulta:', results);
+//        }
+//    });
    
    
+// app.listen(PORT, () => {
+//     console.log(`Servidor escuchando en el puerto ${PORT}`);
+// });
 
 
 // const db = mysql.createConnection({
@@ -53,17 +50,126 @@ app.use(express.json());
 
 db.connect((err) => {
     if (err) {
-        console.error('Error al conectarse a la base de datos:', err);
+        console.error('Error al conectarse a la base de datos con MySQL2:', err);
         return;
     }
-    console.log('Conexión exitosa a MySQL');
+    console.log('Conexión exitosa a MySQL con MySQL2');
 });
+// Sincronizar modelos con la base de datos
+sequelize.sync({ alter: true })
+    .then(() => console.log('Modelos sincronizados con la base de datos'))
+    .catch((err) => console.error('Error al sincronizar modelos:', err));
 
-// Ruta para verificar que el servidor está funcionando
+// Rutas
+
+// Verificar funcionamiento del servidor
 app.get('/test', (req, res) => {
     res.json({ message: 'Servidor funcionando correctamente' });
 });
 
+// Exportar la instancia para usar en otros módulos
+module.exports = sequelize;
+
+// Definición de modelos con Sequelize
+const PlanModel = sequelize.define('planes', {
+    id: { type: DataTypes.STRING(10), primaryKey: true },
+    name: { type: DataTypes.STRING, allowNull: false },
+    description: { type: DataTypes.TEXT },
+    price: { type: DataTypes.INTEGER, allowNull: false },
+    image: { type: DataTypes.STRING },
+    duration: { type: DataTypes.INTEGER },
+    startDate: { type: DataTypes.DATE },
+    endDate: { type: DataTypes.DATE },
+    benefits: { type: DataTypes.TEXT },
+});
+
+const ClienteModel = sequelize.define('client', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    nombre: { type: DataTypes.STRING(20) },
+    apellido: { type: DataTypes.STRING(20) },
+    tipoDocumento: { type: DataTypes.STRING(3) },
+    numeroDocumento: { type: DataTypes.STRING(20) },
+    sexo: { type: DataTypes.STRING(10) },
+    tipoCuerpo: { type: DataTypes.STRING(20) },
+    peso: { type: DataTypes.INTEGER },
+    altura: { type: DataTypes.INTEGER },
+    usuario: { type: DataTypes.STRING(40) },
+    password: { type: DataTypes.STRING(40) },
+    correo: { type: DataTypes.STRING(40) },
+    telefono: { type: DataTypes.STRING(10) },
+    rutinas: { type: DataTypes.TEXT },
+    tickets: { type: DataTypes.INTEGER },
+    fechaCreacion: { type: DataTypes.DATE },
+    horaCreacion: { type: DataTypes.TIME },
+    habilitado: { type: DataTypes.BOOLEAN },
+    planes: { type: DataTypes.TEXT },
+});
+
+
+
+
+// Obtener datos de un plan
+app.get('/planes/:id', async (req, res) => {
+    try {
+        const plan = await PlanModel.findByPk(req.params.id);
+        if (!plan) {
+            return res.status(404).json({ message: 'Plan no encontrado' });
+        }
+        res.json(plan);
+    } catch (err) {
+        res.status(500).json({ message: 'Error al obtener el plan', error: err });
+    }
+});
+
+// Actualizar fecha de expiración de un plan
+app.patch('/planes/:id', async (req, res) => {
+    try {
+        const { endDate } = req.body;
+        const [updated] = await PlanModel.update({ endDate }, { where: { id: req.params.id } });
+        if (!updated) {
+            return res.status(404).json({ message: 'Plan no encontrado' });
+        }
+        res.json({ message: 'Fecha de expiración actualizada exitosamente' });
+    } catch (err) {
+        res.status(500).json({ message: 'Error al actualizar el plan', error: err });
+    }
+});
+
+// Verificar si un cliente tiene un plan activo
+app.get('/client/:id/activePlan', async (req, res) => {
+    try {
+        const cliente = await ClienteModel.findByPk(req.params.id);
+        if (!cliente) {
+            return res.status(404).json({ message: 'Cliente no encontrado' });
+        }
+        const planes = cliente.planes ? JSON.parse(cliente.planes) : [];
+        const activePlan = planes.find((plan) => new Date(plan.endDate) > new Date());
+        res.json({ hasActivePlan: !!activePlan });
+    } catch (err) {
+        res.status(500).json({ message: 'Error al verificar el plan activo', error: err });
+    }
+});
+
+// Añadir un plan a un cliente
+app.post('/client/:id/planes', async (req, res) => {
+    try {
+        const cliente = await ClienteModel.findByPk(req.params.id);
+        if (!cliente) {
+            return res.status(404).json({ message: 'Cliente no encontrado' });
+        }
+        const planesActuales = cliente.planes ? JSON.parse(cliente.planes) : [];
+        planesActuales.push(req.body);
+
+        await ClienteModel.update(
+            { planes: JSON.stringify(planesActuales) },
+            { where: { id: req.params.id } }
+        );
+
+        res.json({ message: 'Plan añadido exitosamente' });
+    } catch (err) {
+        res.status(500).json({ message: 'Error al añadir el plan', error: err });
+    }
+});
 
 // Ruta modificada para obtener clientes con filtro opcional por número de documento
 app.get('/client', (req, res) => {
@@ -1445,11 +1551,8 @@ app.patch('/client/:id', (req, res) => {
   });
 });
 
-// app.listen(PORT, () => {
-//     console.log(`Servidor corriendo en http://localhost:${PORT}`);
-// });
-
-
 app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
+
