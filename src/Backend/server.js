@@ -50,10 +50,10 @@ app.use(cors());
 app.use(express.json());
 
 // Configuración de Sequelize
-const sequelize = new Sequelize('nombre_base_datos', 'root', 'Alek122334', {
+const sequelize = new Sequelize('nombre_base_datos', 'root', '', {
     host: '127.0.0.1', // Dirección de tu servidor MySQL
     dialect: 'mysql',  // Dialecto que utiliza Sequelize
-    port: 3006,        // Puerto personalizado de tu servidor MySQL
+    port: 3005,        // Puerto personalizado de tu servidor MySQL
   });
 
 // Verificar conexión con Sequelize
@@ -70,7 +70,7 @@ sequelize
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'Alek122334',
+    password: '',
     database: 'ProyectoGym',
 });
 
