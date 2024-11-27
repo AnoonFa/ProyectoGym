@@ -95,7 +95,6 @@ function ClientePage() {
         <Route path='ClientClass' element={<ClientClass />} />
         <Route path='Planes' element={<Planes />} />
         <Route path='ProductsClient' element={<ProductsClient />} />
-        <Route path='RutinesClient' element={<RutinesPage />} />
         <Route path="RutinasCliente" element={<RutinasCliente />} />
         {/* Otras rutas aquí */}
       </Routes>

@@ -50,10 +50,10 @@ app.use(cors());
 app.use(express.json());
 
 // Configuración de Sequelize
-const sequelize = new Sequelize('nombre_base_datos', 'root', '', {
-    host: '127.0.0.1', // Dirección de tu servidor MySQL
+const sequelize = new Sequelize('ProyectoGym', 'root', '', {
+    host: 'localhost', // Dirección de tu servidor MySQL
     dialect: 'mysql',  // Dialecto que utiliza Sequelize
-    port: 3005,        // Puerto personalizado de tu servidor MySQL
+    port: 3306,        // Puerto personalizado de tu servidor MySQL
   });
 
 // Verificar conexión con Sequelize
