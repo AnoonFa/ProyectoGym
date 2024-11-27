@@ -3,50 +3,76 @@ const cors = require('cors');
 const mysql = require('mysql2');
 const { Sequelize, DataTypes } = require('sequelize');
 
-
-// //    Despliegue
-//    const url = require('url')
+/* 
+   Despliegue
+   const url = require('url')
    
-// //    Obtener la URL de la base de datos desde la variable de entorno de Heroku
-//    const dbUrl = process.env.JAWSDB_URL
-// //    Si JAWSDB_URL está disponible (en Heroku), usaremos esa conexión
-// //    Parsear la URL para extraer la información de conexión
-//    const dbParams = url.parse(dbUrl);
-//    const [username, password] = dbParams.auth.split(':');
-//    const dbName = dbParams.pathname.split('/')[1];
-//    const dbHost = dbParams.hostname;
-//    const dbPort = dbParams.port;
-//    mysql://vmdlgmcmgh7azdmh:a6apzim09v1v7ca1@wvulqmhjj9tbtc1w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/vcmdb0gjowzzxrc
+   Obtener la URL de la base de datos desde la variable de entorno de Heroku
+   const dbUrl = process.env.JAWSDB_URL
+   Si JAWSDB_URL está disponible (en Heroku), usaremos esa conexión
+   Parsear la URL para extraer la información de conexión
+   const dbParams = url.parse(dbUrl);
+   const [username, password] = dbParams.auth.split(':');
+   const dbName = dbParams.pathname.split('/')[1];
+   const dbHost = dbParams.hostname;
+   const dbPort = dbParams.port;
+   mysql://vmdlgmcmgh7azdmh:a6apzim09v1v7ca1@wvulqmhjj9tbtc1w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/vcmdb0gjowzzxrc
 
-// //    Configurar la conexión con los parámetros extraídos
-//    const db = mysql.createConnection({
-//        host: dbHost,
-//        user: username,
-//        password: password,
-//        database: dbName,
-//        port: dbPort || 3306 // Si no se especifica el puerto, usamos el puerto por defecto (3306)
-//    });
+   Configurar la conexión con los parámetros extraídos
+   const db = mysql.createConnection({
+       host: dbHost,
+       user: username,
+       password: password,
+       database: dbName,
+       port: dbPort || 3306 // Si no se especifica el puerto, usamos el puerto por defecto (3306)
+   });
 
-//    db.query('SELECT 1 + 1 AS result', (err, results) => {
-//        if (err) {
-//            console.error('Error al hacer la consulta:', err);
-//        } else {
-//            console.log('Resultado de la consulta:', results);
-//        }
-//    });
+   db.query('SELECT 1 + 1 AS result', (err, results) => {
+       if (err) {
+           console.error('Error al hacer la consulta:', err);
+       } else {
+           console.log('Resultado de la consulta:', results);
+       }
+   });
    
    
-// app.listen(PORT, () => {
-//     console.log(`Servidor escuchando en el puerto ${PORT}`);
-// });
+   app.listen(PORT, () => {
+       console.log(`Servidor escuchando en el puerto ${PORT}`);
+   });
 
+*/
 
-// const db = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: '',
-//     database: 'ProyectoGym'
-// });
+const app = express();
+const PORT = process.env.PORT || 3005;
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+
+// Configuración de Sequelize
+const sequelize = new Sequelize('nombre_base_datos', 'root', 'Alek122334', {
+    host: '127.0.0.1', // Dirección de tu servidor MySQL
+    dialect: 'mysql',  // Dialecto que utiliza Sequelize
+    port: 3006,        // Puerto personalizado de tu servidor MySQL
+  });
+
+// Verificar conexión con Sequelize
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Conexión establecida correctamente con la base de datos.');
+  })
+  .catch((error) => {
+    console.error('Error al conectarse a la base de datos:', error);
+  });
+
+// Conexión directa con MySQL
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'Alek122334',
+    database: 'ProyectoGym',
+});
 
 db.connect((err) => {
     if (err) {
@@ -1554,5 +1580,3 @@ app.patch('/client/:id', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
-
-
