@@ -1,0 +1,104 @@
+/* Formulario de añadir clase */
+.modify-class-form {
+  position: relative;
+  display: grid;
+  width: 100%; /* Cambiar a 100% para responsividad */
+  max-width: 600px; /* Limitar ancho máximo para pantallas grandes */
+  max-height: 756px; /* Limitar altura máxima para el formulario */
+  margin: 30px auto; /* Centrar el formulario */
+  gap: 12px;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px; /* Padding uniforme */
+  border-radius: 10px;
+  border: 1px solid #e4e4e4;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Agregar sombra para profundidad */
+  overflow-y: auto; /* Agregar scroll si el contenido excede la altura máxima */
+}
+  
+  /* Button styles */
+  .vkz-button {
+    padding: 8px 15px;
+    background-color: #2679f7;
+    color: white;
+    border: none;
+    position: relative;
+    left: 1%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+    
+  }
+  .vkz-button-l {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px 29px; 
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vkz-button:hover {
+    background-color: #1a5cc3;
+  }
+  
+  .vkz-button-l:hover {
+    background-color: #b1b1b1;
+  
+  }
+  
+  
+  .vkz-input-field {
+    margin-top: 3px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
+  }
+  
+  .descripcion-field {
+    height: 100px;
+    resize: vertical;
+    max-height: 200px; /* Máxima altura para evitar que se expanda demasiado */
+  }
+  
+  /* Estilos para agrupar campos en una fila */
+  .field-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .field-half {
+    flex: 1;
+  }
+  
+  .form-field {
+    /* Espacio personalizado para cada div que contiene una opción */
+  }
+  
+  .form-clases {
+    font-weight: 600;
+  }
+  
+  .form-button {
+    display: flex;
+    position: relative;
+    left: 1%;
+    width: 99%;
+    top: -12%;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 600px) {
+    .field-half {
+        flex: 1 1 100%; /* Apilar campos en pantallas pequeñas */
+    }
+
+    .form-button {
+        flex-direction: column; /* Apilar botones verticalmente */
+        gap: 10px;
+    }
+}
+

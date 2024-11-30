@@ -1,0 +1,121 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.fondo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 80px; 
+    margin-left: 122px;
+}
+
+.fondo {
+    position: relative;
+    width: 100%; /* Ajustado para ocupar todo el contenedor */
+    height: auto;
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    display: flex;
+    align-items: center;
+    transition: height .2s ease;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.fondo .contenedor-form {
+    width: 100%;
+    padding: 40px;
+}
+
+.contenedor-form h2 {
+    font-size: 2em;
+    color: #000000;
+    text-align: center;
+}
+
+.contenedor-input {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid #000000;
+    margin: 30px 0;
+}
+
+.contenedor-input select,
+.contenedor-input input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    padding: 0 35px 0 5px;
+}
+
+.contenedor-input option {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.contenedor-input input::placeholder {
+    color: #050000;
+}
+
+.contenedor-input label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    font-weight: 600;
+    pointer-events: none;
+    transition: .4s;
+}
+
+.contenedor-input .icono {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    font-size: 1.4em;
+    color: #000000;
+    transform: translate(0, -50%);
+    line-height: 57px;
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: column; /* Cambiado a columna */
+    margin: 20px 0;
+}
+
+.upload-section .contenedor-input {
+    margin-bottom: 10px; /* Añadir espacio entre los campos */
+}
+.Upload {
+    display: flex;
+    transform: translate(0, -60%);
+}
+
+.btn {
+    width: 100%;
+    height: 45px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: #090f1d;
+    color: #F1EFEF;
+    font-weight: 700;
+}

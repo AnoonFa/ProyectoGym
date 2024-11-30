@@ -1,0 +1,100 @@
+.product-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0 12px;
+  height: 28rem; /* Altura fija para la tarjeta */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.product-image {
+  width: 253.25px; /* Ancho fijo */
+  max-width: 500px;
+  height: 255.25px; /* Altura fija */
+  padding: 8%;
+  object-fit: cover; /* Mantiene proporciones y recorta si es necesario */
+  border-bottom: 2px solid #eaeaea;
+  margin: 0 auto; /* Centra la imagen en el contenedor */
+}
+
+.product-infos {
+  flex-grow: 1;
+  padding: 10px 10px 22px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.product-description {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.4;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #e74c3c;
+  text-align: left;
+  margin-top: auto; /* Esto ayuda a empujar el precio hacia abajo */
+}
+
+.product-card button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px; 
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px; /* Separar el botón del contenido anterior */
+}
+
+.product-card button:hover {
+  background-color: #0056b3;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  color: #e74c3c;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.delete-icon:hover {
+  color: #c0392b;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Cuatro columnas por defecto */
+  grid-gap: 20px; /* Espacio entre las tarjetas */
+  padding: 0 20px; /* Espaciado lateral */
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas en pantallas más pequeñas */
+  }
+}
+
+.product-placeholder {
+  width: 253.25px; /* Mantener el mismo tamaño que las imágenes */
+  height: 255.25px; /* Altura fija para el espacio del producto */
+}

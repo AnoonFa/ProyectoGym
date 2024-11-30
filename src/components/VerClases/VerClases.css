@@ -1,0 +1,302 @@
+/* Estilo general de la sección */
+.calendar-container {
+  background-color: #ffffff;
+
+}
+
+/* Encabezado principal "Clases" */
+.header-container h2 {
+  font-size: 48px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.empty-slot {
+  height: 100%; /* Se adapta al tamaño de la celda */
+  padding: 20px;
+}
+
+/* Descripción debajo del encabezado */
+.header-description {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+  max-width: 100%;
+  width: 94%;
+  display: flex;
+  left: 3.1%;
+  position: relative;
+
+}
+
+/* Estilo del contenedor de encabezado */
+.header-container {
+  display: flex;
+  position: relative;
+  top: 10%;
+  left: 6%;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 57px;
+  width: 88%;
+}
+
+/* Filtro de clases */
+.Filter { 
+  display: flex; 
+  position: absolute; 
+  right: 0%; 
+  height: 54px; 
+  gap: 20px; 
+}
+
+
+/* Botón de añadir clase */
+.AddButtonLink {
+  padding: 12px 24px;
+  background-color: #2679f7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.AddButtonLink:hover {
+  background-color: #2679f7;
+}
+
+/* Formulario de añadir clase */
+.add-class-form {
+  position: relative;
+  top: 16px;
+  display: grid;
+  right: 64px;
+  width: 24%;
+  gap: 12px;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px 20px 12px;
+  border-radius: 10px;
+  border: 1px solid #e4e4e4;
+}
+
+/* Button styles */
+.vkz-button {
+  padding: 10px 37px;
+  background-color: #2679f7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: medium;
+}
+.vkz-button-l {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px 37px; 
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: medium;
+  border: 1px solid #bababa;
+}
+
+.vkz-button:hover {
+  background-color: #1a5cc3;
+}
+
+.vkz-button-l:hover {
+  background-color: #b1b1b1;
+
+}
+
+
+.vkz-input-field {
+  margin-top: 3px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100%; 
+}
+
+.descripcion-field {
+  height: 100px;
+  resize: vertical;
+  max-height: 200px; /* Máxima altura para evitar que se expanda demasiado */
+}
+
+/* Estilos para agrupar campos en una fila */
+.field-row {
+  display: flex;
+  gap: 10px;
+}
+
+.field-half {
+  flex: 1;
+}
+
+.form-clases {
+  font-weight: 600;
+}
+
+.form-button {
+  display: flex;
+  position: relative;
+  left: 1%;
+  width: 99%;
+  top: -12%;
+  justify-content: space-between;
+}
+
+/* Contador de caracteres en el campo de descripción */
+.char-counter {
+  text-align: right;
+  font-size: 12px;
+  color: #888;
+}
+.form-title {
+  background-color: #0081ff;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border-radius:5px ; 
+}
+
+
+
+
+/* Estilos del calendario */
+.calendar-table {
+  margin-top: 5%;
+  width: 78%;
+  position: relative;
+  left: 10%;
+  background-color: #fff;
+}
+
+.day-th {
+  background: #cee2f75d;
+  border-bottom: 1px solid #44709c5e;
+  padding: 12px;
+  text-transform: uppercase;
+}
+
+.calendar-body td {
+  border-bottom: 1px solid #44709c5e;
+  padding: 14px;
+  text-align: center;
+  width: 13%;
+}
+
+.time-th{
+  position: relative;
+  bottom: 2.5px;
+  border-top: 1px solid #44709c5e;
+  padding: 1px 10px 10;
+  text-transform: uppercase;
+}
+.containerDayCalendar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.colorPrimCalendar {
+  color: white;
+}
+
+.colorSecuCalendar {
+  color: black;
+}
+
+
+.itemCalendarLesson {
+  background-color: #ffc10775;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  border: 1px solid #832929;
+}
+
+.itemCalendarLesson h5 {
+  margin: 0;
+}
+
+.itemCalendarLesson p {
+  margin: 0;
+}
+
+
+.eliminar {
+  margin-top: 5px;
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.eliminar :hover {
+  background-color: #c82333;
+
+}
+.ver {
+  background-color: #2679f7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+  padding: 5px 10px;
+
+}
+.ver:hover{
+  background-color: #1065e6;
+}
+
+.rbc-calendar {
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-right: 6%;
+  margin-left: 6%;
+  margin-top: 44px;
+  margin-bottom: 119px;
+}
+
+
+.calendar-form-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 23px;
+}
+
+/*Calendario se mueve cuando el form es visible*/
+.calendar-container.form-visible .calendar-wrapper {
+  width: 73%;
+  transition: width 0.3s ease;
+}
+
+.calendar-wrapper {
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Estilos del calendario y contenedores */
+.mis-clases-container {
+  margin-bottom: 20px; /* Agrega espacio debajo de "Mis Clases" */
+}
+
+.calendar-form-wrapper.mis-clases-visible .calendar-wrapper {
+  margin-top: 20px; /* Añadir espacio cuando "Mis Clases" está visible */
+}

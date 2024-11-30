@@ -1,0 +1,54 @@
+.AdminCalendarContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Ajusta según el espacio que necesitas */
+  }
+  
+  .CalendarButtons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
+   
+  .CalendarButtons button {
+    background-color: #FFC120;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .CalendarButtons button:hover {
+    background-color: #FFA500;
+  }
+  
+  .EventForm {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .EventForm input {
+    padding: 20px 10 10 10;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .EventForm button {
+    background-color: #FFC120;
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .EventForm button:hover {
+    background-color: #FFA500;
+  }
+  

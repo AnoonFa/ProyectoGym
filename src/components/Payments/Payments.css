@@ -1,0 +1,14 @@
+.PaymentsContainer {
+    padding: 20px;
+}
+
+.PaymentItem {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.PaymentItem p {
+    margin: 5px 0;
+}

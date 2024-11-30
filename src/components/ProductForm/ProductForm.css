@@ -1,0 +1,86 @@
+/* Modal container covering full screen */
+.modal-producto-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+/* Modal content */
+.modal-producto-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Form styles */
+.modify-product-form-modal {
+  display: grid;
+  gap: 12px;
+}
+
+.product-button-modal {
+  padding: 8px 15px;
+  background-color: #2679f7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: medium;
+}
+
+.product-button-l-modal {
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  padding: 10px 29px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: medium;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-button-modal:hover {
+  background-color: #1a5cc3;
+}
+
+.product-button-l-modal:hover {
+  background-color: #b1b1b1;
+}
+
+.product-input-field-modal {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+.descripcion-field-modal {
+  height: 100px;
+  resize: vertical;
+  max-height: 200px;
+}
+
+.field-row-modal {
+  display: flex;
+  gap: 10px;
+}
+
+.field-half-modal {
+  flex: 1;
+}
+
+.form-button-modal {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
