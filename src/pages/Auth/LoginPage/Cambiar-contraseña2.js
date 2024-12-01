@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import './ResetPassword.css';
 import eyeIcon from '../../../assets/icons/OjoAbierto.png';
@@ -7,6 +7,7 @@ import eyeOffIcon from '../../../assets/icons/OjoBloqueado.png';
 
 const ResetPassword = () => {
   const { userId } = useParams();
+  const navigate = useNavigate();  
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -27,34 +28,39 @@ const ResetPassword = () => {
     e.preventDefault();
 
     if (newPassword !== confirmPassword) {
-      setError('Las contraseñas no coinciden.');
-      return;
+        setError('Las contraseñas no coinciden.');
+        return;
     }
 
     if (!validatePassword(newPassword)) {
-      setError('La contraseña debe tener entre 8 y 20 caracteres, incluir al menos una letra mayúscula, un carácter especial y un número.');
-      return;
+        setError('La contraseña debe tener entre 8 y 20 caracteres, incluir al menos una letra mayúscula, un carácter especial y un número.');
+        return;
     }
 
     try {
-      const response = await fetch('http://localhost:3001/restablecer-contraseña', {
+      const response = await fetch(`http://localhost:3005/restablecer-contrasena/${userId}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: userId, password: newPassword }),
-      });
-
-      if (response.ok) {
-        setMessage('Contraseña restablecida con éxito. Puedes iniciar sesión.');
-      } else {
-        setError('Hubo un problema al restablecer la contraseña.');
-      }
+        body: JSON.stringify({ password: newPassword })
+    });
+    
+      
+        if (response.ok) {
+            setMessage('Contraseña restablecida con éxito. Puedes iniciar sesión.');
+            setTimeout(() => {
+              navigate('/loginP');  // Redirige al login después de 2 segundos
+          }, 2000);  // Espera 2 segundos para que el mensaje se vea antes de redirigir
+        } else {
+            setError('Hubo un problema al restablecer la contraseña.');
+        }
     } catch (error) {
-      console.error('Error:', error);
-      setError('Error en la conexión.');
+        console.error('Error:', error);
+        setError('Error en la conexión.');
     }
-  };
+};
+
 
   const toggleNewPasswordVisibility = () => {
     setShowNewPassword(prevState => !prevState);

@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
 const { Sequelize, DataTypes } = require('sequelize');
+const nodemailer = require('nodemailer');
 
 /* 
    Despliegue
@@ -81,6 +82,7 @@ db.connect((err) => {
     }
     console.log('Conexión exitosa a MySQL con MySQL2');
 });
+
 // Sincronizar modelos con la base de datos
 sequelize.sync({ alter: true })
     .then(() => console.log('Modelos sincronizados con la base de datos'))
@@ -132,6 +134,98 @@ const ClienteModel = sequelize.define('client', {
 });
 
 
+// Configurar el transporte de correo usando Gmail
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'gimnasiodavidgoliat@gmail.com', // Tu correo de Gmail
+        pass: 'ukjx ekbv frpr dvna', // Tu contraseña de Gmail o App Password
+    },
+});
+// Ruta para resetear contraseña
+app.post('/reset-password', async (req, res) => {
+    const { correo } = req.body;
+
+    if (!correo) {
+        return res.status(400).json({ message: 'Correo es requerido' });
+    }
+
+    try {
+        // Buscar cliente en la base de datos por correo
+        const query = 'SELECT id, nombre, correo FROM client WHERE correo = ?';
+        db.query(query, [correo], async (err, result) => {
+            if (err) {
+                console.error('Error al buscar cliente:', err);
+                return res.status(500).json({ message: 'Error interno del servidor' });
+            }
+
+            if (result.length === 0) {
+                return res.status(404).json({ message: 'Usuario no encontrado' });
+            }
+
+            const cliente = result[0];
+            const resetLink = `http://localhost:3000/restablecer-contraseña/${cliente.id}`;
+
+            // Configurar el correo
+            const mailOptions = {
+                from: 'gimnasiodavidgoliat@gmail.com',
+                to: cliente.correo,
+                subject: 'Restablecer Contraseña',
+                html: `
+                    <p>Hola ${cliente.nombre},</p>
+                    <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+                    <a href="${resetLink}">${resetLink}</a>
+                `,
+            };
+
+            // Enviar el correo con Nodemailer
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.error('Error al enviar el correo:', error);
+                    return res.status(500).json({ message: 'Error al enviar el correo' });
+                }
+                res.json({ message: 'Correo enviado exitosamente.' });
+            });
+        });
+    } catch (error) {
+        console.error('Error al procesar la solicitud:', error);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+});
+
+
+// Ruta para restablecer la contraseña
+app.post('/restablecer-contrasena/:id', async (req, res) => {
+    const { id } = req.params;  // Aquí recibimos el ID desde la URL
+    const { password } = req.body;  // La nueva contraseña llega en el cuerpo de la solicitud
+
+    try {
+        const query = 'SELECT * FROM client WHERE id = ?';
+        db.query(query, [id], (err, result) => {
+            if (err) {
+                console.error('Error al buscar cliente:', err);
+                return res.status(500).json({ message: 'Error interno del servidor' });
+            }
+
+            if (result.length === 0) {
+                return res.status(404).json({ message: 'Usuario no encontrado' });
+            }
+
+            const updateQuery = 'UPDATE client SET password = ? WHERE id = ?';
+            db.query(updateQuery, [password, id], (err, updateResult) => {
+                if (err) {
+                    console.error('Error al actualizar la contraseña:', err);
+                    return res.status(500).json({ message: 'Error al actualizar la contraseña' });
+                }
+
+                res.status(200).json({ message: 'Contraseña restablecida con éxito' });
+            });
+        });
+    } catch (error) {
+        console.error('Error al procesar la solicitud:', error);
+        res.status(500).json({ message: 'Error al procesar la solicitud' });
+    }
+});
 
 
 // Obtener datos de un plan
