@@ -168,8 +168,8 @@ const ClienteForm = () => {
             })
             .catch(() => {
               console.error('Error al enviar el correo.');
-              setError('Error al enviar el correo. Intenta nuevamente.');
-            });
+              setFormError('Error al enviar el correo. Intenta nuevamente.');
+            });  
 
           setTimeout(() => {
             navigate('/');

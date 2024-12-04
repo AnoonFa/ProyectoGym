@@ -20,7 +20,6 @@
 }
 
 .product-infos {
-  flex-grow: 1;
   padding: 10px 10px 22px 10px;
   display: flex;
   flex-direction: column;

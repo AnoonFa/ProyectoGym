@@ -769,7 +769,6 @@ app.post('/verify-ticket', async (req, res) => {
                                     error: err
                                 });
                             }
-
                             res.json({
                                 success: true,
                                 message: 'Estado del ticket actualizado correctamente',
